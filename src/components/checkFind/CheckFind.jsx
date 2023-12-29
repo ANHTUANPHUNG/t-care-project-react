@@ -4,7 +4,7 @@ import './CheckFind.css'
 import { NavLink } from "react-router-dom";
 export function CheckFind({setCheckFind,checkFind}){
      return(
-        <div className="bodyRender pt-5 ">
+        <div className="bodyRender pt-5 " >
         <div className="contentRender ">
           <div className="content ">
             <h3 className="fontContent ">Connecting families with quality, local caregivers</h3>

@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import { Button } from "@mui/material";
 import LogoProject from "../logoProject/LogoProject";
 import { RadioJobType } from "./RadioJobType";
+import { ButtonForMe } from "../ButtonForMe";
 
 export function UserJobType() {
   const [check, setCheck] = useState()
@@ -35,20 +36,7 @@ export function UserJobType() {
       </div>
       <div className="my-5" style={{ height: "50px", textAlign: "center" }}>
         <NavLink to="/user/datesession">
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            style={{
-              width: "30%",
-              backgroundColor: "orangered",
-              height: "100%",
-              border: "1px solid orangered",
-              borderRadius: "20px",
-            }}
-          >
-            Next
-          </Button>
+        <ButtonForMe/>
         </NavLink>
       </div>
       <div className="legal-notice-user">

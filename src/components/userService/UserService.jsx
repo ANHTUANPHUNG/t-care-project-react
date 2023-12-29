@@ -5,6 +5,7 @@ import Checkbox from "@mui/material/Checkbox";
 import { CheckBoxService } from "./CheckboxService";
 import { NavLink } from 'react-router-dom';
 import { Button } from '@mui/material';
+import { ButtonForMe } from "../ButtonForMe";
 
 export function UserService() {
   return (
@@ -29,20 +30,7 @@ export function UserService() {
       </div>
       <div className="my-5" style={{ height: "50px", textAlign:'center' }}>
         <NavLink to="/user/jobtype">
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            style={{
-              width: "30%",
-              backgroundColor: "orangered",
-              height: "100%",
-              border: "1px solid orangered",
-              borderRadius: "20px",
-            }}
-          >
-            Next
-          </Button>
+        <ButtonForMe/>
         </NavLink>
       </div>
       <div className="legal-notice-user">

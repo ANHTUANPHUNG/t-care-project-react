@@ -25,7 +25,7 @@ export function Home() {
       <div style={{ backgroundColor: "#FFF1EB" }}>
         <div className="d-flex" style={{backgroundColor:'white', borderBottom:'red'}}>
           <CheckFind setCheckFind={setCheckFind} checkFind={checkFind} />
-          <div>
+          <div >
             <img
               src="https://res.cloudinary.com/dw4xpd646/image/upload/v1703748824/Cloudinary-React/gwsdfpleoznddaljvn9m.png"
               alt=""

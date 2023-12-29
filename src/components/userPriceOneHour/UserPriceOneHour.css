@@ -1,0 +1,13 @@
+.header {
+    background-color: #3b71aa;
+    height: 3px;
+}
+.render-price{
+    width: 35%
+}
+.per-hour{
+    margin-left: 40%; font-size:13px ;color:#757575
+}
+.ruler-select-per-hour{
+    color:#757575
+}

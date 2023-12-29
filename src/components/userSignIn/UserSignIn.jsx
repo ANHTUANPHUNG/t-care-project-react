@@ -6,7 +6,6 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import {
-  ButtonGroup,
   Checkbox,
   FormControl,
   FormControlLabel,
@@ -30,17 +29,11 @@ export function UserSignIn() {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    // Password validation
     if (password !== confirmPassword) {
       setPasswordError("Passwords do not match");
       return;
     }
-
-    // Clear password error if passwords match
     setPasswordError("");
-
-    // Handle form submission logic here
     console.log("Form submitted!");
   };
   return (

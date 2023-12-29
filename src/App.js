@@ -7,6 +7,10 @@ import { UserAddress } from './components/userAddress/UserAddress';
 import { UserService } from './components/userService/UserService';
 import { UserJobType } from './components/userJobType/UserJobType';
 import { DateSession } from './components/datesession/DateSession';
+import { UserPriceOneHour } from './components/userPriceOneHour/UserPriceOneHour';
+import { UserNeedCare } from './components/userNeedCare/UserNeedCare';
+import { AssistantCaption } from './components/assistantCaption/AssistantCaption';
+import { RenderListAssistant } from './components/renderListAssistant/RenderListAssistant';
 
 
 
@@ -21,6 +25,10 @@ function App() {
         <Route path='/user/service' element={<UserService/>}></Route>
         <Route path='/user/jobtype' element={<UserJobType/>}></Route>
         <Route path='/user/datesession' element={<DateSession/>}></Route>
+        <Route path='/user/onehour' element={<UserPriceOneHour/>}></Route>
+        <Route path='/user/needcare' element={<UserNeedCare/>}></Route>
+        <Route path='/user/assistant-caption' element={<AssistantCaption/>}></Route>
+        <Route path='/user/render-list-assistant' element={<RenderListAssistant/>}></Route>
       </Routes>
     </>
   );
