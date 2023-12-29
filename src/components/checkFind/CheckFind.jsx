@@ -11,13 +11,13 @@ export function CheckFind({setCheckFind,checkFind}){
           </div>
           <div className="d-flex mt-5 ">
             <div
-              className={`check-find-${checkFind ? "active" : ""}`}
+              className={`check-${checkFind ? "active" : ""}`}
               onClick={() => setCheckFind(true)}
             >
               <div className="px-4">Find care</div>
             </div>
             <div
-              className={`check-find-${!checkFind ? "active" : ""}`}
+              className={`check-${!checkFind ? "active" : ""}`}
               onClick={() => setCheckFind(false)}
             >
               <div className="px-4">Find a job</div>

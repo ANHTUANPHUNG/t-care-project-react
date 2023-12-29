@@ -27,20 +27,28 @@ export function CareHub() {
         <div
           className="row mt-5 pb-5 d-flex care-hub-body"
         >
-          <div className="col-4">
+          <div className="col-3">
             <h6>About T-Care</h6>
             <p className="m-0">About us</p>
             <p className="m-0">Careers</p>
             <p className="m-0">Terms of use</p>
             <p className="m-0">Privacy policy</p>
           </div>
-          <div className="col-4">
+          <div className="col-3">
             <h6>Get help</h6>
             <p className="m-0">Safety</p>
             <p className="m-0">Articles & Guides</p>
             <p className="m-0">Help Center</p>
           </div>
-          <div className="col-4">
+          <div className="col-3">
+            <h6>Popular in Senior Care</h6>
+            <p className="m-0">Senior Care</p>
+            <p className="m-0">Home Care</p>
+            <p className="m-0">Assisted Living</p>
+            <p className="m-0">Senior Care Jobs</p>
+            <p className="m-0">Senior Care Directory</p>
+          </div>
+          <div className="col-3">
             <h6>Discover</h6>
             <p className="m-0">HomePay℠ - nanny tax help</p>
             <p className="m-0">List your business</p>

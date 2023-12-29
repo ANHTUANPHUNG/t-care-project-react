@@ -11,12 +11,13 @@
     font-size: 43px;
     color: #464646;
 }
-.check-find-active{
+.check-active{
     color: orangered;
     border-bottom: 2px solid orangered;
 }
-.check-find{
-    color: transparent;
+.check-{
+    color: black;
+    cursor: pointer;
     border-bottom: 2px solid transparent;
 }
 .buttonSearch{

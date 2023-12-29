@@ -15,7 +15,7 @@ export function Home() {
       <div className="container-head">
         <LogoProject />
         <div id="logInHome">
-          <NavLink className="navlink-no-underline" to="user">
+          <NavLink className="navlink-no-underline" to="login">
             <Button className="buttonLogin" variant="contained">
               Log in
             </Button>

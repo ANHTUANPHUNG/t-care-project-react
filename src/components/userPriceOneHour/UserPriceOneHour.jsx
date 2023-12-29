@@ -48,7 +48,7 @@ export function UserPriceOneHour() {
       </div>
       <div className="mt-2 mb-5 button-date-session">
         <NavLink to="/user/needcare">
-          <ButtonForMe />
+          <ButtonForMe childrenButton={'Next'}/>
         </NavLink>
       </div>
       <div className="legal-notice-user">

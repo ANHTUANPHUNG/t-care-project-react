@@ -33,7 +33,7 @@ export function AssistantCaption(){
   
         <div className="mt-2 mb-5 button-date-session">
           <NavLink to="/user/render-list-assistant">
-            <ButtonForMe />
+            <ButtonForMe childrenButton={'Next'}/>
           </NavLink>
         </div>
         <div className="legal-notice-user">

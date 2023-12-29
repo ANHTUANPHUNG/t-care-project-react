@@ -30,7 +30,7 @@ export function UserService() {
       </div>
       <div className="my-5" style={{ height: "50px", textAlign:'center' }}>
         <NavLink to="/user/jobtype">
-        <ButtonForMe/>
+        <ButtonForMe childrenButton={'Next'}/>
         </NavLink>
       </div>
       <div className="legal-notice-user">

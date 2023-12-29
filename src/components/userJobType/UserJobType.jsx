@@ -36,7 +36,7 @@ export function UserJobType() {
       </div>
       <div className="my-5" style={{ height: "50px", textAlign: "center" }}>
         <NavLink to="/user/datesession">
-        <ButtonForMe/>
+        <ButtonForMe childrenButton={'Next'}/>
         </NavLink>
       </div>
       <div className="legal-notice-user">

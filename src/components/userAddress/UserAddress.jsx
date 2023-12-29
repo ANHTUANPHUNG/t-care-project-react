@@ -37,7 +37,7 @@ export function UserAddress() {
         </form>
         <div className="mt-5" style={{ height: "50px" }}>
           <NavLink to="/user/service">
-          <ButtonForMe/>
+          <ButtonForMe childrenButton={'Next'}/>
           </NavLink>
         </div>
       </div>

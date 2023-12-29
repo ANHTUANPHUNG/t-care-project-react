@@ -127,7 +127,7 @@ export function UserNeedCare() {
 
       <div className="mt-2 mb-5 button-date-session">
         <NavLink to="/user/assistant-caption">
-          <ButtonForMe />
+          <ButtonForMe childrenButton={'Next'}/>
         </NavLink>
       </div>
       <div className="legal-notice-user">

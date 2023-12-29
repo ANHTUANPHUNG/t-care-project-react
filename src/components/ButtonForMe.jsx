@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import React from "react";
 
-export function ButtonForMe({value}) {
+export function ButtonForMe({value, childrenButton}) {
   return (
     <Button
       type="button"
@@ -14,6 +14,6 @@ export function ButtonForMe({value}) {
         border: "1px solid orangered",
         borderRadius: "20px",
       }}
-    >Next</Button>
+    >{childrenButton}</Button>
   );
 }

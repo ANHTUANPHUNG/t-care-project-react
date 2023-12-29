@@ -1,5 +1,5 @@
 import { ToastContainer } from 'react-toastify';
-import './App.css';
+// import './App.css';
 import { Home } from './components/home/Home';
 import { Route, Routes } from 'react-router-dom';
 import {  UserSignIn } from './components/userSignIn/UserSignIn';
@@ -11,6 +11,10 @@ import { UserPriceOneHour } from './components/userPriceOneHour/UserPriceOneHour
 import { UserNeedCare } from './components/userNeedCare/UserNeedCare';
 import { AssistantCaption } from './components/assistantCaption/AssistantCaption';
 import { RenderListAssistant } from './components/renderListAssistant/RenderListAssistant';
+import { FormUserLogIn } from './components/formLogInSignIn/FormUserLogIn';
+import { SignInSelect } from './components/signInSelect/SignInSelect';
+import { SignInUser } from './components/signInUser/SignInUser';
+import { IndexUser } from './components/indexUser/IndexUser';
 
 
 
@@ -19,7 +23,10 @@ function App() {
     <>
       <ToastContainer autoClose={3000} theme='colored' />
       <Routes>
-        <Route path='/' element={<Home/>}></Route>
+        <Route path='/' element={<IndexUser/>}></Route>
+        <Route path='/login' element={<FormUserLogIn/>}></Route>
+        <Route path='/sign-in' element={<SignInSelect/>}></Route>
+        <Route path='/sign-in/find-care' element={<SignInUser/>}></Route>
         <Route path='/user/signin' element={<UserSignIn/>}></Route>
         <Route path='/user/address' element={<UserAddress/>}></Route>
         <Route path='/user/service' element={<UserService/>}></Route>
