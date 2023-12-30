@@ -2,19 +2,20 @@ import { ToastContainer } from 'react-toastify';
 // import './App.css';
 import { Home } from './components/home/Home';
 import { Route, Routes } from 'react-router-dom';
-import {  UserSignIn } from './components/userSignIn/UserSignIn';
-import { UserAddress } from './components/userAddress/UserAddress';
-import { UserService } from './components/userService/UserService';
-import { UserJobType } from './components/userJobType/UserJobType';
-import { DateSession } from './components/datesession/DateSession';
-import { UserPriceOneHour } from './components/userPriceOneHour/UserPriceOneHour';
-import { UserNeedCare } from './components/userNeedCare/UserNeedCare';
-import { AssistantCaption } from './components/assistantCaption/AssistantCaption';
-import { RenderListAssistant } from './components/renderListAssistant/RenderListAssistant';
-import { FormUserLogIn } from './components/formLogInSignIn/FormUserLogIn';
-import { SignInSelect } from './components/signInSelect/SignInSelect';
-import { SignInUser } from './components/signInUser/SignInUser';
-import { IndexUser } from './components/indexUser/IndexUser';
+import { UserSignIn } from './components/home/wordFindCare/userSignIn/UserSignIn';
+import { UserAddress } from './components/home/wordFindCare/userAddress/UserAddress';
+import { UserService } from './components/home/wordFindCare/userService/UserService';
+import { UserJobType } from './components/home/wordFindCare/userJobType/UserJobType';
+import { DateSession } from './components/home/wordFindCare/datesession/DateSession';
+import { UserPriceOneHour } from './components/home/wordFindCare/userPriceOneHour/UserPriceOneHour';
+import { UserNeedCare } from './components/home/wordFindCare/userNeedCare/UserNeedCare';
+import { AssistantCaption } from './components/home/wordFindCare/assistantCaption/AssistantCaption';
+import { RenderListAssistant } from './components/home/wordFindCare/renderListAssistant/RenderListAssistant';
+import { ContainerViewUser } from './components/viewUser/containerViewUser/ContainerViewUser';
+import { SignInSelect } from './components/home/login-signin/signInSelect/SignInSelect';
+import { LogIn } from './components/home/login-signin/login/LogIn';
+import { SignInUser } from './components/home/login-signin/signInUser/SignInUser';
+
 
 
 
@@ -23,8 +24,8 @@ function App() {
     <>
       <ToastContainer autoClose={3000} theme='colored' />
       <Routes>
-        <Route path='/' element={<IndexUser/>}></Route>
-        <Route path='/login' element={<FormUserLogIn/>}></Route>
+        <Route path='/' element={<Home/>}></Route>
+        <Route path='/login' element={<LogIn/>}></Route>
         <Route path='/sign-in' element={<SignInSelect/>}></Route>
         <Route path='/sign-in/find-care' element={<SignInUser/>}></Route>
         <Route path='/user/signin' element={<UserSignIn/>}></Route>

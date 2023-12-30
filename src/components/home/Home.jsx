@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import "./Home.css";
 import { NavLink } from "react-router-dom";
 import { Button } from "@mui/material";
-import { CareHub } from "../carehub/CareHub";
-import About from "../about/About";
-import { Assistant } from "../assistant/Assistant";
-import { CheckFind } from "../checkFind/CheckFind";
+import About from "./about/About";
+import { Assistant } from "./assistant/Assistant";
+import { CheckFind } from "./checkFind/CheckFind";
 import LogoProject from "../logoProject/LogoProject";
+import { CareHub } from './../carehub/CareHub';
 export function Home() {
   const [checkFind, setCheckFind] = useState("true");
 
@@ -23,13 +23,13 @@ export function Home() {
         </div>
       </div>
       <div style={{ backgroundColor: "#FFF1EB" }}>
-        <div className="d-flex" style={{backgroundColor:'white', borderBottom:'red'}}>
+        <div className="d-flex" style={{ backgroundColor: "white", borderBottom: "red" }}>
           <CheckFind setCheckFind={setCheckFind} checkFind={checkFind} />
-          <div >
+          <div>
             <img
               src="https://res.cloudinary.com/dw4xpd646/image/upload/v1703748824/Cloudinary-React/gwsdfpleoznddaljvn9m.png"
               alt=""
-              style={{height:"400px"}}
+              style={{ height: "400px" }}
             />
           </div>
         </div>
