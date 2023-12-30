@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@mui/material";
 import './CheckFind.css'
 import { NavLink } from "react-router-dom";
-export function CheckFind({setCheckFind,checkFind}){
+export function CheckFind(){
+  const [checkFind, setCheckFind] = useState(true);
+
      return(
         <div className="bodyRender pt-5 " >
         <div className="contentRender ">
@@ -22,7 +24,7 @@ export function CheckFind({setCheckFind,checkFind}){
             >
               <div className="px-4">Find a job</div>
             </div>
-            <NavLink className="w-50 ms-2" to='/user/signin'>
+            <NavLink className="w-50 ms-2" to={`${checkFind ? '/user/signin' : '/assistant/sign-in'}`}>
               <Button className="buttonSearch" variant="contained">
                 Search
               </Button>

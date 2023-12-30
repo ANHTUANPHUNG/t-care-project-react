@@ -14,8 +14,8 @@ import { RenderListAssistant } from './components/home/wordFindCare/renderListAs
 import { SignInSelect } from './components/home/login-signin/signInSelect/SignInSelect';
 import { LogIn } from './components/home/login-signin/login/LogIn';
 import { SignInUser } from './components/home/login-signin/signInUser/SignInUser';
-import { Index } from './components/viewUser/index/Index';
 import { Profile } from './components/viewUser/profile/Profile';
+import { AssistantSignIn } from './components/home/wordFindJobs/assistantSignIn/AssistantSignIn';
 
 
 
@@ -25,10 +25,11 @@ function App() {
     <>
       <ToastContainer autoClose={3000} theme='colored' />
       <Routes>
-        <Route path='/' element={<Profile/>}></Route>
+        <Route path='/' element={<Home/>}></Route>
         <Route path='/login' element={<LogIn/>}></Route>
         <Route path='/sign-in' element={<SignInSelect/>}></Route>
         <Route path='/sign-in/find-care' element={<SignInUser/>}></Route>
+        <Route path='assistant/sign-in' element={<AssistantSignIn/>}></Route>
         <Route path='/user/signin' element={<UserSignIn/>}></Route>
         <Route path='/user/address' element={<UserAddress/>}></Route>
         <Route path='/user/service' element={<UserService/>}></Route>
@@ -38,6 +39,7 @@ function App() {
         <Route path='/user/needcare' element={<UserNeedCare/>}></Route>
         <Route path='/user/assistant-caption' element={<AssistantCaption/>}></Route>
         <Route path='/user/render-list-assistant' element={<RenderListAssistant/>}></Route>
+        <Route path='/user/profile' element={<Profile/>}></Route>
       </Routes>
     </>
   );

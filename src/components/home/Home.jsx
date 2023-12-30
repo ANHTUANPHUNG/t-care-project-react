@@ -8,7 +8,6 @@ import { CheckFind } from "./checkFind/CheckFind";
 import LogoProject from "../logoProject/LogoProject";
 import { CareHub } from './../carehub/CareHub';
 export function Home() {
-  const [checkFind, setCheckFind] = useState("true");
 
   return (
     <>
@@ -24,7 +23,7 @@ export function Home() {
       </div>
       <div style={{ backgroundColor: "#FFF1EB" }}>
         <div className="d-flex" style={{ backgroundColor: "white", borderBottom: "red" }}>
-          <CheckFind setCheckFind={setCheckFind} checkFind={checkFind} />
+          <CheckFind  />
           <div>
             <img
               src="https://res.cloudinary.com/dw4xpd646/image/upload/v1703748824/Cloudinary-React/gwsdfpleoznddaljvn9m.png"

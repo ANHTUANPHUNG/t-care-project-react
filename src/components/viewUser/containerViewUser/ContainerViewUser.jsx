@@ -87,7 +87,7 @@ export function ContainerViewUser() {
           role="presentation"
         >
           <div className="box-profile">a</div>
-          <NavLink className="profile">
+          <NavLink to={'user-index/profile'} className="profile">
             <h3> Profile </h3>
           </NavLink>
           <NavLink className="logout" onClick={() => setIsOpen(false)}>
