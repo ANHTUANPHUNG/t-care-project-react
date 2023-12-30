@@ -10,7 +10,6 @@ import { NavLink } from "react-router-dom";
 import { SwipeableDrawer } from "@mui/material";
 import Box from "@mui/material/Box";
 import { ButtonForMe } from "../../ButtonForMe";
-import { LegalNotice } from './../../carehub/LegalNotice';
 
 export function ContainerViewUser() {
   const [isOpen, setIsOpen] = useState(false);

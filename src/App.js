@@ -11,10 +11,11 @@ import { UserPriceOneHour } from './components/home/wordFindCare/userPriceOneHou
 import { UserNeedCare } from './components/home/wordFindCare/userNeedCare/UserNeedCare';
 import { AssistantCaption } from './components/home/wordFindCare/assistantCaption/AssistantCaption';
 import { RenderListAssistant } from './components/home/wordFindCare/renderListAssistant/RenderListAssistant';
-import { ContainerViewUser } from './components/viewUser/containerViewUser/ContainerViewUser';
 import { SignInSelect } from './components/home/login-signin/signInSelect/SignInSelect';
 import { LogIn } from './components/home/login-signin/login/LogIn';
 import { SignInUser } from './components/home/login-signin/signInUser/SignInUser';
+import { Index } from './components/viewUser/index/Index';
+import { Profile } from './components/viewUser/profile/Profile';
 
 
 
@@ -24,7 +25,7 @@ function App() {
     <>
       <ToastContainer autoClose={3000} theme='colored' />
       <Routes>
-        <Route path='/' element={<Home/>}></Route>
+        <Route path='/' element={<Profile/>}></Route>
         <Route path='/login' element={<LogIn/>}></Route>
         <Route path='/sign-in' element={<SignInSelect/>}></Route>
         <Route path='/sign-in/find-care' element={<SignInUser/>}></Route>
