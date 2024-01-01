@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./FormUserSignIn.css";
+import "./FormSignIn.css";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
@@ -7,7 +7,7 @@ import { Checkbox, FormControl, FormControlLabel, FormLabel } from "@mui/materia
 import { NavLink } from "react-router-dom";
 import { ButtonForMe } from "../../ButtonForMe";
 
-export function FormUserSignIn({url}) {
+export function FormSignIn({ url, marginContainer, marginHeader, marginContent, termAgreed }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -29,11 +29,14 @@ export function FormUserSignIn({url}) {
     setPasswordError("");
     console.log("Form submitted!");
   };
+
   return (
-    <div style={{ margin: "5% 27%" }}>
+    <div className="container-form-sign-in" style={{ margin: marginContainer || "0 27%" }}>
       <div>
-        <div style={{ margin: "3% 16%" }}>
-          <h3>Add a few details about yourself.</h3>
+        <div className="form-sign-in-header" style={{ margin: marginHeader || "3% 16%" }}>
+          <h3 className="form-sign-in-content">
+            {marginHeader || "Add a few details about yourself."}
+          </h3>
         </div>
         <form onSubmit={handleSubmit}>
           <Grid container spacing={2}>
@@ -95,6 +98,7 @@ export function FormUserSignIn({url}) {
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel
+                className="term-agreed"
                 control={
                   <Checkbox
                     checked={termsAgreed}
@@ -102,7 +106,10 @@ export function FormUserSignIn({url}) {
                     color="primary"
                   />
                 }
-                label="By clicking 'Join now', you agree to our Terms of Use and Privacy Policy."
+                label={
+                  termAgreed ||
+                  "By clicking 'Join now', you agree to our Terms of Use and Privacy Policy."
+                }
               />
             </Grid>
             <Grid item xs={12} className="d-flex justify-content-center">

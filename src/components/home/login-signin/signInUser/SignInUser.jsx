@@ -2,7 +2,7 @@ import React from "react";
 import "./SignInUser.css";
 import { LegalNotice } from "../../../carehub/LegalNotice";
 import LogoProject from "../../../logoProject/LogoProject";
-import { FormUserSignIn } from "../../formUserSignIn/FormUserSignIn";
+import { FormSignIn } from "../../formSignIn/FormSignIn";
 export function SignInUser() {
   return (
     <>
@@ -14,7 +14,9 @@ export function SignInUser() {
           <div className="col-12 step-sign-in"></div>
         </div>
       </div>
-      <FormUserSignIn url={"/sign-in/find-care"} />
+      <div style={{ margin: "5% 0" }}>
+        <FormSignIn url={"/sign-in/find-care"} />
+      </div>
 
       <div className="legal-notice-user">
         <LegalNotice />

@@ -24,11 +24,11 @@ export function Home() {
       <div style={{ backgroundColor: "#FFF1EB" }}>
         <div className="d-flex" style={{ backgroundColor: "white", borderBottom: "red" }}>
           <CheckFind  />
-          <div>
+          <div 
+          style={{width:'45%'}}>
             <img
               src="https://res.cloudinary.com/dw4xpd646/image/upload/v1703748824/Cloudinary-React/gwsdfpleoznddaljvn9m.png"
-              alt=""
-              style={{ height: "400px" }}
+              style={{ width:"100%" }}
             />
           </div>
         </div>

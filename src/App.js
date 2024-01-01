@@ -1,5 +1,4 @@
 import { ToastContainer } from 'react-toastify';
-// import './App.css';
 import { Home } from './components/home/Home';
 import { Route, Routes } from 'react-router-dom';
 import { UserSignIn } from './components/home/wordFindCare/userSignIn/UserSignIn';
@@ -16,6 +15,10 @@ import { LogIn } from './components/home/login-signin/login/LogIn';
 import { SignInUser } from './components/home/login-signin/signInUser/SignInUser';
 import { Profile } from './components/viewUser/profile/Profile';
 import { AssistantSignIn } from './components/home/wordFindJobs/assistantSignIn/AssistantSignIn';
+import { Address } from './components/home/wordFindJobs/address/Address';
+import { Index } from './components/viewUser/index/Index';
+import { DescriptionProcess } from './components/home/wordFindJobs/descriptionProcess/DescriptionProcess';
+import { JobType } from './components/home/wordFindJobs/jobType/JobType';
 
 
 
@@ -29,7 +32,10 @@ function App() {
         <Route path='/login' element={<LogIn/>}></Route>
         <Route path='/sign-in' element={<SignInSelect/>}></Route>
         <Route path='/sign-in/find-care' element={<SignInUser/>}></Route>
-        <Route path='assistant/sign-in' element={<AssistantSignIn/>}></Route>
+        <Route path='/assistant/sign-in' element={<AssistantSignIn/>}></Route>
+        <Route path='/assistant/address' element={<Address/>}></Route>
+        <Route path='/assistant/process' element={<DescriptionProcess/>}></Route>
+        <Route path='/assistant/job-type' element={<JobType/>}></Route>
         <Route path='/user/signin' element={<UserSignIn/>}></Route>
         <Route path='/user/address' element={<UserAddress/>}></Route>
         <Route path='/user/service' element={<UserService/>}></Route>
@@ -40,6 +46,8 @@ function App() {
         <Route path='/user/assistant-caption' element={<AssistantCaption/>}></Route>
         <Route path='/user/render-list-assistant' element={<RenderListAssistant/>}></Route>
         <Route path='/user/profile' element={<Profile/>}></Route>
+        <Route path='/user/index' element={<Index/>}></Route>
+    
       </Routes>
     </>
   );

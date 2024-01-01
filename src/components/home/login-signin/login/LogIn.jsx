@@ -42,7 +42,7 @@ export function LogIn() {
             </div>
 
             <Grid item xs={12} className="d-flex justify-content-center ">
-              <NavLink to="/user/address" style={{ width: "100%" }}>
+              <NavLink to="/user/index" style={{ width: "100%" }}>
                 <ButtonForMe value={100} childrenButton={"Log In"} />
               </NavLink>
             </Grid>
