@@ -31,7 +31,7 @@ export function SideBarFindJob({ value, check, activeIds }) {
         height: "100%",
       }}
     >
-      <div className="col-4" style={{ padding: "20px 15px 0 30px" }}>
+      <div className="col-3" style={{ padding: "20px 15px 0 30px" }}>
         <h6>MY PROGRESS</h6>
         <div
           style={{

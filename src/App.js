@@ -1,4 +1,7 @@
+
 import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { Home } from './components/home/Home';
 import { Route, Routes } from 'react-router-dom';
 import { UserSignIn } from './components/home/wordFindCare/userSignIn/UserSignIn';
@@ -19,17 +22,17 @@ import { Address } from './components/home/wordFindJobs/address/Address';
 import { Index } from './components/viewUser/index/Index';
 import { DescriptionProcess } from './components/home/wordFindJobs/descriptionProcess/DescriptionProcess';
 import { JobType } from './components/home/wordFindJobs/jobType/JobType';
-import SimpleMap from './components/GoogleMap';
 
 
 
 
 function App() {
+  
   return (
     <>
       <ToastContainer autoClose={3000} theme='colored' />
       <Routes>
-        <Route path='/' element={<SimpleMap/>}></Route>
+        <Route path='/' element={<Home/>}></Route>
         <Route path='/login' element={<LogIn/>}></Route>
         <Route path='/sign-in' element={<SignInSelect/>}></Route>
         <Route path='/sign-in/find-care' element={<SignInUser/>}></Route>

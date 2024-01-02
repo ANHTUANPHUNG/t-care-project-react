@@ -9,7 +9,7 @@ import { SideBarFindJob } from "../sideBarFindJob/SideBarFindJob";
 
 export const DescriptionProcess = () => {
   const greatStart = (
-    <div style={{ paddingTop: "20px" }} className="col-8">
+    <div style={{ paddingTop: "20px" }} className="col-9">
       <h3>Great Start! Here's what comes next</h3>
       <div>
         <div className="d-flex" style={{ margin: "30px 0 10px 0" }}>
