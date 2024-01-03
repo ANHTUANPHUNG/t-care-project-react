@@ -24,6 +24,8 @@ import { DescriptionProcess } from './components/home/wordFindJobs/descriptionPr
 import { Schedule } from './components/home/wordFindJobs/schedule/Schedule';
 import { Availability } from './components/home/wordFindJobs/availability/Availability';
 import { Experience } from './components/home/wordFindJobs/experience/Experience';
+import { Bio } from './components/home/wordFindJobs/bio/Bio';
+import { Photo } from './components/home/wordFindJobs/photo/Photo';
 
 
 
@@ -44,6 +46,8 @@ function App() {
         <Route path='/assistant/schedule' element={<Schedule />}></Route>
         <Route path='/assistant/availability' element={<Availability/>}></Route>
         <Route path='/assistant/experience' element={<Experience/>}></Route>
+        <Route path='/assistant/bio' element={<Bio/>}></Route>
+        <Route path='/assistant/photo' element={<Photo/>}></Route>
         <Route path='/user/signin' element={<UserSignIn/>}></Route>
         <Route path='/user/address' element={<UserAddress/>}></Route>
         <Route path='/user/service' element={<UserService/>}></Route>

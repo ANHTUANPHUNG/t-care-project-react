@@ -6,14 +6,15 @@ import ListItemText from "@mui/material/ListItemText";
 import Collapse from "@mui/material/Collapse";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
-export function SideBarFindJob({ value, check, activeIds }) {
+export function SideBarFindJob({col, value, check, activeIds }) {
   const listBuildProfile = [
     { id: 1, name: "Schedule" },
     { id: 2, name: "Availability" },
     { id: 3, name: "Experience" },
     { id: 4, name: "Bio" },
-    { id: 5, name: "Apply jobs" },
-    { id: 6, name: "BioPhoto" },
+    { id: 5, name: "Photo" },
+
+    { id: 6, name: "Apply jobs" },
   ];
   const [open, setOpen] = useState(check);
 
@@ -42,7 +43,7 @@ export function SideBarFindJob({ value, check, activeIds }) {
           }}
           className="row"
         >
-          <div className="col-2" style={{ backgroundColor: "#33465a", borderRadius: "25px" }}></div>
+          <div className={col}  style={{ backgroundColor: "#33465a", borderRadius: "25px" }}></div>
         </div>
         <div>
           <List

@@ -108,6 +108,6 @@ export function Schedule() {
   );
 
   return (
-    <NavBarFindJob children={<SideBarFindJob value={jobType} check={true} activeIds={[1]} />} />
+    <NavBarFindJob children={<SideBarFindJob col={"col-2"} value={jobType} check={true} activeIds={[1]} />} />
   );
 }

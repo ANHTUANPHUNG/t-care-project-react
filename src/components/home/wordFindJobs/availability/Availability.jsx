@@ -29,6 +29,6 @@ export function Availability() {
   );
 
   return (
-    <NavBarFindJob children={<SideBarFindJob value={needCare} check={true} activeIds={[1, 2]} />} />
+    <NavBarFindJob children={<SideBarFindJob col={"col-4"} value={needCare} check={true} activeIds={[1, 2]} />} />
   );
 }
