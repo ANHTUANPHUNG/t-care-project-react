@@ -86,7 +86,7 @@ export function Address() {
       </div>
       <div style={{ textAlign: "end", marginBottom: "40px", marginRight: "80px" }}>
         <NavLink to={"/assistant/process"}>
-          <ButtonForMe childrenButton={"Next"} />
+          <ButtonForMe childrenButton={"Next"} colorButton={"#213f5f"} />
         </NavLink>
       </div>
     </div>

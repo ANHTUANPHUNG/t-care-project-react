@@ -64,10 +64,9 @@ export const DescriptionProcess = () => {
         </div>
       </div>
       <div style={{ justifyContent: "end", display: "flex", width: "70%", margin: "40px 0" }}>
-        <NavLink style={{ textDecoration: "none" }} to={"/assistant/job-type"}>
+        <NavLink style={{ textDecoration: "none" }} to={"/assistant/schedule"}>
           <div
             style={{
-              border: "1px solid",
               borderRadius: "20px",
               padding: "10px 20px",
               backgroundColor: "#213f5f",

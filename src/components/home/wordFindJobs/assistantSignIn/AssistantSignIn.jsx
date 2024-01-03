@@ -14,6 +14,7 @@ const formSignIn = (
         marginContent={'0 0'}
         marginContainer={'0 0'}
         marginHeader={'Try T-Care.com today!'}
+        color={"#213f5f"}
       />
     </div>
     <div style={{margin :'200px 30px',width:'40%'}}>

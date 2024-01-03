@@ -21,7 +21,9 @@ import { AssistantSignIn } from './components/home/wordFindJobs/assistantSignIn/
 import { Address } from './components/home/wordFindJobs/address/Address';
 import { Index } from './components/viewUser/index/Index';
 import { DescriptionProcess } from './components/home/wordFindJobs/descriptionProcess/DescriptionProcess';
-import { JobType } from './components/home/wordFindJobs/jobType/JobType';
+import { Schedule } from './components/home/wordFindJobs/schedule/Schedule';
+import { Availability } from './components/home/wordFindJobs/availability/Availability';
+import { Experience } from './components/home/wordFindJobs/experience/Experience';
 
 
 
@@ -39,7 +41,9 @@ function App() {
         <Route path='/assistant/sign-in' element={<AssistantSignIn/>}></Route>
         <Route path='/assistant/address' element={<Address/>}></Route>
         <Route path='/assistant/process' element={<DescriptionProcess/>}></Route>
-        <Route path='/assistant/job-type' element={<JobType/>}></Route>
+        <Route path='/assistant/schedule' element={<Schedule />}></Route>
+        <Route path='/assistant/availability' element={<Availability/>}></Route>
+        <Route path='/assistant/experience' element={<Experience/>}></Route>
         <Route path='/user/signin' element={<UserSignIn/>}></Route>
         <Route path='/user/address' element={<UserAddress/>}></Route>
         <Route path='/user/service' element={<UserService/>}></Route>

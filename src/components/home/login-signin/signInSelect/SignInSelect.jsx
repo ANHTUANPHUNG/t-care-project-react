@@ -42,7 +42,7 @@ export function SignInSelect({}) {
             />
             <h5>I want a care job</h5>
             <span>Create a profile and search for jobs.</span>
-            <NavLink className="nav-link-select">
+            <NavLink to={"/assistant/sign-in"} className="nav-link-select">
               <div className="find-jobs-title">
                 <span>Find Jobs</span>
               </div>

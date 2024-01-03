@@ -1,0 +1,68 @@
+.container-job-type{
+    padding: 20px 0
+}
+.job-type-title{
+    padding: 15px 0
+}
+.job-type-title-select{
+    font-size: 13px
+}
+.recurring-job{
+    display: flex; margin: 20px 0
+}
+.recurring-job-title{
+    cursor: pointer
+}
+.recurring-job-title-span{
+    font-size: 13px
+}
+.recurring-job-check{
+    margin-left: 100px
+}
+.recurring-job-hour-per{
+    display: flex
+}
+.recurring-job-hour-per-title{
+    margin-top: 15px
+}
+.recurring-job-hour-per-select{
+    display: flex
+}
+.recurring-job-hour-per-select-remove{
+    margin: 15px
+}
+.recurring-job-hour-per-price{
+    padding: 15px 0
+}
+.recurring-job-hour-per-price-select{
+    margin-top: 40px; margin-left: 40px; width: 50%
+}
+.separation{
+    
+    margin-right: 29%;
+    margin-top: 20px;
+    height: 5px;
+    border-radius: 15px;
+    background-color: #e6e8ea;
+}
+.one-time-job-container{
+    display: flex; margin: 40px 0
+}
+.one-time-job-header{
+    cursor: pointer
+}
+.one-time-job-header-title{
+    font-size: 13px
+}
+.one-time-job-header-select{
+    margin-left: 100px
+}
+.one-time-job-hour{
+    display: flex
+}
+.one-time-job-hour-title{
+    margin-top: 15px 
+}
+.one-time-job-hour-select{
+    display: flex
+}

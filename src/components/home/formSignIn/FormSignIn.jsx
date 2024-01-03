@@ -7,7 +7,7 @@ import { Checkbox, FormControl, FormControlLabel, FormLabel } from "@mui/materia
 import { NavLink } from "react-router-dom";
 import { ButtonForMe } from "../../ButtonForMe";
 
-export function FormSignIn({ url, marginContainer, marginHeader, marginContent, termAgreed }) {
+export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, color }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -114,7 +114,7 @@ export function FormSignIn({ url, marginContainer, marginHeader, marginContent, 
             </Grid>
             <Grid item xs={12} className="d-flex justify-content-center">
               <NavLink to={url} style={{ width: "50%" }}>
-                <ButtonForMe value={100} childrenButton={"Join Now"} />
+                <ButtonForMe value={100} childrenButton={"Join Now"} colorButton={color} />
               </NavLink>
             </Grid>
           </Grid>
