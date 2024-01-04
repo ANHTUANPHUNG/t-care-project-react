@@ -10,6 +10,7 @@ import { CareHub } from './../carehub/CareHub';
 export function Home() {
 
   return (
+
     <>
       <div className="container-head">
         <LogoProject />
