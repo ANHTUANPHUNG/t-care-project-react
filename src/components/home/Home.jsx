@@ -13,10 +13,6 @@ export function Home() {
   useEffect(() => {
 		loadTopThreeRates();
 	}, []);
-
-  
-
-
 	const loadTopThreeRates = async () => {
 		const employeeList = await axios.get(
 			"http://localhost:8080/api/rates/top3",
