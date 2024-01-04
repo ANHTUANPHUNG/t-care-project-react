@@ -6,7 +6,7 @@ export function MapToMe({ mapToMe }) {
     <>
       {mapToMe.map((e) => (
         <div key={e.id} style={{ display: "flex" }}>
-          <FormControlLabel control={<Checkbox />} label={e.name} />
+          <FormControlLabel control={<Checkbox />} label={e.name} />a
         </div>
       ))}
     </>

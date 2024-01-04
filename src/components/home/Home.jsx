@@ -6,27 +6,17 @@ import About from "./about/About";
 import { Assistant } from "./assistant/Assistant";
 import { CheckFind } from "./checkFind/CheckFind";
 import LogoProject from "../logoProject/LogoProject";
-import { CareHub } from './../carehub/CareHub';
+import { CareHub } from "./../carehub/CareHub";
 import axios from "axios";
 export function Home() {
-
+  const [rateTopThree, setRateTopThree] = useState();
   useEffect(() => {
-		loadTopThreeRates();
-	}, []);
-
-  
-
-
-	const loadTopThreeRates = async () => {
-		const employeeList = await axios.get(
-			"http://localhost:8080/api/rates/top3",
-		);
-        console.log(
-          employeeList.data
-        );
-			
-
-    }
+    loadTopThreeRates();
+  }, []);
+  const loadTopThreeRates = async () => {
+    const employeeList = await axios.get("http://localhost:8080/api/rates/top3");
+    setRateTopThree(employeeList.data);
+  };
   return (
 
     <>
@@ -42,12 +32,11 @@ export function Home() {
       </div>
       <div style={{ backgroundColor: "#FFF1EB" }}>
         <div className="d-flex" style={{ backgroundColor: "white", borderBottom: "red" }}>
-          <CheckFind  />
-          <div 
-          style={{width:'45%'}}>
+          <CheckFind />
+          <div style={{ width: "45%" }}>
             <img
               src="https://res.cloudinary.com/dw4xpd646/image/upload/v1703748824/Cloudinary-React/gwsdfpleoznddaljvn9m.png"
-              style={{ width:"100%" }}
+              style={{ width: "100%" }}
             />
           </div>
         </div>
@@ -67,15 +56,12 @@ export function Home() {
 
         <div className="d-flex justify-content-center ">
           <div className="row profile-assistant mb-5">
-            <div className="col-4">
-              <Assistant />
-            </div>
-            <div className="col-4 ">
-              <Assistant />
-            </div>
-            <div className="col-4 ">
-              <Assistant />
-            </div>
+            {rateTopThree?.map((e) => (
+              <div className="col-4" key={e?.employeeId}>
+                <Assistant employee={e} />
+              </div>
+            ))}
+            
           </div>
         </div>
       </div>
