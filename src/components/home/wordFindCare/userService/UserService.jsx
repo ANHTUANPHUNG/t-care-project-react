@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import LogoProject from "../../../logoProject/LogoProject";
 import { LegalNotice } from "../../../carehub/LegalNotice";
 import { NavLink } from "react-router-dom";
@@ -6,6 +7,15 @@ import { ButtonForMe } from "../../../ButtonForMe";
 import { CheckBoxService } from "../userService/CheckboxService";
 
 export function UserService() {
+  const [listServiceGenerals, setListServiceGenerals] = useState();
+
+  useEffect(() => {
+    showListServiceGenerals();
+  }, []);
+  const showListServiceGenerals = async () => {
+    const serviceGenerals = await axios.get("http://localhost:8080/api/serviceGenerals");
+    setListServiceGenerals(serviceGenerals.data);
+  };
   return (
     <>
       <div>
@@ -20,10 +30,12 @@ export function UserService() {
       <div className="d-flex my-5 " style={{ justifyContent: "center" }}>
         <div>
           <h3 className="mb-4">What kind of help are you looking for?</h3>
-          <CheckBoxService />
-          <CheckBoxService />
-          <CheckBoxService />
-          <CheckBoxService />
+          {
+            listServiceGenerals?.map(e=>(
+              <CheckBoxService key={e?.id} value={e} />
+            ))
+          }
+          
         </div>
       </div>
       <div className="my-5" style={{ height: "50px", textAlign: "center" }}>
