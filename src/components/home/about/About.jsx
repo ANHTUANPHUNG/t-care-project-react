@@ -13,7 +13,7 @@ function About() {
           height="140"
           src="https://www.care.com/about/wp-content/uploads/sites/4/2021/12/Senior-Couple-1.png.webp"
           alt=""
-          class="wp-image-1992"
+          className="wp-image-1992"
           srcSet="https://www.care.com/about/wp-content/uploads/sites/4/2021/12/Senior-Couple-1.png.webp 424w, https://www.care.com/about/wp-content/uploads/sites/4/2021/12/Senior-Couple-1-300x267.png.webp 300w"
           sizes="(max-width: 100px) 100vw, 424px"
         />
