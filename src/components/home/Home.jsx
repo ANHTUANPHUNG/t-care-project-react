@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Home.css";
 import { NavLink } from "react-router-dom";
 import { Button } from "@mui/material";
@@ -7,8 +7,26 @@ import { Assistant } from "./assistant/Assistant";
 import { CheckFind } from "./checkFind/CheckFind";
 import LogoProject from "../logoProject/LogoProject";
 import { CareHub } from './../carehub/CareHub';
+import axios from "axios";
 export function Home() {
 
+  useEffect(() => {
+		loadTopThreeRates();
+	}, []);
+
+  
+
+
+	const loadTopThreeRates = async () => {
+		const employeeList = await axios.get(
+			"http://localhost:8080/api/rates/top3",
+		);
+        console.log(
+          employeeList.data
+        );
+			
+
+    }
   return (
     <>
       <div className="container-head">
