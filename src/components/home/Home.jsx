@@ -18,6 +18,7 @@ export function Home() {
     setRateTopThree(employeeList.data);
   };
   return (
+
     <>
       <div className="container-head">
         <LogoProject />
