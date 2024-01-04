@@ -2,7 +2,7 @@ import React from "react";
 import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
 import PersonPinCircleIcon from '@mui/icons-material/PersonPinCircle';
 
- const REACT_APP_GOOGLE_MAPS_KEY = "AIzaSyCt9olIIrAV34JqidXlgRkLC9hLjOZK2hA"
+ const REACT_APP_GOOGLE_MAPS_KEY = "AIzaSyADjq6OpnNMXE-b2LKvk4CrgoHh6s9JJUM"
  
  const MapComponent = ({ selectedLocation }) => {
    const { isLoaded, loadError } = useLoadScript({
