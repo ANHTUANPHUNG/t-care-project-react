@@ -73,22 +73,22 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
                 <FormLabel component="legend">Gender</FormLabel>
                 <div className="d-flex">
                   <Button
-                    onClick={() => handleGenderClick("male")}
-                    variant={gender === "male" ? "contained" : "outlined"}
+                    onClick={() => handleGenderClick("MALE")}
+                    variant={gender === "MALE" ? "contained" : "outlined"}
                     className="mx-1"
                   >
                     Nam
                   </Button>
                   <Button
-                    onClick={() => handleGenderClick("female")}
-                    variant={gender === "female" ? "contained" : "outlined"}
+                    onClick={() => handleGenderClick("FEMALE")}
+                    variant={gender === "FEMALE" ? "contained" : "outlined"}
                     className="mx-1"
                   >
                     Nữ
                   </Button>
                   <Button
-                    onClick={() => handleGenderClick("other")}
-                    variant={gender === "other" ? "contained" : "outlined"}
+                    onClick={() => handleGenderClick("OTHER")}
+                    variant={gender === "OTHER" ? "contained" : "outlined"}
                     className="mx-1"
                   >
                     Khác
