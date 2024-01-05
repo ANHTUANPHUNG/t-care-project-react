@@ -9,7 +9,6 @@ const SearchLocationInput = ({ setSelectedLocation, setPlace,title }) => {
 
   const inputRef = useRef();
   const [query, setQuery] = useState("");
-  console.log(query);
   const handleScriptLoad = (updateQuery) => {
     autoCompleteRef.current = new window.google.maps.places.Autocomplete(inputRef.current, {
       componentRestrictions: { country: "VN" },

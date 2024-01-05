@@ -24,7 +24,6 @@ export function Address() {
     longitude: selectedLocation.lng,
     latitude: selectedLocation.lat
 });
-console.log(selectedLocation);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -66,9 +65,8 @@ console.log(selectedLocation);
       longitude: selectedLocation.lng,
       latitude: selectedLocation.lat,
     };
-    alert("hi")
     axios
-      .post(`http://localhost:8080/api/employees/${id}`, postData)
+      .put(`http://localhost:8080/api/employees/location/${id}`, postData)
       .then((response) => {
         navigate(`/assistant/process/${id}`)
         console.log("Post thành công:", response.data);
@@ -117,7 +115,7 @@ console.log(selectedLocation);
       </div>
       <div style={{ textAlign: "end", marginBottom: "40px", marginRight: "80px" }}>
         {/* <NavLink to={"/assistant/process"}> */}
-          <ButtonForMe childrenButton={"Next"} colorButton={"#213f5f"} onClick={handleButtonClick} />
+          <ButtonForMe childrenButton={"Next"} colorButton={"#213f5f"} onclick={handleButtonClick} />
         {/* </NavLink> */}
       </div>
     </div>
