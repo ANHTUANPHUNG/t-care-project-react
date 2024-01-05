@@ -24,7 +24,7 @@ export function LogIn() {
           <div className="col-12 step"></div>
         </div>
       </div>
-      <div className="form-user">
+      <div className="form-login">
         <CheckLogInSignIn value={"login"} />
 
         <form onSubmit={handleSubmit}>

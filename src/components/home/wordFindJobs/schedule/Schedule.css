@@ -23,7 +23,7 @@
     display: flex
 }
 .recurring-job-hour-per-title{
-    margin-top: 15px
+    margin-top: 15px ; margin-right: 10px
 }
 .recurring-job-hour-per-select{
     display: flex
@@ -61,7 +61,7 @@
     display: flex
 }
 .one-time-job-hour-title{
-    margin-top: 15px 
+    margin-top: 15px ; margin-right: 10px
 }
 .one-time-job-hour-select{
     display: flex
