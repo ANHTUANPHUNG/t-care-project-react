@@ -2,8 +2,8 @@
     background-color: #ed8c2b;
      height: 3px
 }
-.form-user{
-    margin: 64px 500px
+.form-login{
+    margin: 64px 550px
 }
 
 .line {
@@ -40,9 +40,7 @@
   }
   .login-google-content{
     width: 70%;
-     margin-top: 7px;
-     margin-left: 55px
-  }
-  .login-google-content{
+    margin: 10px 0 0 75px;
     color: white  
-}
+  }
+ 

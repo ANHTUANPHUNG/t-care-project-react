@@ -3,11 +3,12 @@ import "./Schedule.css";
 import { NavBarFindJob } from "../navBarFindJob/NavBarFindJob";
 import { SideBarFindJob } from "../sideBarFindJob/SideBarFindJob";
 import Switch from "@mui/material/Switch";
-import BasicSelect from "./SelectOption";
+
 import RemoveIcon from "@mui/icons-material/Remove";
 import { Slider } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import { ButtonForMe } from "../../../ButtonForMe";
+import SelectOption from './SelectOption';
 
 export function Schedule() {
   const [checkRecurringJobs, setCheckRecurringJobs] = useState(false);
@@ -48,11 +49,11 @@ export function Schedule() {
           <div className="recurring-job-hour-per">
             <span className="recurring-job-hour-per-title">Hours per week</span>
             <div className="recurring-job-hour-per-select">
-              <BasicSelect startIndex={1} endIndex={75} nameSelect={"Hour"} />
+              <SelectOption startIndex={1} endIndex={75} nameSelect={"Hour"} />
               <div className="recurring-job-hour-per-select-remove">
                 <RemoveIcon />
               </div>
-              <BasicSelect startIndex={5} endIndex={80} nameSelect={"Hour"} />
+              <SelectOption startIndex={5} endIndex={80} nameSelect={"Hour"} />
             </div>
           </div>
           <h6 className="recurring-job-hour-per-price">Mức lương theo giờ ưa thích của tôi</h6>
@@ -89,7 +90,7 @@ export function Schedule() {
           <div className="one-time-job-hour">
             <span className="one-time-job-hour-title">Số giờ tối thiểu cho mỗi công việc</span>
             <div className="one-time-job-hour-select">
-              <BasicSelect startIndex={1} endIndex={8} nameSelect={"Hour"} />
+              <SelectOption startIndex={1} endIndex={8} nameSelect={"Hour"} />
             </div>
           </div>
         </>

@@ -4,6 +4,7 @@ import { FormSignIn } from "../../formSignIn/FormSignIn";
 import { NavBarFindJob } from "../navBarFindJob/NavBarFindJob";
 
 const formSignIn = (
+  
   <div className="" style={{ display: "flex", margin:'5% 12% 0 12%' }}>
     <div style={{ width: "60%", padding: '5%', backgroundColor:'white' }}>
       <FormSignIn
