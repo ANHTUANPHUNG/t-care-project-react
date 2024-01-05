@@ -10,13 +10,13 @@ import { CareHub } from "./../carehub/CareHub";
 import axios from "axios";
 export function Home() {
   const [rateTopThree, setRateTopThree] = useState();
-  useEffect(() => {
-    loadTopThreeRates();
-  }, []);
-  const loadTopThreeRates = async () => {
-    const employeeList = await axios.get("http://localhost:8080/api/rates/top3");
-    setRateTopThree(employeeList.data);
-  };
+  // useEffect(() => {
+  //   loadTopThreeRates();
+  // }, []);
+  // const loadTopThreeRates = async () => {
+  //   const employeeList = await axios.get("http://localhost:8080/api/rates/top3");
+  //   setRateTopThree(employeeList.data);
+  // };
   return (
 
     <>

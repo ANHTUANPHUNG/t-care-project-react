@@ -43,7 +43,7 @@ export function SideBarFindJob({col, value, check, activeIds }) {
           }}
           className="row"
         >
-          <div className={col}  style={{ backgroundColor: "#33465a", borderRadius: "25px" }}></div>
+          <div className={col || "col-1"}  style={{ backgroundColor: "#33465a", borderRadius: "25px" }}></div>
         </div>
         <div>
           <List
