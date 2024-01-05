@@ -42,10 +42,10 @@ function App() {
         <Route path='/sign-in' element={<SignInSelect/>}></Route>
         <Route path='/sign-in/find-care' element={<SignInUser/>}></Route>
         <Route path='/assistant/sign-in' element={<AssistantSignIn/>}></Route>
-        <Route path='/assistant/address' element={<Address/>}></Route>
-        <Route path='/assistant/process' element={<DescriptionProcess/>}></Route>
-        <Route path='/assistant/schedule' element={<Schedule />}></Route>
-        <Route path='/assistant/availability' element={<Availability/>}></Route>
+        <Route path='/assistant/address/:id' element={<Address/>}></Route>
+        <Route path='/assistant/process/:id' element={<DescriptionProcess/>}></Route>
+        <Route path='/assistant/schedule/:id' element={<Schedule />}></Route>
+        <Route path='/assistant/availability/:id' element={<Availability/>}></Route>
         <Route path='/assistant/experience' element={<Experience/>}></Route>
         <Route path='/assistant/bio' element={<Bio/>}></Route>
         <Route path='/assistant/photo' element={<Photo/>}></Route>

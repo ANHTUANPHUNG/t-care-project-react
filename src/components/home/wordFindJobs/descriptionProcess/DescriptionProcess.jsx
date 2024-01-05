@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import "./DescriptionProcess.css";
 import { NavBarFindJob } from "../navBarFindJob/NavBarFindJob";
 import { Avatar } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 
 import CheckIcon from "@mui/icons-material/Check";
 import { SideBarFindJob } from "../sideBarFindJob/SideBarFindJob";
 
 export const DescriptionProcess = () => {
+  
+  const { id } = useParams();
   const greatStart = (
     <div style={{ paddingTop: "20px" }} className="col-9">
       <h3>Great Start! Here's what comes next</h3>
@@ -64,7 +66,7 @@ export const DescriptionProcess = () => {
         </div>
       </div>
       <div style={{ justifyContent: "end", display: "flex", width: "70%", margin: "40px 0" }}>
-        <NavLink style={{ textDecoration: "none" }} to={"/assistant/schedule"}>
+        <NavLink style={{ textDecoration: "none" }} to={`/assistant/schedule/${id}`}>
           <div
             style={{
               borderRadius: "20px",

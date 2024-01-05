@@ -14,31 +14,31 @@ export function Photo() {
 
   const handleFileChange = async(e) => {
     const selectedFile = e.target.files[0];
-    if (selectedFile) {
-      console.log(selectedFile);
+  //   if (selectedFile) {
+  //     console.log(selectedFile);
 
-      const formData = new FormData();
-      formData.append("avatar", selectedFile);
-      formData.append("fileType", "image");
-      try {
-          const response = await fetch("http://localhost:8080/api/photos", {
-              method: "POST",
-              body: formData,
-          });
-          if (response.ok) {
-              const result = await response.json();
-              if (result) {
-                  console.log(result);
-              } else {
-                  console.error('Image ID not found in the response.');
-              }
-          } else {
-              console.error('Failed to upload image:', response.statusText);
-          }
-      } catch (error) {
-          console.error('An error occurred:', error);
-      }
-  }
+  //     const formData = new FormData();
+  //     formData.append("avatar", selectedFile);
+  //     formData.append("fileType", "image");
+  //     try {
+  //         const response = await fetch("http://localhost:8080/api/photos", {
+  //             method: "POST",
+  //             body: formData,
+  //         });
+  //         if (response.ok) {
+  //             const result = await response.json();
+  //             if (result) {
+  //                 console.log(result);
+  //             } else {
+  //                 console.error('Image ID not found in the response.');
+  //             }
+  //         } else {
+  //             console.error('Failed to upload image:', response.statusText);
+  //         }
+  //     } catch (error) {
+  //         console.error('An error occurred:', error);
+  //     }
+  // }
   };
   const photo = (
     <div className="col-9 " style={{ paddingTop: "20px" }}>

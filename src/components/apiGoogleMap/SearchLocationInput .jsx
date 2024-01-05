@@ -1,6 +1,9 @@
 import { useRef, useEffect, useState } from "react";
 import AddLocationIcon from "@mui/icons-material/AddLocation";
-const SearchLocationInput = ({ setSelectedLocation, title }) => {
+
+const SearchLocationInput = ({ setSelectedLocation, setPlace,title }) => {
+
+
   
   const autoCompleteRef = useRef();
 
@@ -47,7 +50,7 @@ const SearchLocationInput = ({ setSelectedLocation, title }) => {
           style={{  cursor: "pointer" }}
           ref={inputRef}
           className="form-control"
-          onChange={(event) => setQuery(event.target.value)}
+          onChange={(event) => (setQuery(event.target.value) ,setPlace(event.target.value))}
           placeholder="Search Places ..."
           value={query}
           id="inputSearchAddress"
