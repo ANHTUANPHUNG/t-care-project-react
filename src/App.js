@@ -30,6 +30,7 @@ import { Photo } from './components/home/wordFindJobs/photo/Photo';
 
 
 
+
 function App() {
   
   return (

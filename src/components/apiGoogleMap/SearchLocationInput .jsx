@@ -1,6 +1,8 @@
 import { useRef, useEffect, useState } from "react";
 import AddLocationIcon from "@mui/icons-material/AddLocation";
-const SearchLocationInput = ({ setSelectedLocation, setPlace }) => {
+
+const SearchLocationInput = ({ setSelectedLocation, setPlace,title }) => {
+
 
   
   const autoCompleteRef = useRef();
@@ -41,7 +43,7 @@ const SearchLocationInput = ({ setSelectedLocation, setPlace }) => {
   return (
     <div className="search-location-input">
       <label htmlFor="inputSearchAddress" style={{ cursor: "pointer" }}>
-        <h3>Where do you live?</h3>
+        <h3>{title || "Where do you live?"} </h3>
       </label>
       <div className="d-flex " style={{margin:" 15px 20% 0 20%"}}>
        
