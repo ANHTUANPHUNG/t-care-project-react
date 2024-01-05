@@ -1,11 +1,13 @@
 import { useRef, useEffect, useState } from "react";
 import AddLocationIcon from "@mui/icons-material/AddLocation";
-const SearchLocationInput = ({ setSelectedLocation }) => {
+const SearchLocationInput = ({ setSelectedLocation, setPlace }) => {
+
   
   const autoCompleteRef = useRef();
 
   const inputRef = useRef();
   const [query, setQuery] = useState("");
+  console.log(query);
   const handleScriptLoad = (updateQuery) => {
     autoCompleteRef.current = new window.google.maps.places.Autocomplete(inputRef.current, {
       componentRestrictions: { country: "VN" },
@@ -47,7 +49,7 @@ const SearchLocationInput = ({ setSelectedLocation }) => {
           style={{  cursor: "pointer" }}
           ref={inputRef}
           className="form-control"
-          onChange={(event) => setQuery(event.target.value)}
+          onChange={(event) => (setQuery(event.target.value) ,setPlace(event.target.value))}
           placeholder="Search Places ..."
           value={query}
           id="inputSearchAddress"

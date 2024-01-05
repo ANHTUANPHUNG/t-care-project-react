@@ -4,18 +4,22 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import { Checkbox, FormControl, FormControlLabel, FormLabel } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { ButtonForMe } from "../../ButtonForMe";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, color }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const [personID, setPersonId] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [termsAgreed, setTermsAgreed] = useState(false);
   const [gender, setGender] = useState("");
+  let navigate = useNavigate();
 
   const handleGenderClick = (selectedGender) => {
     setGender(selectedGender);
@@ -28,6 +32,23 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
     }
     setPasswordError("");
     console.log("Form submitted!");
+    axios.post("http://localhost:8080/api/employees/account", {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password,
+      gender: gender,
+      personID: personID
+    })
+    .then(response => {
+      toast.success("Tài khoản được tạo thành công")
+      console.log('Data sent successfully!');
+      console.log(response);
+      navigate(url + "/" + response.data);
+    })
+    .catch(error => {
+      console.error('Error sending data:', error);
+    });
   };
 
   return (
@@ -41,17 +62,21 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
         <form onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <TextField fullWidth id="email" label="Email" type="email" />
+              <TextField fullWidth id="email" label="Email" type="email" value={email}
+                onChange={(e) => setEmail(e.target.value)}/>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField fullWidth id="firstName" label="First Name" />
+              <TextField fullWidth id="firstName" label="First Name" value={firstName}
+                onChange={(e) => setFirstName(e.target.value)} />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField fullWidth id="lastName" label="Last Name" />
+              <TextField fullWidth id="lastName" label="Last Name" value={lastName}
+                onChange={(e) => setLastName(e.target.value)} />
             </Grid>
 
             <Grid item xs={12}>
-              <TextField fullWidth id="password" label="Password" type="password" />
+              <TextField fullWidth id="password" label="Password" type="password" value={password}
+                onChange={(e) => setPassword(e.target.value)} />
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -66,29 +91,30 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField fullWidth id="personId" label="Person ID" />
+              <TextField fullWidth id="personID" label="Person ID" value={personID}
+                onChange={(e) => setPersonId(e.target.value)}/>
             </Grid>
             <Grid item xs={12}>
               <FormControl component="fieldset">
                 <FormLabel component="legend">Gender</FormLabel>
                 <div className="d-flex">
                   <Button
-                    onClick={() => handleGenderClick("male")}
-                    variant={gender === "male" ? "contained" : "outlined"}
+                    onClick={() => handleGenderClick("MALE")}
+                    variant={gender === "MALE" ? "contained" : "outlined"}
                     className="mx-1"
                   >
                     Nam
                   </Button>
                   <Button
-                    onClick={() => handleGenderClick("female")}
-                    variant={gender === "female" ? "contained" : "outlined"}
+                    onClick={() => handleGenderClick("FEMALE")}
+                    variant={gender === "FEMALE" ? "contained" : "outlined"}
                     className="mx-1"
                   >
                     Nữ
                   </Button>
                   <Button
-                    onClick={() => handleGenderClick("other")}
-                    variant={gender === "other" ? "contained" : "outlined"}
+                    onClick={() => handleGenderClick("OTHER")}
+                    variant={gender === "OTHER" ? "contained" : "outlined"}
                     className="mx-1"
                   >
                     Khác
@@ -113,9 +139,9 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
               />
             </Grid>
             <Grid item xs={12} className="d-flex justify-content-center">
-              <NavLink to={url} style={{ width: "50%" }}>
+              {/* <NavLink to={url} style={{ width: "50%" }}> */}
                 <ButtonForMe value={100} childrenButton={"Join Now"} colorButton={color} />
-              </NavLink>
+              {/* </NavLink> */}
             </Grid>
           </Grid>
         </form>

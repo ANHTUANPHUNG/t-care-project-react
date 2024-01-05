@@ -4,7 +4,7 @@ import React from "react";
 export function ButtonForMe({value, childrenButton, colorButton}) {
   return (
     <Button
-      type="button"
+      type="submit"
       variant="contained"
       color="primary"
       style={{

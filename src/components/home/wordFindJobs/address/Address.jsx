@@ -1,21 +1,30 @@
 import React, { useEffect, useState } from "react";
 import "./Address.css";
 import { NavBarFindJob } from "../navBarFindJob/NavBarFindJob";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import SearchLocationInput from "../../../apiGoogleMap/SearchLocationInput ";
 import MapComponent from "../../../apiGoogleMap/GoogleMap";
 import { ButtonForMe } from "../../../ButtonForMe";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import { toast } from "react-toastify";
-import { CircularProgress } from "@mui/material";
+import axios from "axios";
 export function Address() {
   const [km, setKm] = useState(10);
+  const [place, setPlace] = useState("")
   const [selectedLocation, setSelectedLocation] = useState({
     lat: 0,
     lng: 0,
   });
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  let navigate = useNavigate();
+  const { id } = useParams();
+  const [location, setLocation] = useState({
+    nameLocation: place,
+    distanceForWork: km,
+    longitude: selectedLocation.lng,
+    latitude: selectedLocation.lat
+});
+console.log(selectedLocation);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -30,12 +39,12 @@ export function Address() {
         console.error("Error getting geolocation:", error);
       }
     );
-  }, []);
+
+  }, [location]);
   const handleMinus = () => {
 
 
     if (km > 5) {
-      toast.success("Xử lý thành công");
       setKm((prev) => prev - 5);
     } else {
       toast.error("Số km lớn hơn 5");
@@ -44,11 +53,33 @@ export function Address() {
   const handleAdd = () => {
 
     if (km < 100) {
-      toast.success("Xử lý thành công");
       setKm((prev) => prev + 5);
     } else {
       toast.error("Số km bé hơn 100");
     }
+  };
+
+  const handleButtonClick = () => {
+    const postData = {
+      nameLocation: place,
+      distanceForWork: km,
+      longitude: selectedLocation.lng,
+      latitude: selectedLocation.lat,
+    };
+    alert("hi")
+    axios
+      .post(`http://localhost:8080/api/employees/${id}`, postData)
+      .then((response) => {
+        navigate(`/assistant/process/${id}`)
+        console.log("Post thành công:", response.data);
+        // Thực hiện các hành động tiếp theo sau khi gửi thành công
+      })
+      .catch((error) => {
+        // Xử lý lỗi
+        console.error("Lỗi khi gửi POST request:", error);
+        // Hiển thị thông báo lỗi cho người dùng
+        toast.error("Lỗi khi gửi thông tin vị trí");
+      });
   };
 
   const formAddress = (
@@ -61,7 +92,7 @@ export function Address() {
       }}
     >
       <div style={{ margin: "30px 200px" }}>
-        <SearchLocationInput setSelectedLocation={setSelectedLocation} />
+        <SearchLocationInput setSelectedLocation={setSelectedLocation} setPlace={setPlace}/>
         <MapComponent selectedLocation={selectedLocation} />
       </div>
       <div style={{ margin: "30px 35%" }}>
@@ -85,9 +116,9 @@ export function Address() {
         </div>
       </div>
       <div style={{ textAlign: "end", marginBottom: "40px", marginRight: "80px" }}>
-        <NavLink to={"/assistant/process"}>
-          <ButtonForMe childrenButton={"Next"} colorButton={"#213f5f"} />
-        </NavLink>
+        {/* <NavLink to={"/assistant/process"}> */}
+          <ButtonForMe childrenButton={"Next"} colorButton={"#213f5f"} onClick={handleButtonClick} />
+        {/* </NavLink> */}
       </div>
     </div>
   );
