@@ -1,10 +1,10 @@
 import { Button } from "@mui/material";
 import React from "react";
 
-export function ButtonForMe({value, childrenButton, colorButton}) {
+export function ButtonForMe({value, childrenButton, colorButton, onclick}) {
   return (
     <Button
-      type="button"
+      type="submit"
       variant="contained"
       color="primary"
       style={{
@@ -13,6 +13,7 @@ export function ButtonForMe({value, childrenButton, colorButton}) {
         height: "100%",
         borderRadius: "20px",
       }}
+      onClick={onclick}
     >{childrenButton}</Button>
   );
 }
