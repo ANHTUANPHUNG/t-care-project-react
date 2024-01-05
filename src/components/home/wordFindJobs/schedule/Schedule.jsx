@@ -115,7 +115,7 @@ export function Schedule() {
             endIndex={75}
             nameSelect={"Hour"}
             value={hourPerWeekMin}
-            onChange={handleHourPerWeekMinChange}
+            onchange={handleHourPerWeekMinChange}
           />
           <div className="recurring-job-hour-per-select-remove">
             <RemoveIcon />
@@ -125,7 +125,7 @@ export function Schedule() {
             endIndex={80}
             nameSelect={"Hour"}
             value={hourPerWeekMax}
-            onChange={handleHourPerWeekMaxChange}
+            onchange={handleHourPerWeekMaxChange}
           />
         </div>
 
