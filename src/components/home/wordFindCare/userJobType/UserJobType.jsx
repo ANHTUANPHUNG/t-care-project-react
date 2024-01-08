@@ -20,12 +20,14 @@ export function UserJobType() {
       </div>
       <div className=" mt-5" style={{ textAlign: "-webkit-center" }}>
         <div style={{ width: "30%" }}>
-          <h5>Great! Time to find the right fit</h5>
+          <h5>Tuyệt vời!</h5>
           <span>
-            Share a bit more about what you need, and we’ll create a job post to help you quickly
-            find caregivers.
+              {/* Share a bit more about what you need, and we’ll create a job post to help you quickly
+              find caregivers. */}
+              Chia sẻ thêm một chút về những gì bạn cần, chúng tôi sẽ tạo tin tuyển dụng để giúp bạn nhanh chóng tìm người chăm sóc
+
           </span>
-          <h6 className="mt-5 mb-3">What type of care are you looking for?</h6>
+          <h6 className="mt-5 mb-3">Bạn đang tìm kiếm loại dịch vụ chăm sóc nào?</h6>
         </div>
         <div style={{ width: "30%" }}>
           <RadioJobType id="1" />

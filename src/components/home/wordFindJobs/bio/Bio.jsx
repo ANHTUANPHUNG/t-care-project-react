@@ -7,6 +7,7 @@ import HighlightIcon from "@mui/icons-material/Highlight";
 import { NavLink } from "react-router-dom";
 import { ButtonForMe } from "../../../ButtonForMe";
 import ModalUnstyled from "../../../ModalToMe";
+import { Grid } from '@mui/material/Grid';
 export function Bio() {
   const [bioText, setBioText] = useState("");
   const [checkModal, setCheckModal] = useState(false);
@@ -60,29 +61,29 @@ export function Bio() {
   const bio = (
     <div className="col-9 " style={{ paddingTop: "20px" }}>
       <h4 className="" style={{ marginBottom: "20px" }}>
-        My bio
+        Tiểu sử của tôi
       </h4>
-      <span>Add a title (ex: Fun sitter and smile creator)</span>
+      <span>Thêm vào tiêu đề (Ví dụ: Luôn mỉm cười dưới mọi hoàn cảnh)</span>
       <div style={{ margin: "20px 0" }}>
         <TextField
           sx={{ width: "70%" }}
           size="small"
           id="outlined-basic"
-          label="Bio title (optional)"
+          label="Tiêu đề tiểu sử"
           variant="outlined"
         />
       </div>
       <div style={{ width: "70%", paddingBottom: "20px" }}>
         <span>
-          Introduce yourself to families by writing a bio. We started a draft, but you'll need to
-          edit it — reword or add more detail. It should be at least 100 characters.
+          Giới thiệu bản thân với gia đình bằng cách viết tiểu sử. Chúng tôi đã bắt đầu một bản nháp, nhưng bạn cần phải chỉnh sửa nó
+          và viết lại thêm chi tiết. Nó phải có ít nhất 100 kí tự
         </span>
       </div>
       <div>
         <textarea
           style={{ height: "100px", width: "70%" }}
           name="Size"
-          placeholder="I have 1 year of experience. I can help with Light Housecleaning. "
+          placeholder="Tôi có một năm kinh nghiệm làm việc. Tôi có thể sửa đèn và giúp dọn dẹp nhà. "
           onChange={(e) => setBioText(e.target.value)}
         />
       </div>

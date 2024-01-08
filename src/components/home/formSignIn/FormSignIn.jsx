@@ -56,7 +56,7 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
       <div>
         <div className="form-sign-in-header" style={{ margin: marginHeader || "3% 16%" }}>
           <h3 className="form-sign-in-content">
-            {marginHeader || "Add a few details about yourself."}
+            {marginHeader || "Một số thông tin về bản thân bạn"}
           </h3>
         </div>
         <form onSubmit={handleSubmit}>
@@ -66,23 +66,23 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
                 onChange={(e) => setEmail(e.target.value)}/>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField fullWidth id="firstName" label="First Name" value={firstName}
+              <TextField fullWidth id="firstName" label="Tên" value={firstName}
                 onChange={(e) => setFirstName(e.target.value)} />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField fullWidth id="lastName" label="Last Name" value={lastName}
+              <TextField fullWidth id="lastName" label="Họ" value={lastName}
                 onChange={(e) => setLastName(e.target.value)} />
             </Grid>
 
             <Grid item xs={12}>
-              <TextField fullWidth id="password" label="Password" type="password" value={password}
+              <TextField fullWidth id="password" label="Mật khẩu" type="password" value={password}
                 onChange={(e) => setPassword(e.target.value)} />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 fullWidth
                 id="confirmPassword"
-                label="Confirm Password"
+                label="Xác nhận mật khẩu"
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
@@ -91,12 +91,12 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField fullWidth id="personID" label="Person ID" value={personID}
+              <TextField fullWidth id="personID" label="Số Căn Cước Công Dân" value={personID}
                 onChange={(e) => setPersonId(e.target.value)}/>
             </Grid>
             <Grid item xs={12}>
               <FormControl component="fieldset">
-                <FormLabel component="legend">Gender</FormLabel>
+                <FormLabel component="legend">Giới tính</FormLabel>
                 <div className="d-flex">
                   <Button
                     onClick={() => handleGenderClick("MALE")}
@@ -134,14 +134,14 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
                 }
                 label={
                   termAgreed ||
-                  "By clicking 'Join now', you agree to our Terms of Use and Privacy Policy."
+                  " Khi chọn vào ô này, bạn đã chấp thuận với điều khoản và dịch vụ của công ty chúng tôi."
                 }
               />
             </Grid>
             <Grid item xs={12} className="d-flex justify-content-center">
-              {/* <NavLink to={url} style={{ width: "50%" }}> */}
-                <ButtonForMe value={100} childrenButton={"Join Now"} colorButton={color} />
-              {/* </NavLink> */}
+              <NavLink to={url} style={{ width: "50%" }}>
+                <ButtonForMe value={100} childrenButton={"Đăng kí"} colorButton={color} />
+              </NavLink>
             </Grid>
           </Grid>
         </form>

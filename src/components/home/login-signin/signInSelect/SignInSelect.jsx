@@ -20,18 +20,18 @@ export function SignInSelect({}) {
         <CheckLogInSignIn value={"signIn"} />
       </div>
       <div className="container-sign-in">
-        <h5 className="sign-in-title">Let’s get started. Choose an option.</h5>
+        <h5 className="sign-in-title"> Đưa ra một lựa chọn.</h5>
         <div className="sign-in-select">
           <div className="find-care">
             <img
               src="https://res.cloudinary.com/dw4xpd646/image/upload/v1703859018/Cloudinary-React/br2chgppnqhqxbz1mojt.png"
               alt=""
             />
-            <h5>I need a caregiver</h5>
-            <span>Start your free search for care in your area.</span>
+            <h5>Tôi cần người hỗ trợ</h5>
+            <span>Bắt đầu tìm kiếm sự chăm sóc xung quanh bạn.</span>
             <NavLink to={"/sign-in/find-care"} className="nav-link-select">
               <div className="find-care-title">
-                <span>Find Care</span>
+                <span>Tìm người hỗ trợ</span>
               </div>
             </NavLink>
           </div>
@@ -40,11 +40,11 @@ export function SignInSelect({}) {
               src="https://res.cloudinary.com/dw4xpd646/image/upload/v1703859013/Cloudinary-React/mzyueuz5ouilpslba9zv.png"
               alt=""
             />
-            <h5>I want a care job</h5>
-            <span>Create a profile and search for jobs.</span>
+            <h5>Tôi cần kiếm công việc</h5>
+            <span>Tạo hồ sơ cá nhân và tìm kiếm công việc</span>
             <NavLink to={"/assistant/sign-in"} className="nav-link-select">
               <div className="find-jobs-title">
-                <span>Find Jobs</span>
+                <span>Tìm kiếm công việc</span>
               </div>
             </NavLink>
           </div>

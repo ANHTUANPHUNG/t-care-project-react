@@ -12,15 +12,15 @@ export const DescriptionProcess = () => {
   const { id } = useParams();
   const greatStart = (
     <div style={{ paddingTop: "20px" }} className="col-9">
-      <h3>Great Start! Here's what comes next</h3>
+      <h3>Tuyệt vời! Đây là những thứ tiếp theo</h3>
       <div>
         <div className="d-flex" style={{ margin: "30px 0 10px 0" }}>
           <Avatar style={{ backgroundColor: "#3b71aa", width: "50px", height: "50px" }}>
             <CheckIcon />
           </Avatar>
           <div style={{ paddingLeft: "15px" }}>
-            <span style={{ fontSize: "20px" }}>Create your account</span> <br></br>
-            <span style={{ fontSize: "13px", color: "blue" }}>Done!</span>
+            <span style={{ fontSize: "20px" }}>Đăng kí tài khoản</span> <br></br>
+            <span style={{ fontSize: "13px", color: "blue" }}>Thành công!</span>
           </div>
         </div>
         <div style={{ color: "#b3bac1" }}>
@@ -39,8 +39,8 @@ export const DescriptionProcess = () => {
             </div>
 
             <div style={{ paddingLeft: "15px" }}>
-              <span style={{ fontSize: "20px" }}>Build your profile</span> <br></br>
-              <span style={{ fontSize: "13px" }}>Your availability, pay rate, and bio.</span>
+              <span style={{ fontSize: "20px" }}>Xây dựng hồ sơ của bạn</span> <br></br>
+              <span style={{ fontSize: "13px" }}>Lịch rảnh, sở thích, thông tin cá nhân</span>
             </div>
           </div>
           <div className="d-flex" style={{ margin: "30px 0 10px 0" }}>
@@ -57,9 +57,9 @@ export const DescriptionProcess = () => {
               3
             </div>
             <div style={{ paddingLeft: "15px" }}>
-              <span style={{ fontSize: "20px" }}>Get screened</span> <br></br>
+              <span style={{ fontSize: "20px" }}>Xây dựng giao diện</span> <br></br>
               <span style={{ fontSize: "13px" }}>
-                Answer some required safety questions and earn a safety badge for your profile.
+              Trả lời một số câu hỏi bắt buộc về an toàn và nhận được huy hiệu an toàn cho hồ sơ của bạn.
               </span>
             </div>
           </div>
@@ -75,7 +75,7 @@ export const DescriptionProcess = () => {
               cursor: "pointer",
             }}
           >
-            <h6 style={{ margin: "0", color: "white" }}>Build your profile</h6>
+            <h6 style={{ margin: "0", color: "white" }}>Xây dựng hồ sơ của bạn</h6>
           </div>
         </NavLink>
       </div>

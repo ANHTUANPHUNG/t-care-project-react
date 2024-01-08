@@ -25,7 +25,7 @@ export function Home() {
         <div id="logInHome">
           <NavLink className="navlink-no-underline" to="login">
             <Button className="buttonLogin" variant="contained">
-              Log in
+              Đăng nhập
             </Button>
           </NavLink>
         </div>
@@ -44,12 +44,13 @@ export function Home() {
         <div className="rate-average mt-3">
           <div className="rate-average-top">
             <p className="rate-average-content">
-              Access a network of background checked caregivers
+              {/* Access a network of background checked caregivers */}
+              Hệ thống những người hỗ trợ chuyên nghiệp
             </p>
           </div>
           <div className="rate-average-bot">
             <p className="rate-average-rate">
-              With an average 4.7 star rating, you’ll find a caregiver to rave about too.
+              Với trung bình lượt đánh giá là 4.7 sao, chúng tôi sẽ giúp bạn tìm người hỗ trợ tốt nhất
             </p>
           </div>
         </div>

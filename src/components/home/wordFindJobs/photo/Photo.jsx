@@ -43,10 +43,10 @@ export function Photo() {
   const photo = (
     <div className="col-9 " style={{ paddingTop: "20px" }}>
       <h4 className="" style={{ marginBottom: "20px" }}>
-        Upload a photo
+       Tải ảnh lên
       </h4>
       <span>
-        <strong>You're 7X more likely to get hired with a profile photo!</strong>
+        <strong>Bạn có khả năng được tuyển dụng cao hơn gấp 7 lần nếu ảnh có hồ sơ</strong>
       </span>
       <div style={{ display: "flex", width: "30%", margin: "50px 0 20px 30%" }}>
         <img
@@ -87,34 +87,36 @@ export function Photo() {
       </div>
       <label htmlFor="imgPhoto">
         <h6 style={{ marginLeft: "248px", marginBottom: "50px", cursor: "pointer" }}>
-          Tap to add a photo
+        Nhấn để thêm ảnh
         </h6>
       </label>
       <div style={{ color: "#334c64" }}>
-        <h6 style={{ fontSize: "24px" }}>For the fastest approval time, be sure to:</h6>
+        <h6 style={{ fontSize: "24px" }}>Để có thời gian phê duyệt nhanh nhất, hãy đảm bảo:</h6>
         <ul>
           <li style={{ fontSize: "15px" }}>
-            <strong>Look professional</strong>—show you're a pro
+            <strong>Bức hình chuyên nghiệp</strong>—Chứng tỏ bạn là một người chuyên nghiệp
           </li>
           <li style={{ fontSize: "15px" }}>
-            <strong>Show your face</strong>—no sunglasses, hat, etc
+            <strong>Góc ảnh đầy đủ khuôn mặt của bạn</strong>—Không có kinh râm, mũ,..
           </li>
           <li style={{ fontSize: "15px" }}>
-            <strong>It's just you</strong>—no other people in the photo
+            <strong>Đó là bạn</strong>—Không có người nào khác trong bức ảnh này
           </li>
           <li style={{ fontSize: "15px" }}>
-            <strong>No frames or filters</strong>—just be real
+            <strong>Không có phần mềm chỉnh sửa</strong>—Hãy thành thật
           </li>
         </ul>
       </div>
       <div style={{ width: "80%", fontSize: "12px" }}>
-        If your photo includes children, by uploading and clicking Next, you verify that you are the
+        {/* If your photo includes children, by uploading and clicking Next, you verify that you are the
         parent or that you have explicit permission of the parent(s) to include the children in your
-        photo.
+        photo. */}  
+        Nếu ảnh của bạn có trẻ em, hãy tải lên và chọn Tiếp theo, bạn xác minh rằng bạn là người cha mẹ hoặc
+         bạn được cha mẹ cho phép rõ ràng để đưa con cái vào hình chụp của bạn.
       </div>
       <div className="" style={{ padding: "20px 0 40px 0", width: "70%", textAlign: "end" }}>
         <NavLink className="experience-link" to={"/assistant/photo"}>
-          <ButtonForMe childrenButton={"Next"} colorButton={"#213f5f"} />
+          <ButtonForMe childrenButton={"Tiếp theo"} colorButton={"#213f5f"} />
         </NavLink>
       </div>
     </div>
