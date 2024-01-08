@@ -20,7 +20,6 @@ import { AssistantSignIn } from "./components/home/wordFindJobs/assistantSignIn/
 import { Address } from "./components/home/wordFindJobs/address/Address";
 import { Index } from "./components/viewUser/index/Index";
 import { DescriptionProcess } from "./components/home/wordFindJobs/descriptionProcess/DescriptionProcess";
-import { Schedule } from "./components/home/wordFindJobs/schedule/Schedule";
 import { Availability } from "./components/home/wordFindJobs/availability/Availability";
 import { Experience } from "./components/home/wordFindJobs/experience/Experience";
 import { Bio } from "./components/home/wordFindJobs/bio/Bio";
@@ -38,10 +37,9 @@ function App() {
         <Route path="/assistant/sign-in" element={<AssistantSignIn />}></Route>
         <Route path="/assistant/address" element={<Address />}></Route>
         <Route
-          path="/assistant/process/:id"
+          path="/assistant/process"
           element={<DescriptionProcess />}
         ></Route>
-        <Route path="/assistant/schedule" element={<Schedule />}></Route>
         <Route
           path="/assistant/availability"
           element={<Availability />}

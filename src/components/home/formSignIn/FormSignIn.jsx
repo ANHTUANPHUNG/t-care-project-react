@@ -9,7 +9,7 @@ import { ButtonForMe } from "../../ButtonForMe";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, color }) {
+export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, color, checkRole }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -31,24 +31,23 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
       return;
     }
     setPasswordError("");
-    console.log("Form submitted!");
-    axios.post("http://localhost:8080/api/employees/account", {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: password,
-      gender: gender,
-      personID: personID
-    })
-    .then(response => {
-      toast.success("Tài khoản được tạo thành công")
-      console.log('Data sent successfully!');
-      console.log(response);
-      navigate(url + "/" + response.data);
-    })
-    .catch(error => {
-      console.error('Error sending data:', error);
-    });
+    axios
+      .post("http://localhost:8080/api/auth/employees/account", {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        password: password,
+        gender: gender,
+        personID: personID,
+        role: checkRole,
+      })
+      .then((response) => {
+        toast.success("Tài khoản được tạo thành công");
+        navigate(url + "/" + response.data);
+      })
+      .catch((error) => {
+        console.error("Error sending data:", error);
+      });
   };
 
   return (
@@ -62,10 +61,17 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
         <form onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <TextField fullWidth id="email" label="Email" type="email" value={email}
-                onChange={(e) => setEmail(e.target.value)}/>
+              <TextField
+                fullWidth
+                id="email"
+                label="Email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </Grid>
             <Grid item xs={12} sm={6}>
+
               <TextField fullWidth id="firstName" label="Tên" value={firstName}
                 onChange={(e) => setFirstName(e.target.value)} />
             </Grid>
@@ -91,6 +97,7 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
               />
             </Grid>
             <Grid item xs={12}>
+
               <TextField fullWidth id="personID" label="Số Căn Cước Công Dân" value={personID}
                 onChange={(e) => setPersonId(e.target.value)}/>
             </Grid>
@@ -139,9 +146,11 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
               />
             </Grid>
             <Grid item xs={12} className="d-flex justify-content-center">
+
               <NavLink to={url} style={{ width: "50%" }}>
                 <ButtonForMe value={100} childrenButton={"Đăng kí"} colorButton={color} />
               </NavLink>
+
             </Grid>
           </Grid>
         </form>

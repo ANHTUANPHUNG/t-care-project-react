@@ -124,7 +124,7 @@ export function Photo() {
   return (
     <NavBarFindJob
       children={
-        <SideBarFindJob col={"col-8"} value={photo} check={true} activeIds={[1, 2, 3, 4, 5]} />
+        <SideBarFindJob col={"col-10"} value={photo} check={true} activeIds={[1, 2, 3, 4, 5]} />
       }
     />
   );

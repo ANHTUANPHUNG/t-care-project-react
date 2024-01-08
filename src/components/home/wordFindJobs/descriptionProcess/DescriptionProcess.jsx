@@ -66,7 +66,7 @@ export const DescriptionProcess = () => {
         </div>
       </div>
       <div style={{ justifyContent: "end", display: "flex", width: "70%", margin: "40px 0" }}>
-        <NavLink style={{ textDecoration: "none" }} to={`/assistant/schedule/${id}`}>
+        <NavLink style={{ textDecoration: "none" }} to={`/assistant/availability`}>
           <div
             style={{
               borderRadius: "20px",
@@ -82,6 +82,6 @@ export const DescriptionProcess = () => {
     </div>
   );
   return (
-    <NavBarFindJob children={<SideBarFindJob value={greatStart} check={false} activeIds={[]} />} />
+    <NavBarFindJob children={<SideBarFindJob col={"col-2"} value={greatStart} check={false} activeIds={[]} />} />
   );
 };

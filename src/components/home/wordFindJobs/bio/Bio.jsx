@@ -102,7 +102,7 @@ export function Bio() {
         <div>
           {bioText.length < 100 && (
             <span style={{ color: "#a5a5a5", fontSize: "11px" }}>
-              {remainingCharacters} characters remaining
+              {remainingCharacters} kí tự
             </span>
           )}
         </div>

@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 export function Address() {
   const [km, setKm] = useState(10);
-  const [place, setPlace] = useState("")
+  const [place, setPlace] = useState("");
   const [selectedLocation, setSelectedLocation] = useState({
     lat: 0,
     lng: 0,
@@ -22,8 +22,8 @@ export function Address() {
     nameLocation: place,
     distanceForWork: km,
     longitude: selectedLocation.lng,
-    latitude: selectedLocation.lat
-});
+    latitude: selectedLocation.lat,
+  });
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -38,11 +38,8 @@ export function Address() {
         console.error("Error getting geolocation:", error);
       }
     );
-
   }, [location]);
   const handleMinus = () => {
-
-
     if (km > 5) {
       setKm((prev) => prev - 5);
     } else {
@@ -50,7 +47,6 @@ export function Address() {
     }
   };
   const handleAdd = () => {
-
     if (km < 100) {
       setKm((prev) => prev + 5);
     } else {
@@ -68,12 +64,13 @@ export function Address() {
     axios
       .put(`http://localhost:8080/api/employees/location/${id}`, postData)
       .then((response) => {
-        navigate(`/assistant/process/${id}`)
+        navigate(`/assistant/process`);
         console.log("Post thành công:", response.data);
       })
       .catch((error) => {
         console.error("Lỗi khi gửi POST request:", error);
-        navigate(`/assistant/process/${id}`)
+
+        navigate(`/assistant/process`)
         toast.error("Lỗi khi gửi thông tin vị trí");
       });
   };
@@ -88,7 +85,7 @@ export function Address() {
       }}
     >
       <div style={{ margin: "30px 200px" }}>
-        <SearchLocationInput setSelectedLocation={setSelectedLocation} setPlace={setPlace}/>
+        <SearchLocationInput setSelectedLocation={setSelectedLocation} setPlace={setPlace} />
         <MapComponent selectedLocation={selectedLocation} />
       </div>
       <div style={{ margin: "30px 35%" }}>
@@ -101,19 +98,19 @@ export function Address() {
           }}
         >
           <div style={{ cursor: "pointer", margin: "10px" }} onClick={() => handleMinus()}>
-           <RemoveIcon />
+            <RemoveIcon />
           </div>
           <div>
             <span style={{ fontSize: "30px" }}>{km}</span> <br /> <span>Kilomets</span>
           </div>
           <div style={{ cursor: "pointer", margin: "10px" }} onClick={() => handleAdd()}>
-             <AddIcon />
+            <AddIcon />
           </div>
         </div>
       </div>
       <div style={{ textAlign: "end", marginBottom: "40px", marginRight: "80px" }}>
         {/* <NavLink to={"/assistant/process"}> */}
-          <ButtonForMe childrenButton={"Next"} colorButton={"#213f5f"} onclick={handleButtonClick} />
+        <ButtonForMe childrenButton={"Next"} colorButton={"#213f5f"} onclick={handleButtonClick} />
         {/* </NavLink> */}
       </div>
     </div>
