@@ -29,8 +29,9 @@ export function RenderListAssistant() {
         <div className="row render-list-assistant-header">
           <div className="col-3"></div>
           <div className="col-6 py-3">
-            <h4>Here's a personalized list of caregivers based on your needs</h4>
-            <h6>Shortlist the ones you like best</h6>
+            {/* <h4>Here's a personalized list of caregivers based on your needs</h4> */}
+            <h4>Đây là danh sách hồ sơ cá nhân gợi ý dựa vào những thông tin bạn cung cấp</h4>
+            <h6>Danh sách yêu thích</h6>
           </div>
           <div className="col-3 p-0">
             <img
@@ -71,7 +72,7 @@ export function RenderListAssistant() {
 
           <div className="per-page">
             <div className="per-page-item">
-              <div>View 5 more caregivers</div>
+              <div>Xem thêm 5 người hỗ trợ</div>
             </div>
           </div>
         </div>

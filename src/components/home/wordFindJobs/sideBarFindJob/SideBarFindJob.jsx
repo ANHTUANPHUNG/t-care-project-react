@@ -8,13 +8,13 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 export function SideBarFindJob({col, value, check, activeIds }) {
   const listBuildProfile = [
-    { id: 1, name: "Schedule" },
-    { id: 2, name: "Availability" },
-    { id: 3, name: "Experience" },
-    { id: 4, name: "Bio" },
-    { id: 5, name: "Photo" },
+    { id: 1, name: "Loại công việc" },
+    { id: 2, name: "Lịch làm " },
+    { id: 3, name: "Kinh nghiệm" },
+    { id: 4, name: "Tiểu sử" },
+    { id: 5, name: "Ảnh" },
 
-    { id: 6, name: "Apply jobs" },
+    { id: 6, name: "Nộp đơn ứng tuyển" },
   ];
   const [open, setOpen] = useState(check);
 
@@ -33,7 +33,7 @@ export function SideBarFindJob({col, value, check, activeIds }) {
       }}
     >
       <div className="col-3" style={{ padding: "20px 15px 0 30px" }}>
-        <h6>MY PROGRESS</h6>
+        <h6>TIẾN TRÌNH</h6>
         <div
           style={{
             height: "5px",
@@ -52,7 +52,7 @@ export function SideBarFindJob({col, value, check, activeIds }) {
             aria-labelledby="nested-list-subheader"
           >
             <ListItemButton onClick={handleClick} sx={{ padding: " 0", marginTop: "10px " }}>
-              <ListItemText primary="Inbox" />
+              <ListItemText primary="Hộp thư" />
               {open ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
             <Collapse in={open} timeout="auto" unmountOnExit>

@@ -29,7 +29,7 @@ export function UserService() {
       </div>
       <div className="d-flex my-5 " style={{ justifyContent: "center" }}>
         <div>
-          <h3 className="mb-4">What kind of help are you looking for?</h3>
+          <h3 className="mb-4">Bạn đang tìm kiếm loại chăm sóc nào?</h3>
           {
             listServiceGenerals?.map(e=>(
               <CheckBoxService key={e?.id} value={e} />

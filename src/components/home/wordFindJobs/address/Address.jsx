@@ -70,12 +70,10 @@ export function Address() {
       .then((response) => {
         navigate(`/assistant/process/${id}`)
         console.log("Post thành công:", response.data);
-        // Thực hiện các hành động tiếp theo sau khi gửi thành công
       })
       .catch((error) => {
-        // Xử lý lỗi
         console.error("Lỗi khi gửi POST request:", error);
-        // Hiển thị thông báo lỗi cho người dùng
+        navigate(`/assistant/process/${id}`)
         toast.error("Lỗi khi gửi thông tin vị trí");
       });
   };
@@ -94,7 +92,7 @@ export function Address() {
         <MapComponent selectedLocation={selectedLocation} />
       </div>
       <div style={{ margin: "30px 35%" }}>
-        <h6 style={{ paddingLeft: "50px" }}>How far are you willing to travel?</h6>
+        <h6 style={{ paddingLeft: "50px" }}>Bạn có thể di chuyển bao xa?</h6>
         <div
           style={{
             display: "flex",
@@ -106,7 +104,7 @@ export function Address() {
            <RemoveIcon />
           </div>
           <div>
-            <span style={{ fontSize: "30px" }}>{km}</span> <br /> <span>Miles</span>
+            <span style={{ fontSize: "30px" }}>{km}</span> <br /> <span>Kilomets</span>
           </div>
           <div style={{ cursor: "pointer", margin: "10px" }} onClick={() => handleAdd()}>
              <AddIcon />

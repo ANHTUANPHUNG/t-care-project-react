@@ -61,10 +61,10 @@ export function UserAddress() {
       </div>
       <div className="m-5 " style={{ textAlign: "-webkit-center" }}>
         
-        <SearchLocationInput setSelectedLocation={setSelectedLocation} title={"Where are you looking for care?"}  />
+        <SearchLocationInput setSelectedLocation={setSelectedLocation} title={"Bạn tìm kiếm sự chăm sóc ở đâu?"}  />
         <MapComponent selectedLocation={selectedLocation} widthMap={"60%"}  />
         <div style={{ margin: "30px 35%" }}>
-        <h6 style={{ paddingLeft: "50px" }}>How far are you willing to travel?</h6>
+        <h6 style={{ paddingLeft: "50px" }}>Bạn dự định tìm kiếm trong bao xa?</h6>
         <div
           style={{
             display: "flex",
@@ -76,7 +76,7 @@ export function UserAddress() {
            <RemoveIcon />
           </div>
           <div>
-            <span style={{ fontSize: "30px" }}>{km}</span> <br /> <span>Miles</span>
+            <span style={{ fontSize: "30px" }}>{km}</span> <br /> <span>Kilomets</span>
           </div>
           <div style={{ cursor: "pointer", margin: "10px" }} onClick={() => handleAdd()}>
              <AddIcon />
@@ -85,7 +85,7 @@ export function UserAddress() {
       </div>
         <div className="mt-5" style={{ height: "50px" }}>
           <NavLink to="/user/service">
-            <ButtonForMe childrenButton={"Next"} />
+            <ButtonForMe childrenButton={"Tiếp theo"} />
           </NavLink>
         </div>
       </div>

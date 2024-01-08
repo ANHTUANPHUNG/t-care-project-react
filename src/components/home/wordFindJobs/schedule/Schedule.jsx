@@ -174,10 +174,10 @@ export function Schedule() {
       )}
       <div className="separation"></div>
       <div style={{ textAlign: "end", margin:" 30px 50px 40px 0" }}>
-        {/* <NavLink style={{ textDecoration: "none" }} to={"/assistant/availability"}> */}
+        <NavLink style={{ textDecoration: "none" }} to={"/assistant/availability"}>
           
           <ButtonForMe childrenButton={"Next"} colorButton={"#213f5f"} onclick={handleButtonClick}/>
-        {/* </NavLink> */}
+        </NavLink>
       </div>
      
     </div>

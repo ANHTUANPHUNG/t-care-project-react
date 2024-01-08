@@ -37,7 +37,7 @@ export function LogIn() {
             </Grid>
             <div className="forgot-password">
               <div>
-                <span>Forgot Password?</span>
+                <span>Quên mật khẩu?</span>
               </div>
             </div>
 
@@ -50,7 +50,7 @@ export function LogIn() {
         </form>
         <div className="d-flex justify-content-center w-100 my-4">
           <div className="line"></div>
-          <span className="mx-2">OR</span>
+          <span className="mx-2">Hoặc</span>
           <div className="line"></div>
         </div>
         <div className="login-google">
@@ -60,7 +60,7 @@ export function LogIn() {
               alt=""
             />
             <div className="login-google-content">
-              <h6>Continue With Google</h6>
+              <h6>Tiếp tục với Google</h6>
             </div>
           </div>
         </div>
