@@ -21,7 +21,7 @@ export function DateSession() {
       </div>
       <div className="d-flex mt-5 date-session">
         <div>
-          <h4>Which days do you need care?</h4>
+          <h4>Bạn cần chăm sóc những ngày nào?</h4>
         </div>
       </div>
       <div className="date-session-map" >
@@ -29,7 +29,8 @@ export function DateSession() {
       </div>
       
       <div className="d-flex justify-content-center mt-4">
-        Don't worry, you can always adjust these times later.
+        {/* Don't worry, you can always adjust these times later. */}
+        Đừng lo lắng, bạn luôn có thể chỉnh sửa nó sau.
       </div>
 
       <div className="mt-2 mb-5 button-date-session">

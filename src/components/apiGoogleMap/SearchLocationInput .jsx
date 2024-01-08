@@ -42,7 +42,7 @@ const SearchLocationInput = ({ setSelectedLocation, setPlace,title }) => {
   return (
     <div className="search-location-input">
       <label htmlFor="inputSearchAddress" style={{ cursor: "pointer" }}>
-        <h3>{title || "Where do you live?"} </h3>
+        <h3>{title || "Bạn sống ở đâu?"} </h3>
       </label>
       <div className="d-flex " style={{margin:" 15px 20% 0 20%"}}>
        
@@ -51,7 +51,7 @@ const SearchLocationInput = ({ setSelectedLocation, setPlace,title }) => {
           ref={inputRef}
           className="form-control"
           onChange={(event) => (setQuery(event.target.value) ,setPlace(event.target.value))}
-          placeholder="Search Places ..."
+          placeholder="Tìm kiếm địa điểm"
           value={query}
           id="inputSearchAddress"
         />

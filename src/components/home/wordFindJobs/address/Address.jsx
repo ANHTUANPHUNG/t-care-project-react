@@ -64,11 +64,13 @@ export function Address() {
     axios
       .put(`http://localhost:8080/api/employees/location/${id}`, postData)
       .then((response) => {
-        navigate(`/assistant/process/${id}`);
+        navigate(`/assistant/process`);
         console.log("Post thành công:", response.data);
       })
       .catch((error) => {
         console.error("Lỗi khi gửi POST request:", error);
+
+        navigate(`/assistant/process`)
         toast.error("Lỗi khi gửi thông tin vị trí");
       });
   };
@@ -87,7 +89,7 @@ export function Address() {
         <MapComponent selectedLocation={selectedLocation} />
       </div>
       <div style={{ margin: "30px 35%" }}>
-        <h6 style={{ paddingLeft: "50px" }}>How far are you willing to travel?</h6>
+        <h6 style={{ paddingLeft: "50px" }}>Bạn có thể di chuyển bao xa?</h6>
         <div
           style={{
             display: "flex",
@@ -99,7 +101,7 @@ export function Address() {
             <RemoveIcon />
           </div>
           <div>
-            <span style={{ fontSize: "30px" }}>{km}</span> <br /> <span>Miles</span>
+            <span style={{ fontSize: "30px" }}>{km}</span> <br /> <span>Kilomets</span>
           </div>
           <div style={{ cursor: "pointer", margin: "10px" }} onClick={() => handleAdd()}>
             <AddIcon />

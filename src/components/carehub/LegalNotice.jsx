@@ -6,31 +6,33 @@ export function LegalNotice (){
         <div className=" care-hub-footer" >
           <div className="row  care-hub-footer-align" >
             <p  className="mb-4">
-              Care.com does not employ any caregiver and is not responsible for the conduct of any
+              {/* Care.com does not employ any caregiver and is not responsible for the conduct of any
               user of our site. All information in member profiles, job posts, applications, and
               messages is created by users of our site and not generated or verified by Care.com.
               You need to do your own diligence to ensure the job or caregiver you choose is
-              appropriate for your needs and complies with applicable laws.
+              appropriate for your needs and complies with applicable laws. */}
+              T-Care không tuyển dụng bất kì người chăm sóc nào không chịu trách nhiệm về hành vi chăm sóc của mình.
+               Tất cả thông tin trong hồ sơ thành viên, bài đăng công việc, ứng dụng và tin nhắn được tạo bởi người dùng
+               trang web của chúng tôi không được T-Care tạo ra hoặc xác minh. Bạn cần phải nỗ lực hết mình để đảm bảo công việc
+               hoặc người chăm sóc của bạn là phù hợp với nhu cầu của bạn và tuân thủ pháp luật hiện hành.
             </p>
             <p  className="mb-4">
-              Care.com® HomePay℠ is a service provided by Breedlove and Associates, LLC, a Care.com
-              company.
+             T-Care.com® là một trang web dịch vụ của công ty T-Company.
             </p>
             <p  className="mb-4">
-              “Care.com" and "There for you" are service marks or registered service marks of
-              Care.com, Inc. 2007-2023 Care.com, Inc. All rights reserved.
+              “T-Care.com" được tạo ra để hỗ trợ chăm sóc người cao tuổi, thành lập vào năm 2023
             </p>
             <div  className="col-2">
-              Terms of use
+             Điều khoản dịch vụ
             </div>
             <div  className="col-2">
-              Privacy Policy
+              Chính sách bảo mật
             </div>
             <div  className="col-3">
-              California Privacy Notice
+             Quyền riêng tư
             </div>
             <div  className="col-5">
-              Do Not Sell or Share My Personal Information
+              Không được bán và chia sẻ thông tin dưới mọi hình thức
             </div>
           </div>
         </div>

@@ -7,11 +7,11 @@ import { LegalNotice } from "../../../carehub/LegalNotice";
 import { ButtonForMe } from "../../../ButtonForMe";
 
 const relationship = [
-  { id: 1, name: "My parent" },
-  { id: 2, name: "My spouse" },
-  { id: 3, name: "My grandparent" },
-  { id: 4, name: "My friend/extended relative" },
-  { id: 5, name: "Myself" },
+  { id: 1, name: "Bố mẹ của tôi" },
+  { id: 2, name: "Vợ/chồng của tôi" },
+  { id: 3, name: "Ông bà của tôi" },
+  { id: 4, name: "Bạn bè/họ hàng của tôi" },
+  { id: 5, name: "Bản thân tôi" },
 ];
 const gender = [
   { id: 1, name: "Nam" },
@@ -53,8 +53,8 @@ export function UserNeedCare() {
       </div>
       <div className="d-flex user-need-care">
         <div className="user-need-care-container">
-          <h4>Share a few details about who needs care.</h4>
-          <h5>Who needs care?</h5>
+          <h4>Chia sẻ thêm thông tin về người được chăm sóc.</h4>
+          <h5>Ai đang cần chăm sóc?</h5>
           {relationship.map((e) => (
             <div
               key={e.id}
@@ -102,15 +102,15 @@ export function UserNeedCare() {
               </Select>
             </FormControl>
           </Box>
-          <h5 className="my-4">What should we know about them?</h5>
-          <span className="my-2">Examples:</span>
+          <h5 className="my-4">Chúng tôi nên biết gì về họ?</h5>
+          <span className="my-2">Ví dụ:</span>
           <ul>
-            <li className="my-2">Do they have any underlying conditions?</li>
-            <li className="my-2">What are their hobbies/interests?</li>
-            <li className="my-2">How would they structure their ideal day?</li>
+            <li className="my-2">Họ có cần điều kiện cơ bản gì không(Ví dụ người hỗ trợ là nam/ nữ)</li>
+            <li className="my-2">Sở thích, niềm vui của họ là gì?</li>
+            <li className="my-2">Một ngày sinh hoạt bình thường của họ như thế nào?</li>
           </ul>
           <div class="form-group">
-            <textarea class="form-control" placeholder="Share detail here" rows="3"></textarea>
+            <textarea class="form-control" placeholder="Chia sẻ chi tiết ở đây" rows="3"></textarea>
           </div>
         </div>
       </div>
