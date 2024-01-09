@@ -5,6 +5,7 @@ import { LegalNotice } from "../../../carehub/LegalNotice";
 import { NavLink } from "react-router-dom";
 import { ButtonForMe } from "../../../ButtonForMe";
 import { CheckBoxService } from "../userService/CheckboxService";
+import GetServiceAPI from "../../../../service/getServiceAPI";
 
 export function UserService() {
   const [listServiceGenerals, setListServiceGenerals] = useState();
@@ -13,8 +14,8 @@ export function UserService() {
     showListServiceGenerals();
   }, []);
   const showListServiceGenerals = async () => {
-    const serviceGenerals = await axios.get("http://localhost:8080/api/serviceGenerals");
-    setListServiceGenerals(serviceGenerals.data);
+    const serviceGenerals = await GetServiceAPI.getServiceGeneral();
+    setListServiceGenerals(serviceGenerals);
   };
   return (
     <>
