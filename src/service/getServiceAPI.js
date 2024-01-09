@@ -11,7 +11,7 @@ const GetServiceAPI = {
             .catch((err) => {
                 console.log(err);
             });
-    }
-    
+    },
+    keyGGMap: "AIzaSyBPFhgGX5wghzuKBgfwoETGm3E0CO2Xhrc",
 };
 export default GetServiceAPI;
