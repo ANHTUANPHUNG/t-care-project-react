@@ -16,7 +16,6 @@ export function UserAddress() {
     lat: 0,
     lng: 0,
   });
-
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {

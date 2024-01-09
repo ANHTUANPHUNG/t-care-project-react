@@ -1,25 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./SelectDate.css";
 
-export function SelectDate({paddingSpan}) {
+export function SelectDate({ paddingSpan, setValue }) {
   const dateInWeek = [
-    { id: 1, name: "CN" },
-    { id: 2, name: "TH2" },
-    { id: 3, name: "TH3" },
-    { id: 4, name: "TH4" },
-    { id: 5, name: "TH5" },
-    { id: 6, name: "TH6" },
-    { id: 7, name: "TH7" },
+    { id: 1, name: "CN", value: "SUNDAY" },
+    { id: 2, name: "TH2", value: "MONDAY" },
+    { id: 3, name: "TH3", value: "TUESDAY" },
+    { id: 4, name: "TH4", value: "WEDNESDAY" },
+    { id: 5, name: "TH5", value: "THURSDAY" },
+    { id: 6, name: "TH6", value: "FRIDAY" },
+    { id: 7, name: "TH7", value: "SATURDAY" },
   ];
   const sessionInDate = [
-    { id: 1, name: "Buổi sáng" },
-    { id: 2, name: "Buổi chiều" },
-    { id: 3, name: "Buổi tối" },
-    { id: 4, name: "Cả ngày" },
+    { id: 1, name: "Buổi sáng", value: "MORNING" },
+    { id: 2, name: "Buổi chiều", value: "AFTERNOON" },
+    { id: 3, name: "Buổi tối", value: "EVENING" },
+    { id: 4, name: "Cả ngày", value: "NIGHT" },
   ];
+  
+ 
   const [valueDate, setValueDate] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedSessions, setSelectedSessions] = useState([]);
+  console.log(selectedSessions);
   const toggleSession = (date, sessionId) => {
     const dateSessions = selectedSessions[date] || [];
     const updatedSessions = dateSessions.includes(sessionId)
@@ -31,6 +34,11 @@ export function SelectDate({paddingSpan}) {
       [date]: updatedSessions,
     });
   };
+  
+  useEffect(() => {
+    setValue(selectedSessions);
+  }, [selectedSessions]);
+
   return (
     <>
       <div className="d-flex date-in-week">
@@ -39,14 +47,14 @@ export function SelectDate({paddingSpan}) {
             <div
               key={e.id}
               id={`${
-                selectedSessions[e.name] && Object.keys(selectedSessions[e.name]).length > 0
+                selectedSessions[e.value] && Object.keys(selectedSessions[e.value]).length > 0
                   ? "idActive"
                   : ""
               }`}
               className={`d-flex date-in-week-header-render-${
-                e.name === selectedDate ? "selected" : ""
+                e.value === selectedDate ? "selected" : ""
               }`}
-              onClick={() => (setValueDate(e.name), setSelectedDate(e.name))}
+              onClick={() => (setValueDate(e.value), setSelectedDate(e.value))}
             >
               <span className="w-100">{e.name}</span>
             </div>
@@ -54,7 +62,7 @@ export function SelectDate({paddingSpan}) {
         </div>
       </div>
       <div className="d-flex justify-content-center my-4">
-          <h6>{valueDate} </h6>
+        <h6>{valueDate} </h6>
       </div>
       <div className="my-4  d-flex justify-content-center">
         <div className="d-flex  justify-content-center">
@@ -63,11 +71,11 @@ export function SelectDate({paddingSpan}) {
               <div
                 key={e.id}
                 className={` ms-3 session-render-${
-                  (selectedSessions[valueDate] || []).includes(e.id) ? "selected" : ""
+                  (selectedSessions[valueDate] || []).includes(e.value) ? "selected" : ""
                 }`}
-                onClick={() => toggleSession(valueDate, e.id)}
+                onClick={() => toggleSession(valueDate, e.value)}
               >
-                <span style={{padding: paddingSpan|| 0}}>{e.name}</span>
+                <span style={{ padding: paddingSpan || 0 }}>{e.name}</span>
               </div>
             ))}
         </div>

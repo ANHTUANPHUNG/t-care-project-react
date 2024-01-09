@@ -12,13 +12,13 @@ import axios from "axios";
 import EmployeeServiceAPI from "../../../../service/employeeServiceAPI";
 export function Address() {
   const [km, setKm] = useState(10);
+  const { id } = useParams();
   const [place, setPlace] = useState("");
   const [selectedLocation, setSelectedLocation] = useState({
     lat: 0,
     lng: 0,
   });
   let navigate = useNavigate();
-  const { id } = useParams();
   const [location, setLocation] = useState({
     nameLocation: place,
     distanceForWork: km,
@@ -62,7 +62,8 @@ export function Address() {
       longitude: selectedLocation.lng,
       latitude: selectedLocation.lat,
     };
-await EmployeeServiceAPI.updateLocation(id,postData)
+
+    await EmployeeServiceAPI.updateLocation(id, postData);
     // axios
     //   .put(`http://localhost:8080/api/employees/location/${id}`, postData)
     //   .then((response) => {
@@ -111,9 +112,7 @@ await EmployeeServiceAPI.updateLocation(id,postData)
         </div>
       </div>
       <div style={{ textAlign: "end", marginBottom: "40px", marginRight: "80px" }}>
-        {/* <NavLink to={"/assistant/process"}> */}
         <ButtonForMe childrenButton={"Next"} colorButton={"#213f5f"} onclick={handleButtonClick} />
-        {/* </NavLink> */}
       </div>
     </div>
   );
