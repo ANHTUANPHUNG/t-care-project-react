@@ -35,20 +35,20 @@ function App() {
         <Route path="/sign-in" element={<SignInSelect />}></Route>
         <Route path="/sign-in/find-care" element={<SignInUser />}></Route>
         <Route path="/assistant/sign-in" element={<AssistantSignIn />}></Route>
-        <Route path="/assistant/address" element={<Address />}></Route>
+        <Route path="/assistant/address/:id" element={<Address />}></Route>
         <Route
-          path="/assistant/process"
+          path="/assistant/process/:id"
           element={<DescriptionProcess />}
         ></Route>
         <Route
-          path="/assistant/availability"
+          path="/assistant/availability/:id"
           element={<Availability />}
         ></Route>
-        <Route path="/assistant/experience" element={<Experience />}></Route>
+        <Route path="/assistant/experience/:id" element={<Experience />}></Route>
         <Route path="/assistant/bio" element={<Bio />}></Route>
         <Route path="/assistant/photo" element={<Photo />}></Route>
         <Route path="/user/signin" element={<UserSignIn />}></Route>
-        <Route path="/user/address" element={<UserAddress />}></Route>
+        <Route path="/user/address/:id" element={<UserAddress />}></Route>
         <Route path="/user/service" element={<UserService />}></Route>
         <Route path="/user/jobtype" element={<UserJobType />}></Route>
         <Route path="/user/datesession" element={<DateSession />}></Route>

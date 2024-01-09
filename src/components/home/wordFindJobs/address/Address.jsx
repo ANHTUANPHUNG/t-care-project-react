@@ -11,13 +11,13 @@ import { toast } from "react-toastify";
 import axios from "axios";
 export function Address() {
   const [km, setKm] = useState(10);
+  const { id } = useParams();
   const [place, setPlace] = useState("");
   const [selectedLocation, setSelectedLocation] = useState({
     lat: 0,
     lng: 0,
   });
   let navigate = useNavigate();
-  const { id } = useParams();
   const [location, setLocation] = useState({
     nameLocation: place,
     distanceForWork: km,
@@ -53,7 +53,7 @@ export function Address() {
       toast.error("Số km bé hơn 100");
     }
   };
-
+console.log(id);
   const handleButtonClick = () => {
     const postData = {
       nameLocation: place,
@@ -64,13 +64,12 @@ export function Address() {
     axios
       .put(`http://localhost:8080/api/employees/location/${id}`, postData)
       .then((response) => {
-        navigate(`/assistant/process`);
-        console.log("Post thành công:", response.data);
+        navigate(`/assistant/process/` + id);
+        toast.success("Hoàn thành cập nhật vị trí");
+
       })
       .catch((error) => {
         console.error("Lỗi khi gửi POST request:", error);
-
-        navigate(`/assistant/process`)
         toast.error("Lỗi khi gửi thông tin vị trí");
       });
   };
@@ -109,9 +108,7 @@ export function Address() {
         </div>
       </div>
       <div style={{ textAlign: "end", marginBottom: "40px", marginRight: "80px" }}>
-        {/* <NavLink to={"/assistant/process"}> */}
         <ButtonForMe childrenButton={"Next"} colorButton={"#213f5f"} onclick={handleButtonClick} />
-        {/* </NavLink> */}
       </div>
     </div>
   );

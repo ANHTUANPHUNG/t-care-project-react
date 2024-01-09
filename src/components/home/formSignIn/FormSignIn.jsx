@@ -30,7 +30,6 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
       setPasswordError("Passwords do not match");
       return;
     }
-    setPasswordError("");
     axios
       .post("http://localhost:8080/api/auth/employees/account", {
         firstName: firstName,
@@ -147,9 +146,9 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
             </Grid>
             <Grid item xs={12} className="d-flex justify-content-center">
 
-              <NavLink to={url} style={{ width: "50%" }}>
+              {/* <NavLink to={url} style={{ width: "50%" }}> */}
                 <ButtonForMe value={100} childrenButton={"Đăng kí"} colorButton={color} />
-              </NavLink>
+              {/* </NavLink> */}
 
             </Grid>
           </Grid>
