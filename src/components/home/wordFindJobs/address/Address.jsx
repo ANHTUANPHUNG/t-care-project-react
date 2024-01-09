@@ -9,6 +9,7 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import { toast } from "react-toastify";
 import axios from "axios";
+import EmployeeServiceAPI from "../../../../service/employeeServiceAPI";
 export function Address() {
   const [km, setKm] = useState(10);
   const { id } = useParams();
@@ -53,25 +54,28 @@ export function Address() {
       toast.error("Số km bé hơn 100");
     }
   };
-console.log(id);
-  const handleButtonClick = () => {
+
+  const handleButtonClick = async () => {
     const postData = {
       nameLocation: place,
       distanceForWork: km,
       longitude: selectedLocation.lng,
       latitude: selectedLocation.lat,
     };
-    axios
-      .put(`http://localhost:8080/api/employees/location/${id}`, postData)
-      .then((response) => {
-        navigate(`/assistant/process/` + id);
-        toast.success("Hoàn thành cập nhật vị trí");
 
-      })
-      .catch((error) => {
-        console.error("Lỗi khi gửi POST request:", error);
-        toast.error("Lỗi khi gửi thông tin vị trí");
-      });
+    await EmployeeServiceAPI.updateLocation(id, postData);
+    // axios
+    //   .put(`http://localhost:8080/api/employees/location/${id}`, postData)
+    //   .then((response) => {
+    //     navigate(`/assistant/process`);
+    //     console.log("Post thành công:", response.data);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Lỗi khi gửi POST request:", error);
+
+    //     navigate(`/assistant/process`)
+    //     toast.error("Lỗi khi gửi thông tin vị trí");
+    //   });
   };
 
   const formAddress = (
