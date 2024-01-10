@@ -18,11 +18,15 @@ const SearchLocationInput = ({ setSelectedLocation, setPlace,title }) => {
       handlePlaceSelect(updateQuery);
     });
   };
-
+  const handleInputChange = (event) => {
+    const inputValue = event.target.value;
+    setQuery(inputValue);
+  };
   const handlePlaceSelect = async (updateQuery) => {
     const addressObject = await autoCompleteRef.current.getPlace();
 
     if (addressObject && addressObject.formatted_address) {
+      setPlace(addressObject.formatted_address)
       const selectedQuery = addressObject.formatted_address;
       updateQuery(selectedQuery);
 
@@ -50,7 +54,7 @@ const SearchLocationInput = ({ setSelectedLocation, setPlace,title }) => {
           style={{  cursor: "pointer" }}
           ref={inputRef}
           className="form-control"
-          onChange={(event) => (setQuery(event.target.value) ,setPlace(event.target.value))}
+          onChange={handleInputChange}
           placeholder="Tìm kiếm địa điểm"
           value={query}
           id="inputSearchAddress"
