@@ -44,6 +44,7 @@ export function Experience() {
   const { id } = useParams();
   const [showMore, setShowMore] = useState(false);
   const [education, setEducation] = useState("");
+  const [educationId, setEducationId] = useState("");
   const [years, setYears] = useState(listYear[0]);
   const [servicer, setServicer] = useState([]);
   const [skill, setSkill] = useState([]);
@@ -51,6 +52,8 @@ export function Experience() {
   const [listInformation, setListInformation] = useState();
   const [listService, setListService] = useState();
   const [listSkill, setListSkill] = useState();
+  const [educationName, setEducationName] = useState("");
+
   useEffect(() => {
     let axiosData = async () => {
       const responseInformation = await axios.get("http://localhost:8080/api/add-infos");
@@ -84,29 +87,31 @@ export function Experience() {
     }
   };
   const handleChangeEducation = (event) => {
-    setEducation(event.target.value);
+    const selectedEducationId = event.target.value;
+    setEducationId(selectedEducationId);
+
+    const selectedEducation = listYear.find((item) => item.id === selectedEducationId);
+
+    if (selectedEducation) {
+      setEducationName(selectedEducation.name);
+    }
   };
-  console.log(skill);
-  console.log(years);
-  console.log(information);
-  console.log(servicer);
-  console.log(education);
   const handleSubmitExperience = async () => {
     const listExperience = {
-      idSkills: skill.map(s => s.id),         
-      experience: years.id,                 
-      idAddInfos: information.map(info => info.id),  
-      idServices: servicer.map(service => service.id), 
-      education: education,  
+      idSkills: skill.map((s) => s.id),
+      experience: years.id,
+      idAddInfos: information.map((info) => info.id),
+      idServices: servicer.map((service) => service.id),
+      education: educationId,
     };
     await axios
       .put(`http://localhost:8080/api/employees/experience/${id}`, listExperience)
       .then((resp) => {
-        toast.success("Tài khoản được tạo thành công");
+        toast.success("Lưu thông tin thành công");
       })
       .catch((err) => {
         console.error("Lỗi khi gửi POST request:", err);
-        toast.error("Lỗi khi gửi thông tin vị trí");
+        toast.error("Chọn đầy đủ thông tin");
       });
   };
   const servicesToShow = showMore ? listService : listService?.slice(0, 5);
@@ -148,16 +153,9 @@ export function Experience() {
           <FormControl sx={{ width: 300 }}>
             <Select
               displayEmpty
-              value={education}
+              value={educationId}
               onChange={handleChangeEducation}
               input={<OutlinedInput />}
-              renderValue={(selected) => {
-                if (selected.length === 0) {
-                  return <em>Vui lòng chọn trường này</em>;
-                }
-
-                return selected;
-              }}
               MenuProps={MenuProps}
               sx={{ backgroundColor: "#f3f4f6", height: "40px" }}
             >
@@ -214,11 +212,11 @@ export function Experience() {
         </div>
       </div>
       <div className="experience-button">
-          <ButtonForMe
-            childrenButton={"Lưu và tiếp tục"}
-            colorButton={"#213f5f"}
-            onclick={handleSubmitExperience}
-          />
+        <ButtonForMe
+          childrenButton={"Lưu và tiếp tục"}
+          colorButton={"#213f5f"}
+          onclick={handleSubmitExperience}
+        />
       </div>
     </div>
   );

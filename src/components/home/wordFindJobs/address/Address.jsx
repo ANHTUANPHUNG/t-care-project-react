@@ -8,7 +8,6 @@ import { ButtonForMe } from "../../../ButtonForMe";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import { toast } from "react-toastify";
-import axios from "axios";
 import EmployeeServiceAPI from "../../../../service/employeeServiceAPI";
 export function Address() {
   const [km, setKm] = useState(10);
@@ -52,8 +51,6 @@ export function Address() {
         longitude: selectedLocation.lng,
         latitude: selectedLocation.lat,
       };
-      
-
       await EmployeeServiceAPI.updateLocation(id, postData, navigate, "/assistant/process");
     } else {
       toast.error("Chọn vị trí của bạn")
