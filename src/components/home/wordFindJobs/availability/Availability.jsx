@@ -4,7 +4,7 @@ import { NavBarFindJob } from "../navBarFindJob/NavBarFindJob";
 import { SideBarFindJob } from "../sideBarFindJob/SideBarFindJob";
 
 import { SelectDate } from "../../../selectDate/SelectDate";
-import { NavLink, Navigate, useParams } from "react-router-dom";
+import { NavLink, Navigate, useNavigate, useParams } from "react-router-dom";
 import { ButtonForMe } from "../../../ButtonForMe";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -12,35 +12,30 @@ import { toast } from "react-toastify";
 export function Availability() {
   const { id } = useParams();
   const [value, setValue] = useState();
-  const transformData = (value) => {
-    if (!value || typeof value !== 'object') {
-      return { listDateSession: [] };
-    }
-    const daysOfWeek = Object.keys(value);
-    const transformedData = {
-      listDateSession: daysOfWeek.map((day) => ({
+  let navigate = useNavigate();
+
+  const handleSubmitAvailability = async () => {
+    try {
+      if (Object.keys(value).length === 0) {
+        toast.error("Chọn ngày làm");
+        return;
+      }
+
+      const transformedData = Object.keys(value).map((day) => ({
         date: day,
         sessionOfDateList: value[day],
-      })),
-    };
-  
-    return transformedData;
-  };
-  
-  const result = transformData(value);
-  console.log(result);
-  const handleSubmitAvailability = async (e) => {
-    
-    axios
-      .put(`http://localhost:8080/api/employees/dateSessions/${id}`,result)
-      .then((response) => {
-        Navigate(`/assistant/experience/` + id);
-        toast.success("Hoàn thành cập nhật ngày có thể làm");
-      })
-      .catch((error) => {
-        console.error("Lỗi khi gửi POST request:", error);
-        toast.error("Lỗi khi cập nhật ngày làm");
+      }));
+
+      await axios.put(`http://localhost:8080/api/employees/dateSessions/${id}`, {
+        listDateSession: transformedData,
       });
+
+      navigate(`/assistant/experience/${id}`);
+      toast.success("Hoàn thành cập nhật ngày có thể làm");
+    } catch (error) {
+      console.error("Lỗi khi gửi PUT request:", error);
+      toast.error("Đã xảy ra lỗi. Vui lòng thử lại sau.");
+    }
   };
 
   const needCare = (
