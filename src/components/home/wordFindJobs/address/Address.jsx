@@ -56,7 +56,7 @@ export function Address() {
 
       await EmployeeServiceAPI.updateLocation(id, postData, navigate, "/assistant/process");
     } else {
-      toast.error("Chọn vị trí của bạn")
+      toast.error("Vui lòng chọn vị trí của bạn")
     }
   };
 console.log(place);
