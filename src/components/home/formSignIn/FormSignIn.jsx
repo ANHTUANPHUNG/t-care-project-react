@@ -4,60 +4,75 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import { Checkbox, FormControl, FormControlLabel, FormLabel } from "@mui/material";
-import { NavLink, useNavigate } from "react-router-dom";
 import { ButtonForMe } from "../../ButtonForMe";
 import axios from "axios";
 import { toast } from "react-toastify";
 import EmployeeServiceAPI from "../../../service/employeeServiceAPI";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import { useNavigate } from "react-router-dom";
+
+const validationSchema = yup.object().shape({
+  email: yup.string().email("Email không hợp lệ").required("Email không được để trống"),
+  firstName: yup.string().required("Tên không được để trống"),
+  lastName: yup.string().required("Họ không được để trống"),
+  password: yup.string().required("Mật khẩu không được để trống"),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("password"), null], "Mật khẩu xác nhận phải giống mật khẩu"),
+  personID: yup
+    .number()
+    .typeError("Số Căn Cước Công Dân phải là số")
+    .test(
+      "len",
+      "Số Căn Cước Công Dân phải có đúng 10 số",
+      (val) => val && val.toString().length === 10
+    )
+    .required("Số Căn Cước Công Dân không được để trống"),
+  termsAgreed: yup.bool().oneOf([true], "Bạn phải đồng ý với các điều khoản và dịch vụ"),
+});
 
 export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, color, checkRole }) {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [personID, setPersonId] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [termsAgreed, setTermsAgreed] = useState(false);
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState("MALE");
   let navigate = useNavigate();
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      firstName: "",
+      lastName: "",
+      password: "",
+      confirmPassword: "",
+      personID: "",
+      termsAgreed: false,
+    },
+    validationSchema: validationSchema,
+    onSubmit: async (values) => {
+      try {
+        await EmployeeServiceAPI.signInEmployee(
+          {
+            firstName: values.firstName,
+            lastName: values.lastName,
+            email: values.email,
+            password: values.password,
+            gender: gender,
+            personId: values.personID,
+            role: checkRole,
+          },
+          navigate,
+          url
+        );
+
+        formik.resetForm();
+      } catch (error) {
+        // Handle submission error
+        console.error("An error occurred during form submission:", error);
+      }
+    },
+  });
 
   const handleGenderClick = (selectedGender) => {
     setGender(selectedGender);
-  };
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    if (password !== confirmPassword) {
-      setPasswordError("Passwords do not match");
-      return;
-    }
-    setPasswordError("");
-    await EmployeeServiceAPI.signInEmployee({
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: password,
-      gender: gender,
-      personID: personID,
-      role: checkRole,
-    });
-    // axios
-    //     .post("http://localhost:8080/api/auth/employees/account", {
-    //         firstName: firstName,
-    //         lastName: lastName,
-    //         email: email,
-    //         password: password,
-    //         gender: gender,
-    //         personID: personID,
-    //         role: checkRole,
-    //     })
-    //     .then((response) => {
-    //         toast.success("Tài khoản được tạo thành công");
-    //         navigate(url + "/" + response.data);
-    //     })
-    //     .catch((error) => {
-    //         console.error("Error sending data:", error);
-    //     });
   };
 
   return (
@@ -68,7 +83,7 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
             {marginHeader || "Một số thông tin về bản thân bạn"}
           </h3>
         </div>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={formik.handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -76,8 +91,10 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
                 id="email"
                 label="Email"
                 type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                error={formik.touched.email && Boolean(formik.errors.email)}
+                helperText={formik.touched.email && formik.errors.email}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -85,8 +102,10 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
                 fullWidth
                 id="firstName"
                 label="Tên"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
+                value={formik.values.firstName}
+                onChange={formik.handleChange}
+                error={formik.touched.firstName && Boolean(formik.errors.firstName)}
+                helperText={formik.touched.firstName && formik.errors.firstName}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -94,19 +113,22 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
                 fullWidth
                 id="lastName"
                 label="Họ"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
+                value={formik.values.lastName}
+                onChange={formik.handleChange}
+                error={formik.touched.lastName && Boolean(formik.errors.lastName)}
+                helperText={formik.touched.lastName && formik.errors.lastName}
               />
             </Grid>
-
             <Grid item xs={12}>
               <TextField
                 fullWidth
                 id="password"
                 label="Mật khẩu"
                 type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                error={formik.touched.password && Boolean(formik.errors.password)}
+                helperText={formik.touched.password && formik.errors.password}
               />
             </Grid>
             <Grid item xs={12}>
@@ -115,10 +137,10 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
                 id="confirmPassword"
                 label="Xác nhận mật khẩu"
                 type="password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                error={Boolean(passwordError)}
-                helperText={passwordError}
+                value={formik.values.confirmPassword}
+                onChange={formik.handleChange}
+                error={formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)}
+                helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
               />
             </Grid>
             <Grid item xs={12}>
@@ -126,8 +148,10 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
                 fullWidth
                 id="personID"
                 label="Số Căn Cước Công Dân"
-                value={personID}
-                onChange={(e) => setPersonId(e.target.value)}
+                value={formik.values.personID}
+                onChange={formik.handleChange}
+                error={formik.touched.personID && Boolean(formik.errors.personID)}
+                helperText={formik.touched.personID && formik.errors.personID}
               />
             </Grid>
             <Grid item xs={12}>
@@ -163,8 +187,9 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
                 className="term-agreed"
                 control={
                   <Checkbox
-                    checked={termsAgreed}
-                    onChange={(e) => setTermsAgreed(e.target.checked)}
+                    checked={formik.values.termsAgreed}
+                    onChange={formik.handleChange}
+                    name="termsAgreed"
                     color="primary"
                   />
                 }
@@ -173,11 +198,20 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
                   " Khi chọn vào ô này, bạn đã chấp thuận với điều khoản và dịch vụ của công ty chúng tôi."
                 }
               />
+              {formik.touched.termsAgreed && formik.errors.termsAgreed && (
+                <div className="error-message" style={{ color: "red" }}>
+                  {formik.errors.termsAgreed}
+                </div>
+              )}
             </Grid>
+
             <Grid item xs={12} className="d-flex justify-content-center">
-              <NavLink to={url} style={{ width: "50%" }}>
-                <ButtonForMe value={100} childrenButton={"Đăng kí"} colorButton={color} />
-              </NavLink>
+              <ButtonForMe
+                value={100}
+                childrenButton={"Đăng kí"}
+                colorButton={color}
+                type="submit"
+              />
             </Grid>
           </Grid>
         </form>

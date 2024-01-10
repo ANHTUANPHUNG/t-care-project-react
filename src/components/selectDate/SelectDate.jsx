@@ -20,9 +20,9 @@ export function SelectDate({ paddingSpan, setValue }) {
   
  
   const [valueDate, setValueDate] = useState("");
+  const [nameDate, setNameDate] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedSessions, setSelectedSessions] = useState([]);
-  console.log(selectedSessions);
   const toggleSession = (date, sessionId) => {
     const dateSessions = selectedSessions[date] || [];
     const updatedSessions = dateSessions.includes(sessionId)
@@ -54,7 +54,7 @@ export function SelectDate({ paddingSpan, setValue }) {
               className={`d-flex date-in-week-header-render-${
                 e.value === selectedDate ? "selected" : ""
               }`}
-              onClick={() => (setValueDate(e.value), setSelectedDate(e.value))}
+              onClick={() => (setValueDate(e.value), setSelectedDate(e.value),setNameDate(e.name))}
             >
               <span className="w-100">{e.name}</span>
             </div>
@@ -62,7 +62,7 @@ export function SelectDate({ paddingSpan, setValue }) {
         </div>
       </div>
       <div className="d-flex justify-content-center my-4">
-        <h6>{valueDate} </h6>
+        <h6>{nameDate} </h6>
       </div>
       <div className="my-4  d-flex justify-content-center">
         <div className="d-flex  justify-content-center">

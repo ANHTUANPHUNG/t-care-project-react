@@ -1,7 +1,8 @@
+
+
 import axios from "axios";
 import { toast } from "react-toastify";
 const PREFIX = "http://localhost:8080/api";
-
 const EmployeeServiceAPI = {
     getRatesTopThree: async () => {
         return axios
@@ -13,23 +14,24 @@ const EmployeeServiceAPI = {
                 console.log(err);
             });
     },
-    signInEmployee: async (postData) => {
+    signInEmployee: async (postData,navigate,url) => {
         return axios
             .post(PREFIX + "/auth/employees/account", postData)
             .then((resp) => {
+                console.log(resp.data);
                 toast.success("Tài khoản được tạo thành công");
-                navigate(url + "/" + response.data);
+                navigate(url + "/" + resp.data);
             })
             .catch((err) => {
                 console.log(err);
             });
     },
-    updateLocation: async (id, postData) => {
+    updateLocation: async (id, postData, navigate, url) => {
         return axios
             .put(PREFIX + "/employees/location/" + id, postData)
             .then((resp) => {
                 toast.success("Tài khoản được tạo thành công");
-                navigate(url + "/" + resp.data);
+                navigate(url + "/" + id);
             })
             .catch((err) => {
                console.error("Lỗi khi gửi POST request:", err);

@@ -19,27 +19,16 @@ export function Address() {
     lng: 0,
   });
   let navigate = useNavigate();
-  const [location, setLocation] = useState({
-    nameLocation: place,
-    distanceForWork: km,
-    longitude: selectedLocation.lng,
-    latitude: selectedLocation.lat,
-  });
-
+  
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
-        setSelectedLocation({
-          lat: latitude,
-          lng: longitude,
-        });
-      },
-      (error) => {
-        console.error("Error getting geolocation:", error);
-      }
-    );
-  }, [location]);
+    navigator.geolocation.getCurrentPosition((position) => {
+      const { latitude, longitude } = position.coords;
+      setSelectedLocation({
+        lat: latitude,
+        lng: longitude,
+      });
+    });
+  }, []);
   const handleMinus = () => {
     if (km > 5) {
       setKm((prev) => prev - 5);
@@ -56,28 +45,21 @@ export function Address() {
   };
 
   const handleButtonClick = async () => {
-    const postData = {
-      nameLocation: place,
-      distanceForWork: km,
-      longitude: selectedLocation.lng,
-      latitude: selectedLocation.lat,
-    };
+    if (place != "") {
+      const postData = {
+        nameLocation: place,
+        distanceForWork: km,
+        longitude: selectedLocation.lng,
+        latitude: selectedLocation.lat,
+      };
+      
 
-    await EmployeeServiceAPI.updateLocation(id, postData);
-    // axios
-    //   .put(`http://localhost:8080/api/employees/location/${id}`, postData)
-    //   .then((response) => {
-    //     navigate(`/assistant/process`);
-    //     console.log("Post thành công:", response.data);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Lỗi khi gửi POST request:", error);
-
-    //     navigate(`/assistant/process`)
-    //     toast.error("Lỗi khi gửi thông tin vị trí");
-    //   });
+      await EmployeeServiceAPI.updateLocation(id, postData, navigate, "/assistant/process");
+    } else {
+      toast.error("Chọn vị trí của bạn")
+    }
   };
-
+console.log(place);
   const formAddress = (
     <div
       style={{

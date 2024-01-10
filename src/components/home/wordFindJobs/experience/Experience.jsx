@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Experience.css";
 import { NavBarFindJob } from "../navBarFindJob/NavBarFindJob";
 import { SideBarFindJob } from "../sideBarFindJob/SideBarFindJob";
@@ -7,11 +7,30 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { MapToMe } from "./MapToMe";
 import { ButtonForMe } from "../../../ButtonForMe";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import { toast } from "react-toastify";
+import axios from "axios";
 export function Experience() {
+  const listEducation = [
+    { id: "HIGHSCHOOL", name: "Trung học cơ sở" },
+    { id: "UNIVERSITY", name: "Đại Học" },
+    { id: "COLLEGE", name: "Cao Đẳng" },
+    { id: "GRADUTEDEGREE", name: "Cử Nhân" },
+  ];
+  const listYear = [
+    { id: "ONE", name: "1" },
+    { id: "TWO", name: "2" },
+    { id: "THREE", name: "3" },
+    { id: "FOUR", name: "4" },
+    { id: "FIVE", name: "5" },
+    { id: "SIX", name: "6" },
+    { id: "SEVEN", name: "7" },
+    { id: "EIGHT", name: "8" },
+    { id: "NIGHT", name: "9" },
+    { id: "TEN", name: "10+" },
+  ];
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {
@@ -22,42 +41,75 @@ export function Experience() {
       },
     },
   };
-  const services = [
-    { id: 1, name: "Dọn phòng nhẹ nhàng" },
-    { id: 2, name: "Chăm sóc tại nhà" },
-    { id: 3, name: "Chăm sóc thay thế" },
-    { id: 4, name: "Dịch vụ chăm sóc cuối đời" },
-    { id: 5, name: "Chăm sóc cá nhân " },
-    { id: 6, name: "Chăm sóc chứng mất trí nhớ" },
-    { id: 7, name: "Tắm và mặc quần áo" }
-
-  ];
+  const { id } = useParams();
   const [showMore, setShowMore] = useState(false);
-  const [personName, setPersonName] = useState("");
-  const [years, setYears] = useState(1);
+  const [education, setEducation] = useState("");
+  const [years, setYears] = useState(listYear[0]);
+  const [servicer, setServicer] = useState([]);
+  const [skill, setSkill] = useState([]);
+  const [information, setInformation] = useState([]);
+  const [listInformation, setListInformation] = useState();
+  const [listService, setListService] = useState();
+  const [listSkill, setListSkill] = useState();
+  useEffect(() => {
+    let axiosData = async () => {
+      const responseInformation = await axios.get("http://localhost:8080/api/add-infos");
+      setListInformation(responseInformation.data);
 
+      const responseService = await axios.get("http://localhost:8080/api/serviceGenerals");
+      setListService(responseService.data);
+
+      const responseSkill = await axios.get("http://localhost:8080/api/skills");
+      setListSkill(responseSkill.data);
+    };
+    axiosData();
+  }, []);
   const handleMinus = () => {
-    if (years > 1) {
-      toast.success("Xử lý thành công");
-      setYears((prev) => prev - 1);
+    const currentIndex = listYear.findIndex((item) => item.id === years.id);
+    const nextIndex = currentIndex - 1;
+
+    if (nextIndex >= 0) {
+      setYears(listYear[nextIndex]);
     } else {
-      toast.error("Số năm lớn hơn 1");
+      toast.error("Số năm phải lớn hơn 1");
     }
   };
   const handleAdd = () => {
-    if (years < 10) {
-      toast.success("Xử lý thành công");
-      setYears((prev) => prev + 1);
+    const currentIndex = listYear.findIndex((item) => item.id === years.id);
+    const nextIndex = currentIndex + 1;
+    if (nextIndex < listYear.length) {
+      setYears(listYear[nextIndex]);
     } else {
-      toast.error("Số năm bé hơn 10");
+      toast.error("Số năm đã quá giới hơn");
     }
   };
-
-  const handleChange = (event) => {
-    setPersonName(event.target.value);
+  const handleChangeEducation = (event) => {
+    setEducation(event.target.value);
   };
-
-  const servicesToShow = showMore ? services : services.slice(0, 5);
+  console.log(skill);
+  console.log(years);
+  console.log(information);
+  console.log(servicer);
+  console.log(education);
+  const handleSubmitExperience = async () => {
+    const listExperience = {
+      idSkills: skill.map(s => s.id),         
+      experience: years.id,                 
+      idAddInfos: information.map(info => info.id),  
+      idServices: servicer.map(service => service.id), 
+      education: education,  
+    };
+    await axios
+      .put(`http://localhost:8080/api/employees/experience/${id}`, listExperience)
+      .then((resp) => {
+        toast.success("Tài khoản được tạo thành công");
+      })
+      .catch((err) => {
+        console.error("Lỗi khi gửi POST request:", err);
+        toast.error("Lỗi khi gửi thông tin vị trí");
+      });
+  };
+  const servicesToShow = showMore ? listService : listService?.slice(0, 5);
 
   const experience = (
     <div className="col-9 container-experience">
@@ -68,12 +120,13 @@ export function Experience() {
           <span className="services-provided-side-bar-select">Vui lòng chọn ít nhất một</span>
         </div>
         <div>
-          <MapToMe mapToMe={servicesToShow} />
-          {services.length > 5 && (
+          <MapToMe mapToMe={servicesToShow} valueList={servicer} setValueList={setServicer} />
+          {listService?.length > 5 && (
             <div className="show-more" onClick={() => setShowMore((prev) => !prev)}>
               {showMore ? (
                 <span>
-                  <KeyboardArrowUpIcon />Hiển thị bớt
+                  <KeyboardArrowUpIcon />
+                  Hiển thị bớt
                 </span>
               ) : (
                 <span>
@@ -95,8 +148,8 @@ export function Experience() {
           <FormControl sx={{ width: 300 }}>
             <Select
               displayEmpty
-              value={personName}
-              onChange={handleChange}
+              value={education}
+              onChange={handleChangeEducation}
               input={<OutlinedInput />}
               renderValue={(selected) => {
                 if (selected.length === 0) {
@@ -111,9 +164,9 @@ export function Experience() {
               <MenuItem disabled value="">
                 <em>Vui lòng chọn trường này</em>
               </MenuItem>
-              {services.map((service) => (
-                <MenuItem key={service.id} value={service.name}>
-                  {service.name}
+              {listEducation?.map((e) => (
+                <MenuItem key={e?.id} value={e?.id}>
+                  {e?.name}
                 </MenuItem>
               ))}
             </Select>
@@ -123,14 +176,15 @@ export function Experience() {
       <div className="separation-experience"></div>
       <div className="year-experience">
         <div className="year-experience-title">
-          <span>Số năm kinh nghiệm làm việc</span>
+          <div className="w-75">Số năm kinh nghiệm làm việc</div>
         </div>
         <div className="year-experience-handle">
           <div className="year-experience-handle-minus" onClick={() => handleMinus()}>
             <RemoveIcon />
           </div>
           <div>
-            <span className="year-experience-handle-years">{years}</span> <br /> <span>Years</span>
+            <span className="year-experience-handle-years">{years.name}</span> <br />{" "}
+            <span>Years</span>
           </div>
           <div className="year-experience-handle-add" onClick={() => handleAdd()}>
             <AddIcon />
@@ -143,7 +197,7 @@ export function Experience() {
           <span>Kĩ năng</span>
         </div>
         <div>
-          <MapToMe mapToMe={servicesToShow} />
+          <MapToMe mapToMe={listSkill} valueList={skill} setValueList={setSkill} />
         </div>
       </div>
       <div className="separation-experience"></div>
@@ -152,13 +206,19 @@ export function Experience() {
           <span>Thông tin thêm</span>
         </div>
         <div>
-          <MapToMe mapToMe={servicesToShow} />
+          <MapToMe
+            mapToMe={listInformation}
+            valueList={information}
+            setValueList={setInformation}
+          />
         </div>
       </div>
       <div className="experience-button">
-        <NavLink className="experience-link" to={"/assistant/bio"}>
-          <ButtonForMe childrenButton={"Lưu và tiếp tục"} colorButton={"#213f5f"} />
-        </NavLink>
+          <ButtonForMe
+            childrenButton={"Lưu và tiếp tục"}
+            colorButton={"#213f5f"}
+            onclick={handleSubmitExperience}
+          />
       </div>
     </div>
   );
