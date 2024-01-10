@@ -4,56 +4,86 @@ import { NavBarFindJob } from "../navBarFindJob/NavBarFindJob";
 import { SideBarFindJob } from "../sideBarFindJob/SideBarFindJob";
 import { Button, TextField } from "@mui/material";
 import HighlightIcon from "@mui/icons-material/Highlight";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { ButtonForMe } from "../../../ButtonForMe";
 import ModalUnstyled from "../../../ModalToMe";
 import { Grid } from '@mui/material/Grid';
+import axios from "axios";
+import { toast } from "react-toastify";
+
 export function Bio() {
   const [bioText, setBioText] = useState("");
   const [checkModal, setCheckModal] = useState(false);
   const remainingCharacters = 100 - bioText.length;
+  const [descriptionText, setDescriptionText] = useState("");
+  const [error, setError] = useState("");
+  const { id } = useParams();
+  let navigate = useNavigate();
+  
+  const handleBioClick = async () => {
+    if (bioText.trim() === "") {
+      setError("Tiêu đề tiểu sử không được để trống");
+      return;
+    }
+  
+    if (descriptionText.trim() === "") {
+      setError("Giới thiệu bản thân không được để trống");
+      return;
+    }
+  
+    setError(""); 
+  
+    const bioEmployee = { bioTitle: bioText, descriptionAboutMySelf: descriptionText };
+    try {
+      await axios.put(`http://localhost:8080/api/employees/bio/${id}`, bioEmployee)
+      .then((resp) => {
+        toast.success("Lưu thông tin thành công");
+        navigate(`/assistant/photo/${id}`)
+      })
+      
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
   const formTips = (
     <>
+    
       <h2 id="unstyled-modal-title" className="modal-title">
-        Tips to create a bio and get the right job
+        Một số mẹo tạo tiểu sử giúp dễ dàng hơn trong việc tìm kiếm công việc
       </h2>
       <ul style={{ width: "100%" }} className="modal-description">
-        <li>Create a must-read bio with lots of details so families get your vibe</li>
-        <li>Set expectations by telling families what type of job you're looking for</li>
-        <li>Tell families how you've come to love what you do</li>
+        <li>Một tiểu sử thật chi tiết để các gia đình hiểu hơn về bạn</li>
+        <li>Cho gia đình biết kiểu công việc mà bạn đang tìm kiếm</li>
+        <li>Hãy kể cho gia đình biết bạn yêu quý điều gì</li>
       </ul>
       <p>
-        <strong>Examples:</strong>
+        <strong>Một số ví dụ:</strong>
       </p>
       <p style={{ margin: 0 }}>
-        <strong>Alice B from Oakland, CA</strong>
+        <strong>Thơ Nguyễn đến từ 30 Hoàng Quang, Thuận An, Huế</strong>
       </p>
       <span>
-        I'm a positive and energetic mother of three and grandmother to three grandchildren. For
-        several years, I worked on and off in daycare centers mostly because I love working with
-        kids. Recently, I've been busy helping raise my grandbabies! Now that the grandkids are in
-        school, I'm looking for a way to earn a little extra money while doing the thing I love. I'm
-        confident, energetic, and fun. I do think kids are kids, but it's up to adults to teach them
-        to respect others, nature, and the world around them. My passion is watching and teaching
-        kiddos about this fantastic world around us.
+        Tôi là một bà mẹ ba con tích cực và đầy nghị lực và là bà của ba đứa cháu. Vì
+         trong vài năm, tôi làm việc liên tục ở các trung tâm hội người cao tuổi chủ yếu là vì tôi thích giúp đỡ với
+         người cao tuổi. Gần đây tôi đang bận giúp đỡ việc nuôi dạy các cháu của mình! Bây giờ các cháu đang ở trong
+         trường học, tôi đang tìm cách kiếm thêm một ít tiền trong khi làm công việc tôi yêu thích
       </span>
       <p style={{ margin: "20px 0 0 0" }}>
-        <strong>Gina S from Somerville, MA</strong>
+        <strong>Minh Nguyễn đến từ 28 Nguyễn Trường Tộ, Huế </strong>
       </p>
       <span>
-        Hi! I am a very reliable, patient, and creative person who has approximately 15 years of
-        experience caring for children, from infants to teenagers. With me, your children will
-        receive appropriate care, and I'm willing to do additional other tasks if requested.
-        Personally, I'm an organizer, planner, and multitasker, so minimum supervision is required.
-        With all my skills and experience, I'm able to provide a supervised, safe, and stable
-        environment for your little ones.
+        Xin chào cả nhà, tôi là một người đáng tin cậy, kiên nhẫn và biết lắng nghe, tôi có khoảng 5 năm kinh nghiệm
+        trong việc chăm sóc lĩnh vực y tế, biết đo huyết áp, đường máu,...
+        Tôi muốn kiếm thêm công việc vào thời gian buổi tối hoặc cuối tuần
       </span>
       <div style={{ textAlign: "center", margin: "20px 0" }}>
         <Button
           onClick={() => setCheckModal(false)}
           style={{ backgroundColor: "#213f5f", color: "white", width: "30%" }}
         >
-          Got it
+          Hiểu rồi
         </Button>
       </div>
     </>
@@ -71,7 +101,11 @@ export function Bio() {
           id="outlined-basic"
           label="Tiêu đề tiểu sử"
           variant="outlined"
+          value={descriptionText}
+          onChange={(e) => setDescriptionText(e.target.value)}
+          
         />
+        {error && <p style={{ color: "red" }}>{error}</p>}
       </div>
       <div style={{ width: "70%", paddingBottom: "20px" }}>
         <span>
@@ -84,8 +118,10 @@ export function Bio() {
           style={{ height: "100px", width: "70%" }}
           name="Size"
           placeholder="Tôi có một năm kinh nghiệm làm việc. Tôi có thể sửa đèn và giúp dọn dẹp nhà. "
+          value={bioText}
           onChange={(e) => setBioText(e.target.value)}
         />
+        {error && <p style={{ color: "red" }}>{error}</p>}
       </div>
       <div
         style={{
@@ -104,13 +140,13 @@ export function Bio() {
             <span style={{ color: "#a5a5a5", fontSize: "11px" }}>
               {remainingCharacters} kí tự
             </span>
-          )}
+          )}  
         </div>
       </div>
       <div className="" style={{ padding: "20px 0 40px 0", width: "70%", textAlign: "end" }}>
-        <NavLink className="experience-link" to={"/assistant/photo"}>
-          <ButtonForMe childrenButton={"Save & Continue"} colorButton={"#213f5f"} />
-        </NavLink>
+
+          <ButtonForMe childrenButton={"Lưu và tiếp tục"} colorButton={"#213f5f"} onclick={handleBioClick} />
+
       </div>
       <ModalUnstyled check={checkModal} onClose={() => setCheckModal(false)} children={formTips} widthForm={"79%"} heightForm={"80vh"} />
     </div>
