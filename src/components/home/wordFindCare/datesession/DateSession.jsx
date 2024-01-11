@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import LogoProject from "../../../logoProject/LogoProject";
 import { LegalNotice } from "../../../carehub/LegalNotice";
-import {  useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./DateSession.css";
 import { ButtonForMe } from "../../../ButtonForMe";
 import { SelectDate } from "../../../selectDate/SelectDate";
@@ -13,6 +13,8 @@ export function DateSession() {
   const [value, setValue] = useState();
   const [selectedDate, setSelectedDate] = useState(undefined);
   const [dayInWeek, setDayInWeek] = useState([]);
+  const [startDay, setStartDay] = useState();
+  const [endDay, setEndDay] = useState();
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
@@ -25,20 +27,29 @@ export function DateSession() {
     while (currentDate <= endDate) {
       days.push({
         date: new Date(currentDate),
-        dayOfWeek: currentDate.toLocaleDateString("en-US", { weekday: "long" }), // Lấy tên thứ
+        dayOfWeek: currentDate.toLocaleDateString("en-US", { weekday: "long" }),
       });
       currentDate.setDate(currentDate.getDate() + 1);
     }
 
     return days;
   };
+  const handleDay = (objectDay) => {
+    const dateValue = objectDay?.$d;
+    const formattedDate = dateValue?.toLocaleDateString("en-GB");
+    return formattedDate;
+
+  };
   useEffect(() => {
     if (selectedDate != null) {
       const daysInRange = getDaysInRange(selectedDate[0], selectedDate[1]);
       const dayInWeekSelect = daysInRange.map((e) => e.dayOfWeek);
       setDayInWeek(dayInWeekSelect);
+      setStartDay(handleDay(selectedDate[0]));
+      setEndDay(handleDay(selectedDate[1]));
     }
   }, [selectedDate]);
+
   const handleSubmitDate = async () => {
     try {
       if (Object.keys(value).length === 0) {
@@ -53,6 +64,8 @@ export function DateSession() {
 
       await axios.put(`http://localhost:8080/api/carts/dateSessions/${id}`, {
         listDateSession: transformedData,
+        timeStart: startDay,
+        timeEnd: endDay,
       });
 
       navigate(`/user/need-care/${id}`);
