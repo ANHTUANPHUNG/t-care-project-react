@@ -52,8 +52,32 @@ export function DateSession() {
 
   const handleSubmitDate = async () => {
     try {
+
+      if (!selectedDate || !selectedDate[0] || !selectedDate[1]) {
+        toast.error("Vui lòng ngày bắt đầu và ngày kết thúc");
+        return;
+      }
+
+
+      const startDate = selectedDate[0];
+      const endDate = selectedDate[1];
+      const currentDate = new Date();
+  
+
+      if (startDate <= currentDate) {
+        toast.error("Vui lòng điền ngày bắt đầu lớn hơn ngày hiện tại");
+        return;
+      }
+  
+      if (endDate <= startDate) {
+        toast.error("Vui lòng điền ngày kết thúc phải lớn hơn ngày bắt đầu");
+        return;
+      }
+
+
+
       if (Object.keys(value).length === 0) {
-        toast.error("Chọn ngày thuê");
+        toast.error("Vui lòng điền thời gian trong tuần bạn muốn thuê");
         return;
       }
 
@@ -69,7 +93,7 @@ export function DateSession() {
       });
 
       navigate(`/user/need-care/${id}`);
-      toast.success("Hoàn thành cập nhật ngày có thể làm");
+      toast.success("Hoàn thành hồ sơ ngày thuê");
     } catch (error) {
       console.error("Lỗi khi gửi PUT request:", error);
       toast.error("Đã xảy ra lỗi. Vui lòng thử lại sau.");
@@ -111,7 +135,7 @@ export function DateSession() {
       </div>
 
       <div className="mt-2 mb-5 button-date-session">
-        <ButtonForMe childrenButton={"Next"} onclick={handleSubmitDate} />
+        <ButtonForMe childrenButton={"Tiếp theo"} onclick={handleSubmitDate} />
       </div>
       <div className="legal-notice-user">
         <LegalNotice />

@@ -85,7 +85,7 @@ export function RenderListAssistant() {
             </div>
             <div className="check-select-button">
               <NavLink to="/user/assistant-caption">
-                <ButtonForMe value={100} childrenButton={"Next"}></ButtonForMe>
+                <ButtonForMe value={100} childrenButton={"Tiếp theo"}></ButtonForMe>
               </NavLink>
             </div>
           </div>

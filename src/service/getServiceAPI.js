@@ -2,6 +2,7 @@ import axios from "axios";
 const PREFIX = "http://localhost:8080/api";
 
 const GetServiceAPI = {
+
     getServiceGeneral: async () => {
         return axios
             .get(PREFIX + "/serviceGenerals")
@@ -12,6 +13,6 @@ const GetServiceAPI = {
                 console.log(err);
             });
     },
-    keyGGMap: "AIzaSyDHPW3qqW5QoLyq3OvL6mJam4jypskr-mo",
+    keyGGMap: "AIzaSyCfrtdLP0TnjP1o6HVJ2aixQDKZxuyamfE",
 };
 export default GetServiceAPI;

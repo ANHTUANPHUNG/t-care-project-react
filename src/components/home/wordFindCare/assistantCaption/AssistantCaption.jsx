@@ -50,7 +50,7 @@ export function AssistantCaption() {
             <textarea
               onInput={(e) => setContent(e.target.value)}
               className="form-control"
-              placeholder="Share detail here"
+              placeholder="Chia sẻ chi tiết ở đây"
               rows="5"
             ></textarea>
           </div>
@@ -58,7 +58,7 @@ export function AssistantCaption() {
       </div>
 
       <div className="mt-2 mb-5 button-date-session">
-        <ButtonForMe childrenButton={"Next"} onclick={handleSubmitAssistantCaption} />
+        <ButtonForMe childrenButton={"Tiếp theo"} onclick={handleSubmitAssistantCaption} />
       </div>
       <div className="legal-notice-user">
         <LegalNotice />

@@ -53,7 +53,7 @@ export function Address() {
       };
       await EmployeeServiceAPI.updateLocation(id, postData, navigate, "/assistant/process");
     } else {
-      toast.error("Chọn vị trí của bạn")
+      toast.error("Vui lòng chọn vị trí của bạn")
     }
   };
 console.log(place);
@@ -91,7 +91,7 @@ console.log(place);
         </div>
       </div>
       <div style={{ textAlign: "end", marginBottom: "40px", marginRight: "80px" }}>
-        <ButtonForMe childrenButton={"Next"} colorButton={"#213f5f"} onclick={handleButtonClick} />
+        <ButtonForMe childrenButton={"Tiếp theo"} colorButton={"#213f5f"} onclick={handleButtonClick} />
       </div>
     </div>
   );
