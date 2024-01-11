@@ -70,13 +70,17 @@ export function Bio() {
          người cao tuổi. Gần đây tôi đang bận giúp đỡ việc nuôi dạy các cháu của mình! Bây giờ các cháu đang ở trong
          trường học, tôi đang tìm cách kiếm thêm một ít tiền trong khi làm công việc tôi yêu thích
       </span>
+      <br />
       <p style={{ margin: "20px 0 0 0" }}>
         <strong>Minh Nguyễn đến từ 28 Nguyễn Trường Tộ, Huế </strong>
       </p>
       <span>
         Xin chào cả nhà, tôi là một người đáng tin cậy, kiên nhẫn và biết lắng nghe, tôi có khoảng 5 năm kinh nghiệm
         trong việc chăm sóc lĩnh vực y tế, biết đo huyết áp, đường máu,...
-        Tôi muốn kiếm thêm công việc vào thời gian buổi tối hoặc cuối tuần
+        Tôi muốn kiếm thêm công việc vào thời gian buổi tối hoặc cuối tuần, ngoài ra tôi muốn phát triển thêm về bản thân,
+        tôi muốn quan tâm, chăm sóc tất cả mọi người, giúp đỡ tất cả khi bản thân còn có thể. Hơn hết tôi muốn tìm hiểu về bản 
+        thân, đó là mình sẽ ra sao vào vài chục năm tới. Tôi có quan điểm bản thân rằng là, xem người năm lớn tuổi như cha, xem 
+        ngươi nữ lớn tuổi như mẹ của mình. Từ đó yêu thương họ hơn.
       </span>
       <div style={{ textAlign: "center", margin: "20px 0" }}>
         <Button

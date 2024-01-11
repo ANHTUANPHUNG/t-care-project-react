@@ -4,21 +4,26 @@ import { SideBarFindJob } from "../sideBarFindJob/SideBarFindJob";
 import { NavBarFindJob } from "../navBarFindJob/NavBarFindJob";
 import AddIcon from "@mui/icons-material/Add";
 import { ButtonForMe } from "../../../ButtonForMe";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import LoadingPage from "../../../common/LoadingPage";
-import ModalUnstyled from "../../../ModalToMe";
-import { Button } from "bootstrap";
+import SweetAlert2 from 'react-sweetalert2';
+import Swal from "sweetalert2";
+
+
 export function Photo() {
   const inputRef = useRef(null);
-  const [check, setCheck] = useState();
+  const [isNextDisabled, setIsNextDisabled] = useState(true);  
+  const [check,setCheck] = ("");
   const [image, setImage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [avatar, setAvatar] = useState("")
   const {id} = useParams()
-  const [checkModal, setCheckModal] = useState(false);
   const [error, setError] = useState("")
+  const [swalProps, setSwalProps] = useState({});
+
+  let navigate = useNavigate();
 
   const handleImageClick = () => {
     inputRef.current.click();
@@ -27,7 +32,7 @@ export function Photo() {
   const handleFileChange = async (e) => {
     const selectedFile = e.target.files[0];
     setIsLoading(true);
-
+    setIsNextDisabled(false);
     if (selectedFile) {
       const formData = new FormData();
       formData.append("avatar", selectedFile);
@@ -53,6 +58,8 @@ export function Photo() {
         console.error("An error occurred:", error);
       } finally {
         setIsLoading(false);
+        setIsNextDisabled(true)
+        setSwalProps(false)
       }
     }
   };
@@ -61,25 +68,31 @@ export function Photo() {
 
   const handleSubmitPhoto = async (e) => {
     e.preventDefault();
-
-    if (avatar.trim() ==="") {
+  
+    if (avatar.trim() === "") {
       setError("Bạn quên thêm ảnh rồi!");
       return;
     }
     setError("");
     const photoEmployee = { avatar: avatar };
     axios
-    .put(`http://localhost:8080/api/employees/photo/${id}`, photoEmployee)
-    .then((response) => {
-     toast.success("Hoàn tất thêm ảnh cá nhân")
-     setCheckModal(true);
-    })
-    .catch((error) => {
-      console.error("Đã có lỗi xảy ra:", error);
-    })
-    .finally(() => {
-      setIsLoading(false);
-    });
+      .put(`http://localhost:8080/api/employees/photo/${id}`, photoEmployee)
+      .then((response) => {
+        Swal.fire({
+          title: 'Hồ sơ trực tuyến đã hoàn tất',
+          text: 'Xin vui lòng đến 28 Nguyễn Tri Phương, tp. Huế, tỉnh Thừa Thiên Huế để hoàn tất thủ tục',
+          confirmButtonText: "OK"
+        }).then(() => { 
+          navigate('/');
+        });
+      })
+      .catch((error) => {
+        console.error("Đã có lỗi xảy ra:", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+        setIsNextDisabled(true);
+      });
   };
   const  ImageAvatar = ({image}) =>{
     return image != null ? (
@@ -145,53 +158,13 @@ export function Photo() {
     )
   }
 
-  const formTips = (
-    <>
-    
-      <h2 id="unstyled-modal-title" className="modal-title">
-        Một số mẹo tạo tiểu sử giúp dễ dàng hơn trong việc tìm kiếm công việc
-      </h2>
-      <ul style={{ width: "100%" }} className="modal-description">
-        <li>Một tiểu sử thật chi tiết để các gia đình hiểu hơn về bạn</li>
-        <li>Cho gia đình biết kiểu công việc mà bạn đang tìm kiếm</li>
-        <li>Hãy kể cho gia đình biết bạn yêu quý điều gì</li>
-      </ul>
-      <p>
-        <strong>Một số ví dụ:</strong>
-      </p>
-      <p style={{ margin: 0 }}>
-        <strong>Thơ Nguyễn đến từ 30 Hoàng Quang, Thuận An, Huế</strong>
-      </p>
-      <span>
-        Tôi là một bà mẹ ba con tích cực và đầy nghị lực và là bà của ba đứa cháu. Vì
-         trong vài năm, tôi làm việc liên tục ở các trung tâm hội người cao tuổi chủ yếu là vì tôi thích giúp đỡ với
-         người cao tuổi. Gần đây tôi đang bận giúp đỡ việc nuôi dạy các cháu của mình! Bây giờ các cháu đang ở trong
-         trường học, tôi đang tìm cách kiếm thêm một ít tiền trong khi làm công việc tôi yêu thích
-      </span>
-      <p style={{ margin: "20px 0 0 0" }}>
-        <strong>Minh Nguyễn đến từ 28 Nguyễn Trường Tộ, Huế </strong>
-      </p>
-      <span>
-        Xin chào cả nhà, tôi là một người đáng tin cậy, kiên nhẫn và biết lắng nghe, tôi có khoảng 5 năm kinh nghiệm
-        trong việc chăm sóc lĩnh vực y tế, biết đo huyết áp, đường máu,...
-        Tôi muốn kiếm thêm công việc vào thời gian buổi tối hoặc cuối tuần
-      </span>
-      <div style={{ textAlign: "center", margin: "20px 0" }}>
-        <Button
-          onClick={() => setCheckModal(false)}
-          style={{ backgroundColor: "#213f5f", color: "white", width: "30%" }}
-        >
-          Hiểu rồi
-        </Button>
-      </div>
-    </>
-  );
 
   const photo = (
     <div className="col-9 " style={{ paddingTop: "20px" }}>
       <h4 className="" style={{ marginBottom: "20px" }}>
         Tải ảnh lên
       </h4>
+      <SweetAlert2 {...swalProps} />
       <span>
         <strong>Bạn có khả năng được tuyển dụng cao hơn gấp 7 lần nếu ảnh có hồ sơ</strong>
       </span>
@@ -227,9 +200,8 @@ export function Photo() {
         Nếu ảnh của bạn có trẻ em, hãy tải lên và chọn Tiếp theo, bạn xác minh rằng bạn là người cha
         mẹ hoặc bạn được cha mẹ cho phép rõ ràng để đưa con cái vào hình chụp của bạn.
       </div>
-      <ModalUnstyled check={checkModal} onClose={() => setCheckModal(false)} children={formTips} widthForm={"79%"} heightForm={"80vh"} />
       <div className="" style={{ padding: "20px 0 40px 0", width: "70%", textAlign: "end" }}>
-          <ButtonForMe childrenButton={"Tiếp theo"} colorButton={"#213f5f"} onclick={handleSubmitPhoto} />
+        {isNextDisabled &&  <ButtonForMe childrenButton={"Tiếp theo"} colorButton={"#213f5f"} onclick={handleSubmitPhoto}/>}
       </div>
       
     </div>

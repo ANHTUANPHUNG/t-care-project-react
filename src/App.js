@@ -25,6 +25,7 @@ import { Experience } from "./components/home/wordFindJobs/experience/Experience
 import { Bio } from "./components/home/wordFindJobs/bio/Bio";
 import { Photo } from "./components/home/wordFindJobs/photo/Photo";
 import LoadingPage from "./components/common/LoadingPage";
+import SweetAlertEmployee from "./components/common/SweetAlertEmployee";
 
 function App() {
   return (
@@ -68,7 +69,7 @@ function App() {
         ></Route>
         <Route path="/user/profile" element={<Profile />}></Route>
         <Route path="/user/index" element={<Index />}></Route>
-        <Route path="/loading" element={<LoadingPage />}></Route>
+        <Route path="/swals" element={<SweetAlertEmployee />}></Route>
       </Routes>
     </>
   );

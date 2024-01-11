@@ -12,10 +12,10 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import { toast } from "react-toastify";
 import axios from "axios";
-import LoadingPage from "../../../common/LoadingPage";
+import LoadingCommon from "../../../common/LoadingCommon";
 export function Experience() {
   const listEducation = [
-    { id: "HIGHSCHOOL", name: "Trung học cơ sở" },
+    { id: "HIGHSCHOOL", name: "Trung học phổ thông" },
     { id: "UNIVERSITY", name: "Đại Học" },
     { id: "COLLEGE", name: "Cao Đẳng" },
     { id: "GRADUTEDEGREE", name: "Cử Nhân" },
@@ -79,7 +79,7 @@ export function Experience() {
   }, []);
 
   if (isLoading) {
-    return <LoadingPage />;
+    return <LoadingCommon />;
   }
   const handleMinus = () => {
     const currentIndex = listYear.findIndex((item) => item.id === years.id);
@@ -127,7 +127,7 @@ export function Experience() {
      
       .catch((err) => {
         console.error("Lỗi khi gửi POST request:", err);
-        toast.error("Chọn đầy đủ thông tin");
+        toast.error("Vui lòng điền đầy đủ thông tin");
       });
   };
   const servicesToShow = showMore ? listService : listService?.slice(0, 5);

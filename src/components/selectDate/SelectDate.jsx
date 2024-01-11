@@ -13,9 +13,9 @@ export function SelectDate({ paddingSpan, setValue }) {
   ];
   const sessionInDate = [
     { id: 1, name: "Buổi sáng", value: "MORNING" },
-    { id: 2, name: "Buổi chiều", value: "AFTERNOON" },
+    { id: 2, name: "Buổi trưa", value: "AFTERNOON" },
     { id: 3, name: "Buổi tối", value: "EVENING" },
-    { id: 4, name: "Cả ngày", value: "NIGHT" },
+    { id: 4, name: "Trực đêm", value: "NIGHT" },
   ];
   
  
