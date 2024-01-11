@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import LogoProject from "../../../logoProject/LogoProject";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { ButtonForMe } from "../../../ButtonForMe";
 import { LegalNotice } from "../../../carehub/LegalNotice";
 import SearchLocationInput from "../../../apiGoogleMap/SearchLocationInput ";
@@ -8,31 +8,28 @@ import MapComponent from "../../../apiGoogleMap/GoogleMap";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import { toast } from "react-toastify";
+import UserServiceAPI from "./../../../../service/userServiceAPI";
 
 export function UserAddress() {
   const [km, setKm] = useState(10);
-
+  const [place, setPlace] = useState("");
+  const { id } = useParams();
   const [selectedLocation, setSelectedLocation] = useState({
     lat: 0,
     lng: 0,
   });
+  let navigate = useNavigate();
+
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
-        setSelectedLocation({
-          lat: latitude,
-          lng: longitude,
-        });
-      },
-      (error) => {
-        console.error("Error getting geolocation:", error);
-      }
-    );
+    navigator.geolocation.getCurrentPosition((position) => {
+      const { latitude, longitude } = position.coords;
+      setSelectedLocation({
+        lat: latitude,
+        lng: longitude,
+      });
+    });
   }, []);
   const handleMinus = () => {
-
-
     if (km > 5) {
       setKm((prev) => prev - 5);
     } else {
@@ -40,11 +37,23 @@ export function UserAddress() {
     }
   };
   const handleAdd = () => {
-
     if (km < 100) {
       setKm((prev) => prev + 5);
     } else {
       toast.error("Số km bé hơn 100");
+    }
+  };
+  const handleButtonClick = async () => {
+    if (place != "") {
+      const postData = {
+        nameLocation: place,
+        distanceForWork: km,
+        longitude: selectedLocation.lng,
+        latitude: selectedLocation.lat,
+      };
+      await UserServiceAPI.updateLocation(id, postData, navigate, "/user/service");
+    } else {
+      toast.error("Chọn vị trí của bạn");
     }
   };
   return (
@@ -59,33 +68,34 @@ export function UserAddress() {
         </div>
       </div>
       <div className="m-5 " style={{ textAlign: "-webkit-center" }}>
-        
-        <SearchLocationInput setSelectedLocation={setSelectedLocation} title={"Bạn tìm kiếm sự chăm sóc ở đâu?"}  />
-        <MapComponent selectedLocation={selectedLocation} widthMap={"60%"}  />
+        <SearchLocationInput
+          setSelectedLocation={setSelectedLocation}
+          setPlace={setPlace}
+          title={"Bạn tìm kiếm sự chăm sóc ở đâu?"}
+        />
+        <MapComponent selectedLocation={selectedLocation} widthMap={"60%"} />
         <div style={{ margin: "30px 35%" }}>
-        <h6 style={{ paddingLeft: "50px" }}>Bạn dự định tìm kiếm trong bao xa?</h6>
-        <div
-          style={{
-            display: "flex",
-            margin: "30px 0",
-            justifyContent: "space-around",
-          }}
-        >
-          <div style={{ cursor: "pointer", margin: "10px" }} onClick={() => handleMinus()}>
-           <RemoveIcon />
-          </div>
-          <div>
-            <span style={{ fontSize: "30px" }}>{km}</span> <br /> <span>Kilomets</span>
-          </div>
-          <div style={{ cursor: "pointer", margin: "10px" }} onClick={() => handleAdd()}>
-             <AddIcon />
+          <h6 style={{ paddingLeft: "50px" }}>Bạn dự định tìm kiếm trong bao xa?</h6>
+          <div
+            style={{
+              display: "flex",
+              margin: "30px 0",
+              justifyContent: "space-around",
+            }}
+          >
+            <div style={{ cursor: "pointer", margin: "10px" }} onClick={() => handleMinus()}>
+              <RemoveIcon />
+            </div>
+            <div>
+              <span style={{ fontSize: "30px" }}>{km}</span> <br /> <span>Kilomets</span>
+            </div>
+            <div style={{ cursor: "pointer", margin: "10px" }} onClick={() => handleAdd()}>
+              <AddIcon />
+            </div>
           </div>
         </div>
-      </div>
         <div className="mt-5" style={{ height: "50px" }}>
-          <NavLink to="/user/service">
-            <ButtonForMe childrenButton={"Tiếp theo"} />
-          </NavLink>
+          <ButtonForMe childrenButton={"Tiếp theo"} onclick={handleButtonClick} />
         </div>
       </div>
       <div className="legal-notice-user">

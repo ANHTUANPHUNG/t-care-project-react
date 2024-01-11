@@ -1,20 +1,20 @@
-.checkBoxService{
+.radioService{
     border: 1px solid #ccd1d6;
     border-radius: 20px;
     justify-content: space-around;
     cursor: pointer;
 
 }
-.checkBoxService-active{
+.radioService-active{
     border: 2px solid #3b71aa;
     border-radius: 20px;
     justify-content: space-around;
     cursor: pointer;
 
 }
-.checkBoxService:hover{
+.radioService:hover{
     background-color: #c9c4c4;
 }
-.checkBoxService-active:hover{
+.radioService-active:hover{
     background-color: #c9c4c4;
 }

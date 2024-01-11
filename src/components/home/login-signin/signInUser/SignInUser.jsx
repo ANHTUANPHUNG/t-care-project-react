@@ -3,6 +3,7 @@ import "./SignInUser.css";
 import { LegalNotice } from "../../../carehub/LegalNotice";
 import LogoProject from "../../../logoProject/LogoProject";
 import { FormSignIn } from "../../formSignIn/FormSignIn";
+import UserServiceAPI from "../../../../service/userServiceAPI";
 export function SignInUser() {
   return (
     <>
@@ -15,7 +16,7 @@ export function SignInUser() {
         </div>
       </div>
       <div style={{ margin: "5% 0" }}>
-        <FormSignIn url={"/sign-in/find-care"} />
+        <FormSignIn url={"/login"} checkRole={"ROLE_USER"} api ={UserServiceAPI.signInUserReturnLogin}/>
       </div>
 
       <div className="legal-notice-user">

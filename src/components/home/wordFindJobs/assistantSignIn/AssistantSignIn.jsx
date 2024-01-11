@@ -2,6 +2,7 @@ import React from "react";
 import "./AssistantSignIn.css";
 import { FormSignIn } from "../../formSignIn/FormSignIn";
 import { NavBarFindJob } from "../navBarFindJob/NavBarFindJob";
+import EmployeeServiceAPI from "../../../../service/employeeServiceAPI";
 
 const formSignIn = (
   
@@ -17,6 +18,7 @@ const formSignIn = (
         marginHeader={'Gia nhập T-Care ngay bây giờ!'}
         color={"#213f5f"}
         checkRole ={"ROLE_EMPLOYEE"}
+        api ={EmployeeServiceAPI.signInEmployee}
       />
     </div>
     <div style={{margin :'200px 30px',width:'40%'}}>

@@ -3,15 +3,30 @@ import "./LogIn.css";
 import LogoProject from "../../../logoProject/LogoProject";
 
 import { Grid, TextField } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { ButtonForMe } from "../../../ButtonForMe";
 import { CheckLogInSignIn } from "../checkLogInSignIn/CheckLogInSignIn";
 import { LegalNotice } from "../../../carehub/LegalNotice";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 export function LogIn() {
-  const handleSubmit = (event) => {
+  let navigate = useNavigate();
+  const [email,setEmail] = useState("")
+  const [pass,setPass] = useState("")
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("Form submitted!");
+    const login =
+    { username: email, password:pass }
+
+    try {
+      const resp = await axios.post("http://localhost:8080/api/auth/login", login);
+      toast.success("Đăng nhập thành công");
+      navigate("/user/index/" + resp.data.idUser);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -30,10 +45,10 @@ export function LogIn() {
         <form onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <TextField fullWidth id="email" label="Email" type="email" />
+              <TextField fullWidth id="email" label="Email" type="email" onChange={(e) => setEmail(e.target.value)} />
             </Grid>
             <Grid item xs={12}>
-              <TextField fullWidth id="password" label="Password" type="password" />
+              <TextField fullWidth id="password" label="Password" type="password" onChange={(e) => setPass(e.target.value)} />
             </Grid>
             <div className="forgot-password">
               <div>
@@ -42,9 +57,7 @@ export function LogIn() {
             </div>
 
             <Grid item xs={12} className="d-flex justify-content-center ">
-              <NavLink to="/user/index" style={{ width: "100%" }}>
-                <ButtonForMe value={100} childrenButton={"Log In"} />
-              </NavLink>
+              <ButtonForMe value={100} childrenButton={"Log In"} />
             </Grid>
           </Grid>
         </form>
