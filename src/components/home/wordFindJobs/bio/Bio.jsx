@@ -17,23 +17,32 @@ export function Bio() {
   const remainingCharacters = 100 - bioText.length;
   const [descriptionText, setDescriptionText] = useState("");
   const [error, setError] = useState("");
+  const [errorDescription, setErrorDescription] = useState("");
   const { id } = useParams();
   let navigate = useNavigate();
   
   const handleBioClick = async () => {
-    if (bioText.trim() === "") {
+    if (descriptionText.trim() === "") {
       setError("Tiêu đề tiểu sử không được để trống");
       return;
     }
+
+    setError(""); 
   
-    if (descriptionText.trim() === "") {
-      setError("Giới thiệu bản thân không được để trống");
+    if (bioText.trim() === "") {
+      setErrorDescription("Giới thiệu bản thân không được để trống");
+      return;
+    }
+    setErrorDescription(""); 
+
+    if (remainingCharacters > 0) {
+      setErrorDescription("Giới thiệu bản thân phải nhiều hơn 100 kí tự");
       return;
     }
   
-    setError(""); 
+    setErrorDescription(""); 
   
-    const bioEmployee = { bioTitle: bioText, descriptionAboutMySelf: descriptionText };
+    const bioEmployee = { bioTitle: descriptionText, descriptionAboutMySelf: bioText };
     try {
       await axios.put(`http://localhost:8080/api/employees/bio/${id}`, bioEmployee)
       .then((resp) => {
@@ -125,7 +134,7 @@ export function Bio() {
           value={bioText}
           onChange={(e) => setBioText(e.target.value)}
         />
-        {error && <p style={{ color: "red" }}>{error}</p>}
+        {errorDescription && <p style={{ color: "red" }}>{errorDescription}</p>}
       </div>
       <div
         style={{

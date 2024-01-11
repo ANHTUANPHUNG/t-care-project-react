@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./SelectDate.css";
 
-export function SelectDate({ paddingSpan, setValue }) {
-  const dateInWeek = [
+export function SelectDate({ paddingSpan, setValue, dayInWeek }) {
+  const dateInWeekList = [
     { id: 1, name: "CN", value: "SUNDAY" },
     { id: 2, name: "TH2", value: "MONDAY" },
     { id: 3, name: "TH3", value: "TUESDAY" },
@@ -17,12 +17,21 @@ export function SelectDate({ paddingSpan, setValue }) {
     { id: 3, name: "Buổi tối", value: "EVENING" },
     { id: 4, name: "Trực đêm", value: "NIGHT" },
   ];
-  
- 
+
   const [valueDate, setValueDate] = useState("");
   const [nameDate, setNameDate] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedSessions, setSelectedSessions] = useState([]);
+  const [day, setDay] = useState([]);
+  useEffect(() => {
+    if (dayInWeek != null) {
+      
+      const filterDay = dateInWeekList.filter((e) =>
+        dayInWeek.some((element) => element.toLowerCase() === e.value.toLowerCase())
+      );
+      setDay(filterDay)
+    }
+  }, [dayInWeek]);
   const toggleSession = (date, sessionId) => {
     const dateSessions = selectedSessions[date] || [];
     const updatedSessions = dateSessions.includes(sessionId)
@@ -34,7 +43,7 @@ export function SelectDate({ paddingSpan, setValue }) {
       [date]: updatedSessions,
     });
   };
-  
+
   useEffect(() => {
     setValue(selectedSessions);
   }, [selectedSessions]);
@@ -43,22 +52,49 @@ export function SelectDate({ paddingSpan, setValue }) {
     <>
       <div className="d-flex date-in-week">
         <div className="d-flex date-in-week-header">
-          {dateInWeek.map((e) => (
-            <div
-              key={e.id}
-              id={`${
-                selectedSessions[e.value] && Object.keys(selectedSessions[e.value]).length > 0
-                  ? "idActive"
-                  : ""
-              }`}
-              className={`d-flex date-in-week-header-render-${
-                e.value === selectedDate ? "selected" : ""
-              }`}
-              onClick={() => (setValueDate(e.value), setSelectedDate(e.value),setNameDate(e.name))}
-            >
-              <span className="w-100">{e.name}</span>
-            </div>
-          ))}
+          {dayInWeek == null ? (
+            <>
+              {dateInWeekList.map((e) => (
+                <div
+                  key={e.id}
+                  id={`${
+                    selectedSessions[e.value] && Object.keys(selectedSessions[e.value]).length > 0
+                      ? "idActive"
+                      : ""
+                  }`}
+                  className={`d-flex date-in-week-header-render-${
+                    e.value === selectedDate ? "selected" : ""
+                  }`}
+                  onClick={() => (
+                    setValueDate(e.value), setSelectedDate(e.value), setNameDate(e.name)
+                  )}
+                >
+                  <span className="w-100">{e.name}</span>
+                </div>
+              ))}
+            </>
+          ) : (
+            <>
+              {day.map((e) => (
+                <div
+                  key={e.id}
+                  id={`${
+                    selectedSessions[e.value] && Object.keys(selectedSessions[e.value]).length > 0
+                      ? "idActive"
+                      : ""
+                  }`}
+                  className={`d-flex date-in-week-header-render-${
+                    e.value === selectedDate ? "selected" : ""
+                  }`}
+                  onClick={() => (
+                    setValueDate(e.value), setSelectedDate(e.value), setNameDate(e.name)
+                  )}
+                >
+                  <span className="w-100">{e.name}</span>
+                </div>
+              ))}
+            </>
+          )}
         </div>
       </div>
       <div className="d-flex justify-content-center my-4">

@@ -29,7 +29,6 @@ export function RenderListAssistant() {
         <div className="row render-list-assistant-header">
           <div className="col-3"></div>
           <div className="col-6 py-3">
-            {/* <h4>Here's a personalized list of caregivers based on your needs</h4> */}
             <h4>Đây là danh sách hồ sơ cá nhân gợi ý dựa vào những thông tin bạn cung cấp</h4>
             <h6>Danh sách yêu thích</h6>
           </div>
@@ -52,7 +51,6 @@ export function RenderListAssistant() {
                   <h6 className="m-0">Toni C</h6>
                   <span> Sao</span>
                   <div>
-                    {/* nhwớ chỉnh fontsize nhỏ lại */}
                     <span>Địa chỉ</span>
                   </div>
                 </div>
@@ -87,7 +85,7 @@ export function RenderListAssistant() {
             </div>
             <div className="check-select-button">
               <NavLink to="/user/assistant-caption">
-                <ButtonForMe value={100} childrenButton={"Next"}></ButtonForMe>
+                <ButtonForMe value={100} childrenButton={"Tiếp theo"}></ButtonForMe>
               </NavLink>
             </div>
           </div>
@@ -97,7 +95,7 @@ export function RenderListAssistant() {
       <div className="legal-notice-user">
         <LegalNotice />
       </div>
-      <SwipeableDrawer anchor="right" open={isOpen} onOpen={() => setIsOpen(true)}>
+      <SwipeableDrawer anchor="right" onClose={() => setIsOpen(false)} open={isOpen} onOpen={() => setIsOpen(true)}>
         <Box
           sx={{ width: "601px" }}
           role="presentation"

@@ -32,7 +32,7 @@ const validationSchema = yup.object().shape({
   termsAgreed: yup.bool().oneOf([true], "Bạn phải đồng ý với các điều khoản và dịch vụ"),
 });
 
-export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, color, checkRole }) {
+export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, color, checkRole, api }) {
   const [gender, setGender] = useState("MALE");
   let navigate = useNavigate();
 
@@ -49,7 +49,7 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
-        await EmployeeServiceAPI.signInEmployee(
+        await api(
           {
             firstName: values.firstName,
             lastName: values.lastName,
@@ -62,10 +62,8 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
           navigate,
           url
         );
-
         formik.resetForm();
       } catch (error) {
-        // Handle submission error
         console.error("An error occurred during form submission:", error);
       }
     },

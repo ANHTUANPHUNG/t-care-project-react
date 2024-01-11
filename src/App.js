@@ -6,9 +6,7 @@ import { Route, Routes } from "react-router-dom";
 import { UserSignIn } from "./components/home/wordFindCare/userSignIn/UserSignIn";
 import { UserAddress } from "./components/home/wordFindCare/userAddress/UserAddress";
 import { UserService } from "./components/home/wordFindCare/userService/UserService";
-import { UserJobType } from "./components/home/wordFindCare/userJobType/UserJobType";
 import { DateSession } from "./components/home/wordFindCare/datesession/DateSession";
-import { UserPriceOneHour } from "./components/home/wordFindCare/userPriceOneHour/UserPriceOneHour";
 import { UserNeedCare } from "./components/home/wordFindCare/userNeedCare/UserNeedCare";
 import { AssistantCaption } from "./components/home/wordFindCare/assistantCaption/AssistantCaption";
 import { RenderListAssistant } from "./components/home/wordFindCare/renderListAssistant/RenderListAssistant";
@@ -54,25 +52,23 @@ function App() {
         <Route path="/assistant/photo/:id" element={<Photo />}></Route>
         <Route path="/user/signin" element={<UserSignIn />}></Route>
         <Route path="/user/address/:id" element={<UserAddress />}></Route>
-        <Route path="/user/service" element={<UserService />}></Route>
-        <Route path="/user/jobtype" element={<UserJobType />}></Route>
-        <Route path="/user/datesession" element={<DateSession />}></Route>
-        <Route path="/user/onehour" element={<UserPriceOneHour />}></Route>
-        <Route path="/user/needcare" element={<UserNeedCare />}></Route>
+        <Route path="/user/service/:id" element={<UserService />}></Route>
+        <Route path="/user/date-session/:id" element={<DateSession />}></Route>
+        <Route path="/user/need-care/:id" element={<UserNeedCare />}></Route>
         <Route
-          path="/user/assistant-caption"
+          path="/user/assistant-caption/:id"
           element={<AssistantCaption />}
         ></Route>
         <Route
-          path="/user/render-list-assistant"
+          path="/user/render-list-assistant/:id"
           element={<RenderListAssistant />}
         ></Route>
         <Route path="/user/profile" element={<Profile />}></Route>
-        <Route path="/user/index" element={<Index />}></Route>
-        <Route path="/swals" element={<SweetAlertEmployee />}></Route>
+        <Route path="/user/index/:id" element={<Index />}></Route>
       </Routes>
     </>
   );
 }
+
 
 export default App;
