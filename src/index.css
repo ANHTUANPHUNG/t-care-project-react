@@ -2,3 +2,8 @@ body {
   font-family: 'Your Custom Font', sans-serif;
   font-size: 15px;
 }
+
+
+.MuiDateRangeCalendar-root > div:first-child{
+ display: none;
+}

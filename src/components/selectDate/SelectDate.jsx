@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./SelectDate.css";
+import Button from "@mui/material/Button";
 
-export function SelectDate({ paddingSpan, setValue, dayInWeek }) {
+export function SelectDate({ paddingSpan, setValue, dayInWeek, billIndexUser }) {
   const dateInWeekList = [
     { id: 1, name: "CN", value: "SUNDAY" },
     { id: 2, name: "TH2", value: "MONDAY" },
@@ -25,11 +26,10 @@ export function SelectDate({ paddingSpan, setValue, dayInWeek }) {
   const [day, setDay] = useState([]);
   useEffect(() => {
     if (dayInWeek != null) {
-      
       const filterDay = dateInWeekList.filter((e) =>
         dayInWeek.some((element) => element.toLowerCase() === e.value.toLowerCase())
       );
-      setDay(filterDay)
+      setDay(filterDay);
     }
   }, [dayInWeek]);
   const toggleSession = (date, sessionId) => {
@@ -101,20 +101,41 @@ export function SelectDate({ paddingSpan, setValue, dayInWeek }) {
         <h6>{nameDate} </h6>
       </div>
       <div className="my-4  d-flex justify-content-center">
-        <div className="d-flex  justify-content-center">
-          {valueDate !== "" &&
-            sessionInDate.map((e) => (
-              <div
-                key={e.id}
-                className={` ms-3 session-render-${
-                  (selectedSessions[valueDate] || []).includes(e.value) ? "selected" : ""
-                }`}
-                onClick={() => toggleSession(valueDate, e.value)}
-              >
-                <span style={{ padding: paddingSpan || 0 }}>{e.name}</span>
-              </div>
-            ))}
-        </div>
+        {!billIndexUser ? (
+          <>
+            <div className="d-flex  justify-content-center">
+              {valueDate !== "" &&
+                sessionInDate.map((e) => (
+                  <Button
+                    key={e.id}
+                    className={`ms-3 session-render-${
+                      (selectedSessions[valueDate] || []).includes(e.value) ? "selected" : ""
+                    }`}
+                    onClick={() => toggleSession(valueDate, e.value)}
+                  >
+                    {e.name}
+                  </Button>
+                ))}
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="" style={{ display: "flex", flexWrap: "wrap" }}>
+              {valueDate !== "" &&
+                sessionInDate.map((e) => (
+                  <Button
+                    key={e.id}
+                    className={`ms-3 session-render-${
+                      (selectedSessions[valueDate] || []).includes(e.value) ? "selected" : ""
+                    }`}
+                    onClick={() => toggleSession(valueDate, e.value)}
+                  >
+                    {e.name}
+                  </Button>
+                ))}
+            </div>
+          </>
+        )}
       </div>
     </>
   );
