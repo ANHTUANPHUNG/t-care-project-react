@@ -1,10 +1,20 @@
 import { useRef, useEffect, useState } from "react";
 import AddLocationIcon from "@mui/icons-material/AddLocation";
-
-const SearchLocationInput = ({ setSelectedLocation, setPlace,title, test, marginTest }) => {
-
-
-  
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import "./SearchLocationInput.css";
+import { minWidth } from "@mui/system";
+const SearchLocationInput = ({
+  setSelectedLocation,
+  setPlace,
+  title,
+  marginTest,
+  resetInputAddress,
+  children,
+}) => {
   const autoCompleteRef = useRef();
 
   const inputRef = useRef();
@@ -18,6 +28,9 @@ const SearchLocationInput = ({ setSelectedLocation, setPlace,title, test, margin
       handlePlaceSelect(updateQuery);
     });
   };
+  useEffect(() => {
+    setQuery("");
+  }, [resetInputAddress]);
   const handleInputChange = (event) => {
     const inputValue = event.target.value;
     setQuery(inputValue);
@@ -26,7 +39,7 @@ const SearchLocationInput = ({ setSelectedLocation, setPlace,title, test, margin
     const addressObject = await autoCompleteRef.current.getPlace();
 
     if (addressObject && addressObject.formatted_address) {
-      setPlace(addressObject.formatted_address)
+      setPlace(addressObject.formatted_address);
       const selectedQuery = addressObject.formatted_address;
       updateQuery(selectedQuery);
 
@@ -43,14 +56,43 @@ const SearchLocationInput = ({ setSelectedLocation, setPlace,title, test, margin
   useEffect(() => {
     handleScriptLoad(setQuery);
   }, []);
+  const [age, setAge] = useState("");
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
   return (
     <div className="search-location-input">
-      <label htmlFor="inputSearchAddress" style={{ cursor: "pointer" }}>
-        {test || <h3>{title || "Bạn sống ở đâu?"} </h3>}
-      </label>
-      <div className="d-flex" style={{ margin: marginTest|| "15px 20% 0 20%" }}>
+      {!children ? (
+        <label htmlFor="inputSearchAddress" style={{ cursor: "pointer" }}>
+          <h3>{title || "Bạn sống ở đâu?"} </h3>
+        </label>
+      ) : (
+        <div className="d-flex justify-content-between">
+          <h6>Bạn cần chăm sóc ở đâu ?</h6>
+          <div className="d-flex ">
+            <FormControl fullWidth sx={{minWidth:100}}>
+              <InputLabel id="demo-simple-select-label" className="input-index-user">Khoảng cách</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                className="select-index-user"
+                value={age}
+                label="Age"
+                onChange={handleChange}
+              >
+                <MenuItem value={10}>10</MenuItem>
+                <MenuItem value={15}>15</MenuItem>
+                <MenuItem value={20}>20</MenuItem>
+              </Select>
+            </FormControl>
+          </div>
+        </div>
+      )}
+
+      <div className="d-flex" style={{ margin: marginTest || "15px 20% 0 20%" }}>
         <input
-          style={{  cursor: "pointer" }}
+          style={{ cursor: "pointer" }}
           ref={inputRef}
           className="form-control"
           onChange={handleInputChange}

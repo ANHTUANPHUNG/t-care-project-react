@@ -1,0 +1,7 @@
+.select-index-user > div:first-child{
+    padding: 0 !important;
+}
+.input-index-user{
+    font-size: 12px !important;
+    top:-11px !important
+}

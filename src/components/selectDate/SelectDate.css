@@ -44,44 +44,28 @@
     text-align: center;
     align-self: center;
 }
-
-/* Session render styles */
-.session-render- {
-    height: 40px;
-    width: 100px;
-    border: 1px solid #ccd1d6;
-    border-radius: 15px;
-    cursor: pointer;
-}
 #idActive{
     background-color: #3B71AA;
     color: white;
 }
-.session-render-selected {
-    height: 40px;
-    width: 100px;
-    border: 1px solid #ccd1d6;
-    border-radius: 15px;
-    cursor: pointer;
-    background-color: #3B71AA;
-    color: white;
-}
 
-.session-render-:hover {
-    height: 40px;
-    width: 100px;
-    border: 1px solid #ccd1d6;
-    border-radius: 15px;
-    background-color: #e5d8d8;
-}
-
-.session-render- span,
-.session-render-selected span {
-    vertical-align: sub;
-}
-
-/* Button date session styles */
 .button-date-session {
     height: 50px;
     text-align: center;
+}
+.session-render-{
+    color: black !important;
+    border-radius: 20px !important;
+    border: 1px solid #ccd1d6 !important;
+    background-color: white !important;
+    font-size: 12px !important;
+    margin: 0 4px 10px 0 !important;
+}
+.session-render-selected{
+    color: white !important;
+    border-radius: 20px !important;
+    border: 1px solid #ccd1d6 !important;
+    background-color: #3b71aa !important;
+    font-size: 12px !important;
+    margin: 0 4px 10px 0 !important;
 }
