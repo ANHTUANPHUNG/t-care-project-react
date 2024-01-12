@@ -1,0 +1,68 @@
+.container-index-user{
+    height: 50px;
+     background-color: #fbf3ec;
+     width: 100%
+}
+.index-user-header{
+    text-align: center;
+     padding-top: 10px
+}
+.icon-local-police{
+    color: #3a94ed
+}
+.index-user-body{
+    padding: 0 3%
+}
+.index-user-body-address{
+    height: 100%;
+     background-color: #f6f7f8;
+     padding-top: 30px
+}
+.index-user-body-title{
+    padding-bottom: 10px;
+    display: flex;
+}
+.reset-filter{
+    width: 40%;
+    font-size: 20px;
+}
+.index-user-body-services{
+    margin: 10px 0;
+}
+.index-user-body-services-render{
+    display: flex;
+     flex-wrap: wrap
+}
+
+.index-user-body-service-render{
+    color: black;
+    border-radius: 20px;
+    border: 1px solid #ccd1d6;
+    background-color: white;
+    font-size: 12px;
+    margin: 0 4px 10px 0;
+}
+.index-user-body-service-render:hover{
+    color: black;
+    border-radius: 20px;
+    border: 1px solid #383a3b;
+    background-color: white;
+    font-size: 12px;
+    margin: 0 4px 10px 0;
+}
+.index-user-body-service-render-active{
+    color: white;
+    border-radius: 20px;
+    border: 1px solid #ccd1d6;
+    background-color: #3b71aa;
+    font-size: 12px;
+    margin: 0 4px 10px 0;
+}
+.index-user-body-service-render-active:hover{
+    color: black;
+    border-radius: 20px;
+    border: 1px solid #ccd1d6;
+    background-color: #3b71aa;
+    font-size: 12px;
+    margin: 0 4px 10px 0;
+}

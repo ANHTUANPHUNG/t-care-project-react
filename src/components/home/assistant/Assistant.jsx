@@ -3,9 +3,7 @@ import "./Assistant.css";
 import { Star, StarHalf } from "@mui/icons-material";
 
 export function Assistant({ employee }) {
-  console.log(employee?.employeeStar);
 
-  // Round up to the nearest tenth
   const roundedStars = Math.ceil(employee?.employeeStar * 2) / 2;
   const hasHalfStar = roundedStars - Math.floor(roundedStars) > 0;
 

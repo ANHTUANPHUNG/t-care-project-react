@@ -45,7 +45,6 @@ export function Experience() {
   let navigate = useNavigate();
   const { id } = useParams();
   const [showMore, setShowMore] = useState(false);
-  const [education, setEducation] = useState("");
   const [educationId, setEducationId] = useState("");
   const [years, setYears] = useState(listYear[0]);
   const [servicer, setServicer] = useState([]);
