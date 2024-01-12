@@ -23,6 +23,8 @@ import { Experience } from "./components/home/wordFindJobs/experience/Experience
 import { Bio } from "./components/home/wordFindJobs/bio/Bio";
 import { Photo } from "./components/home/wordFindJobs/photo/Photo";
 import { ForgotPassword } from "./components/home/login-signin/forgotPassword/ForgotPassword";
+import LoadingPage from "./components/common/LoadingPage";
+import SweetAlertEmployee from "./components/common/SweetAlertEmployee";
 
 function App() {
   return (
@@ -44,9 +46,12 @@ function App() {
           path="/assistant/availability/:id"
           element={<Availability />}
         ></Route>
-        <Route path="/assistant/experience/:id" element={<Experience />}></Route>
-        <Route path="/assistant/bio" element={<Bio />}></Route>
-        <Route path="/assistant/photo" element={<Photo />}></Route>
+        <Route
+          path="/assistant/experience/:id"
+          element={<Experience />}
+        ></Route>
+        <Route path="/assistant/bio/:id" element={<Bio />}></Route>
+        <Route path="/assistant/photo/:id" element={<Photo />}></Route>
         <Route path="/user/signin" element={<UserSignIn />}></Route>
         <Route path="/user/address/:id" element={<UserAddress />}></Route>
         <Route path="/user/service/:id" element={<UserService />}></Route>
@@ -66,5 +71,6 @@ function App() {
     </>
   );
 }
+
 
 export default App;

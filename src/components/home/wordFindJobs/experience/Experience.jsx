@@ -7,14 +7,15 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { MapToMe } from "./MapToMe";
 import { ButtonForMe } from "../../../ButtonForMe";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import { toast } from "react-toastify";
 import axios from "axios";
+import LoadingCommon from "../../../common/LoadingCommon";
 export function Experience() {
   const listEducation = [
-    { id: "HIGHSCHOOL", name: "Trung học cơ sở" },
+    { id: "HIGHSCHOOL", name: "Trung học phổ thông" },
     { id: "UNIVERSITY", name: "Đại Học" },
     { id: "COLLEGE", name: "Cao Đẳng" },
     { id: "GRADUTEDEGREE", name: "Cử Nhân" },
@@ -41,6 +42,7 @@ export function Experience() {
       },
     },
   };
+  let navigate = useNavigate();
   const { id } = useParams();
   const [showMore, setShowMore] = useState(false);
   const [educationId, setEducationId] = useState("");
@@ -52,20 +54,32 @@ export function Experience() {
   const [listService, setListService] = useState();
   const [listSkill, setListSkill] = useState();
   const [educationName, setEducationName] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    let axiosData = async () => {
-      const responseInformation = await axios.get("http://localhost:8080/api/add-infos");
-      setListInformation(responseInformation.data);
+    const fetchData = async () => {
+      try {
+        const responseInformation = await axios.get("http://localhost:8080/api/add-infos");
+        setListInformation(responseInformation.data);
 
-      const responseService = await axios.get("http://localhost:8080/api/serviceGenerals");
-      setListService(responseService.data);
+        const responseService = await axios.get("http://localhost:8080/api/serviceGenerals");
+        setListService(responseService.data);
 
-      const responseSkill = await axios.get("http://localhost:8080/api/skills");
-      setListSkill(responseSkill.data);
+        const responseSkill = await axios.get("http://localhost:8080/api/skills");
+        setListSkill(responseSkill.data);
+
+        setIsLoading(false); 
+      } catch (error) {
+        console.error(error);
+      }
     };
-    axiosData();
+
+    fetchData();
   }, []);
+
+  if (isLoading) {
+    return <LoadingCommon />;
+  }
   const handleMinus = () => {
     const currentIndex = listYear.findIndex((item) => item.id === years.id);
     const nextIndex = currentIndex - 1;
@@ -82,7 +96,7 @@ export function Experience() {
     if (nextIndex < listYear.length) {
       setYears(listYear[nextIndex]);
     } else {
-      toast.error("Số năm đã quá giới hơn");
+      toast.error("Số năm đã quá giới hạn");
     }
   };
   const handleChangeEducation = (event) => {
@@ -107,10 +121,12 @@ export function Experience() {
       .put(`http://localhost:8080/api/employees/experience/${id}`, listExperience)
       .then((resp) => {
         toast.success("Lưu thông tin thành công");
+        navigate(`/assistant/bio/${id}`)
       })
+     
       .catch((err) => {
         console.error("Lỗi khi gửi POST request:", err);
-        toast.error("Chọn đầy đủ thông tin");
+        toast.error("Vui lòng điền đầy đủ thông tin");
       });
   };
   const servicesToShow = showMore ? listService : listService?.slice(0, 5);

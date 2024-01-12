@@ -82,7 +82,10 @@ export function RenderListAssistant() {
               <span>Add more or continue to evaluate them</span>
             </div>
             <div className="check-select-button">
-                <ButtonForMe value={100} childrenButton={"Next"}></ButtonForMe>
+
+              <NavLink to="/user/assistant-caption">
+                <ButtonForMe value={100} childrenButton={"Tiếp theo"}></ButtonForMe>
+              </NavLink>
             </div>
           </div>
         </div>
