@@ -21,6 +21,7 @@ import { Availability } from "./components/home/wordFindJobs/availability/Availa
 import { Experience } from "./components/home/wordFindJobs/experience/Experience";
 import { Bio } from "./components/home/wordFindJobs/bio/Bio";
 import { Photo } from "./components/home/wordFindJobs/photo/Photo";
+import SalerView from "./components/saler/SalerView";
 import { ForgotPassword } from "./components/home/login-signin/forgotPassword/ForgotPassword";
 import { IndexUser } from "./components/viewUser/index/IndexUser";
 
@@ -65,10 +66,10 @@ function App() {
         ></Route>
         <Route path="/user/profile" element={<Profile />}></Route>
         <Route path="/user/index/:id" element={<IndexUser />}></Route>
+        <Route path="/saler/:id" element={<SalerView />}></Route>
       </Routes>
     </>
   );
 }
-
 
 export default App;
