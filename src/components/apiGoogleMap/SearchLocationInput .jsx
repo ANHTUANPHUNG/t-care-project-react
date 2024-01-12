@@ -72,7 +72,7 @@ const SearchLocationInput = ({
           <h6>Bạn cần chăm sóc ở đâu ?</h6>
           <div className="d-flex ">
             <FormControl fullWidth sx={{minWidth:100}}>
-              <InputLabel id="demo-simple-select-label" className="input-index-user">Khoảng cách</InputLabel>
+              <InputLabel id="demo-simple-select-label" className={`input-index-user${age!= "" ?"acitve":""}`}>Km</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"

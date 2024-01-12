@@ -154,11 +154,11 @@
     margin: 0 4px 10px 0;
 }
 .index-user-body-dates{
-    margin: 20px 0;
+    margin-top: 20px ;
 }
 .index-user-body-dates-render{
     display: flex;
      flex-wrap: wrap;
-     padding: 10px 0;
+     padding: 10px 0 0 0;
 
 }

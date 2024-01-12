@@ -89,7 +89,7 @@ export function IndexUser() {
             children ={true}
           />
           <div className="index-user-body-dates">
-            <h6>Thời gian cần chăm sóc</h6>
+            <h6 style={{margin:"0"}}>Thời gian cần chăm sóc</h6>
             <div className="index-user-body-dates-render">
               <DateIndexUser
                 setSelectedDate={setSelectedDate}
