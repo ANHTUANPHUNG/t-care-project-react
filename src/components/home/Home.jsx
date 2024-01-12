@@ -9,6 +9,7 @@ import LogoProject from "../logoProject/LogoProject";
 import { CareHub } from "./../carehub/CareHub";
 import axios from "axios";
 import EmployeeServiceAPI from "../../service/employeeServiceAPI";
+import Phone from "../common/phone/Phone";
 export function Home() {
     const [rateTopThree, setRateTopThree] = useState();
     useEffect(() => {
@@ -37,8 +38,8 @@ export function Home() {
                         <img
                             src="https://res.cloudinary.com/dw4xpd646/image/upload/v1703748824/Cloudinary-React/gwsdfpleoznddaljvn9m.png"
                             style={{ width: "100%" }}
-                        />
-                    </div>
+                        />  
+                    </div>  
                 </div>
                 <About />
                 <div className="rate-average mt-3">
@@ -67,6 +68,7 @@ export function Home() {
                 </div>
             </div>
             <CareHub />
+            <Phone/>
         </>
     );
 }

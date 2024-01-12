@@ -146,7 +146,7 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
                 fullWidth
                 id="personID"
                 label="Số Căn Cước Công Dân"
-                value={formik.values.personID}
+                value={formik.values.personID || "1234567890"}
                 onChange={formik.handleChange}
                 error={formik.touched.personID && Boolean(formik.errors.personID)}
                 helperText={formik.touched.personID && formik.errors.personID}
