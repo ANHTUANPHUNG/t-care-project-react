@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from "react";
 import AddLocationIcon from "@mui/icons-material/AddLocation";
 
-const SearchLocationInput = ({ setSelectedLocation, setPlace,title }) => {
+const SearchLocationInput = ({ setSelectedLocation, setPlace,title, test, marginTest }) => {
 
 
   
@@ -46,10 +46,9 @@ const SearchLocationInput = ({ setSelectedLocation, setPlace,title }) => {
   return (
     <div className="search-location-input">
       <label htmlFor="inputSearchAddress" style={{ cursor: "pointer" }}>
-        <h3>{title || "Bạn sống ở đâu?"} </h3>
+        {test || <h3>{title || "Bạn sống ở đâu?"} </h3>}
       </label>
-      <div className="d-flex " style={{margin:" 15px 20% 0 20%"}}>
-       
+      <div className="d-flex" style={{ margin: marginTest|| "15px 20% 0 20%" }}>
         <input
           style={{  cursor: "pointer" }}
           ref={inputRef}

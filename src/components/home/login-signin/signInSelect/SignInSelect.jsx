@@ -4,18 +4,11 @@ import LogoProject from "../../../logoProject/LogoProject";
 import { CheckLogInSignIn } from "../checkLogInSignIn/CheckLogInSignIn";
 import { LegalNotice } from "../../../carehub/LegalNotice";
 import { NavLink } from "react-router-dom";
+import { FrameLoginSignIn } from "../frameLoginSignIn/FrameLoginSignIn";
 
 export function SignInSelect({}) {
-  return (
+  const signInSelect = (
     <>
-      <div>
-        <div className="ms-5 my-2">
-          <LogoProject />
-        </div>
-        <div className="row ">
-          <div className="col-12 step-sign-in"></div>
-        </div>
-      </div>
       <div className="select-category">
         <CheckLogInSignIn value={"signIn"} />
       </div>
@@ -50,9 +43,7 @@ export function SignInSelect({}) {
           </div>
         </div>
       </div>
-      <div className="legal-notice-user">
-        <LegalNotice />
-      </div>
     </>
   );
+  return <FrameLoginSignIn children={signInSelect} />;
 }
