@@ -22,14 +22,16 @@ import { Availability } from "./components/home/wordFindJobs/availability/Availa
 import { Experience } from "./components/home/wordFindJobs/experience/Experience";
 import { Bio } from "./components/home/wordFindJobs/bio/Bio";
 import { Photo } from "./components/home/wordFindJobs/photo/Photo";
+import { ForgotPassword } from "./components/home/login-signin/forgotPassword/ForgotPassword";
 
 function App() {
   return (
     <>
       <ToastContainer autoClose={3000} theme="colored" />
       <Routes>
-        <Route path="/" element={<Home />}></Route>
+        <Route path="/home" element={<Home />}></Route>
         <Route path="/login" element={<LogIn />}></Route>
+        <Route path="/forgot-password" element={<ForgotPassword />}></Route>
         <Route path="/sign-in" element={<SignInSelect />}></Route>
         <Route path="/sign-in/find-care" element={<SignInUser />}></Route>
         <Route path="/assistant/sign-in" element={<AssistantSignIn />}></Route>
