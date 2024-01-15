@@ -29,20 +29,7 @@ export default function SalerView() {
     }
 
    
-    const handleAddCustomer = () => {
-      axios
-        .post(`http://localhost:8080/api/carts/cartSale/${id}`)
-        .then((response) => {
-          console.log(response);
-          const customerId = response.data
-          toast.success("Thêm khách hàng mới thành công", { autoClose: 1000 });
-         navigate("/user/address/"+customerId)
-        })
-        .catch((error) => {
-          console.error(error);
-          toast.error("Thêm khách hàng mới thất bại");
-        });
-    };
+
 
     const handleDeleteCustomer = (id) => {
       axios
@@ -73,7 +60,7 @@ export default function SalerView() {
                          
                          <Link
                              style={{textDecoration: "none", color:"#0d6efd"}}
-                            onClick={handleAddCustomer}
+                              to={`/add-customer/${id}`}
                              >
                                  
                                  <i className="far fa-plus-square"></i>
@@ -89,41 +76,48 @@ export default function SalerView() {
          <table id="tbCustomer" className="table table-hover">
              <thead>
                  <tr>
-                     <th>Mã khách hàng</th>
-                     <th>Tên</th>
-                     <th>Họ</th>
-                     <th>Giới tính</th>
+                  
+                     <th>Họ Tên</th>
+                     <th>Địa chỉ</th>
                      <th>Số điện thoại</th>
-                     <th>Ngày bắt đầu thuê</th>
-                     <th>Ngày hết hạn</th>
-                     <th colSpan="3" style={{textAlign: "center"}}>Action</th>
+                     <th>Ngày thuê</th>
+                     <th>Quan hệ</th>
+                     <th>Gói</th>
+                     <th>Ghi chú người thuê</th>
+                     <th>Ghi chú người nhà</th>
+                     <th>Ghi chú của sale</th>
+                     <th></th>
+                     <th colSpan="2" style={{textAlign: "center"}}>...</th>
 
                  </tr>
              </thead>
              <tbody>
   {customers &&
-    customers.map((customer) => (
+    customers.map((customer) => (  
       <tr key={customer.id}>
-        <td>{customer.id}</td>
-        <td>{customer.firstName ? customer.firstName : ''}</td>
-        <td>{customer.lastName ? customer.lastName : ''}</td>
-        <td>
-          {customer.gender === 'MALE'
+        <td style={{maxWidth: "100px"}}> {customer.lastName ? customer.lastName : ''} {customer.firstName ? customer.firstName : ''} ({customer.gender === 'MALE'
             ? 'Nam'
             : customer.gender === 'FEMALE'
             ? 'Nữ'
-            : 'Khác'}
+            : 'Khác'})</td>
+        <td style={{maxWidth:'170px'}}>
+          {customer.locationPlace ? customer.locationPlace : ''}
         </td>
         <td>{customer.phone}</td>
-        <td>{customer.timeStart !== null ? customer.timeStart : ''}</td>
-        <td>{customer.timeEnd !== null ? customer.timeEnd : ''}</td>
-        <td className="mx-2">
-          <Link
-            className="btn btn-info"
-          >
-            <FaEye />
-          </Link>
+        <td>{customer.timeStart !== null ? customer.timeStart : ''} <br />{customer.timeEnd !== null ? customer.timeEnd : ''}</td>
+        <td>
+          {customer.memberOfFamily !== null ?
+            (customer.memberOfFamily === 'MYPARENT' ? 'Cha/Mẹ' :
+            (customer.memberOfFamily === 'MYSPOUSE' ? 'Vợ/Chồng' :
+            (customer.memberOfFamily === 'MYSELF' ? 'Bản thân' :
+            (customer.memberOfFamily === 'MYGRANDPARENTS' ? 'Ông/Bà' :
+            'Khác')))) : ''}
         </td>
+        <td style={{maxWidth: "150px"}}>{customer.serviceGeneral} </td>
+        <td style={{maxWidth: "150px"}}>{customer.noteForEmployee}</td> 
+        <td style={{maxWidth: "150px"}}>{customer.noteForPatient}</td> 
+        <td style={{maxWidth: "150px"}}>{customer.saleNote}</td> 
+        
         <td className="mx-2">
           <Link className="btn btn-warning">
             <FaEdit />

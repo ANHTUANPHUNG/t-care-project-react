@@ -1,0 +1,180 @@
+.container-index-user{
+    height: 50px;
+     background-color: #fbf3ec;
+     width: 100%
+}
+.index-user-header{
+    text-align: center;
+     padding-top: 10px
+}
+.icon-local-police{
+    color: #3a94ed
+}
+.index-user-body{
+    padding: 0 3%
+}
+.index-user-body-filter{
+    height: 100%;
+     background-color: #f6f7f8;
+     padding-top: 30px;
+    
+}
+.index-user-body-title{
+    padding-bottom: 10px;
+    display: flex;
+}
+.reset-filter{
+    width: 40%;
+    font-size: 20px;
+    color: #004b9b;
+    cursor: pointer;
+}
+.index-user-body-services{
+    margin: 20px 0;
+}
+.index-user-body-services-render{
+    display: flex;
+     flex-wrap: wrap;
+     padding: 10px 0;
+}
+
+.index-user-body-service-render{
+    color: black !important;
+    border-radius: 20px !important;
+    border: 1px solid #ccd1d6 !important;
+    background-color: white !important;
+    font-size: 12px !important;
+    margin: 0 4px 10px 0 !important;
+}
+.index-user-body-service-render:hover{
+    color: black !important;
+    border-radius: 20px !important;
+    border: 1px solid #383a3b !important;
+    background-color: white !important;
+    font-size: 12px !important;
+    margin: 0 4px 10px 0 !important;
+}
+.index-user-body-service-render-active{
+    color: white !important;
+    border-radius: 20px !important;
+    border: 1px solid #ccd1d6 !important;
+    background-color: #3b71aa !important;
+    font-size: 12px !important;
+    margin: 0 4px 10px 0 !important;
+}
+.index-user-body-service-render-active:hover{
+    color: black;
+    border-radius: 20px;
+    border: 1px solid #ccd1d6;
+    background-color: #3b71aa;
+    font-size: 12px;
+    margin: 0 4px 10px 0;
+}
+.index-user-body-skills{
+    margin: 20px 0;
+}
+.index-user-body-skills-render{
+    display: flex;
+     flex-wrap: wrap;
+     padding: 10px 0;
+
+}
+
+.index-user-body-skill-render{
+    color: black !important;
+    border-radius: 20px !important;
+    border: 1px solid #ccd1d6 !important;
+    background-color: white !important;
+    font-size: 12px !important;
+    margin: 0 4px 10px 0 !important;
+}
+.index-user-body-skill-render:hover{
+    color: black !important;
+    border-radius: 20px !important;
+    border: 1px solid #383a3b !important;
+    background-color: white !important;
+    font-size: 12px !important;
+    margin: 0 4px 10px 0 !important;
+}
+.index-user-body-skill-render-active{
+    color: white !important;
+    border-radius: 20px !important;
+    border: 1px solid #ccd1d6 !important;
+    background-color: #3b71aa !important;
+    font-size: 12px !important;
+    margin: 0 4px 10px 0 !important;
+}
+.index-user-body-skill-render-active:hover{
+    color: black;
+    border-radius: 20px;
+    border: 1px solid #ccd1d6;
+    background-color: #3b71aa;
+    font-size: 12px;
+    margin: 0 4px 10px 0;
+}
+.index-user-body-infos{
+    margin: 20px 0;
+}
+.index-user-body-infos-render{
+    display: flex;
+     flex-wrap: wrap;
+     padding: 10px 0;
+
+}
+
+.index-user-body-info-render{
+    color: black !important;
+    border-radius: 20px !important;
+    border: 1px solid #ccd1d6 !important;
+    background-color: white !important;
+    font-size: 12px !important;
+    margin: 0 4px 10px 0 !important;
+}
+.index-user-body-info-render:hover{
+    color: black !important;
+    border-radius: 20px !important;
+    border: 1px solid #383a3b !important;
+    background-color: white !important;
+    font-size: 12px !important;
+    margin: 0 4px 10px 0 !important;
+}
+.index-user-body-info-render-active{
+    color: white !important;
+    border-radius: 20px !important;
+    border: 1px solid #ccd1d6 !important;
+    background-color: #3b71aa !important;
+    font-size: 12px !important;
+    margin: 0 4px 10px 0 !important;
+}
+.index-user-body-info-render-active:hover{
+    color: black;
+    border-radius: 20px;
+    border: 1px solid #ccd1d6;
+    background-color: #3b71aa;
+    font-size: 12px;
+    margin: 0 4px 10px 0;
+}
+.index-user-body-dates{
+    margin-top: 20px ;
+}
+.index-user-body-dates-render{
+    display: flex;
+     flex-wrap: wrap;
+     padding: 10px 0 0 0;
+
+}
+.button-index-user{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 50px;
+}
+.sidebar{
+    height: fit-content;
+    display: flex;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    align-items: flex-end;
+    flex-direction: column;
+}

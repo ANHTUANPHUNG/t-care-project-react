@@ -14,6 +14,7 @@ const validationSchema = yup.object().shape({
   email: yup.string().email("Email không hợp lệ").required("Email không được để trống"),
   firstName: yup.string().required("Tên không được để trống"),
   lastName: yup.string().required("Họ không được để trống"),
+  phone: yup.string().required("Số điện thoại không được để trống"),
   password: yup.string().required("Mật khẩu không được để trống"),
   confirmPassword: yup
     .string()
@@ -39,6 +40,7 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
       email: "",
       firstName: "",
       lastName: "",
+      phone : "",
       password: "",
       confirmPassword: "",
       personID: "",
@@ -52,6 +54,7 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
             firstName: values.firstName,
             lastName: values.lastName,
             email: values.email,
+            phone: values.phone,
             password: values.password,
             gender: gender,
             personId: values.personID,
@@ -91,6 +94,18 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
                 onChange={formik.handleChange}
                 error={formik.touched.email && Boolean(formik.errors.email)}
                 helperText={formik.touched.email && formik.errors.email}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                id="phone"
+                label="Số điện thoại"
+                type="phone"
+                value={formik.values.phone}
+                onChange={formik.handleChange}
+                error={formik.touched.phone && Boolean(formik.errors.phone)}
+                helperText={formik.touched.phone && formik.errors.phone}
               />
             </Grid>
             <Grid item xs={12} sm={6}>

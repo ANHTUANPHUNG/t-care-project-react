@@ -16,7 +16,6 @@ import { SignInUser } from "./components/home/login-signin/signInUser/SignInUser
 import { Profile } from "./components/viewUser/profile/Profile";
 import { AssistantSignIn } from "./components/home/wordFindJobs/assistantSignIn/AssistantSignIn";
 import { Address } from "./components/home/wordFindJobs/address/Address";
-import { Index } from "./components/viewUser/index/Index";
 import { DescriptionProcess } from "./components/home/wordFindJobs/descriptionProcess/DescriptionProcess";
 import { Availability } from "./components/home/wordFindJobs/availability/Availability";
 import { Experience } from "./components/home/wordFindJobs/experience/Experience";
@@ -27,6 +26,7 @@ import { ForgotPassword } from "./components/home/login-signin/forgotPassword/Fo
 import LoadingPage from "./components/common/LoadingPage";
 import SweetAlertEmployee from "./components/common/SweetAlertEmployee";
 import AddCustomer from "./components/saler/AddCustomer";
+import { IndexUser } from "./components/viewUser/index/IndexUser";
 
 function App() {
   return (
@@ -68,8 +68,10 @@ function App() {
           element={<RenderListAssistant />}
         ></Route>
         <Route path="/user/profile" element={<Profile />}></Route>
-        <Route path="/user/index/:id" element={<Index />}></Route>
-        <Route path="/sale/:id" element={<SalerView />}></Route>
+
+        <Route path="/user/index/:id" element={<IndexUser />}></Route>
+        <Route path="/saler/:id" element={<SalerView />}></Route>
+        <Route path="/add-customer/:id" element={<AddCustomer />}></Route>
       </Routes>
     </>
   );
