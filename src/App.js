@@ -27,6 +27,7 @@ import LoadingPage from "./components/common/LoadingPage";
 import SweetAlertEmployee from "./components/common/SweetAlertEmployee";
 import AddCustomer from "./components/saler/AddCustomer";
 import { IndexUser } from "./components/viewUser/index/IndexUser";
+import { ProfileAssistant } from "./components/viewUser/profileAssistant/ProfileAssistant";
 
 function App() {
   return (
@@ -70,6 +71,7 @@ function App() {
         <Route path="/user/profile" element={<Profile />}></Route>
 
         <Route path="/user/index/:id" element={<IndexUser />}></Route>
+        <Route path="/user/index/:id/:idAssistant" element={<ProfileAssistant />}></Route>
         <Route path="/saler/:id" element={<SalerView />}></Route>
         <Route path="/add-customer/:id" element={<AddCustomer />}></Route>
       </Routes>
