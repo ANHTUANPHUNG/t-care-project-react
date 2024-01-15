@@ -6,7 +6,7 @@ function About() {
     <div className="about my-5" >
       <div className="about-container">
         <h1>T-Care.</h1>
-        <h3>Small word. Huge impact.</h3>
+        <h3>Từ ngữ nhỏ, ý nghĩa lớn</h3>
         <img
           decoding="async"
           width="150"
@@ -19,43 +19,45 @@ function About() {
         />
         <div style={{width:"30%"}}>
           <p>
-            Every single person will need and/or provide care to someone in their lifetime, probably
-            more than once.
+            Chúng ta đều cần hạnh phúc
           </p>
         </div>
         <h3>
-          And then there’s
-          <span>T-Care.com…</span>
+          Đến với{" "}
+          <span>T-Care </span>
         </h3>
         <div className="about-footer">
           <h6>
-            Our purpose is to help every family at each stage of care and today, we’re helping
-            millions of families at home and at work across 17+ countries and growing.
+            {/* Our purpose is to help every family at each stage of care and today, we’re helping
+            millions of families at home and at work across 17+ countries and growing. */}
+            Sứ mệnh của chúng tôi là mang đến mỗi gia đình sự chăm sóc tận tình, hiện đại. Chúng tôi đang giúp đỡ hàng ngàn gia đình
+            trên khắp cả nước và đang tiếp tục phát triển
           </h6>
           <p>
             <Favorite className="me-2 favorite" />
-            We’re using technology and innovation to solve one of the greatest human challenges.
+            Chúng tôi sử dụng thiết bị và công nghệ hiện đại, phù hợp với từng hoàn cảnh.
           </p>
           <p>
             <Favorite className="me-2 favorite" />
-            We’re at the forefront of safety, advocacy and thought leadership.
+            Chúng tôi đi đầu trong sự an toàn, với chính sách cải tiến, hiện đại.
           </p>
           <p>
             <Favorite className="me-2 favorite" />
-            We’re obsessively attuned to our customers’ needs because we ARE our customer.
+           Chúng tôi đặt sự quan tâm đến khách hàng lên hàng đầu, bởi vì chúng tôi chính là KHÁCH của bạn.
           </p>
           <p>
             <Favorite className="me-2 favorite" />
-            We’re devoted to families of all types and backgrounds because we ARE families of all
-            types and backgrounds.
+           Chúng tôi luôn cống hiến hết mình cho mọi gia đình với quan niệm chúng tôi là một phần
+           của gia đình bạn.
           </p>
           <p>
             <Favorite className="me-2 favorite" />
-            We’re here for all your life, for all families, for all the reasons that matter.
+            {/* We’re here for all your life, for all families, for all the reasons that matter. */}
+            Chúng tôi ở đây vì cuộc sống của bạn, vì gia đình của bạn, bất kì lý do gì.
           </p>
         </div>
         <div className="my-3">
-          <h5>T-Care</h5> for all you <span>love.</span>
+          <h5>T-Care</h5> Đong đầy <span>tình yêu.</span>
         </div>
       </div>
     </div>

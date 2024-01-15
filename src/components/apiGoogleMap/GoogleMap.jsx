@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
+import GetServiceAPI from "../../service/getServiceAPI";
 
-const REACT_APP_GOOGLE_MAPS_KEY = "AIzaSyADjq6OpnNMXE-b2LKvk4CrgoHh6s9JJUM";
 
 const MapComponent = ({ selectedLocation, widthMap }) => {
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: REACT_APP_GOOGLE_MAPS_KEY,
+    googleMapsApiKey: GetServiceAPI.keyGGMap,
   });
   const mapRef = React.useRef();
 

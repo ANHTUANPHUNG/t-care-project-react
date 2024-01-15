@@ -9,24 +9,24 @@ export function CheckFind(){
         <div className="bodyRender pt-5 " >
         <div className="contentRender ">
           <div className="content ">
-            <h3 className="fontContent ">Connecting families with quality, local caregivers</h3>
+            <h3 className="fontContent ">Chăm sóc gia đình chất lượng, với người hỗ trợ đáng tin cậy</h3>
           </div>
           <div className="d-flex mt-5 ">
             <div
               className={`check-${checkFind ? "active" : ""}`}
               onClick={() => setCheckFind(true)}
             >
-              <div className="px-4">Find care</div>
+              <div className="px-4">Tìm người hỗ trợ</div>
             </div>
             <div
               className={`check-${!checkFind ? "active" : ""}`}
               onClick={() => setCheckFind(false)}
             >
-              <div className="px-4">Find a job</div>
+              <div className="px-4">Tìm công việc</div>
             </div>
             <NavLink className="w-50 ms-2" to={`${checkFind ? '/user/signin' : '/assistant/sign-in'}`}>
               <Button className="buttonSearch" variant="contained">
-                Search
+                Tìm kiếm
               </Button>
             </NavLink>
           </div>

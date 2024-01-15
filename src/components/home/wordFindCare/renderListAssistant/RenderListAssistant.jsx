@@ -1,22 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./RenderListAssistant.css";
 import LogoProject from "../../../logoProject/LogoProject";
 import { LegalNotice } from "../../../carehub/LegalNotice";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { Checkbox, SwipeableDrawer } from "@mui/material";
 import Box from "@mui/material/Box";
 import CheckIcon from "@mui/icons-material/Check";
 import ClearIcon from "@mui/icons-material/Clear";
 import { ButtonForMe } from "../../../ButtonForMe";
+import axios from "axios";
+import { RenderAss } from "./RenderAss";
 
 export function RenderListAssistant() {
   const [isOpen, setIsOpen] = useState(false);
-
   const [isChecked, setChecked] = useState(false);
-
+  const [filterAss, setFilterAss] = useState();
+  const { id } = useParams();
+  console.log(filterAss);
+  useEffect(() => {
+    let axiosData = async () => {
+      const responseFilterAss = await axios.get(
+        "http://localhost:8080/api/carts/filter/e5c79d6b-6a3c-4104-b4f9-91d3a9979e06"
+      );
+      console.log(responseFilterAss?.data);
+      setFilterAss(responseFilterAss?.data.content);
+    };
+    axiosData();
+  }, []);
   const handleCheckboxChange = () => {
     setChecked(!isChecked);
   };
+  
   return (
     <>
       <div>
@@ -29,8 +43,8 @@ export function RenderListAssistant() {
         <div className="row render-list-assistant-header">
           <div className="col-3"></div>
           <div className="col-6 py-3">
-            <h4>Here's a personalized list of caregivers based on your needs</h4>
-            <h6>Shortlist the ones you like best</h6>
+            <h4>Đây là danh sách hồ sơ cá nhân gợi ý dựa vào những thông tin bạn cung cấp</h4>
+            <h6>Danh sách yêu thích</h6>
           </div>
           <div className="col-3 p-0">
             <img
@@ -40,38 +54,21 @@ export function RenderListAssistant() {
           </div>
         </div>
         <div className="render-list-assistant-body">
-          <div className="render-list-assistant-body-render">
-            <div className="render-list-assistant-body-render-container">
-              <div className="d-flex render-list-assistant-body-render-container-header">
-                <img
-                  src="https://png.pngtree.com/png-vector/20190413/ourmid/pngtree-img-file-document-icon-png-image_938720.jpg"
-                  alt=""
-                />
-                <div className="render-list-assistant-body-render-container-header-information">
-                  <h6 className="m-0">Toni C</h6>
-                  <span> Sao</span>
-                  <div>
-                    {/* nhwớ chỉnh fontsize nhỏ lại */}
-                    <span>Địa chỉ</span>
-                  </div>
-                </div>
-                <div>
-                  <Checkbox checked={isChecked} onChange={handleCheckboxChange} />
-                </div>
-              </div>
-              <div className="d-flex mt-3 render-list-assistant-body-render-container-body">
-                <div className="ms-4">
-                  My name is Toni, I've been in home care for over 12 years. I'm Certified, I've
-                  worked with health care agencies and ...{" "}
-                  <span onClick={() => setIsOpen(true)}>read more</span>
-                </div>
-              </div>
-            </div>
-          </div>
+          {filterAss != null ? (
+            <RenderAss
+              listFilterAss={filterAss}
+              setChecked={setChecked}
+              isChecked={isChecked}
+              handleCheckboxChange={handleCheckboxChange}
+              setIsOpen={setIsOpen}
+            />
+          ) : (
+            ""
+          )}
 
           <div className="per-page">
             <div className="per-page-item">
-              <div>View 5 more caregivers</div>
+              <div>Xem thêm 5 người hỗ trợ</div>
             </div>
           </div>
         </div>
@@ -85,8 +82,9 @@ export function RenderListAssistant() {
               <span>Add more or continue to evaluate them</span>
             </div>
             <div className="check-select-button">
+
               <NavLink to="/user/assistant-caption">
-                <ButtonForMe value={100} childrenButton={"Next"}></ButtonForMe>
+                <ButtonForMe value={100} childrenButton={"Tiếp theo"}></ButtonForMe>
               </NavLink>
             </div>
           </div>
@@ -96,7 +94,12 @@ export function RenderListAssistant() {
       <div className="legal-notice-user">
         <LegalNotice />
       </div>
-      <SwipeableDrawer anchor="right" open={isOpen} onOpen={() => setIsOpen(true)}>
+      <SwipeableDrawer
+        anchor="right"
+        onClose={() => setIsOpen(false)}
+        open={isOpen}
+        onOpen={() => setIsOpen(true)}
+      >
         <Box
           sx={{ width: "601px" }}
           role="presentation"
