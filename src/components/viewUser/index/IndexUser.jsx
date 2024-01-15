@@ -10,11 +10,13 @@ import { ServiceIndexUser } from "./ServiceIndexUser";
 import { SkillIndexUser } from "./SkillIndexUser";
 import { InfoIndexUser } from "./InfoIndexUser";
 import { DateIndexUser } from "./DateIndexUser";
-
+import { ButtonForMe } from "./../../ButtonForMe";
+import { RenderListAssistantIndexUser } from "./RenderListAssistantIndexUser";
 export function IndexUser() {
   const [listInformation, setListInformation] = useState();
   const [listService, setListService] = useState();
   const [listSkill, setListSkill] = useState();
+  const [listAssistant, setListAssistant] = useState();
   const [checkButtonService, setCheckButtonService] = useState("");
   const [selectedSkills, setSelectedSkills] = useState([]);
   const [selectedInfos, setSelectedInfos] = useState([]);
@@ -56,12 +58,12 @@ export function IndexUser() {
 
       const responseSkill = await axios.get("http://localhost:8080/api/skills");
       setListSkill(responseSkill.data);
+      const responseAssistant = await axios.get("http://localhost:8080/api/employees");
+      setListAssistant(responseAssistant.data);
     };
     axiosData();
   }, []);
-
-
-
+  console.log(listAssistant);
   return (
     <>
       <ContainerViewUser />
@@ -72,8 +74,8 @@ export function IndexUser() {
         </div>
       </div>
 
-      <div className="index-user-body row">
-        <div className="index-user-body-address col-4">
+      <div className="index-user-body row ">
+        <div className="index-user-body-filter col-4 sidebar">
           <div className="index-user-body-title">
             <h5>Tìm kiếm người chăm sóc theo mong muốn của bạn</h5>
             <span className="reset-filter" onClick={handleReset}>
@@ -81,15 +83,15 @@ export function IndexUser() {
             </span>
           </div>
 
-          <SearchLocationInput
+          <div className="w-100"><SearchLocationInput
             setSelectedLocation={setSelectedLocation}
             setPlace={setPlace}
             marginTest={"0"}
             resetInputAddress={resetInputAddress}
-            children ={true}
-          />
+            children={true}
+          /></div>
           <div className="index-user-body-dates">
-            <h6 style={{margin:"0"}}>Thời gian cần chăm sóc</h6>
+            <h6 style={{ margin: "0" }}>Thời gian cần chăm sóc</h6>
             <div className="index-user-body-dates-render">
               <DateIndexUser
                 setSelectedDate={setSelectedDate}
@@ -107,6 +109,7 @@ export function IndexUser() {
             <div className="index-user-body-services-render">
               {listService?.map((e) => (
                 <ServiceIndexUser
+                  key={e.id}
                   value={e}
                   setCheckButtonService={setCheckButtonService}
                   checkButtonService={checkButtonService}
@@ -119,6 +122,7 @@ export function IndexUser() {
             <div className="index-user-body-skills-render">
               {listSkill?.map((e) => (
                 <SkillIndexUser
+                  key={e.id}
                   setSelectedSkills={setSelectedSkills}
                   selectedSkills={selectedSkills}
                   value={e}
@@ -131,6 +135,7 @@ export function IndexUser() {
             <div className="index-user-body-infos-render">
               {listInformation?.map((e) => (
                 <InfoIndexUser
+                  key={e.id}
                   setSelectedInfos={setSelectedInfos}
                   selectedInfos={selectedInfos}
                   value={e}
@@ -138,6 +143,22 @@ export function IndexUser() {
               ))}
             </div>
           </div>
+          <div className="button-index-user">
+            <ButtonForMe
+              value={60}
+              childrenButton={"Tìm kiếm"}
+              colorButton={"#3b71aa"}
+              type="submit"
+            />
+          </div>
+        </div>
+        <div className="index-user-body-render-assistant col-8">
+
+          {listAssistant?.map((e) => (
+            <div key={e.id}>
+              <RenderListAssistantIndexUser value={e}  />
+            </div>
+          ))}
         </div>
       </div>
       <LegalNotice />

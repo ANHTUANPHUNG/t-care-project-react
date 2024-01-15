@@ -13,10 +13,11 @@
 .index-user-body{
     padding: 0 3%
 }
-.index-user-body-address{
+.index-user-body-filter{
     height: 100%;
      background-color: #f6f7f8;
-     padding-top: 30px
+     padding-top: 30px;
+    
 }
 .index-user-body-title{
     padding-bottom: 10px;
@@ -161,4 +162,19 @@
      flex-wrap: wrap;
      padding: 10px 0 0 0;
 
+}
+.button-index-user{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 50px;
+}
+.sidebar{
+    height: fit-content;
+    display: flex;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    align-items: flex-end;
+    flex-direction: column;
 }
