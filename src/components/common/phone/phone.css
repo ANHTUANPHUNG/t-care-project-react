@@ -8,16 +8,14 @@
     --phone-hover-color:#f86e00;
     --phone-hover2-color:red;
     }
-        .fone {
-            font-size:19px;
-            /* chữ cạnh nút gọi */
-    color:var(--phone-text-color);
-            line-height:40px;
-            font-weight:bold;
-            padding-left: 77px
-            ;
-            /* cách bên trái cho chữ */
-    margin:0 0;
+    .fone {
+        font-size: 19px;
+        color: var(--phone-text-color);
+        line-height: 40px;
+        font-weight: bold;
+        padding-left: 77px;
+        margin: 0;
+        cursor: pointer;
     }
     .fix_tel {
             position:fixed;

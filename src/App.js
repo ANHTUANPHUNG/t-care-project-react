@@ -26,6 +26,7 @@ import SalerView from "./components/saler/SalerView";
 import { ForgotPassword } from "./components/home/login-signin/forgotPassword/ForgotPassword";
 import LoadingPage from "./components/common/LoadingPage";
 import SweetAlertEmployee from "./components/common/SweetAlertEmployee";
+import AddCustomer from "./components/saler/AddCustomer";
 
 function App() {
   return (
@@ -68,7 +69,7 @@ function App() {
         ></Route>
         <Route path="/user/profile" element={<Profile />}></Route>
         <Route path="/user/index/:id" element={<Index />}></Route>
-        <Route path="/saler/:id" element={<SalerView />}></Route>
+        <Route path="/sale/:id" element={<SalerView />}></Route>
       </Routes>
     </>
   );

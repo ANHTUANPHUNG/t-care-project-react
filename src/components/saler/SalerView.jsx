@@ -28,16 +28,35 @@ export default function SalerView() {
 
     }
 
-    const handleDelete = async (id) => {
-        console.log(id);
-		try {
-            await axios.delete(`http://localhost:3000/customers/${id}`);
-			loadCustomers();
-			toast.success("Xoá khách hàng thành công",{autoClose: 1000});
-		} catch (error) {
-			
-		}
-	};
+   
+    const handleAddCustomer = () => {
+      axios
+        .post(`http://localhost:8080/api/carts/cartSale/${id}`)
+        .then((response) => {
+          console.log(response);
+          const customerId = response.data
+          toast.success("Thêm khách hàng mới thành công", { autoClose: 1000 });
+         navigate("/user/address/"+customerId)
+        })
+        .catch((error) => {
+          console.error(error);
+          toast.error("Thêm khách hàng mới thất bại");
+        });
+    };
+
+    const handleDeleteCustomer = (id) => {
+      axios
+        .delete(`http://localhost:8080/api/carts/deleteCustomerBySale/${id}`)
+        .then((response) => {
+          console.log(response);
+          toast.success("Xóa khách hàng thành công", { autoClose: 1000 });
+          loadCustomers();
+        })
+        .catch((error) => {
+          console.error(error);
+          toast.error("Xóa thất bại");
+        });
+    }
   return (
     <>
  <ContainerViewUser/>
@@ -54,7 +73,7 @@ export default function SalerView() {
                          
                          <Link
                              style={{textDecoration: "none", color:"#0d6efd"}}
-                             to={`/add-customer`}
+                            onClick={handleAddCustomer}
                              >
                                  
                                  <i className="far fa-plus-square"></i>
@@ -74,6 +93,7 @@ export default function SalerView() {
                      <th>Tên</th>
                      <th>Họ</th>
                      <th>Giới tính</th>
+                     <th>Số điện thoại</th>
                      <th>Ngày bắt đầu thuê</th>
                      <th>Ngày hết hạn</th>
                      <th colSpan="3" style={{textAlign: "center"}}>Action</th>
@@ -81,43 +101,45 @@ export default function SalerView() {
                  </tr>
              </thead>
              <tbody>
-                 {customers && customers
-                  .map((customer) => (
-                     <tr key={customer.id}>
-                 <td>{customer.id}</td>
-                 <td>{customer.firstName}</td>
-                 <td>{customer.lastName}</td>
-                 <td>{customer.gender === 'MALE' ? 'Nam' : customer.gender === 'FEMALE' ? 'Nữ' : 'Khác'}</td>
-                 <td>{customer.timeStart}</td>
-                 <td>{customer.timeEnd}</td>
-                 <td className="mx-2">
-                  <Link
-                    to={`/student-profile/${customer.id}`}
-                    className="btn btn-info"
-                  >
-                    <FaEye />
-                  </Link>
-                </td>
-                <td className="mx-2">
-                  <Link
-                    to={`/edit-student/${customer.id}`}
-                    className="btn btn-warning"
-                  >
-                    <FaEdit />
-                  </Link>
-                </td>
-                <td className="mx-2">
-                  <button
-                    className="btn btn-danger"
-                    onClick={() => handleDelete(customer.id)}
-                  >
-                    <FaTrashAlt />
-                  </button>
-                </td>
-             </tr>
-                  ))}
-             
-             </tbody>
+  {customers &&
+    customers.map((customer) => (
+      <tr key={customer.id}>
+        <td>{customer.id}</td>
+        <td>{customer.firstName ? customer.firstName : ''}</td>
+        <td>{customer.lastName ? customer.lastName : ''}</td>
+        <td>
+          {customer.gender === 'MALE'
+            ? 'Nam'
+            : customer.gender === 'FEMALE'
+            ? 'Nữ'
+            : 'Khác'}
+        </td>
+        <td>{customer.phone}</td>
+        <td>{customer.timeStart !== null ? customer.timeStart : ''}</td>
+        <td>{customer.timeEnd !== null ? customer.timeEnd : ''}</td>
+        <td className="mx-2">
+          <Link
+            className="btn btn-info"
+          >
+            <FaEye />
+          </Link>
+        </td>
+        <td className="mx-2">
+          <Link className="btn btn-warning">
+            <FaEdit />
+          </Link>
+        </td>
+        <td className="mx-2">
+          <button className="btn btn-danger"
+          onClick={() => handleDeleteCustomer(customer.id)}
+          >
+            
+            <FaTrashAlt />
+          </button>
+        </td>
+      </tr>
+    ))}
+</tbody>
          </table> 
      </div>
      
