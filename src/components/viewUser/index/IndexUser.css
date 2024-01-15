@@ -11,7 +11,7 @@
     color: #3a94ed
 }
 .index-user-body{
-    padding: 0 3%
+    padding: 0 3% 30px 3%
 }
 .index-user-body-filter{
     height: 100%;
@@ -177,4 +177,57 @@
     top: 0;
     align-items: flex-end;
     flex-direction: column;
+}
+.render-list-assistant-index-user{
+    padding: 10px 40px
+}
+.render-list-assistant-index-user-header{
+    display: flex;
+     margin: 0 30px;
+     padding: 20px 0
+}
+.render-list-assistant-index-user-header img{
+    width: 100px;
+     border-radius: 20px;
+     height: 100px
+}
+.render-list-assistant-index-user-body{
+    font-size: 20px;
+     margin-left: 10px
+}
+.render-list-assistant-index-user-body-name{
+    font-weight: bold
+}
+.render-list-assistant-index-user-body-icon-token{
+    color: #4093e9;
+     margin: 0 3px
+}
+.render-list-assistant-index-user-body-icon-security{
+    color: #4093e9
+}
+.render-list-assistant-index-user-body-experience{
+    font-size: 15px
+}
+.render-list-assistant-index-user-footer{
+    display: flex;
+     margin: 0 0 0 30px ;
+     justify-content: space-around
+}
+.render-list-assistant-index-user-footer-content{
+    font-size: 12px;
+     width: 70%
+}
+.render-list-assistant-index-user-footer-separation{
+    height: 1px;
+     background-color: #e0e0e0;
+     margin-left: 70px
+}
+.favorite-check-index-user{
+    margin-top: 6px;
+     cursor: pointer
+}
+.favorite-check-index-user-active{
+    margin-top: 6px;
+     cursor: pointer;
+     color: red;
 }

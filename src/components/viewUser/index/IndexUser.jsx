@@ -63,7 +63,6 @@ export function IndexUser() {
     };
     axiosData();
   }, []);
-  console.log(listAssistant);
   return (
     <>
       <ContainerViewUser />
@@ -153,7 +152,6 @@ export function IndexUser() {
           </div>
         </div>
         <div className="index-user-body-render-assistant col-8">
-
           {listAssistant?.map((e) => (
             <div key={e.id}>
               <RenderListAssistantIndexUser value={e}  />

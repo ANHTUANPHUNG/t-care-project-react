@@ -24,6 +24,7 @@ import { Photo } from "./components/home/wordFindJobs/photo/Photo";
 import SalerView from "./components/saler/SalerView";
 import { ForgotPassword } from "./components/home/login-signin/forgotPassword/ForgotPassword";
 import { IndexUser } from "./components/viewUser/index/IndexUser";
+import { ProfileAssistant } from "./components/viewUser/profileAssistant/ProfileAssistant";
 
 function App() {
   return (
@@ -66,6 +67,7 @@ function App() {
         ></Route>
         <Route path="/user/profile" element={<Profile />}></Route>
         <Route path="/user/index/:id" element={<IndexUser />}></Route>
+        <Route path="/user/index/:id/:idAssistant" element={<ProfileAssistant />}></Route>
         <Route path="/saler/:id" element={<SalerView />}></Route>
       </Routes>
     </>
