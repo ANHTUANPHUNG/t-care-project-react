@@ -6,7 +6,14 @@ import { Modal as BaseModal } from "@mui/base/Modal";
 import { ButtonForMe } from "./ButtonForMe";
 import { Button } from "@mui/material";
 
-export default function ModalUnstyled({ check, onClose, widthForm, heightForm, children }) {
+export default function ModalUnstyled({
+  paddingCheck,
+  check,
+  onClose,
+  widthForm,
+  heightForm,
+  children,
+}) {
   const [open, setOpen] = React.useState(false);
   React.useEffect(() => {
     setOpen(check);
@@ -20,8 +27,8 @@ export default function ModalUnstyled({ check, onClose, widthForm, heightForm, c
   return (
     <div>
       <Modal open={open} onClose={handleClose} slots={{ backdrop: StyledBackdrop }}>
-        <ModalContent sx={{ width: widthForm, height:  heightForm }}>
-          {children}
+        <ModalContent sx={{ width: widthForm, height: heightForm }}>
+          <div style={{padding: paddingCheck || 0 }}>{children}</div>
         </ModalContent>
       </Modal>
     </div>
@@ -92,7 +99,7 @@ const ModalContent = styled("div")(
     border: 1px solid ${theme.palette.mode === "dark" ? grey[700] : grey[200]};
     box-shadow: 0 4px 12px
       ${theme.palette.mode === "dark" ? "rgb(0 0 0 / 0.5)" : "rgb(0 0 0 / 0.2)"};
-    padding: 24px;
+    padding: "0" ;
     color: ${theme.palette.mode === "dark" ? grey[50] : grey[900]};
 
     & .modal-title {
