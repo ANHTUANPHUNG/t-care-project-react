@@ -6,7 +6,7 @@ import UserServiceAPI from "../../../../service/userServiceAPI";
 import { FrameLoginSignIn } from "../frameLoginSignIn/FrameLoginSignIn";
 export function SignInUser() {
   const signInUser = (
-    <div style={{ margin: "5% 0" }}>
+    <div className="m5-0">
       <FormSignIn
         url={"/login"}
         checkRole={"ROLE_USER"}

@@ -8,6 +8,7 @@ import { SelectDate } from "../../../selectDate/SelectDate";
 import DateBetween from "./DateBetween";
 import { toast } from "react-toastify";
 import axios from "axios";
+import './DateSession.css'
 
 export function DateSession() {
   const [value, setValue] = useState();
@@ -116,14 +117,14 @@ export function DateSession() {
         </div>
       </div>
       <div className="date-session-map">
-        <div style={{ margin: "0px 400px" }}>
+        <div className="m0-400">
           <DateBetween
             onChange={handleDateChange}
             setSelectedDate={setSelectedDate}
             selectedDate={selectedDate}
           />
         </div>
-        <div style={{ marginTop: "20px" }}>
+        <div className="mtop-20">
           {selectedDate && selectedDate[0] && selectedDate[1] && (
             <SelectDate dayInWeek={dayInWeek} setValue={setValue} />
           )}{" "}
