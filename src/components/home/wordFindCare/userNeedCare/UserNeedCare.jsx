@@ -75,8 +75,7 @@ export function UserNeedCare() {
           {memberOfFamily.map((e) => (
             <div
               key={e.id}
-              className="d-flex w-50 my-3"
-              style={{ justifyContent: "space-between" }}
+              className="d-flex w-50 my-3 jc-sp"
             >
               <label htmlFor={`id-${e.id}`}>{e.name}</label>
               <Radio

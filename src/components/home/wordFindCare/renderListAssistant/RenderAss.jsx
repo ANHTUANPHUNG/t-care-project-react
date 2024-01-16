@@ -28,7 +28,7 @@ export function RenderAss({ setIsOpen, handleCheckboxChange, isChecked, listFilt
                   {Math.ceil(e?.starAverage * 2) / 2 -
                     Math.floor(Math.ceil(e?.starAverage * 2) / 2) >
                     0 && <StarHalf style={{ color: "yellow" }} />}
-                  <span style={{ marginLeft: "5px", fontSize: "12px", marginTop:"3px" }}>
+                  <span className="ml-5-fs12-mt3">
                     (<span >{e?.rateQuantity}</span>)
                   </span>
                 </div>

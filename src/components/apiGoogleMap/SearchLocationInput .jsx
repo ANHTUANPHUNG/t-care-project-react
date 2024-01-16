@@ -64,7 +64,7 @@ const SearchLocationInput = ({
   return (
     <div className="search-location-input">
       {!children ? (
-        <label htmlFor="inputSearchAddress" style={{ cursor: "pointer" }}>
+        <label htmlFor="inputSearchAddress" className="pointer">
           <h3>{title || "Bạn sống ở đâu?"} </h3>
         </label>
       ) : (
@@ -90,7 +90,7 @@ const SearchLocationInput = ({
         </div>
       )}
 
-      <div className="d-flex" style={{ margin: marginTest || "15px 20% 0 20%" }}>
+      <div className="d-flex" style={{ margin: marginTest || "15px 20% 0 20%" }} >
         <input
           style={{ cursor: "pointer" }}
           ref={inputRef}
@@ -100,8 +100,8 @@ const SearchLocationInput = ({
           value={query}
           id="inputSearchAddress"
         />
-        <label htmlFor="inputSearchAddress" style={{ cursor: "pointer" }}>
-          <AddLocationIcon style={{ margin: "7px 0 0 -25px" }} />
+        <label htmlFor="inputSearchAddress" className="pointer">
+          <AddLocationIcon className="m-700-25" />
         </label>
       </div>
     </div>

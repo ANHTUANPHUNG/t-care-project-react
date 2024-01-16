@@ -17,7 +17,7 @@ function About() {
           srcSet="https://www.care.com/about/wp-content/uploads/sites/4/2021/12/Senior-Couple-1.png.webp 424w, https://www.care.com/about/wp-content/uploads/sites/4/2021/12/Senior-Couple-1-300x267.png.webp 300w"
           sizes="(max-width: 100px) 100vw, 424px"
         />
-        <div style={{width:"30%"}}>
+        <div className="w-30">
           <p>
             Chúng ta đều cần hạnh phúc
           </p>

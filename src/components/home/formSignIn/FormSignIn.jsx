@@ -210,7 +210,7 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
                 }
               />
               {formik.touched.termsAgreed && formik.errors.termsAgreed && (
-                <div className="error-message" style={{ color: "red" }}>
+                <div className="error-message cl-red">
                   {formik.errors.termsAgreed}
                 </div>
               )}

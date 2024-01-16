@@ -82,8 +82,8 @@ export function Photo() {
           title: 'Hồ sơ trực tuyến đã hoàn tất',
           text: 'Xin vui lòng đến 28 Nguyễn Tri Phương, tp. Huế, tỉnh Thừa Thiên Huế để hoàn tất thủ tục',
           confirmButtonText: "OK"
-        }).then(() => { 
-          navigate('/');
+        }).then(() => {   
+          navigate('/home');
         });
       })
       .catch((error) => {

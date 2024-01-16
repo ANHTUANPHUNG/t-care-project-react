@@ -55,16 +55,16 @@ export function UserService() {
         </div>
 
         <div className="row">
-          <div className="col-6" style={{ backgroundColor: "#3b71aa", height: "3px" }}></div>
+          <div className="col-6 bg-h3"></div>
         </div>
       </div>
-      <div className="d-flex my-5 " style={{ justifyContent: "center" }}>
+      <div className="d-flex my-5 jc-center">
         <div>
           <h3 className="mb-4">Bạn đang tìm kiếm loại chăm sóc nào?</h3>
           <RadioService value={listServiceGenerals} selectedRadioId={selectedRadioId} setSelectedRadioId={setSelectedRadioId} />
         </div>
       </div>
-      <div className="my-5" style={{ height: "50px", textAlign: "center" }}>
+      <div className="my-5 h5-ta-center">
           <ButtonForMe childrenButton={"Tiếp theo"} onclick={handleSubmitService} />
       </div>
       <div className="legal-notice-user">
