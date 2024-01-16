@@ -11,7 +11,7 @@ export function RadioService({ value, selectedRadioId, setSelectedRadioId }) {
         key={e.id}
         className={`d-flex mb-3 py-3 radioService${selectedRadioId === e.id ? "-active" : ""}`}
       >
-        <div className="" style={{ width: "300px" }}>
+        <div className="w300">
           <label htmlFor={e.id}>
             <h5 className="mx-3 mb-0">{e.name}</h5>
             {sentences.map((sentence, index) => (

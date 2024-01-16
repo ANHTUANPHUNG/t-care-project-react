@@ -120,7 +120,7 @@ export function SelectDate({ paddingSpan, setValue, dayInWeek, billIndexUser }) 
           </>
         ) : (
           <>
-            <div className="" style={{ display: "flex", flexWrap: "wrap" }}>
+            <div className="d-flex-wrap">
               {valueDate !== "" &&
                 sessionInDate.map((e) => (
                   <Button

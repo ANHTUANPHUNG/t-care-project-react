@@ -31,3 +31,6 @@
      border-radius: 20px;
      color: white;
 }
+.jc-sp{
+    justify-content: space-between;
+}

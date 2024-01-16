@@ -56,3 +56,17 @@ body{
     border-radius: 10px;
     border: 1px solid #72727247;
 }
+
+.bg-ff{
+    background-color: #FFF1EB;
+}
+.bg-white-bb-red{
+    background-color: white;
+    border-bottom: red;
+}
+.w45{
+    width: 45%;
+}
+.w100{
+    width: 100%;
+}

@@ -64,37 +64,32 @@ export function UserAddress() {
         </div>
 
         <div className="row">
-          <div className="col-4" style={{ backgroundColor: "#3b71aa", height: "3px" }}></div>
+          <div className="col-4 bg-h3"></div>
         </div>
       </div>
-      <div className="m-5 " style={{ textAlign: "-webkit-center" }}>
+      <div className="m-5 ta-we-c">
         <SearchLocationInput
           setSelectedLocation={setSelectedLocation}
           setPlace={setPlace}
           title={"Bạn tìm kiếm sự chăm sóc ở đâu?"}
         />
         <MapComponent selectedLocation={selectedLocation} widthMap={"60%"} />
-        <div style={{ margin: "30px 35%" }}>
-          <h6 style={{ paddingLeft: "50px" }}>Bạn dự định tìm kiếm trong bao xa?</h6>
-          <div
-            style={{
-              display: "flex",
-              margin: "30px 0",
-              justifyContent: "space-around",
-            }}
+        <div className="m30-35">
+          <h6 className="pl-50">Bạn dự định tìm kiếm trong bao xa?</h6>
+          <div className="d-flex-m30-0-jc-sa"
           >
-            <div style={{ cursor: "pointer", margin: "10px" }} onClick={() => handleMinus()}>
+            <div className="pointer-m10" onClick={() => handleMinus()}>
               <RemoveIcon />
             </div>
             <div>
-              <span style={{ fontSize: "30px" }}>{km}</span> <br /> <span>Kilomets</span>
+              <span className="fs30">{km}</span> <br /> <span>Kilomets</span>
             </div>
-            <div style={{ cursor: "pointer", margin: "10px" }} onClick={() => handleAdd()}>
+            <div className="pointer-m10" onClick={() => handleAdd()}>
               <AddIcon />
             </div>
           </div>
         </div>
-        <div className="mt-5" style={{ height: "50px" }}>
+        <div className="mt-5 h10">
           <ButtonForMe childrenButton={"Tiếp theo"} onclick={handleButtonClick} />
         </div>
       </div>
