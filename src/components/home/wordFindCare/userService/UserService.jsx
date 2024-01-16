@@ -8,6 +8,7 @@ import { RadioService } from "./RadioService";
 import GetServiceAPI from "../../../../service/getServiceAPI";
 import { toast } from "react-toastify";
 import LoadingCommon from "../../../common/LoadingCommon";
+import './UserService.css'
 
 export function UserService() {
   const [listServiceGenerals, setListServiceGenerals] = useState();
