@@ -31,13 +31,13 @@ export function Home() {
                     </NavLink>
                 </div>
             </div>
-            <div style={{ backgroundColor: "#FFF1EB" }}>
-                <div className="d-flex" style={{ backgroundColor: "white", borderBottom: "red" }}>
+            <div className="bg-ff">
+                <div className="d-flex bg-white-bb-red">
                     <CheckFind />
-                    <div style={{ width: "45%" }}>
-                        <img
+                    <div className="w45">
+                        <img className="w100"
                             src="https://res.cloudinary.com/dw4xpd646/image/upload/v1703748824/Cloudinary-React/gwsdfpleoznddaljvn9m.png"
-                            style={{ width: "100%" }}
+                           
                         />  
                     </div>  
                 </div>
