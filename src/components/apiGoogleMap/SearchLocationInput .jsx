@@ -14,6 +14,7 @@ const SearchLocationInput = ({
   marginTest,
   resetInputAddress,
   children,
+  onKmChange,
 }) => {
   const autoCompleteRef = useRef();
 
@@ -59,7 +60,13 @@ const SearchLocationInput = ({
   const [age, setAge] = useState("");
 
   const handleChange = (event) => {
-    setAge(event.target.value);
+    // setAge(event.target.value);
+
+    let newAge = event.target.value;
+    setAge(newAge);
+  if (onKmChange) {
+    onKmChange(newAge);
+  }
   };
   return (
     <div className="search-location-input">

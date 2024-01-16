@@ -12,25 +12,25 @@ import { ServiceIndexUser } from '../viewUser/index/ServiceIndexUser';
 import { SkillIndexUser } from '../viewUser/index/SkillIndexUser';
 import { InfoIndexUser } from '../viewUser/index/InfoIndexUser';
 import { ButtonForMe } from '../ButtonForMe';
-import { RenderListAssistantIndexUser } from '../viewUser/index/RenderListAssistantIndexUser';
 import { LegalNotice } from '../carehub/LegalNotice';
 
 export default function AddCustomer() {
   const [listInformation, setListInformation] = useState();
   const [listService, setListService] = useState();
   const [listSkill, setListSkill] = useState();
-  const [listAssistant, setListAssistant] = useState();
   const [saleNote, setSaleNote] = useState();
   const [checkButtonService, setCheckButtonService] = useState("");
   const [selectedSkills, setSelectedSkills] = useState([]);
   const [selectedInfos, setSelectedInfos] = useState([]);
   const [selectedGender, setSelectedGender] = useState([]);
+  const [selectedEdecade, setSelectedEdecade] = useState([]);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [noteForPatient, setNoteForPatient] = useState('');
   const [noteForEmployee, setNoteForEmployee] = useState('');
   const [phone,setPhone] = useState("");
   const [relation, setRelation] = useState('');
+  const [km, setKm] = useState(10);
   const [resetInputAddress, setResetInputAddress] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState({
     lat: 0,
@@ -64,18 +64,38 @@ export default function AddCustomer() {
   }, []);
   useEffect(() => {
     let axiosData = async () => {
-      const responseInformation = await axios.get("http://localhost:8080/api/add-infos");
-      setListInformation(responseInformation.data);
-
       const responseService = await axios.get("http://localhost:8080/api/serviceGenerals");
       setListService(responseService.data);
-
-      const responseSkill = await axios.get("http://localhost:8080/api/skills");
-      setListSkill(responseSkill.data);
     };
     axiosData();
   }, []);
-  console.log(listAssistant);
+  
+  const cart = {
+    timeStart: startDay,
+    timeEnd: endDay,
+    noteForPatient: noteForPatient,
+    noteForEmployee: noteForEmployee,
+    saleNote: saleNote,
+    firstName: firstName,
+    lastName: lastName,
+    phone: phone,
+    serviceId: checkButtonService,
+    memberOfFamily:relation,
+    edecade:selectedEdecade,
+    gender:selectedGender,
+    latitude: selectedLocation.lat,
+    longitude: selectedLocation.lng,
+    locationPlace:place,
+    distanceForWork: km,
+
+
+  }
+  const handleButtonClick = () => {
+    console.log(cart);
+  }
+  const handleKmChange = (newKm) => {
+    setKm(newKm)
+  };
   return (
     <>
       <ContainerViewUser />
@@ -84,7 +104,6 @@ export default function AddCustomer() {
           <h4>THÊM MỚI KHÁCH HÀNG</h4>
         </div>
       </div>
-
       <div>
         <div >  
           <div>
@@ -153,6 +172,15 @@ export default function AddCustomer() {
           <label>
             <input
               type="radio"
+              value="MYSELF"
+              checked={relation === 'MYSELF'}
+              onChange={(e) => setRelation(e.target.value)}
+            />
+            Bản thân
+          </label>
+          <label>
+            <input
+              type="radio"
               value="OTHER"
               checked={relation === 'OTHER'}
               onChange={(e) => setRelation(e.target.value)}
@@ -189,17 +217,31 @@ export default function AddCustomer() {
           <div className="index-user-body-gender">
         <h6>Giới tính</h6>
         <div className="index-user-body-gender-render">
-          <select
-            value={selectedGender}
-            onChange={(e) => setSelectedGender(e.target.value)}
-          >
-            <option value="">Chọn giới tính</option>
-            {gender.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
+        <select
+          value={selectedGender || ''}
+          onChange={(e) => setSelectedGender(e.target.value)}
+        >
+          <option value="">Chọn giới tính</option>
+          {gender.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+        </div>
+        <h6>Thập niên</h6>
+        <div className="index-user-body-gender-render">
+        <select
+          value={selectedEdecade || ''}
+          onChange={(e) => setSelectedEdecade(e.target.value)}
+        > 
+          <option value="">Chọn thập niên</option>
+          {edecade.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
         </div>
       </div>
           <div className="w-100"><SearchLocationInput
@@ -208,6 +250,7 @@ export default function AddCustomer() {
             marginTest={"0"}
             resetInputAddress={resetInputAddress}
             children={true}
+            onKmChange={handleKmChange}
           /></div>
           <div className="index-user-body-dates">
             <h6 className='m0'>Thời gian cần chăm sóc</h6>
@@ -236,38 +279,12 @@ export default function AddCustomer() {
               ))}
             </div>
           </div>
-          <div className="index-user-body-skills">
-            <h6>Kỹ năng chuyên nghiệp</h6>
-            <div className="index-user-body-skills-render">
-              {listSkill?.map((e) => (
-                <SkillIndexUser
-                  key={e.id}
-                  setSelectedSkills={setSelectedSkills}
-                  selectedSkills={selectedSkills}
-                  value={e}
-                />
-              ))}
-            </div>
-          </div>
-          <div className="index-user-body-infos">
-            <h6>Kỹ năng chuyên nghiệp</h6>
-            <div className="index-user-body-infos-render">
-              {listInformation?.map((e) => (
-                <InfoIndexUser
-                  key={e.id}
-                  setSelectedInfos={setSelectedInfos}
-                  selectedInfos={selectedInfos}
-                  value={e}
-                />
-              ))}
-            </div>
-          </div>
           <div className="button-index-user">
             <ButtonForMe
               value={60}
-              childrenButton={"Tìm kiếm"}
+              childrenButton={"Tạo mới"}
               colorButton={"#3b71aa"}
-              type="submit"
+              onclick={handleButtonClick}
             />
           </div>  
         </div>
