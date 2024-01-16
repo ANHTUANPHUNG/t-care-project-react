@@ -3,7 +3,7 @@
      height: "3px";
 }
 .ta-we-c{
-    text-align: "-webkit-center";
+    text-align: "webkit-center";
 }
 .m30-35{
     margin: "30px 35%"
@@ -20,7 +20,7 @@
     cursor: "pointer";
      margin: "10px"
 }
-.h10{
+.ad-h10{
     height: 10px;
 }
 .fs30{

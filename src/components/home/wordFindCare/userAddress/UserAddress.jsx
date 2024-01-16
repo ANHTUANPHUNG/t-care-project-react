@@ -9,6 +9,7 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import { toast } from "react-toastify";
 import UserServiceAPI from "./../../../../service/userServiceAPI";
+import './UserAddress.css'
 
 export function UserAddress() {
   const [km, setKm] = useState(10);
@@ -67,7 +68,7 @@ export function UserAddress() {
           <div className="col-4 bg-h3"></div>
         </div>
       </div>
-      <div className="m-5 ta-we-c">
+      <div className="m-5" style={{textAlign:"-webkit-center"}}>
         <SearchLocationInput
           setSelectedLocation={setSelectedLocation}
           setPlace={setPlace}
