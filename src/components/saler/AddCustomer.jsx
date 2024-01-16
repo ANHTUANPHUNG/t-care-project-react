@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { ContainerViewUser } from '../viewUser/containerViewUser/ContainerViewUser'
 import SearchLocationInput from '../apiGoogleMap/SearchLocationInput '
-import DateBetween from '../home/wordFindCare/datesession/DateBetween';
-import { SelectDate } from '../selectDate/SelectDate';
 import "./addCustomer.css"  
-import LocalPoliceIcon from "@mui/icons-material/LocalPolice";
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { DateIndexUser } from '../viewUser/index/DateIndexUser';
-import { ServiceIndexUser } from '../viewUser/index/ServiceIndexUser';
-import { SkillIndexUser } from '../viewUser/index/SkillIndexUser';
-import { InfoIndexUser } from '../viewUser/index/InfoIndexUser';
 import { ButtonForMe } from '../ButtonForMe';
 import { LegalNotice } from '../carehub/LegalNotice';
+import ServiceIndexSale from './ServiceIndexSale';
+import { toast } from 'react-toastify';
+import { Input } from '@mui/material';
 
 export default function AddCustomer() {
   const [listInformation, setListInformation] = useState();
@@ -29,15 +26,15 @@ export default function AddCustomer() {
   const [noteForPatient, setNoteForPatient] = useState('');
   const [noteForEmployee, setNoteForEmployee] = useState('');
   const [phone,setPhone] = useState("");
-  const [relation, setRelation] = useState('');
+  const [relation, setRelation] = useState('MYPARENT');
   const [km, setKm] = useState(10);
   const [resetInputAddress, setResetInputAddress] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState({
     lat: 0,
-    lng: 0,
+    lng: 0, 
   });
   const [place, setPlace] = useState("");
-  const [value, setValue] = useState();
+  const [value, setValue] = useState("");
   const [selectedDate, setSelectedDate] = useState(undefined);
   
   const [dayInWeek, setDayInWeek] = useState([]);
@@ -70,10 +67,26 @@ export default function AddCustomer() {
     axiosData();
   }, []);
   
+  const transformedData = Object.entries(value).map(([date, sessionList]) => ({
+    date,
+    sessionOfDateList: sessionList,
+  }));
+  function convertDateFormat(dateString) {
+    if (!dateString) {
+      return ""; 
+    }
+  
+    const parts = dateString.split('/');
+    const day = parts[0];
+    const month = parts[1];
+    const year = parts[2];
+    const formattedDate = `${year}-${month}-${day}`;
+    return formattedDate;
+  }
   const cart = {
-    timeStart: startDay,
-    timeEnd: endDay,
-    noteForPatient: noteForPatient,
+    timeStart: convertDateFormat(startDay),
+    timeEnd: convertDateFormat(endDay),
+    noteForPatient: noteForPatient, 
     noteForEmployee: noteForEmployee,
     saleNote: saleNote,
     firstName: firstName,
@@ -87,15 +100,24 @@ export default function AddCustomer() {
     longitude: selectedLocation.lng,
     locationPlace:place,
     distanceForWork: km,
-
-
+    listDateSession: transformedData
   }
   const handleButtonClick = () => {
     console.log(cart);
+    axios.post(`http://localhost:8080/api/carts/sale/${id}`, cart)
+    .then(response => {
+      console.log(response.data);
+      toast.success("Thêm mới khách hàng thành công")
+    })
+    .catch(error => {
+      console.error(error); 
+    });
   }
   const handleKmChange = (newKm) => {
     setKm(newKm)
   };
+
+  
   return (
     <>
       <ContainerViewUser />
@@ -110,7 +132,14 @@ export default function AddCustomer() {
           <div className="index-user-body-name">
         <h6>Họ</h6>
         <div className="index-user-body-name-render">
-          <input
+          {/* <input
+            type="text"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+          /> */}
+          <Input
+            placeholder="Nhập họ của khách"
+            sx={{ '--Input-focused': 1, width: 256 }}
             type="text"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
@@ -120,10 +149,17 @@ export default function AddCustomer() {
       <div className="index-user-body-name">
         <h6>Tên</h6>
         <div className="index-user-body-name-render">
-          <input
+          {/* <input
             type="text"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
+          /> */}
+          <Input
+            placeholder="Nhập tên của khách"
+            sx={{ '--Input-focused': 1, width: 256 }}
+            type="text"
+            value={lastName}
+            onChange={(e) => setFirstName(e.target.value)}
           />
         </div>
       </div>
@@ -270,7 +306,7 @@ export default function AddCustomer() {
             <h6>Có thể giúp bạn với</h6>
             <div className="index-user-body-services-render">
               {listService?.map((e) => (
-                <ServiceIndexUser
+                <ServiceIndexSale
                   key={e.id}
                   value={e}
                   setCheckButtonService={setCheckButtonService}
