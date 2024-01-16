@@ -9,7 +9,7 @@ import { ButtonForMe } from '../ButtonForMe';
 import { LegalNotice } from '../carehub/LegalNotice';
 import ServiceIndexSale from './ServiceIndexSale';
 import { toast } from 'react-toastify';
-import { Input } from '@mui/material';
+import { FormControl, Input, MenuItem, Select } from '@mui/material';
 
 export default function AddCustomer() {
   const [listInformation, setListInformation] = useState();
@@ -126,58 +126,71 @@ export default function AddCustomer() {
           <h4>THÊM MỚI KHÁCH HÀNG</h4>
         </div>
       </div>
-      <div>
+      
+      <div className='container'>
         <div >  
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+        <div style={{ marginRight: '80px' }}>
+          <h6>Họ</h6>
           <div>
-          <div className="index-user-body-name">
-        <h6>Họ</h6>
-        <div className="index-user-body-name-render">
-          {/* <input
-            type="text"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-          /> */}
-          <Input
-            placeholder="Nhập họ của khách"
-            sx={{ '--Input-focused': 1, width: 256 }}
-            type="text"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-          />
+            <Input
+              placeholder="Nhập họ của khách"
+              sx={{ '--Input-focused': 1, width: 256 }}
+              type="text"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+          </div>
         </div>
-      </div>
-      <div className="index-user-body-name">
-        <h6>Tên</h6>
-        <div className="index-user-body-name-render">
-          {/* <input
-            type="text"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-          /> */}
-          <Input
-            placeholder="Nhập tên của khách"
-            sx={{ '--Input-focused': 1, width: 256 }}
-            type="text"
-            value={lastName}
-            onChange={(e) => setFirstName(e.target.value)}
-          />
+        <div style={{ marginRight: '80px' }}>
+          <h6>Tên</h6>
+          <div>
+            <Input
+              placeholder="Nhập tên của khách"
+              sx={{ '--Input-focused': 1, width: 256 }}
+              type="text"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+            />
+          </div>
         </div>
-      </div>
-      <div className="index-user-body-name">
+        <div>
         <h6>Số điện thoại</h6>
-        <div className="index-user-body-name-render">
-          <input
+        <div style={{ marginRight: '100px' }}>
+           <Input
+            placeholder="Nhập số điện thoại"
+            sx={{ '--Input-focused': 1, width: 256 }}
             type="text"
             value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            onChange={(e) => setFirstName(e.target.value)}
           />
         </div>
       </div>
-          </div>
+        <div style={{ marginRight: '100px' }}>
+          <FormControl>
+            <Select
+              value={selectedGender || ''}
+              onChange={(e) => setSelectedGender(e.target.value)}
+              displayEmpty
+              placeholder="Chọn giới tính"
+            >
+              <MenuItem value="" disabled>
+                Chọn giới tính
+              </MenuItem>
+              {gender.map((option) => (
+                <MenuItem key={option} value={option}>
+                  {option}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </div>
 
-          <div className="index-user-body-relation">
+       
+      </div>
+          <div>
         <h6>Mối quan hệ</h6>
-        <div className="index-user-body-relation-render">
+        <div>
           <label>
             <input
               type="radio"
@@ -253,7 +266,7 @@ export default function AddCustomer() {
           <div className="index-user-body-gender">
         <h6>Giới tính</h6>
         <div className="index-user-body-gender-render">
-        <select
+        {/* <select
           value={selectedGender || ''}
           onChange={(e) => setSelectedGender(e.target.value)}
         >
@@ -263,9 +276,10 @@ export default function AddCustomer() {
               {option}
             </option>
           ))}
-        </select>
+        </select> */}
+
         </div>
-        <h6>Thập niên</h6>
+        {/* <h6>Thập niên</h6>
         <div className="index-user-body-gender-render">
         <select
           value={selectedEdecade || ''}
@@ -278,7 +292,24 @@ export default function AddCustomer() {
             </option>
           ))}
         </select>
-        </div>
+        </div> */}
+        <FormControl>
+            <Select
+              value={selectedEdecade || ''}
+              onChange={(e) => setSelectedEdecade(e.target.value)}
+              displayEmpty
+              placeholder="Chọn thập niên"
+            >
+              <MenuItem value="" disabled>
+                Chọn thập niên
+              </MenuItem>
+              {edecade.map((option) => (
+                <MenuItem key={option} value={option}>
+                  {option}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
       </div>
           <div className="w-100"><SearchLocationInput
             setSelectedLocation={setSelectedLocation}
