@@ -9,7 +9,9 @@ import { ButtonForMe } from '../ButtonForMe';
 import { LegalNotice } from '../carehub/LegalNotice';
 import ServiceIndexSale from './ServiceIndexSale';
 import { toast } from 'react-toastify';
-import { FormControl, Input, MenuItem, Select } from '@mui/material';
+import { FormControl, FormLabel, Input, MenuItem, Radio, RadioGroup, Select, TextareaAutosize } from '@mui/material';
+import { SkillIndexUser } from '../viewUser/index/SkillIndexUser';
+import { InfoIndexUser } from '../viewUser/index/InfoIndexUser';
 
 export default function AddCustomer() {
   const [listInformation, setListInformation] = useState();
@@ -19,8 +21,8 @@ export default function AddCustomer() {
   const [checkButtonService, setCheckButtonService] = useState("");
   const [selectedSkills, setSelectedSkills] = useState([]);
   const [selectedInfos, setSelectedInfos] = useState([]);
-  const [selectedGender, setSelectedGender] = useState([]);
-  const [selectedEdecade, setSelectedEdecade] = useState([]);
+  const [selectedGender, setSelectedGender] = useState('FEMALE');
+  const [selectedEdecade, setSelectedEdecade] = useState('FORTY');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [noteForPatient, setNoteForPatient] = useState('');
@@ -44,6 +46,7 @@ export default function AddCustomer() {
   const { id } = useParams();
   const gender = ['MALE','FEMALE','OTHER']
   const edecade = ['THIRTY','FORTY','FIFTY','SIXTY','SEVENTY','EIGHTY','NINETY']
+  const relationship = ['MYPARENT','MYSPOUSE','MYGRANDPARENTS','MYSELF','OTHER']
   const handleReset = () => {
     setSelectedInfos([]);
     setSelectedSkills([]);
@@ -63,6 +66,10 @@ export default function AddCustomer() {
     let axiosData = async () => {
       const responseService = await axios.get("http://localhost:8080/api/serviceGenerals");
       setListService(responseService.data);
+      const responseInformation = await axios.get("http://localhost:8080/api/add-infos");
+      setListInformation(responseInformation.data);
+      const responseSkill = await axios.get("http://localhost:8080/api/skills");
+      setListSkill(responseSkill.data);
     };
     axiosData();
   }, []);
@@ -83,6 +90,54 @@ export default function AddCustomer() {
     const formattedDate = `${year}-${month}-${day}`;
     return formattedDate;
   }
+  const getDisplayValueGender = (value) => {
+    switch (value) {
+      case 'MALE':
+        return 'Nam';
+      case 'FEMALE':
+        return 'Nữ';
+      case 'OTHER':
+        return 'Khác';
+      default:
+        return '';
+    }
+  };
+  const getDisplayValueRelation = (value) => {
+    switch (value) {
+      case 'MYPARENT':
+        return 'Bố/Mẹ';
+      case 'MYSPOUSE':
+        return 'Vợ/Chồng';
+      case 'MYGRANDPARENTS':
+        return 'Ông/Bà';
+      case 'MYSELF':
+        return 'Bản thân';
+      case 'OTHER':
+        return 'Khác';
+      default:
+        return '';
+    }
+  };
+  const getDisplayValueEdecade = (value) => {
+    switch (value) {
+      case 'THIRTY':
+        return '30s';
+      case 'FORTY':
+        return '40s';
+      case 'FIFTY':
+        return '50s';
+      case 'SIXTY':
+        return '60s';
+      case 'SEVENTY':
+        return '70s';
+      case 'EIGHTY':
+        return '80s';
+      case 'NINETY':
+        return '90s';
+      default:
+        return '';
+    }
+  };
   const cart = {
     timeStart: convertDateFormat(startDay),
     timeEnd: convertDateFormat(endDay),
@@ -103,14 +158,36 @@ export default function AddCustomer() {
     listDateSession: transformedData
   }
   const handleButtonClick = () => {
+    if (!selectedDate || !selectedDate[0] || !selectedDate[1]) {
+      toast.error("Vui lòng ngày bắt đầu và ngày kết thúc");
+      return;
+    }
+
+
+    const startDate = selectedDate[0];
+    const endDate = selectedDate[1];
+    const currentDate = new Date();
+
+
+    if (startDate <= currentDate) {
+      toast.error("Vui lòng điền ngày bắt đầu lớn hơn ngày hiện tại");
+      return;
+    }
+
+    if (endDate <= startDate) {
+      toast.error("Vui lòng điền ngày kết thúc phải lớn hơn ngày bắt đầu");
+      return;
+    }
     console.log(cart);
     axios.post(`http://localhost:8080/api/carts/sale/${id}`, cart)
     .then(response => {
       console.log(response.data);
+       const cartId = response.data
       toast.success("Thêm mới khách hàng thành công")
+      navigate(`/user/render-list-assistant/${cartId}`)
     })
     .catch(error => {
-      console.error(error); 
+      toast.error("Vui lòng điền đầy đủ thông tin");
     });
   }
   const handleKmChange = (newKm) => {
@@ -162,11 +239,17 @@ export default function AddCustomer() {
             sx={{ '--Input-focused': 1, width: 256 }}
             type="text"
             value={phone}
-            onChange={(e) => setFirstName(e.target.value)}
+            onChange={(e) => setPhone(e.target.value)}
           />
         </div>
       </div>
-        <div style={{ marginRight: '100px' }}>
+       
+
+       
+      </div>
+        <div style={{ display: 'flex', alignItems: 'center', paddingTop:'60px' }}>
+          <h6>Giới tính:</h6>
+          <div style={{ marginRight: '140px',paddingLeft: "58px" }}>
           <FormControl>
             <Select
               value={selectedGender || ''}
@@ -179,120 +262,36 @@ export default function AddCustomer() {
               </MenuItem>
               {gender.map((option) => (
                 <MenuItem key={option} value={option}>
-                  {option}
+                  {getDisplayValueGender(option)}
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
         </div>
-
-       
-      </div>
-          <div>
         <h6>Mối quan hệ</h6>
-        <div>
-          <label>
-            <input
-              type="radio"
-              value="MYPARENT"
-              checked={relation === 'MYPARENT'}
+        <div style={{ marginRight: '120px', paddingLeft: "35px" }}>
+        <FormControl>
+            <Select
+              value={relation || ''}
               onChange={(e) => setRelation(e.target.value)}
-            />
-            Mẹ/Bố
-          </label>
-          <label>
-            <input
-              type="radio"
-              value="MYSPOUSE"
-              checked={relation === 'MYSPOUSE'}
-              onChange={(e) => setRelation(e.target.value)}
-            />
-            Vợ/Chồng
-          </label>
-          <label>
-            <input
-              type="radio"
-              value="MYGRANDPARENTS"
-              checked={relation === 'MYGRANDPARENTS'}
-              onChange={(e) => setRelation(e.target.value)}
-            />
-            Ông/Bà
-          </label>
-          <label>
-            <input
-              type="radio"
-              value="MYSELF"
-              checked={relation === 'MYSELF'}
-              onChange={(e) => setRelation(e.target.value)}
-            />
-            Bản thân
-          </label>
-          <label>
-            <input
-              type="radio"
-              value="OTHER"
-              checked={relation === 'OTHER'}
-              onChange={(e) => setRelation(e.target.value)}
-            />
-            Khác
-          </label>
+              displayEmpty
+              placeholder="Mối quan hệ"
+            > 
+              <MenuItem value="" disabled>
+                Mối quan hệ: 
+              </MenuItem>
+              {relationship.map((option) => (
+                <MenuItem key={option} value={option}>
+                  {getDisplayValueRelation(option)}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+         
+          
         </div>
-      </div>
-          <div className="index-user-body-note">
-        <h6>Ghi chú cho bệnh nhân</h6>
-        <div className="index-user-body-note-render">
-          <textarea
-            value={noteForPatient}
-            onChange={(e) => setNoteForPatient(e.target.value)}
-          ></textarea>
-        </div>
-      </div>
-      <div className="index-user-body-note">
-        <h6>Ghi chú cho nhân viên</h6>
-        <div className="index-user-body-note-render">
-          <textarea
-            value={noteForEmployee}
-            onChange={(e) => setNoteForEmployee(e.target.value)}
-          ></textarea>
-        </div>
-        <h6>Ghi chú của sale </h6>
-        <div className="index-user-body-note-render">
-          <textarea
-            value={saleNote}
-            onChange={(e) => setSaleNote(e.target.value)}
-          ></textarea>
-        </div>
-      </div>
-          <div className="index-user-body-gender">
-        <h6>Giới tính</h6>
-        <div className="index-user-body-gender-render">
-        {/* <select
-          value={selectedGender || ''}
-          onChange={(e) => setSelectedGender(e.target.value)}
-        >
-          <option value="">Chọn giới tính</option>
-          {gender.map((option) => (
-            <option key={option} value={option}>
-              {option}
-            </option>
-          ))}
-        </select> */}
-
-        </div>
-        {/* <h6>Thập niên</h6>
-        <div className="index-user-body-gender-render">
-        <select
-          value={selectedEdecade || ''}
-          onChange={(e) => setSelectedEdecade(e.target.value)}
-        > 
-          <option value="">Chọn thập niên</option>
-          {edecade.map((option) => (
-            <option key={option} value={option}>
-              {option}
-            </option>
-          ))}
-        </select>
-        </div> */}
+        <h6>Thập niên</h6>
+        <div style={{ paddingRight: '30px', paddingLeft: "80px" }}>
         <FormControl>
             <Select
               value={selectedEdecade || ''}
@@ -305,11 +304,79 @@ export default function AddCustomer() {
               </MenuItem>
               {edecade.map((option) => (
                 <MenuItem key={option} value={option}>
-                  {option}
+                   {getDisplayValueEdecade(option)}
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
+        </div>
+      </div>
+          <div style={{paddingTop: '40px'}}>
+        <h6>Ghi chú cho bệnh nhân</h6>
+        <div>
+          <TextareaAutosize
+            placeholder="Ghi chú cho bệnh nhân"
+            minRows={4}
+            style={{width:"940px"}}
+            value={noteForPatient}
+            onChange={(e) => setNoteForPatient(e.target.value)}
+            sx={{
+              '&::before': {
+                display: 'none',
+              },
+              '&:focus-within': {
+                outline: '2px solid var(--Textarea-focusedHighlight)',
+                outlineOffset: '2px',
+              },
+            }}
+          />
+        </div>
+      </div>
+      <div style={{paddingTop: '40px'}}>
+        <h6>Ghi chú cho nhân viên</h6>
+        <div>
+          <TextareaAutosize
+            placeholder="Ghi chú cho nhân viên"
+            minRows={4}
+            style={{width:"940px"}}
+            value={noteForEmployee}
+            onChange={(e) => setNoteForEmployee(e.target.value)}
+            sx={{
+              '&::before': {
+                display: 'none',
+              },
+              '&:focus-within': {
+                outline: '2px solid var(--Textarea-focusedHighlight)',
+                outlineOffset: '2px',
+              },
+            }}
+          />
+        </div>
+      </div>
+      <div style={{paddingTop: '40px',paddingBottom: "40px"}}>
+        <h6>Ghi chú của sale</h6>
+        <div>
+          <TextareaAutosize
+            placeholder="Ghi chú của sale"
+            minRows={4}
+            style={{width:"940px"}}
+            value={saleNote}
+            onChange={(e) => setSaleNote(e.target.value)}
+            sx={{
+              '&::before': {
+                display: 'none',
+              },
+              '&:focus-within': {
+                outline: '2px solid var(--Textarea-focusedHighlight)',
+                outlineOffset: '2px',
+              },
+            }}
+          />
+        </div>
+      </div>
+          <div>
+        <div>
+        </div>
       </div>
           <div className="w-100"><SearchLocationInput
             setSelectedLocation={setSelectedLocation}
@@ -319,7 +386,7 @@ export default function AddCustomer() {
             children={true}
             onKmChange={handleKmChange}
           /></div>
-          <div className="index-user-body-dates">
+          <div style={{paddingTop: '40px'}}>
             <h6 className='m0'>Thời gian cần chăm sóc</h6>
             <div className="index-user-body-dates-render">
               <DateIndexUser
@@ -333,8 +400,8 @@ export default function AddCustomer() {
               />
             </div>
           </div>
-          <div className="index-user-body-services">
-            <h6>Có thể giúp bạn với</h6>
+          <div style={{paddingTop: '40px'}}>
+            <h6>Gói của khách</h6>
             <div className="index-user-body-services-render">
               {listService?.map((e) => (
                 <ServiceIndexSale
@@ -342,6 +409,32 @@ export default function AddCustomer() {
                   value={e}
                   setCheckButtonService={setCheckButtonService}
                   checkButtonService={checkButtonService}
+                />
+              ))}
+            </div>
+          </div>
+          <div className="index-user-body-skills">
+          <h6>Kỹ năng/ Đào tạo</h6>
+            <div className="index-user-body-skills-render">
+              {listSkill?.map((e) => (
+                <SkillIndexUser
+                  key={e.id}
+                  setSelectedSkills={setSelectedSkills}
+                  selectedSkills={selectedSkills}
+                  value={e}
+                />
+              ))}
+            </div>
+          </div>
+          <div className="index-user-body-infos">
+            <h6>Thông tin thêm</h6>
+            <div className="index-user-body-infos-render">
+              {listInformation?.map((e) => (
+                <InfoIndexUser
+                  key={e.id}
+                  setSelectedInfos={setSelectedInfos}
+                  selectedInfos={selectedInfos}
+                  value={e}
                 />
               ))}
             </div>

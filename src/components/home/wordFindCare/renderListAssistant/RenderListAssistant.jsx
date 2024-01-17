@@ -20,7 +20,7 @@ export function RenderListAssistant() {
   useEffect(() => {
     let axiosData = async () => {
       const responseFilterAss = await axios.get(
-        "http://localhost:8080/api/carts/filter/e5c79d6b-6a3c-4104-b4f9-91d3a9979e06"
+        `http://localhost:8080/api/carts/filter/${id}` 
       );
       console.log(responseFilterAss?.data);
       setFilterAss(responseFilterAss?.data.content);
