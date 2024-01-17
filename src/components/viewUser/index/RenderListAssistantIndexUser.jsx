@@ -4,9 +4,11 @@ import SecurityIcon from "@mui/icons-material/Security";
 import { FavoriteBorder } from "@mui/icons-material";
 import { ButtonForMe } from "../../ButtonForMe";
 import { useParams } from "react-router-dom";
-export function RenderListAssistantIndexUser({ value }) {
+export function RenderListAssistantIndexUser({ value, index, listAssistant }) {
   const [selectedFavorites, setSelectedFavorites] = useState([]);
+  const [isLastItem, setIsLastItem] = useState(false);
   const { id } = useParams();
+
   const handleSelectFavorite = (e) => {
     const isInfoSelected = selectedFavorites?.some((element) => element === e);
     if (isInfoSelected) {
@@ -18,39 +20,42 @@ export function RenderListAssistantIndexUser({ value }) {
   };
   return (
     <>
-    
-      <div className="render-list-assistant-index-user" key={value.id}>
+      <div className="render-list-assistant-index-user" key={index}>
         <div className="render-list-assistant-index-user-header">
-          <img src={value.photoUrl} alt="" />
+          <img src={value?.photoUrl} alt="" />
           <div className="render-list-assistant-index-user-body">
             <span className="render-list-assistant-index-user-body-name">
-              {value.lastName} {value.firstName}
+              {value?.lastName} {value?.firstName}
             </span>
             <TokenIcon className="render-list-assistant-index-user-body-icon-token" />
             <SecurityIcon className="render-list-assistant-index-user-body-icon-security" />
             <div className="render-list-assistant-index-user-body-experience">
-              <div>{value.nameAddress}</div>
-              <div>{value.experience} năm kinh nghiệm</div>
+              <div>{value?.nameAddress}</div>
+              <div>{value?.experience} năm kinh nghiệm</div>
             </div>
           </div>
         </div>
         <div className="render-list-assistant-index-user-footer">
           <span className="render-list-assistant-index-user-footer-content">
-            "{value.descriptionAboutMySelf.slice(0, 100)}
-            {value.descriptionAboutMySelf.length > 100 ? "..." : ""}"{" "}
-            <a href={`http://localhost:3000/user/index/${id}/${value.id}`} target="_blank">more</a>
+            "{value?.descriptionAboutMySelf?.slice(0, 100)}
+            {value?.descriptionAboutMySelf?.length > 100 ? "..." : ""}"{" "}
+            <a href={`http://localhost:3000/user/index/${id}/${value?.id}`} target="_blank">
+              more
+            </a>
           </span>
           <FavoriteBorder
             className={`favorite-check-index-user${
-              selectedFavorites.includes(value.id) ? "-active" : ""
+              selectedFavorites.includes(value?.id) ? "-active" : ""
             }`}
-            onClick={() => handleSelectFavorite(value.id)}
-            name={value.id}
+            onClick={() => handleSelectFavorite(value?.id)}
+            name={value?.id}
           />
           <ButtonForMe childrenButton={"Thêm"} value={20} />
         </div>
       </div>
-      <div className="render-list-assistant-index-user-footer-separation"></div>
+      {listAssistant?.length - 1 == index || (
+        <div className="render-list-assistant-index-user-footer-separation"></div>
+      )}
     </>
   );
 }
