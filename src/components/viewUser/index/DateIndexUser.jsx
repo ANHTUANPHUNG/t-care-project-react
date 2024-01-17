@@ -12,19 +12,17 @@ export function DateIndexUser({
   selectedDate,
   dayInWeek,
 }) {
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-  };
-
   const getDaysInRange = (startDate, endDate) => {
     const days = [];
-    let currentDate = new Date(startDate);
+    let currentDate = new Date();
 
-    while (currentDate <= endDate) {
+  console.log(currentDate);
+    while (currentDate < endDate) {
       days.push({
         date: new Date(currentDate),
         dayOfWeek: currentDate.toLocaleDateString("en-US", { weekday: "long" }),
       });
+  
       currentDate.setDate(currentDate.getDate() + 1);
     }
 
@@ -46,11 +44,7 @@ export function DateIndexUser({
   }, [selectedDate]);
   return (
     <>
-      <DateBetween
-        onChange={handleDateChange}
-        setSelectedDate={setSelectedDate}
-        selectedDate={selectedDate}
-      />
+      <DateBetween setSelectedDate={setSelectedDate} selectedDate={selectedDate} />
       <div style={{ marginTop: "20px" }}>
         {selectedDate && selectedDate[0] && selectedDate[1] && (
           <SelectDate dayInWeek={dayInWeek} setValue={setValue} billIndexUser={true} />

@@ -41,9 +41,10 @@ export function ProfileAssistant() {
       setDayWork(newDayWork);
     }
   }, [assistant]);
+  console.log(assistant);
   return (
     <>
-      <ContainerViewUser />
+      <ContainerViewUser idUser={id}/>
       <div>
         <div
           style={{
@@ -121,7 +122,7 @@ export function ProfileAssistant() {
             <span>{assistant.descriptionAboutMySelf}</span>
           </div>
           <div style={{ height: "1px", backgroundColor: "#ccd1d6" }}></div>
-          <div style={{ padding: "20px 0" }}>
+          {/* <div style={{ padding: "20px 0" }}>
             <div className="" style={{ justifyContent: "space-between", display: "flex" }}>
               <h5>Đánh giá</h5>
               <div
@@ -142,7 +143,7 @@ export function ProfileAssistant() {
               Hãy đánh giá cho {assistant.firstName} khi cô ấy hoàn thành công việc được nhận từ bạn
             </span>
           </div>
-          <div style={{ height: "1px", backgroundColor: "#ccd1d6" }}></div>
+          <div style={{ height: "1px", backgroundColor: "#ccd1d6" }}></div> */}
           <div style={{ padding: "20px 0" }}>
             <h5>Thời gian mà {assistant.firstName} có thể hỗ trợ bạn</h5>
             <ul>

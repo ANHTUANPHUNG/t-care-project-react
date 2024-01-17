@@ -65,26 +65,51 @@ export function Profile() {
     phoneNumber: yup.string().required("Số điện thoại không được trống"),
     firstName: yup.string().required("Tên không được trống"),
     lastName: yup.string().required("Họ không được trống"),
-    personID: yup.string().required("Số Căn Cước Công Dân không được trống"),
+    personID: yup
+    .number()
+    .typeError("Số Căn Cước Công Dân phải là số")
+    .test(
+      "len",
+      "Số Căn Cước Công Dân phải có đúng 10 số",
+      (val) => val && val.toString().length === 10
+    )
+    .required("Số Căn Cước Công Dân không được để trống"),
   });
-  console.log(user);
   const formik = useFormik({
     initialValues: {
-      phoneNumber: user?.phoneNumber,
-      firstName: user?.firstName,
-      lastName: user?.lastName,
-      personID: user?.personId,
-      gender: user?.gender,
+      phoneNumber: "",
+      firstName: "",
+      lastName: "",
+      personID: "",
+      gender:""
     },
     validationSchema: yup.object({}),
-    onSubmit: (values) => {
-      console.log("a");
-      console.log(values);
+    onSubmit: async (values) => {
+      const apiUrl = `http://localhost:8080/api/users/${id}`;
+
+      const updatedUserData = {
+        phoneNumber: values.phoneNumber || user.phoneNumber,
+        firstName: values.firstName || user.firstName,
+        fullName: values.lastName || user.lastName,
+        personID: values.personID || user.personID,
+        gender: values.gender || user.gender,
+      };
+      const response = await axios.put(apiUrl, updatedUserData);
+
+      if (response.status === 204) {
+        toast.success("User data updated successfully");
+        setCheckModal(false)
+      } else {
+        toast.error("Failed to update user data");
+      }
     },
+    
   });
 
   const handleGenderClick = (selectedGender) => {
     setGender(selectedGender);
+    formik.setFieldValue('gender', selectedGender);
+
   };
   const editProfile = (
     <>
@@ -98,7 +123,7 @@ export function Profile() {
                 id="phoneNumber"
                 label="Số điện thoại"
                 type="phoneNumber"
-                value={formik.values.phoneNumber}
+                value={formik.values.phoneNumber || user?.phoneNumber}
                 onChange={formik.handleChange}
                 error={formik.touched.phoneNumber && Boolean(formik.errors.phoneNumber)}
                 helperText={formik.touched.phoneNumber && formik.errors.phoneNumber}
@@ -109,7 +134,7 @@ export function Profile() {
                 fullWidth
                 id="firstName"
                 label="Tên"
-                value={formik.values.firstName}
+                value={formik.values.firstName || user?.firstName}
                 onChange={formik.handleChange}
                 error={formik.touched.firstName && Boolean(formik.errors.firstName)}
                 helperText={formik.touched.firstName && formik.errors.firstName}
@@ -120,7 +145,7 @@ export function Profile() {
                 fullWidth
                 id="lastName"
                 label="Họ"
-                value={formik.values.lastName}
+                value={formik.values.lastName || user?.lastName}
                 onChange={formik.handleChange}
                 error={formik.touched.lastName && Boolean(formik.errors.lastName)}
                 helperText={formik.touched.lastName && formik.errors.lastName}
@@ -131,7 +156,7 @@ export function Profile() {
                 fullWidth
                 id="personID"
                 label="Số Căn Cước Công Dân"
-                value={formik.values.personID}
+                value={formik.values.personID || user?.personID}
                 onChange={formik.handleChange}
                 error={formik.touched.personID && Boolean(formik.errors.personID)}
                 helperText={formik.touched.personID && formik.errors.personID}
@@ -167,7 +192,7 @@ export function Profile() {
             </Grid>
             <Grid item xs={12} className="d-flex justify-content-center">
               <ButtonForMe
-                value={100}
+                value={50}
                 childrenButton={"Lưu"}
                 colorButton={"orangered"}
                 type="submit"
@@ -184,10 +209,12 @@ export function Profile() {
       axios.get(`http://localhost:8080/api/users/${id}`).then((res) => {
         setUser(res.data);
         setUploadedImageUrl(res.data.photoUrl);
+        setGender(res.data.gender);
+        formik.setValues({});
       });
     };
     axiosData();
-  }, [id]);
+  }, [id, checkModal]);
 
   const handleUpload = async (e) => {
     const selectedFile = e.target.files[0];
@@ -217,7 +244,7 @@ export function Profile() {
       }
     }
   };
-
+ 
   return (
     <>
       <ContainerViewUser idUser={id} />
