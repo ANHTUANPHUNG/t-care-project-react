@@ -15,9 +15,15 @@
 }
 .index-user-body-filter{
     height: 100%;
-     background-color: #f6f7f8;
-     padding-top: 30px;
-    
+    background-color: #f6f7f8;
+    padding-top: 30px;
+    width: 30%;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    scrollbar-color: transparent transparent; 
+    scrollbar-width: thin; 
 }
 .index-user-body-title{
     padding-bottom: 10px;
@@ -170,11 +176,7 @@
     margin-bottom: 50px;
 }
 .sidebar{
-    height: fit-content;
     display: flex;
-    position: sticky;
-    position: -webkit-sticky;
-    top: 0;
     align-items: flex-end;
     flex-direction: column;
 }
@@ -231,3 +233,24 @@
      cursor: pointer;
      color: red;
 }
+.loader-index-user {
+    width: 48px;
+    height: 48px;
+    border: 5px solid;
+    border-color: #FF3D00 transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+  }
+  
+  @keyframes rotation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  } 
+      
+  

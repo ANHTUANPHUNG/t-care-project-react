@@ -68,7 +68,7 @@ function App() {
           path="/user/render-list-assistant/:id"
           element={<RenderListAssistant />}
         ></Route>
-        <Route path="/user/profile" element={<Profile />}></Route>
+        <Route path="/user/profile/:id" element={<Profile />}></Route>
 
         <Route path="/user/index/:id" element={<IndexUser />}></Route>
         <Route path="/user/index/:id/:idAssistant" element={<ProfileAssistant />}></Route>

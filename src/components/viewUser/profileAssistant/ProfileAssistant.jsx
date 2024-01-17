@@ -59,7 +59,7 @@ export function ProfileAssistant() {
               <img
                 src={assistant.photoUrl}
                 alt=""
-                style={{ width: "180px", borderRadius: "15px" }}
+                style={{ width: "180px", height: "180px", borderRadius: "15px" }}
               />
               <div className="" style={{ marginLeft: "20px", alignSelf: "center" }}>
                 <span className="" style={{ fontWeight: "bold", fontSize: "25px" }}>
@@ -81,7 +81,7 @@ export function ProfileAssistant() {
                   justifyContent: "end",
                 }}
               >
-                <FavoriteBorder style={{ marginRight: "10px", cursor:"pointer" }} />
+                <FavoriteBorder style={{ marginRight: "10px", cursor: "pointer" }} />
                 <ButtonForMe childrenButton={"Hợp đồng"} value={50} />
               </div>
             </div>

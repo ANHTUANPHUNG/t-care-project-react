@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./ContainerViewUser.css";
 import LogoProject from "../../logoProject/LogoProject";
 import { FavoriteBorder } from "@mui/icons-material";
@@ -6,11 +6,20 @@ import { CreditScore } from "@mui/icons-material";
 import { ListAlt } from "@mui/icons-material";
 import { PersonAddAlt } from "@mui/icons-material";
 import { Home } from "@mui/icons-material";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { Avatar, Button, Menu, MenuItem } from "@mui/material";
+import axios from "axios";
 
-
-export function ContainerViewUser() {
+export function ContainerViewUser({ idUser }) {
+  const [user, setUser] = useState();
+  useEffect(() => {
+    const axiosData = async () => {
+      axios.get(`http://localhost:8080/api/users/${idUser}`).then((res) => {
+        setUser(res);
+      });
+    };
+    axiosData();
+  }, [idUser]);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -55,7 +64,7 @@ export function ContainerViewUser() {
                 <div className="view-user-header-select-nav-block-title">Contract</div>
               </div>
             </NavLink>
-            <div className="view-user-header-select-profile" >
+            <div className="view-user-header-select-profile">
               <Button
                 id="basic-button"
                 aria-controls={open ? "basic-menu" : undefined}
@@ -63,7 +72,7 @@ export function ContainerViewUser() {
                 aria-expanded={open ? "true" : undefined}
                 onClick={handleClick}
               >
-                <Avatar>H</Avatar>
+                <Avatar>{user?.data.firstName && user?.data.firstName.charAt(0)}</Avatar>
               </Button>
               <Menu
                 id="basic-menu"
@@ -74,11 +83,14 @@ export function ContainerViewUser() {
                   "aria-labelledby": "basic-button",
                 }}
               >
-                <NavLink style={{textDecoration:'none', color:'orangered'}} to={"/user/profile"}>
-                  <MenuItem >Profile</MenuItem>
+                <NavLink
+                  style={{ textDecoration: "none", color: "orangered" }}
+                  to={`/user/profile/${idUser}`}
+                >
+                  <MenuItem>Profile</MenuItem>
                 </NavLink>
-                <NavLink style={{textDecoration:'none' , color:'#212529'}} to={"/"}>
-                <MenuItem >Logout</MenuItem>
+                <NavLink style={{ textDecoration: "none", color: "#212529" }} to={"/"}>
+                  <MenuItem>Logout</MenuItem>
                 </NavLink>
               </Menu>
             </div>
