@@ -12,13 +12,14 @@ import './DateSession.css'
 
 export function DateSession() {
   const [value, setValue] = useState();
-  const [selectedDate, setSelectedDate] = useState(undefined);
+  const [selectedDate, setSelectedDate] = useState([null,null]);
   const [dayInWeek, setDayInWeek] = useState([]);
   const [startDay, setStartDay] = useState();
   const [endDay, setEndDay] = useState();
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
+  console.log(value);
   let navigate = useNavigate();
   const { id } = useParams();
   const getDaysInRange = (startDate, endDate) => {
@@ -50,6 +51,7 @@ export function DateSession() {
       setEndDay(handleDay(selectedDate[1]));
     }
   }, [selectedDate]);
+  console.log(selectedDate);
 
   const handleSubmitDate = async () => {
     try {

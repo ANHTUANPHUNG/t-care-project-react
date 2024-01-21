@@ -11,12 +11,14 @@ import { ButtonForMe } from "../../ButtonForMe";
 import DoneIcon from "@mui/icons-material/Done";
 import { CheckBackground } from "./CheckBackground";
 import { RateAssistant } from "./RateAssistant";
+import ModalUnstyled from "../../ModalToMe";
 export function ProfileAssistant() {
   const { id, idAssistant } = useParams();
   const [assistant, setAssistant] = useState({});
   const [dayWork, setDayWork] = useState([]);
   const [checkModalBackground, setCheckModalBackground] = useState(false);
   const [checkRate, setCheckRate] = useState(false);
+  const [checkModal, setCheckModal] = useState(false);
   useEffect(() => {
     let axiosData = async () => {
       const responseAssistant = await axios.get(
@@ -41,10 +43,17 @@ export function ProfileAssistant() {
       setDayWork(newDayWork);
     }
   }, [assistant]);
-  console.log(assistant);
+  const checkModalFilterCart = <div></div>;
   return (
     <>
-      <ContainerViewUser idUser={id}/>
+      <ModalUnstyled
+        check={checkModal}
+        onClose={() => setCheckModal(false)}
+        children={checkModalFilterCart}
+        widthForm={"60%"}
+        heightForm={"80%"}
+      />
+      <ContainerViewUser idUser={id} />
       <div>
         <div
           style={{
@@ -73,7 +82,7 @@ export function ProfileAssistant() {
                   <div>{assistant.experience} năm kinh nghiệm</div>
                 </div>
               </div>
-              <div
+              {/* <div
                 style={{
                   width: "50%",
                   height: "50px",
@@ -83,8 +92,8 @@ export function ProfileAssistant() {
                 }}
               >
                 <FavoriteBorder style={{ marginRight: "10px", cursor: "pointer" }} />
-                <ButtonForMe childrenButton={"Hợp đồng"} value={50} />
-              </div>
+                <ButtonForMe childrenButton={"Hợp đồng"} value={50} onclick={() => setCheckModal(true)} />
+              </div> */}
             </div>
           )}
         </div>

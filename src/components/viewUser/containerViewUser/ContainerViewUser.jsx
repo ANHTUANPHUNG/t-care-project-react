@@ -12,6 +12,7 @@ import axios from "axios";
 
 export function ContainerViewUser({ idUser }) {
   const [user, setUser] = useState();
+  const { id } = useParams();
   useEffect(() => {
     const axiosData = async () => {
       axios.get(`http://localhost:8080/api/users/${idUser}`).then((res) => {
@@ -34,9 +35,16 @@ export function ContainerViewUser({ idUser }) {
         <div className="view-user-header">
           <LogoProject />
           <div className="view-user-header-select">
-            <NavLink className="view-user-header-select-nav">
+            <NavLink
+              className={`view-user-header-select-nav${
+                window.location.pathname === `/user/index/${id}` ? "active" : ""
+              }`}
+              to={`/user/index/${id}`}
+            >
               <div className="view-user-header-select-nav-block">
-                <Home className="view-user-header-select-nav-block-icon" />
+                <Home className={`view-user-header-select-nav-block-icon${
+                window.location.pathname === `/user/index/${id}` ? "active" : ""
+              }`} />
                 <div className="view-user-header-select-nav-block-title">Home</div>
               </div>
             </NavLink>
@@ -46,15 +54,20 @@ export function ContainerViewUser({ idUser }) {
                 <div className="view-user-header-select-nav-block-title">Favorites</div>
               </div>
             </NavLink>
-            <NavLink className="view-user-header-select-nav">
+            {/* <NavLink className="view-user-header-select-nav">
               <div className="view-user-header-select-nav-block">
                 <PersonAddAlt className="view-user-header-select-nav-block-icon" />
                 <div className="view-user-header-select-nav-block-title">Favorites</div>
               </div>
-            </NavLink>
-            <NavLink className="view-user-header-select-nav">
+            </NavLink> */}
+            <NavLink className={`view-user-header-select-nav${
+                window.location.pathname === `/user/cart/${id}` ? "active" : ""
+              }`}
+               to={`/user/cart/${id}`}>
               <div className="view-user-header-select-nav-block">
-                <ListAlt className="view-user-header-select-nav-block-icon" />
+                <ListAlt className={`view-user-header-select-nav-block-icon${
+                window.location.pathname === `/user/cart/${id}` ? "active" : ""
+              }`} />
                 <div className="view-user-header-select-nav-block-title">Cart</div>
               </div>
             </NavLink>

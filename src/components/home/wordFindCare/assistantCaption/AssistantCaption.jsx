@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./AssistantCaption.css";
 import { LegalNotice } from "../../../carehub/LegalNotice";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
@@ -9,17 +9,30 @@ import axios from "axios";
 export function AssistantCaption() {
   const [content, setContent] = useState("");
   const navigate = useNavigate();
-  const { id } = useParams();
-  const handleSubmitAssistantCaption = async () => {
+  const { idCart } = useParams();
+  const [idUser, setIdUser] = useState()
+  useEffect(() => {
+    const findByIdCart = () => {
+      axios
+        .get(`http://localhost:8080/api/carts/${idCart}`)
+        .then((resp) => {
+          setIdUser(resp.data.user.id)
+        });
+    };
+    findByIdCart();
+  }, [idCart]); 
+  
+  const handleSubmitAssistantCaption =  () => {
     const note = {
       noteForEmployee:content
     }
-    await axios
-      .put(`http://localhost:8080/api/carts/noteEmployee/${id}`, note)
+    const id = idUser
+     axios
+      .put(`http://localhost:8080/api/carts/noteEmployee/${idCart}`, note)
       .then((resp) => {
         
         toast.success("Hoàn thành thêm thông tin người cần chăm sóc");
-        navigate("/user/render-list-assistant" + "/" + id);
+        navigate(`/user/cart/filter/${id}/${idCart}`);
       })
       .catch((err) => {
         console.error("Lỗi khi gửi POST request:", err);
