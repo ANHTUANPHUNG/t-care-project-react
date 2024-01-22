@@ -6,6 +6,7 @@ import { FaEdit, FaEye, FaTrashAlt } from "react-icons/fa";
 import { LegalNotice } from '../carehub/LegalNotice';
 import LogoProject from '../logoProject/LogoProject';
 import { ContainerViewUser } from '../viewUser/containerViewUser/ContainerViewUser';
+import { ContainerViewSale } from './ContainerViewerSale';
 
 export default function SalerView() {
   const [customers, setCustomers] = useState([]);
@@ -19,7 +20,7 @@ export default function SalerView() {
 	let navigate = useNavigate()
 	const loadCustomers = async () => {
 		const customers = await axios.get(
-			"http://localhost:8080/api/carts/sale/"+id,
+			`http://localhost:8080/api/carts/sale/${id}`,
 		);
         console.log(
             customers.data
@@ -46,7 +47,7 @@ export default function SalerView() {
     }
   return (
     <>
- <ContainerViewUser/>
+ <ContainerViewSale/>
     <div>
       
     <div className="container">
@@ -104,7 +105,7 @@ export default function SalerView() {
           {customer.locationPlace ? customer.locationPlace : ''}
         </td>
         <td>{customer.phone}</td>
-        <td>{customer.timeStart !== null ? customer.timeStart : ''} <br />{customer.timeEnd !== null ? customer.timeEnd : ''}</td>
+        <td style={{maxWidth: "150px", minWidth: "120px"}}>{customer.timeStart !== null ? customer.timeStart : ''} <br />{customer.timeEnd !== null ? customer.timeEnd : ''}</td>
         <td>
           {customer.memberOfFamily !== null ?
             (customer.memberOfFamily === 'MYPARENT' ? 'Cha/Mẹ' :
@@ -119,7 +120,10 @@ export default function SalerView() {
         <td style={{maxWidth: "150px"}}>{customer.saleNote}</td> 
         
         <td className="mx-2">
-          <Link className="btn btn-warning">
+          <Link className="btn btn-warning"
+          to={`/edit-customer/${id}/${customer.id}`}
+          >
+            
             <FaEdit />
           </Link>
         </td>

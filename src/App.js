@@ -28,6 +28,8 @@ import SweetAlertEmployee from "./components/common/SweetAlertEmployee";
 import AddCustomer from "./components/saler/AddCustomer";
 import { IndexUser } from "./components/viewUser/index/IndexUser";
 import { ProfileAssistant } from "./components/viewUser/profileAssistant/ProfileAssistant";
+import EditCustomer from "./components/saler/EditCustomer";
+import { RenderListAssistantSale } from "./components/saler/RenderListAssistantSale";
 
 function App() {
   return (
@@ -68,12 +70,17 @@ function App() {
           path="/user/render-list-assistant/:id"
           element={<RenderListAssistant />}
         ></Route>
-        <Route path="/user/profile" element={<Profile />}></Route>
+        <Route path="/user/profile/:id" element={<Profile />}></Route>
 
         <Route path="/user/index/:id" element={<IndexUser />}></Route>
         <Route path="/user/index/:id/:idAssistant" element={<ProfileAssistant />}></Route>
         <Route path="/saler/:id" element={<SalerView />}></Route>
         <Route path="/add-customer/:id" element={<AddCustomer />}></Route>
+        <Route path="/edit-customer/:idSale/:id" element={<EditCustomer />}></Route>
+        <Route
+          path="saler/:idSale/render-list-assistant/:id"
+          element={<RenderListAssistantSale />}
+        ></Route>
       </Routes>
     </>
   );

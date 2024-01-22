@@ -5,7 +5,8 @@ import { AdapterDayjs } from '@mui/x-date-pickers-pro/AdapterDayjs';
 import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
 import dayjs from 'dayjs';
 
-export default function DateBetween({setSelectedDate,selectedDate}) {
+export default function DateBetweenSale({setSelectedDate,selectedDate, defaultDateRange,
+    timeEndPicker}) {
 
   const handleDateRangeChange = (newDateRange) => {
     setSelectedDate(newDateRange);
@@ -15,8 +16,8 @@ export default function DateBetween({setSelectedDate,selectedDate}) {
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DemoContainer components={['DateRangePicker']}>
         <DateRangePicker
-          value={selectedDate} 
-          onChange={handleDateRangeChange}
+          value={selectedDate || [dayjs(defaultDateRange[0]), dayjs(timeEndPicker[0])] } 
+        onChange={handleDateRangeChange}
           localeText={{ start: 'Bắt đầu', end: 'Kết thúc' }}
         />
       </DemoContainer>

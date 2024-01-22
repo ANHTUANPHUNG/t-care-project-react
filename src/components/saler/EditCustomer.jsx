@@ -1,23 +1,22 @@
 import React, { useEffect, useState } from 'react'
-import { ContainerViewUser } from '../viewUser/containerViewUser/ContainerViewUser'
 import SearchLocationInput from '../apiGoogleMap/SearchLocationInput '
 import "./addCustomer.css"  
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import { DateIndexUser } from '../viewUser/index/DateIndexUser';
 import { ButtonForMe } from '../ButtonForMe';
 import { LegalNotice } from '../carehub/LegalNotice';
 import ServiceIndexSale from './ServiceIndexSale';
 import { toast } from 'react-toastify';
-import { FormControl, FormLabel, Input, MenuItem, Radio, RadioGroup, Select, TextareaAutosize } from '@mui/material';
-import { SkillIndexUser } from '../viewUser/index/SkillIndexUser';
-import { InfoIndexUser } from '../viewUser/index/InfoIndexUser';
+import { FormControl, Input, MenuItem, Select, TextareaAutosize } from '@mui/material';
 import { ContainerViewSale } from './ContainerViewerSale';
-import { InfoIndexSale } from './InfoIndexSale';
-import { SkillIndexSale } from './SkillIndexSale';
+import { DateIndexSale } from './DataIndexSale';
+import { SkillIndexSaleEdit } from './SkillIndexSaleEdit';
+import { InfoIndexSaleEdit } from './InforIndexSaleEdit';
+import dayjs from 'dayjs';
 
-export default function AddCustomer() {
+export default function EditCustomer() {
   const [listInformation, setListInformation] = useState();
+  const [customer,setCustomer] = useState(); 
   const [listService, setListService] = useState();
   const [listSkill, setListSkill] = useState();
   const [saleNote, setSaleNote] = useState();
@@ -33,6 +32,8 @@ export default function AddCustomer() {
   const [phone,setPhone] = useState("");
   const [relation, setRelation] = useState('MYPARENT');
   const [km, setKm] = useState(10);
+  const [skillIdRequest, setSkillIdRequest] = useState([])
+  const [infoIdRequest, setInforIdRequest] = useState([])
   const [resetInputAddress, setResetInputAddress] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState({
     lat: 0,
@@ -41,21 +42,19 @@ export default function AddCustomer() {
   const [place, setPlace] = useState("");
   const [value, setValue] = useState("");
   const [selectedDate, setSelectedDate] = useState(undefined);
-  
+  const [defaultDateRange,setDefaultDateRange] = useState([]);
   const [dayInWeek, setDayInWeek] = useState([]);
+  const [timeEndPicker, setTimeEndPicker] = useState([]);
   const [startDay, setStartDay] = useState();
   const [endDay, setEndDay] = useState();
+  const [listDateSession, setListDateSession] = useState([])
   let navigate = useNavigate();
   const { id } = useParams();
+  const {idSale} = useParams();
   const gender = ['MALE','FEMALE','OTHER']
-  const edecade = ['THIRTY','FORTY','FIFTY','SIXTY','SEVENTY','EIGHTY','NINETY']
+  const edecadeList = ['THIRTY','FORTY','FIFTY','SIXTY','SEVENTY','EIGHTY','NINETY']
   const relationship = ['MYPARENT','MYSPOUSE','MYGRANDPARENTS','MYSELF','OTHER']
-  const handleReset = () => {
-    setSelectedInfos([]);
-    setSelectedSkills([]);
-    setCheckButtonService("");
-    setResetInputAddress((pre) => !pre);
-  };
+
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
       const { latitude, longitude } = position.coords;
@@ -73,9 +72,47 @@ export default function AddCustomer() {
       setListInformation(responseInformation.data);
       const responseSkill = await axios.get("http://localhost:8080/api/skills");
       setListSkill(responseSkill.data);
+      const customer = await axios.get(`http://localhost:8080/api/carts/${id}`);
+      console.log(customer.data);
+      setCustomer(customer.data)
+      setFirstName(customer.data.firstName);
+      setLastName(customer.data.lastName);
+      setStartDay(customer.data.timeStart);
+      setNoteForPatient(customer.data.noteForPatient)
+      setNoteForEmployee(customer.data.noteForEmployee)
+      setSaleNote(customer.data.saleNote);
+      setRelation(customer.data.memberOfFamily)
+      setSelectedGender(customer.data.gender)
+      setSelectedLocation({
+        lat: customer.data.locationPlace.latitude,
+        lng: customer.data.locationPlace.longitude
+      });
+      setPlace(customer.data.locationPlace.name)
+      setKm(customer.data.locationPlace.distanceForWork)
+      
+      setPhone(customer.data.phone)
+      setSelectedEdecade(customer.data.decade)
+      setDefaultDateRange([customer.data.timeStart])
+      setTimeEndPicker([customer.data.timeEnd])
+      setCheckButtonService(customer.data.service.id)
+      setSelectedSkills(customer.data.skillList)
+      setSelectedInfos(customer.data.infoList)
+      setSkillIdRequest(customer.data.skillList.map(e => e.id))
+      setInforIdRequest(customer.data.infoList.map(e => e.id))  
+      setStartDay(customer.data.timeStart)
+      setEndDay(customer.data.timeEnd)
+      setListDateSession(customer.data.dateSessionResponseList)
+
+      if(customer.data.timeStart && customer.data.timeEnd){
+        setSelectedDate([dayjs(customer.data.timeStart), dayjs(customer.data.timeEnd)])
+      }
+      
+     
+      
     };
     axiosData();
   }, []);
+
   
   const transformedData = Object.entries(value).map(([date, sessionList]) => ({
     date,
@@ -83,16 +120,21 @@ export default function AddCustomer() {
   }));
   function convertDateFormat(dateString) {
     if (!dateString) {
-      return ""; 
+      return "";
     }
   
-    const parts = dateString.split('/');
+    const parts = dateString.includes('/')
+      ? dateString.split('/')
+      : dateString.split('-');
+  
     const day = parts[0];
     const month = parts[1];
     const year = parts[2];
+  
     const formattedDate = `${year}-${month}-${day}`;
     return formattedDate;
   }
+  
   const getDisplayValueGender = (value) => {
     switch (value) {
       case 'MALE':
@@ -141,6 +183,7 @@ export default function AddCustomer() {
         return '';
     }
   };
+  
   const cart = {
     timeStart: convertDateFormat(startDay),
     timeEnd: convertDateFormat(endDay),
@@ -159,20 +202,17 @@ export default function AddCustomer() {
     locationPlace:place,
     distanceForWork: km,
     listDateSession: transformedData,
-    idSkills: selectedSkills,
-    idAddInfos: selectedInfos,
-
+    idSkills: skillIdRequest,
+    idAddInfos: infoIdRequest
   }
   const handleButtonClick = () => {
-    if (!selectedDate || !selectedDate[0] || !selectedDate[1]) {
-      toast.error("Vui lòng ngày bắt đầu và ngày kết thúc");
-      return;
-    }
-
-
     const startDate = selectedDate[0];
     const endDate = selectedDate[1];
     const currentDate = new Date();
+    if (!selectedDate || !selectedDate[0] || !selectedDate[1]) {
+      toast.error("Vui lòng nhập ngày bắt đầu và ngày kết thúc");
+      return;
+    }
 
 
     if (startDate <= currentDate) {
@@ -184,13 +224,14 @@ export default function AddCustomer() {
       toast.error("Vui lòng điền ngày kết thúc phải lớn hơn ngày bắt đầu");
       return;
     }
-    console.log(cart);
-    axios.post(`http://localhost:8080/api/carts/sale/${id}`, cart)
+    console.log("cart", cart);
+    axios.put(`http://localhost:8080/api/carts/sale/${id}`, cart)
     .then(response => {
       console.log(response.data);
        const cartId = response.data
-      toast.success("Thêm mới khách hàng thành công")
-      navigate(`saler/${id}/render-list-assistant/${cartId}`)
+      toast.success("Thay đổi thông tin khách hàng thành công")
+      navigate(`/saler/${idSale}`)
+      console.log(response.data);
     })
     .catch(error => {
       toast.error("Vui lòng điền đầy đủ thông tin");
@@ -199,14 +240,16 @@ export default function AddCustomer() {
   const handleKmChange = (newKm) => {
     setKm(newKm)
   };
-
   
-  return (
+  
+  const handleQueryChange = (newQuery) => {
+  };
+    return (
     <>
       <ContainerViewSale />
       <div>
         <div className="index-user-header">
-          <h4>THÊM MỚI KHÁCH HÀNG</h4>
+          <h4>THAY ĐỔI THÔNG TIN KHÁCH HÀNG</h4>
         </div>
       </div>
       
@@ -220,7 +263,7 @@ export default function AddCustomer() {
               placeholder="Nhập họ của khách"
               sx={{ '--Input-focused': 1, width: 256 }}
               type="text"
-              value={firstName}
+              value={firstName || customer?.firstName}
               onChange={(e) => setFirstName(e.target.value)}
             />
           </div>
@@ -232,7 +275,7 @@ export default function AddCustomer() {
               placeholder="Nhập tên của khách"
               sx={{ '--Input-focused': 1, width: 256 }}
               type="text"
-              value={lastName}
+              value={lastName || customer?.lastName}
               onChange={(e) => setLastName(e.target.value)}
             />
           </div>
@@ -244,7 +287,7 @@ export default function AddCustomer() {
             placeholder="Nhập số điện thoại"
             sx={{ '--Input-focused': 1, width: 256 }}
             type="text"
-            value={phone}
+            value={phone || customer?.phone}
             onChange={(e) => setPhone(e.target.value)}
           />
         </div>
@@ -308,7 +351,7 @@ export default function AddCustomer() {
               <MenuItem value="" disabled>
                 Chọn thập niên
               </MenuItem>
-              {edecade.map((option) => (
+              {edecadeList.map((option) => (
                 <MenuItem key={option} value={option}>
                    {getDisplayValueEdecade(option)}
                 </MenuItem>
@@ -324,7 +367,7 @@ export default function AddCustomer() {
             placeholder="Ghi chú cho bệnh nhân"
             minRows={4}
             style={{width:"940px"}}
-            value={noteForPatient}
+            value={noteForPatient || customer?.noteForPatient}
             onChange={(e) => setNoteForPatient(e.target.value)}
             sx={{
               '&::before': {
@@ -345,7 +388,7 @@ export default function AddCustomer() {
             placeholder="Ghi chú cho nhân viên"
             minRows={4}
             style={{width:"940px"}}
-            value={noteForEmployee}
+            value={noteForEmployee || customer?.noteForEmployee}
             onChange={(e) => setNoteForEmployee(e.target.value)}
             sx={{
               '&::before': {
@@ -366,7 +409,7 @@ export default function AddCustomer() {
             placeholder="Ghi chú của sale"
             minRows={4}
             style={{width:"940px"}}
-            value={saleNote}
+            value={saleNote || customer?.saleNote}
             onChange={(e) => setSaleNote(e.target.value)}
             sx={{
               '&::before': {
@@ -386,16 +429,18 @@ export default function AddCustomer() {
       </div>
           <div className="w-100"><SearchLocationInput
             setSelectedLocation={setSelectedLocation}
+            onQueryChange={handleQueryChange}
             setPlace={setPlace}
             marginTest={"0"}
             resetInputAddress={resetInputAddress}
             children={true}
             onKmChange={handleKmChange}
+            defaultValue={customer?.locationPlace?.name}
           /></div>
           <div style={{paddingTop: '40px'}}>
             <h6 className='m0'>Thời gian cần chăm sóc</h6>
             <div className="index-user-body-dates-render">
-              <DateIndexUser
+              <DateIndexSale
                 setSelectedDate={setSelectedDate}
                 dayInWeek={dayInWeek}
                 setValue={setValue}
@@ -403,6 +448,8 @@ export default function AddCustomer() {
                 setDayInWeek={setDayInWeek}
                 setStartDay={setStartDay}
                 setEndDay={setEndDay}
+                defaultDateRange = {defaultDateRange}
+                timeEndPicker = {timeEndPicker}
               />
             </div>
           </div>
@@ -423,10 +470,12 @@ export default function AddCustomer() {
           <h6>Kỹ năng/ Đào tạo</h6>
             <div className="index-user-body-skills-render">
               {listSkill?.map((e) => (
-                <SkillIndexSale
+                <SkillIndexSaleEdit
                   key={e.id}
                   setSelectedSkills={setSelectedSkills}
                   selectedSkills={selectedSkills}
+                  skillIdRequest={skillIdRequest}
+                  setSkillIdRequest={setSkillIdRequest}
                   value={e}
                 />
               ))}
@@ -436,10 +485,12 @@ export default function AddCustomer() {
             <h6>Thông tin thêm</h6>
             <div className="index-user-body-infos-render">
               {listInformation?.map((e) => (
-                <InfoIndexSale
+                <InfoIndexSaleEdit
                   key={e.id}
                   setSelectedInfos={setSelectedInfos}
                   selectedInfos={selectedInfos}
+                  infoIdRequest={infoIdRequest}
+                  setInforIdRequest={setInforIdRequest}
                   value={e}
                 />
               ))}
@@ -448,7 +499,7 @@ export default function AddCustomer() {
           <div className="button-index-user">
             <ButtonForMe
               value={60}
-              childrenButton={"Tạo mới"}
+              childrenButton={"Thay đổi"}
               colorButton={"#3b71aa"}
               onclick={handleButtonClick}
             />

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./ContainerViewUser.css";
-import LogoProject from "../../logoProject/LogoProject";
+import "./containerViewerSale.css";
 import { FavoriteBorder } from "@mui/icons-material";
 import { CreditScore } from "@mui/icons-material";
 import { ListAlt } from "@mui/icons-material";
@@ -9,14 +8,15 @@ import { Home } from "@mui/icons-material";
 import { NavLink, useParams } from "react-router-dom";
 import { Avatar, Button, Menu, MenuItem } from "@mui/material";
 import axios from "axios";
+import LogoProject from "../logoProject/LogoProject";
 
-export function ContainerViewUser({ idUser }) {
+export function ContainerViewSale({ idUser }) {
   const [user, setUser] = useState();
   useEffect(() => {
     const axiosData = async () => {
-      axios.get(`http://localhost:8080/api/users/${idUser}`).then((res) => {
-        setUser(res);
-      });
+    //   axios.get(`http://localhost:8080/api/users/${idUser}`).then((res) => {
+    //     setUser(res);
+    //   });
     };
     axiosData();
   }, [idUser]);

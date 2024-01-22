@@ -15,11 +15,13 @@ const SearchLocationInput = ({
   resetInputAddress,
   children,
   onKmChange,
+  onQueryChange,
+  defaultValue,
 }) => {
   const autoCompleteRef = useRef();
 
   const inputRef = useRef();
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(defaultValue || "");
   const handleScriptLoad = (updateQuery) => {
     autoCompleteRef.current = new window.google.maps.places.Autocomplete(inputRef.current, {
       componentRestrictions: { country: "VN" },
@@ -32,9 +34,18 @@ const SearchLocationInput = ({
   useEffect(() => {
     setQuery("");
   }, [resetInputAddress]);
+
+  useEffect(() => {
+    setQuery(defaultValue)
+  }, [defaultValue])
+  
   const handleInputChange = (event) => {
     const inputValue = event.target.value;
     setQuery(inputValue);
+    if (onQueryChange) {
+      onQueryChange(inputValue);
+    }
+    
   };
   const handlePlaceSelect = async (updateQuery) => {
     const addressObject = await autoCompleteRef.current.getPlace();

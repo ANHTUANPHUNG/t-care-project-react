@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import clsx from "clsx";
 import { styled, css } from "@mui/system";
 import { Modal as BaseModal } from "@mui/base/Modal";
-import { ButtonForMe } from "./ButtonForMe";
-import { Button } from "@mui/material";
+
 
 export default function ModalUnstyled({
   paddingCheck,

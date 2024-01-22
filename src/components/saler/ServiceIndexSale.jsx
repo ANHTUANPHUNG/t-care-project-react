@@ -17,6 +17,7 @@ const HtmlTooltip = styled(({ className, ...props }) => (
     },
   }));
 export default function ServiceIndexSale({ value, setCheckButtonService, checkButtonService }) {
+  
   return (
     <HtmlTooltip
     key={value.id}
@@ -39,7 +40,7 @@ export default function ServiceIndexSale({ value, setCheckButtonService, checkBu
   >
     <Button
       className={`index-user-body-service-render${
-        checkButtonService === value.id ? "-active" : ""
+        (checkButtonService === value.id)? "-active" : ""
       }`}
       onClick={() => setCheckButtonService(value.id)}
     >
