@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import Button from "@mui/material/Button";
-import { SelectDate } from "../../selectDate/SelectDate";
-import DateBetweenSale from "../../saler/DateBetweenSale";
-import DateBetween from "../../home/wordFindCare/datesession/DateBetween";
+import DateBetweenSale from "./DateBetweenSale";
+import { SelectDate } from "../selectDate/SelectDate";
+import { SelectDateSale } from "./SelectDateSale";
 
-export function DateIndexUser({
+export function DateIndexSale({
   setValue,
   setEndDay,
   setStartDay,
@@ -13,10 +13,12 @@ export function DateIndexUser({
   selectedDate,
   dayInWeek,
   defaultDateRange,
-  timeEndPicker,
-  handleDateChange
+  timeEndPicker
 }) {
-  
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
+
   const getDaysInRange = (startDate, endDate) => {
     const days = [];
     let currentDate = new Date(startDate);
@@ -48,7 +50,7 @@ export function DateIndexUser({
 
   return (
     <>
-      <DateBetween
+      <DateBetweenSale
         onChange={handleDateChange}
         setSelectedDate={setSelectedDate}
         selectedDate={selectedDate}
@@ -57,7 +59,7 @@ export function DateIndexUser({
       />
       <div style={{ marginTop: "20px" }}>
         {selectedDate && selectedDate[0] && selectedDate[1] && (
-          <SelectDate dayInWeek={dayInWeek} setValue={setValue} billIndexUser={true} />
+          <SelectDateSale dayInWeek={dayInWeek} setValue={setValue} billIndexUser={true} />
         )}
       </div>
     </>

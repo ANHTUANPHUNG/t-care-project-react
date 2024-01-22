@@ -26,6 +26,8 @@ import { ForgotPassword } from "./components/home/login-signin/forgotPassword/Fo
 import AddCustomer from "./components/saler/AddCustomer";
 import { IndexUser } from "./components/viewUser/index/IndexUser";
 import { ProfileAssistant } from "./components/viewUser/profileAssistant/ProfileAssistant";
+import EditCustomer from "./components/saler/EditCustomer";
+import { RenderListAssistantSale } from "./components/saler/RenderListAssistantSale";
 import { CartUser } from './components/viewUser/cartUser/CartUser';
 import { FilterCartUser } from "./components/viewUser/cartUser/FilterCartUser";
 import { Contract } from "./components/viewUser/contract/Contract";
@@ -82,6 +84,11 @@ function App() {
         <Route path="/user/index/:id/:idAssistant" element={<ProfileAssistant />}></Route>
         <Route path="/saler/:id" element={<SalerView />}></Route>
         <Route path="/add-customer/:id" element={<AddCustomer />}></Route>
+        <Route path="/edit-customer/:idSale/:id" element={<EditCustomer />}></Route>
+        <Route
+          path="saler/:idSale/render-list-assistant/:id"
+          element={<RenderListAssistantSale />}
+        ></Route>
         <Route path="/employee/index/:idEmployee" element={<EmployeeIndex />}></Route>
         <Route path="/employee/profile/:idEmployee" element={<EmployeeProfile />}></Route>
         <Route path="/reset-password" element={<ResetPassword />}></Route>
