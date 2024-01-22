@@ -12,6 +12,7 @@ import DoneIcon from "@mui/icons-material/Done";
 import { CheckBackground } from "./CheckBackground";
 import { RateAssistant } from "./RateAssistant";
 import ModalUnstyled from "../../ModalToMe";
+import LoadingCommon from "../../common/LoadingCommon";
 export function ProfileAssistant() {
   const { id, idAssistant } = useParams();
   const [assistant, setAssistant] = useState({});
@@ -19,14 +20,20 @@ export function ProfileAssistant() {
   const [checkModalBackground, setCheckModalBackground] = useState(false);
   const [checkRate, setCheckRate] = useState(false);
   const [checkModal, setCheckModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+ 
   useEffect(() => {
     let axiosData = async () => {
       const responseAssistant = await axios.get(
         "http://localhost:8080/api/employees/" + idAssistant
       );
       setAssistant(responseAssistant.data);
+      setIsLoading(false)
+
     };
     axiosData();
+
   }, [idAssistant]);
   useEffect(() => {
     if (assistant && assistant.listDateSessions) {
@@ -43,6 +50,9 @@ export function ProfileAssistant() {
       setDayWork(newDayWork);
     }
   }, [assistant]);
+  if (isLoading) {
+    return <LoadingCommon />;
+  }
   const checkModalFilterCart = <div></div>;
   return (
     <>

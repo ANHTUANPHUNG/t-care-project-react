@@ -47,8 +47,9 @@ export default function SalerView() {
           if (result.isConfirmed) {
             
           } else if (result.dismiss === Swal.DismissReason.cancel) {
-           axios.post(`http://localhost:8080/api/contracts/createContract/${id}`)
+           axios.post(`http://localhost:8080/api/contracts/createContract/${id}`).then(e => loadCustomers())
            toast.success("Tạo hợp đồng thành công")
+           
           }
         });
     
@@ -129,7 +130,8 @@ export default function SalerView() {
     .filter(
       (customer) =>
         customer.firstName.toLowerCase().includes(search.toLowerCase()) ||
-        customer.lastName.toLowerCase().includes(search.toLowerCase())
+        customer.lastName.toLowerCase().includes(search.toLowerCase()) ||
+        customer.phone.toLowerCase().includes(search.toLowerCase())
     )
     .map((customer) => (  
       <tr key={customer.id}>

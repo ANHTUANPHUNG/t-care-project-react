@@ -76,7 +76,15 @@ export default function AddCustomer() {
     };
     axiosData();
   }, []);
-  
+  const loadCustomers = async () => {
+		const customers = await axios.get(
+			`http://localhost:8080/api/carts/sale/${id}`,
+		);
+        console.log(
+            customers.data
+        );
+    }
+
   const transformedData = Object.entries(value).map(([date, sessionList]) => ({
     date,
     sessionOfDateList: sessionList,
@@ -190,6 +198,7 @@ export default function AddCustomer() {
       console.log(response.data);
        const cartId = response.data
       toast.success("Thêm mới khách hàng thành công")
+      loadCustomers()
       navigate(`/saler/${id}/render-list-assistant/${cartId}`)
     })
     .catch(error => {

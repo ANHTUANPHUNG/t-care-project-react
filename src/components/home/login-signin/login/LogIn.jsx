@@ -23,9 +23,17 @@ export function LogIn() {
     try {
       const resp = await axios.post("http://localhost:8080/api/auth/login", login);
       toast.success("Đăng nhập thành công");
-      navigate("/user/index/" + resp.data.idUser);
+
+      if (resp.data.isUser) {
+        navigate("/user/index/" + resp.data.idAccount);
+      } else if(resp.data.isSale){
+        navigate("/saler/" + resp.data.idAccount);
+      }
+       else if(resp.data.isEmployee){
+        navigate("/employee/index/" + resp.data.idAccount);
+      }
     } catch (err) {
-      console.error(err);
+      toast.error("Tên đăng nhập hoặc mật khẩu không đúng");
     }
   };
   const logIn = (
