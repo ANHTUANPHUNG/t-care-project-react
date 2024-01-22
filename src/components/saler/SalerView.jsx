@@ -2,14 +2,17 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { FaEdit, FaEye, FaTrashAlt } from "react-icons/fa";
+import { FaAddressCard, FaEdit, FaTrashAlt } from "react-icons/fa";
 import { LegalNotice } from '../carehub/LegalNotice';
 import LogoProject from '../logoProject/LogoProject';
 import { ContainerViewUser } from '../viewUser/containerViewUser/ContainerViewUser';
 import { ContainerViewSale } from './ContainerViewerSale';
+import Search from './search';
+import Swal from 'sweetalert2';
 
 export default function SalerView() {
   const [customers, setCustomers] = useState([]);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
 		loadCustomers();
@@ -29,7 +32,32 @@ export default function SalerView() {
     }
 
    
-
+    const handleOnClick = (id) => {
+      console.log(id);
+      axios
+      .get(`http://localhost:8080/api/carts/${id}`)
+      .then((response) => {
+        console.log(response.data);
+        Swal.fire({
+          title: 'Yêu cầu khách chuyển: ' + response.data.totalAmount,
+          showCancelButton: true,
+          confirmButtonText: 'OK',
+          cancelButtonText: 'Tạo hợp đồng',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+           axios.post(`http://localhost:8080/api/contracts/createContract/${id}`)
+           toast.success("Tạo hợp đồng thành công")
+          }
+        });
+    
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    
+    }
 
     const handleDeleteCustomer = (id) => {
       axios
@@ -51,6 +79,9 @@ export default function SalerView() {
       
     <div className="container">
      <header>
+     <div className="d-flex justify-content-end">
+      <Search search={search} setSearch={setSearch} />
+    </div>
          <nav className="navbar bg-body-tertiary">
              <div className="container-fluid">
                  <a className="navbar-brand">Danh sách khách hàng</a>
@@ -94,7 +125,13 @@ export default function SalerView() {
              </thead>
              <tbody>
   {customers &&
-    customers.map((customer) => (  
+    customers
+    .filter(
+      (customer) =>
+        customer.firstName.toLowerCase().includes(search.toLowerCase()) ||
+        customer.lastName.toLowerCase().includes(search.toLowerCase())
+    )
+    .map((customer) => (  
       <tr key={customer.id}>
         <td style={{maxWidth: "100px"}}> {customer.lastName ? customer.lastName : ''} {customer.firstName ? customer.firstName : ''} ({customer.gender === 'MALE'
             ? 'Nam'
@@ -126,6 +163,13 @@ export default function SalerView() {
           >
             
             <FaEdit />
+          </Link>
+        </td>
+        <td className="mx-2">
+          <Link className="btn btn-outline-primary"
+          onClick={() => handleOnClick(customer.id)}
+          >
+            <FaAddressCard />
           </Link>
         </td>
         <td className="mx-2">

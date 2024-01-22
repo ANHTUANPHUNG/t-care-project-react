@@ -23,15 +23,12 @@ import { Bio } from "./components/home/wordFindJobs/bio/Bio";
 import { Photo } from "./components/home/wordFindJobs/photo/Photo";
 import SalerView from "./components/saler/SalerView";
 import { ForgotPassword } from "./components/home/login-signin/forgotPassword/ForgotPassword";
-import LoadingPage from "./components/common/LoadingPage";
-import SweetAlertEmployee from "./components/common/SweetAlertEmployee";
 import AddCustomer from "./components/saler/AddCustomer";
 import { IndexUser } from "./components/viewUser/index/IndexUser";
 import { ProfileAssistant } from "./components/viewUser/profileAssistant/ProfileAssistant";
 import EditCustomer from "./components/saler/EditCustomer";
 import { RenderListAssistantSale } from "./components/saler/RenderListAssistantSale";
 import { CartUser } from './components/viewUser/cartUser/CartUser';
-import { css } from '@mui/system';
 import { FilterCartUser } from "./components/viewUser/cartUser/FilterCartUser";
 
 function App() {
