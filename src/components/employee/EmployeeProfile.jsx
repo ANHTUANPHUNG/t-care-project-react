@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from "react";
-import "./Profile.css";
-import { LegalNotice } from "../../carehub/LegalNotice";
-import { ContainerViewUser } from "../containerViewUser/ContainerViewUser";
+import "./EmployeeProfile.css";
+import { LegalNotice } from "../carehub/LegalNotice";
+
 import TipsAndUpdatesIcon from "@mui/icons-material/TipsAndUpdates";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-import ModalUnstyled from "../../ModalToMe";
+import ModalUnstyled from "../ModalToMe";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import { Checkbox, FormControl, FormControlLabel, FormLabel } from "@mui/material";
-import { ButtonForMe } from "../../ButtonForMe";
+import { ButtonForMe } from "../ButtonForMe";
 
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { ContainerViewEmployee } from "./containerViewEmployee/ContainerViewEmployee";
 const preferencesRender = [
   {
     id: 1,
@@ -52,7 +53,7 @@ const preferencesRender = [
     name: "Share information about me with third party communication facilitators so they may send me direct mail solicitations on behalf of other companies. (?)",
   },
 ];
-export function Profile() {
+export function EmployeeProfile() {
   const { id } = useParams();
   const [user, setUser] = useState();
   const [image, setImage] = useState();
@@ -66,14 +67,14 @@ export function Profile() {
     firstName: yup.string().required("Tên không được trống"),
     lastName: yup.string().required("Họ không được trống"),
     personID: yup
-    .number()
-    .typeError("Số Căn Cước Công Dân phải là số")
-    .test(
-      "len",
-      "Số Căn Cước Công Dân phải có đúng 10 số",
-      (val) => val && val.toString().length === 10
-    )
-    .required("Số Căn Cước Công Dân không được để trống"),
+      .number()
+      .typeError("Số Căn Cước Công Dân phải là số")
+      .test(
+        "len",
+        "Số Căn Cước Công Dân phải có đúng 10 số",
+        (val) => val && val.toString().length === 10
+      )
+      .required("Số Căn Cước Công Dân không được để trống"),
   });
   const formik = useFormik({
     initialValues: {
@@ -81,7 +82,7 @@ export function Profile() {
       firstName: "",
       lastName: "",
       personID: "",
-      gender:""
+      gender: "",
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
@@ -98,23 +99,21 @@ export function Profile() {
 
       if (response.status === 204) {
         toast.success("User data updated successfully");
-        setCheckModal(false)
+        setCheckModal(false);
       } else {
         toast.error("Failed to update user data");
       }
     },
-    
   });
 
   const handleGenderClick = (selectedGender) => {
     setGender(selectedGender);
-    formik.setFieldValue('gender', selectedGender);
-
+    formik.setFieldValue("gender", selectedGender);
   };
   const editProfile = (
     <>
       <div>
-        <h2>Edit Profile</h2>
+        <h2>Sửa hồ sơ</h2>
         <form onSubmit={formik.handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -244,10 +243,10 @@ export function Profile() {
       }
     }
   };
- 
+
   return (
     <>
-      <ContainerViewUser idUser={id} />
+      <ContainerViewEmployee idUser={id} />
       <div className="container-profile-user" style={{ margin: "0px 90px", padding: "0 15px" }}>
         <div
           className="notification-user"
@@ -262,14 +261,13 @@ export function Profile() {
           <div className="d-flex">
             <TipsAndUpdatesIcon />
             <span>
-              This is what your profile looks now. Grab attention from caregivers by describing your
-              family's needs and interests.
+              Hồ sơ của bạn như thế này, có thể thay đổi để thu hút thêm sự chú ý từ khách hàng.
             </span>
           </div>
         </div>
         <h6 className="my-profile" style={{ padding: "25px 0" }}>
           <AccountBoxIcon />
-          My Profile
+          Hồ sơ của tôi
         </h6>
 
         <div className="my-profile-header" style={{ display: "flex" }}>
@@ -286,10 +284,7 @@ export function Profile() {
                     border: "1px solid #53585d",
                     borderRadius: "15px",
                   }}
-                  src={
-                    uploadedImageUrl ||
-                    "https://res.cloudinary.com/dw4xpd646/image/upload/v1703929545/Cloudinary-React/gfxdp8xr8hhsdx0jxyea.png"
-                  }
+                  src={uploadedImageUrl}
                   alt=""
                 />
               </div>
@@ -321,7 +316,7 @@ export function Profile() {
                 onClick={() => setCheckModal(true)}
                 style={{ textAlign: "center", marginTop: "20px", color: "blue", cursor: "pointer" }}
               >
-                Sửa hồ sơ
+                Edit profile
               </div>
             </div>
           </div>

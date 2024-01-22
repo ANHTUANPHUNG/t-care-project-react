@@ -61,7 +61,7 @@ export function CartUser() {
               <th>Ảnh</th>
               <th>Dịch vụ</th>
               <th>Kỹ năng </th>
-              <th>Thông tin </th>
+              <th>Bổ sung</th>
               <th>Trạng thái </th>
               <th>Hoạt động</th>
             </tr>

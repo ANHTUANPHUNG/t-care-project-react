@@ -23,14 +23,16 @@ import { Bio } from "./components/home/wordFindJobs/bio/Bio";
 import { Photo } from "./components/home/wordFindJobs/photo/Photo";
 import SalerView from "./components/saler/SalerView";
 import { ForgotPassword } from "./components/home/login-signin/forgotPassword/ForgotPassword";
-import LoadingPage from "./components/common/LoadingPage";
-import SweetAlertEmployee from "./components/common/SweetAlertEmployee";
 import AddCustomer from "./components/saler/AddCustomer";
 import { IndexUser } from "./components/viewUser/index/IndexUser";
 import { ProfileAssistant } from "./components/viewUser/profileAssistant/ProfileAssistant";
 import { CartUser } from './components/viewUser/cartUser/CartUser';
-import { css } from '@mui/system';
 import { FilterCartUser } from "./components/viewUser/cartUser/FilterCartUser";
+import { Contract } from "./components/viewUser/contract/Contract";
+import { SkillAndInfo } from "./components/home/wordFindCare/skillAndInfo/SkillAndInfo";
+import { EmployeeIndex } from "./components/employee/EmployeeIndex";
+import { ResetPassword } from './components/home/login-signin/forgotPassword/ResetPassword';
+import { EmployeeProfile } from "./components/employee/EmployeeProfile";
 
 function App() {
   return (
@@ -61,6 +63,7 @@ function App() {
         <Route path="/user/signin" element={<UserSignIn />}></Route>
         <Route path="/user/address/:id" element={<UserAddress />}></Route>
         <Route path="/user/service/:id" element={<UserService />}></Route>
+        <Route path="/user/skill-info/:id" element={<SkillAndInfo />}></Route>
         <Route path="/user/date-session/:id" element={<DateSession />}></Route>
         <Route path="/user/need-care/:id" element={<UserNeedCare />}></Route>
         <Route
@@ -72,13 +75,16 @@ function App() {
           element={<RenderListAssistant />}
         ></Route>
         <Route path="/user/profile/:id" element={<Profile />}></Route>
-
         <Route path="/user/index/:id" element={<IndexUser />}></Route>
         <Route path="/user/cart/:id" element={<CartUser />}></Route> 
+        <Route path="/user/contract/:id" element={<Contract />}></Route> 
         <Route path="/user/cart/filter/:id/:idCart" element={<FilterCartUser />}></Route> 
         <Route path="/user/index/:id/:idAssistant" element={<ProfileAssistant />}></Route>
         <Route path="/saler/:id" element={<SalerView />}></Route>
         <Route path="/add-customer/:id" element={<AddCustomer />}></Route>
+        <Route path="/employee/index/:idEmployee" element={<EmployeeIndex />}></Route>
+        <Route path="/employee/profile/:idEmployee" element={<EmployeeProfile />}></Route>
+        <Route path="/reset-password" element={<ResetPassword />}></Route>
       </Routes>
     </>
   );

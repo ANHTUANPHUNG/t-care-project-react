@@ -20,6 +20,7 @@ export function RenderListCart({
   const { id } = useParams();
 
   const [menuSelected, setMenuSelected] = useState(null);
+  const [status, setStatus] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const [member, setMember] = useState("");
   const [gender, setGender] = useState("");
@@ -43,8 +44,8 @@ export function RenderListCart({
   const handleClick = (event) => {
     setMenuSelected(event.currentTarget.dataset.id);
     setAnchorEl(event.currentTarget);
+    setStatus(event.currentTarget.getAttribute("value-id"));
   };
-
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -64,9 +65,9 @@ export function RenderListCart({
       }
     });
   };
+  console.log(listCart);
   const handleUpdateContract = (id) => {
     const findById = listCart.find((e) => e.id === id);
-    console.log(findById);
     if (
       findById.decade &&
       findById.gender &&
@@ -85,7 +86,11 @@ export function RenderListCart({
       }).then((result) => {
         if (result.isConfirmed) {
           axios.put(`http://localhost:8080/api/carts/cartStatus/${findById.id}`).then((res) => {
-            toast.success("Yêu cầu đã được chuyển đến quản lí. Chờ xét duyệt.");
+            Swal.fire({
+              title: "Chuyển tiền vào số tài khoản này để gặp hộ lý, số tiền là 200.000",
+              text: "00000000000",
+            });
+            toast.success("Yêu cầu đã được chuyển đến quản lí.");
             setCheckCallApiCart((pre) => !pre);
           });
         }
@@ -150,9 +155,7 @@ export function RenderListCart({
               {e?.employee?.firstName && e?.employee?.lastName ? (
                 `${e.employee.firstName} ${e.employee.lastName}`
               ) : (
-                <Link to={`/user/cart/filter/${id}/${e.id}`}>
-                    Thêm trợ lý
-                </Link>
+                <Link to={`/user/cart/filter/${id}/${e.id}`}>Thêm trợ lý</Link>
               )}
             </td>
             <td>
@@ -172,6 +175,7 @@ export function RenderListCart({
             <td>
               <i
                 data-id={e.id}
+                value-id={e.cartStatus}
                 style={{ cursor: "pointer" }}
                 aria-controls={open ? "basic-menu" : undefined}
                 aria-haspopup="true"
@@ -194,12 +198,15 @@ export function RenderListCart({
                     style={{ color: "#377af9", cursor: "pointer" }}
                   />
                 </MenuItem>
-                <MenuItem onClick={handleClose}>
-                  <CreditScoreIcon
-                    onClick={() => handleUpdateContract(menuSelected)}
-                    style={{ color: "#ff7d4d", cursor: "pointer" }}
-                  />
-                </MenuItem>
+
+                {status === "Đang xác nhận" || (
+                  <MenuItem onClick={handleClose}>
+                    <CreditScoreIcon
+                      onClick={() => handleUpdateContract(menuSelected)}
+                      style={{ color: "#ff7d4d", cursor: "pointer" }}
+                    />
+                  </MenuItem>
+                )}
                 <MenuItem onClick={handleClose}>
                   <DeleteForeverIcon
                     onClick={() => handleDeletedCart(menuSelected)}
