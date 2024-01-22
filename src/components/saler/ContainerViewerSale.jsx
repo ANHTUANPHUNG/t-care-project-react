@@ -34,7 +34,9 @@ export function ContainerViewSale({ idUser }) {
         <div className="view-user-header">
           <LogoProject />
           <div className="view-user-header-select">
-            <NavLink className="view-user-header-select-nav">
+            <NavLink className="view-user-header-select-nav"
+              to={"/home"}
+            >
               <div className="view-user-header-select-nav-block">
                 <Home className="view-user-header-select-nav-block-icon" />
                 <div className="view-user-header-select-nav-block-title">Home</div>

@@ -13,12 +13,10 @@ export function DateIndexUser({
   selectedDate,
   dayInWeek,
   defaultDateRange,
-  timeEndPicker
+  timeEndPicker,
+  handleDateChange
 }) {
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-  };
-
+  
   const getDaysInRange = (startDate, endDate) => {
     const days = [];
     let currentDate = new Date(startDate);

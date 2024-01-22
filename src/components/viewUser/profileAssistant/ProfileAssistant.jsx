@@ -11,12 +11,14 @@ import { ButtonForMe } from "../../ButtonForMe";
 import DoneIcon from "@mui/icons-material/Done";
 import { CheckBackground } from "./CheckBackground";
 import { RateAssistant } from "./RateAssistant";
+import ModalUnstyled from "../../ModalToMe";
 export function ProfileAssistant() {
   const { id, idAssistant } = useParams();
   const [assistant, setAssistant] = useState({});
   const [dayWork, setDayWork] = useState([]);
   const [checkModalBackground, setCheckModalBackground] = useState(false);
   const [checkRate, setCheckRate] = useState(false);
+  const [checkModal, setCheckModal] = useState(false);
   useEffect(() => {
     let axiosData = async () => {
       const responseAssistant = await axios.get(
@@ -41,9 +43,17 @@ export function ProfileAssistant() {
       setDayWork(newDayWork);
     }
   }, [assistant]);
+  const checkModalFilterCart = <div></div>;
   return (
     <>
-      <ContainerViewUser />
+      <ModalUnstyled
+        check={checkModal}
+        onClose={() => setCheckModal(false)}
+        children={checkModalFilterCart}
+        widthForm={"60%"}
+        heightForm={"80%"}
+      />
+      <ContainerViewUser idUser={id} />
       <div>
         <div
           style={{
@@ -72,7 +82,7 @@ export function ProfileAssistant() {
                   <div>{assistant.experience} năm kinh nghiệm</div>
                 </div>
               </div>
-              <div
+              {/* <div
                 style={{
                   width: "50%",
                   height: "50px",
@@ -82,8 +92,8 @@ export function ProfileAssistant() {
                 }}
               >
                 <FavoriteBorder style={{ marginRight: "10px", cursor: "pointer" }} />
-                <ButtonForMe childrenButton={"Hợp đồng"} value={50} />
-              </div>
+                <ButtonForMe childrenButton={"Hợp đồng"} value={50} onclick={() => setCheckModal(true)} />
+              </div> */}
             </div>
           )}
         </div>
@@ -121,7 +131,7 @@ export function ProfileAssistant() {
             <span>{assistant.descriptionAboutMySelf}</span>
           </div>
           <div style={{ height: "1px", backgroundColor: "#ccd1d6" }}></div>
-          <div style={{ padding: "20px 0" }}>
+          {/* <div style={{ padding: "20px 0" }}>
             <div className="" style={{ justifyContent: "space-between", display: "flex" }}>
               <h5>Đánh giá</h5>
               <div
@@ -142,7 +152,7 @@ export function ProfileAssistant() {
               Hãy đánh giá cho {assistant.firstName} khi cô ấy hoàn thành công việc được nhận từ bạn
             </span>
           </div>
-          <div style={{ height: "1px", backgroundColor: "#ccd1d6" }}></div>
+          <div style={{ height: "1px", backgroundColor: "#ccd1d6" }}></div> */}
           <div style={{ padding: "20px 0" }}>
             <h5>Thời gian mà {assistant.firstName} có thể hỗ trợ bạn</h5>
             <ul>

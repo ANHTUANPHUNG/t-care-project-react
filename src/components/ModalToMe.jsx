@@ -25,7 +25,7 @@ export default function ModalUnstyled({
   };
   return (
     <div>
-      <Modal open={open} onClose={handleClose} slots={{ backdrop: StyledBackdrop }}>
+      <Modal open={open !== undefined ? open : false} onClose={handleClose} slots={{ backdrop: StyledBackdrop }}>
         <ModalContent sx={{ width: widthForm, height: heightForm }}>
           <div style={{padding: paddingCheck || 0 }}>{children}</div>
         </ModalContent>

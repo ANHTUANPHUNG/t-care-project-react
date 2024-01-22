@@ -33,11 +33,16 @@ export function RenderListAssistantSale() {
   const handleCheckboxChange = () => {
     setChecked(!isChecked);
   };
-  const handleClick = () => {
+  const handleClick = (assistantId) => {
     Swal.fire({
       title: 'Liên hệ với nhân viên thành công',
       confirmButtonText: "OK"
     }).then(() => {
+      let cart = {
+        cartId : id,
+        employeeId : assistantId
+      }
+      axios.put(`http://localhost:8080/api/carts/employees`, cart)
       navigate(`/saler/${idSale}`);
     });
   };

@@ -17,6 +17,7 @@ const SearchLocationInput = ({
   onKmChange,
   onQueryChange,
   defaultValue,
+  km,setKm, checkButton
 }) => {
   const autoCompleteRef = useRef();
 
@@ -68,13 +69,11 @@ const SearchLocationInput = ({
   useEffect(() => {
     handleScriptLoad(setQuery);
   }, []);
-  const [age, setAge] = useState("");
 
   const handleChange = (event) => {
-    // setAge(event.target.value);
 
     let newAge = event.target.value;
-    setAge(newAge);
+    setKm(newAge);
   if (onKmChange) {
     onKmChange(newAge);
   }
@@ -90,12 +89,12 @@ const SearchLocationInput = ({
           <h6>Bạn cần chăm sóc ở đâu ?</h6>
           <div className="d-flex ">
             <FormControl fullWidth sx={{minWidth:100}}>
-              <InputLabel id="demo-simple-select-label" className={`input-index-user${age!= "" ?"acitve":""}`}>Km</InputLabel>
+              <InputLabel id="demo-simple-select-label" className={`input-index-user${km!= "" ?"acitve":""}`}>Km</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 className="select-index-user"
-                value={age}
+                value={km}
                 label="Age"
                 onChange={handleChange}
               >

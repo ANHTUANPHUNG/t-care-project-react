@@ -12,6 +12,7 @@ const GetServiceAPI = {
         console.log(err);
       });
   },
-  keyGGMap: "AIzaSyBrY34XIX6GtKL6xXlRk83s1Yp0Ia9-VRs",
+
+  keyGGMap: "AIzaSyCt8QVGyxMTDKMSwxXN7qlcXvYXf5bwGaY",
 };
 export default GetServiceAPI;

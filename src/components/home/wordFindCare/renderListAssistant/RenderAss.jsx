@@ -1,50 +1,58 @@
 import React, { useEffect, useState } from "react";
 import "./RenderAss.css";
-import { Checkbox } from "@mui/material";
+import { Radio } from "@mui/material";
 import { Star, StarHalf } from "@mui/icons-material";
 
-export function RenderAss({ setIsOpen, handleCheckboxChange, isChecked, listFilterAss }) {
+export function RenderAss({
+  setIsOpen,
+  setSelectedAssistant,
+  selectedAssistant,
+  listFilterAss,
+  setProfileAssistant,
+}) {
+
   return (
     <>
       {listFilterAss?.map((e) => (
         <div key={e?.id} className="render-list-assistant-body-render">
           <div className="render-list-assistant-body-render-container">
             <div className="d-flex render-list-assistant-body-render-container-header">
-              <img
-                // src="https://png.pngtree.com/png-vector/20190413/ourmid/pngtree-img-file-document-icon-png-image_938720.jpg"
-                alt=""
-                src={e?.photoUrl}
-              />
+              <img alt="" src={e?.photoUrl} style={{ width: "72px", height: "72px" }} />
               <div className="render-list-assistant-body-render-container-header-information">
                 <h6 className="m-0">
                   {e?.firstName} {e?.lastName}
                 </h6>
                 <div className="d-flex">
-                  {new Array(Math.floor(Math.ceil(e?.starAverage * 2) / 2))
-                    .fill(1)
-                    .map((item, index) => (
-                      <Star key={index} style={{ color: "yellow" }} />
-                    ))}
-                  {Math.ceil(e?.starAverage * 2) / 2 -
-                    Math.floor(Math.ceil(e?.starAverage * 2) / 2) >
-                    0 && <StarHalf style={{ color: "yellow" }} />}
-                  <span className="ml-5-fs12-mt3">
-                    (<span >{e?.rateQuantity}</span>)
-                  </span>
+                  {e && e.starAverage !== null && e.rateQuantity !== null && (
+                    <>
+                      {Array.from({ length: Math.floor(e.starAverage * 2) / 2 })
+                        .fill(1)
+                        .map((item, index) => (
+                          <Star key={index} style={{ color: "yellow", fontSize: "18px", marginTop:"3px" }} />
+                        ))}
+                      {e.starAverage % 1 !== 0 && <StarHalf style={{ color: "yellow", fontSize: "18px", marginTop:"3px" }} />}
+                      <span className="ml-5-fs12-mt3">
+                        (<span style={{ fontSize: "14px"}}>{e.rateQuantity}</span>)
+                      </span>
+                    </>
+                  )}
                 </div>
                 <div>
-                  <span>{e?.nameLocation}</span>
+                  <span style={{ fontSize: "14px"}}>{e?.nameLocation}</span>
                 </div>
               </div>
               <div>
-                <Checkbox  checked={e?.id} onChange={handleCheckboxChange} />
+                <Radio
+                  checked={selectedAssistant?.id === e.id}
+                  onChange={() =>  setSelectedAssistant(e)}
+                />
               </div>
             </div>
             <div className="d-flex mt-3 render-list-assistant-body-render-container-body">
               <div className="ms-4">
-                My name is Toni, I've been in home care for over 12 years. I'm Certified, I've
-                worked with health care agencies and ...{" "}
-                <span onClick={() => setIsOpen(true)}>read more</span>
+                {e?.descriptionAboutMySelf?.slice(0, 100)}
+                {e?.descriptionAboutMySelf?.length > 100 ? "..." : ""}{" "}
+                <span onClick={() => (setIsOpen(true), setProfileAssistant(e))}>read more</span>
               </div>
             </div>
           </div>

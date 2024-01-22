@@ -10,11 +10,10 @@ import { ContainerViewSale } from './ContainerViewerSale';
 
 export default function SalerView() {
   const [customers, setCustomers] = useState([]);
-	const [checkCustomer,setCheckCustomer] = useState(true)
 
   useEffect(() => {
 		loadCustomers();
-	}, [checkCustomer]);
+	}, []);
 
   const {id} = useParams()
 	let navigate = useNavigate()
@@ -86,6 +85,7 @@ export default function SalerView() {
                      <th>Gói</th>
                      <th>Ghi chú người thuê</th>
                      <th>Ghi chú người nhà</th>
+                     <th>Người hỗ trợ</th>
                      <th>Ghi chú của sale</th>
                      <th></th>
                      <th colSpan="2" style={{textAlign: "center"}}>...</th>
@@ -117,6 +117,7 @@ export default function SalerView() {
         <td style={{maxWidth: "150px"}}>{customer.serviceGeneral} </td>
         <td style={{maxWidth: "150px"}}>{customer.noteForEmployee}</td> 
         <td style={{maxWidth: "150px"}}>{customer.noteForPatient}</td> 
+        <td style={{maxWidth: "150px"}}>{customer.employeeFirstName} {customer.employeeLastName}</td> 
         <td style={{maxWidth: "150px"}}>{customer.saleNote}</td> 
         
         <td className="mx-2">

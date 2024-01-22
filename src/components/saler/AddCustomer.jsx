@@ -190,7 +190,7 @@ export default function AddCustomer() {
       console.log(response.data);
        const cartId = response.data
       toast.success("Thêm mới khách hàng thành công")
-      navigate(`saler/${id}/render-list-assistant/${cartId}`)
+      navigate(`/saler/${id}/render-list-assistant/${cartId}`)
     })
     .catch(error => {
       toast.error("Vui lòng điền đầy đủ thông tin");
@@ -390,6 +390,7 @@ export default function AddCustomer() {
             marginTest={"0"}
             resetInputAddress={resetInputAddress}
             children={true}
+            setKm = {setKm}
             onKmChange={handleKmChange}
           /></div>
           <div style={{paddingTop: '40px'}}>
