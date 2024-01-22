@@ -5,7 +5,6 @@ import { Grid, TextField } from "@mui/material";
 import { ButtonForMe } from "../../../ButtonForMe";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
-import OtherHousesIcon from "@mui/icons-material/OtherHouses";
 import "./ForgotPassword.css";
 import * as yup from "yup";
 

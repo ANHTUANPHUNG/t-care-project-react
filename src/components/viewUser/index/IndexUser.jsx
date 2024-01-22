@@ -13,6 +13,8 @@ import { DateIndexUser } from "./DateIndexUser";
 import { ButtonForMe } from "./../../ButtonForMe";
 import { RenderListAssistantIndexUser } from "./RenderListAssistantIndexUser";
 import { toast } from "react-toastify";
+import LoadingCommon from "../../common/LoadingCommon";
+
 const debounce = (func, delay) => {
   let timeout;
   return function (...args) {
@@ -49,6 +51,7 @@ export function IndexUser() {
   let navigate = useNavigate();
   const { id } = useParams();
   const [checkButton, setCheckButton] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleReset = () => {
     setSelectedInfos([]);
@@ -60,7 +63,6 @@ export function IndexUser() {
       lat: 0,
       lng: 0,
     });
-    setCheckButton(false)
     setSelectedDate([null, null])
     setCheckButton(false)
   };
@@ -79,10 +81,12 @@ export function IndexUser() {
       setListAssistant(responseAssistant.data.content);
       setPageTotal(responseAssistant.data.totalPages);
       setTotalElements(responseAssistant.data.totalElements);
+      setIsLoading(false);
+
     };
     axiosData();
   }, []);
-
+  
   const fetchData = async () => {
     try {
       const response = await axios.get(`http://localhost:8080/api/employees?page=${count}`);
@@ -118,6 +122,7 @@ export function IndexUser() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     if (
       selectedLocation.lat !== 0 &&
       selectedLocation.lng !== 0 &&
@@ -154,12 +159,14 @@ export function IndexUser() {
       axios.post(`http://localhost:8080/api/carts/create-filter/${id}`, data).then((res) => {
         setListAssistantFilter(res.data.content);
         setCheckButton(true);
-        console.log(res.data.content);
       });
     } else {
       toast.error("Nhập đầy đủ thông tin trước khi tìm kiếm");
     }
   };
+  if (isLoading) {
+    return <LoadingCommon />;
+  }
   return (
     <>
       <ContainerViewUser idUser={id} checkIconPage={true} />

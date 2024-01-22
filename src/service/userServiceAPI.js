@@ -26,7 +26,7 @@ const UserServiceAPI = {
                 navigate(url + "/" + resp.data);
             })
             .catch((err) => {
-                console.log(err);
+                toast.error(err.response.data)
             });
     },
     signInUserReturnLogin: async (postData,navigate,url) => {
@@ -37,7 +37,7 @@ const UserServiceAPI = {
                 navigate(url);
             })
             .catch((err) => {
-                console.log(err);
+                toast.error(err.response.data)
             });
     },
     updateLocation: async (id, postData, navigate, url) => {
