@@ -16,11 +16,11 @@ export function RenderListAssistant() {
   const [isChecked, setChecked] = useState(false);
   const [filterAss, setFilterAss] = useState();
   const { id } = useParams();
-  console.log(filterAss);
+  console.log(id);
   useEffect(() => {
     let axiosData = async () => {
       const responseFilterAss = await axios.get(
-        "http://localhost:8080/api/carts/filter/bb931cca-268f-4e96-80cd-a67e931091e3"
+        `http://localhost:8080/api/carts/filter/${id}`
       );
       console.log(responseFilterAss?.data);
       setFilterAss(responseFilterAss?.data.content);

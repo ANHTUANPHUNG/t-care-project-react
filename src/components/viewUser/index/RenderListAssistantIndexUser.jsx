@@ -3,12 +3,13 @@ import TokenIcon from "@mui/icons-material/Token";
 import SecurityIcon from "@mui/icons-material/Security";
 import { FavoriteBorder } from "@mui/icons-material";
 import { ButtonForMe } from "../../ButtonForMe";
-import { useParams } from "react-router-dom";
-export function RenderListAssistantIndexUser({ value, index, listAssistant }) {
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import axios from "axios";
+export function RenderListAssistantIndexUser({ value, index, listAssistant, checkButtonForme }) {
   const [selectedFavorites, setSelectedFavorites] = useState([]);
-  const [isLastItem, setIsLastItem] = useState(false);
   const { id } = useParams();
-
+  let navigate = useNavigate();
   const handleSelectFavorite = (e) => {
     const isInfoSelected = selectedFavorites?.some((element) => element === e);
     if (isInfoSelected) {
@@ -17,6 +18,20 @@ export function RenderListAssistantIndexUser({ value, index, listAssistant }) {
     } else {
       setSelectedFavorites((prev) => [...prev, e]);
     }
+  };
+  const handleSubmitCartUser = () => {
+    const form = {
+      cartId: value.cartId,
+      employeeId: value.id,
+    };
+    axios
+      .put(`http://localhost:8080/api/carts/employees`, form)
+      .then((res) => {
+        navigate(`/user/cart/${id}`);
+      })
+      .then((res) => {
+        toast.success("Thêm yêu cầu thành công");
+      });
   };
   return (
     <>
@@ -31,7 +46,7 @@ export function RenderListAssistantIndexUser({ value, index, listAssistant }) {
             <SecurityIcon className="render-list-assistant-index-user-body-icon-security" />
             <div className="render-list-assistant-index-user-body-experience">
               <div>{value?.nameAddress}</div>
-              <div>{value?.experience} năm kinh nghiệm</div>
+              <div>{value?.eexperience} năm kinh nghiệm</div>
             </div>
           </div>
         </div>
@@ -50,7 +65,11 @@ export function RenderListAssistantIndexUser({ value, index, listAssistant }) {
             onClick={() => handleSelectFavorite(value?.id)}
             name={value?.id}
           />
-          <ButtonForMe childrenButton={"Thêm"} value={20} />
+          {checkButtonForme ? (
+            ""
+          ) : (
+            <ButtonForMe childrenButton={"Thêm"} value={20} onclick={handleSubmitCartUser} />
+          )}
         </div>
       </div>
       {listAssistant?.length - 1 == index || (

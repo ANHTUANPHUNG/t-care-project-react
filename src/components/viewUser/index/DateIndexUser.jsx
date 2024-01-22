@@ -12,17 +12,16 @@ export function DateIndexUser({
   selectedDate,
   dayInWeek,
 }) {
+  
   const getDaysInRange = (startDate, endDate) => {
     const days = [];
-    let currentDate = new Date();
+    let currentDate = new Date(startDate);
 
-  console.log(currentDate);
-    while (currentDate < endDate) {
+    while (currentDate <= endDate) {
       days.push({
         date: new Date(currentDate),
         dayOfWeek: currentDate.toLocaleDateString("en-US", { weekday: "long" }),
       });
-  
       currentDate.setDate(currentDate.getDate() + 1);
     }
 

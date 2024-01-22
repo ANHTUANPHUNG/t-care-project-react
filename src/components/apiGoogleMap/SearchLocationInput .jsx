@@ -15,7 +15,7 @@ const SearchLocationInput = ({
   resetInputAddress,
   children,
   onKmChange,
-  km,setKm
+  km,setKm, checkButton
 }) => {
   const autoCompleteRef = useRef();
 
@@ -33,6 +33,7 @@ const SearchLocationInput = ({
   useEffect(() => {
     setQuery("");
   }, [resetInputAddress]);
+  
   const handleInputChange = (event) => {
     const inputValue = event.target.value;
     setQuery(inputValue);

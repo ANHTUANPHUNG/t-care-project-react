@@ -13,11 +13,17 @@
 .view-user-header-select-nav{
     text-decoration: none; color: #213f5f
 }
+.view-user-header-select-navactive{
+    text-decoration: none; color: orangered
+}
 .view-user-header-select-nav-block{
     text-align: center
 }
 .view-user-header-select-nav-block-icon{
     font-size: 32px; color: #213f5f
+}
+.view-user-header-select-nav-block-iconactive{
+    font-size: 32px; 
 }
 .view-user-header-select-nav-block-title{
     font-size: 13px

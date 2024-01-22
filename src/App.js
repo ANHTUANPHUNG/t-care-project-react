@@ -1,6 +1,6 @@
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import "../node_modules/@fortawesome/fontawesome-free/css/all.min.css"
 import { Home } from "./components/home/Home";
 import { Route, Routes } from "react-router-dom";
 import { UserSignIn } from "./components/home/wordFindCare/userSignIn/UserSignIn";
@@ -28,6 +28,9 @@ import SweetAlertEmployee from "./components/common/SweetAlertEmployee";
 import AddCustomer from "./components/saler/AddCustomer";
 import { IndexUser } from "./components/viewUser/index/IndexUser";
 import { ProfileAssistant } from "./components/viewUser/profileAssistant/ProfileAssistant";
+import { CartUser } from './components/viewUser/cartUser/CartUser';
+import { css } from '@mui/system';
+import { FilterCartUser } from "./components/viewUser/cartUser/FilterCartUser";
 
 function App() {
   return (
@@ -61,7 +64,7 @@ function App() {
         <Route path="/user/date-session/:id" element={<DateSession />}></Route>
         <Route path="/user/need-care/:id" element={<UserNeedCare />}></Route>
         <Route
-          path="/user/assistant-caption/:id"
+          path="/user/assistant-caption/:idCart"
           element={<AssistantCaption />}
         ></Route>
         <Route
@@ -71,6 +74,8 @@ function App() {
         <Route path="/user/profile/:id" element={<Profile />}></Route>
 
         <Route path="/user/index/:id" element={<IndexUser />}></Route>
+        <Route path="/user/cart/:id" element={<CartUser />}></Route> 
+        <Route path="/user/cart/filter/:id/:idCart" element={<FilterCartUser />}></Route> 
         <Route path="/user/index/:id/:idAssistant" element={<ProfileAssistant />}></Route>
         <Route path="/saler/:id" element={<SalerView />}></Route>
         <Route path="/add-customer/:id" element={<AddCustomer />}></Route>

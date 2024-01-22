@@ -25,6 +25,7 @@ export function IndexUser() {
   const [listService, setListService] = useState();
   const [listSkill, setListSkill] = useState();
   const [listAssistant, setListAssistant] = useState();
+  const [listAssistantFilter, setListAssistantFilter] = useState();
   const [checkButtonService, setCheckButtonService] = useState("");
   const [selectedSkills, setSelectedSkills] = useState([]);
   const [selectedInfos, setSelectedInfos] = useState([]);
@@ -36,7 +37,7 @@ export function IndexUser() {
   const [km, setKm] = useState("10");
   const [place, setPlace] = useState("");
   const [value, setValue] = useState();
-  const [selectedDate, setSelectedDate] = useState([null,null]);
+  const [selectedDate, setSelectedDate] = useState([null, null]);
   const [dayInWeek, setDayInWeek] = useState([]);
   const [startDay, setStartDay] = useState();
   const [endDay, setEndDay] = useState();
@@ -44,14 +45,24 @@ export function IndexUser() {
   const [pageTotal, setPageTotal] = useState(1);
   const [checking, setChecking] = useState(false);
   const [totalElements, setTotalElements] = useState(0);
-
+  const [checkIconPage, setCheckIconPage] = useState(false);
   let navigate = useNavigate();
   const { id } = useParams();
+  const [checkButton, setCheckButton] = useState(false);
+
   const handleReset = () => {
     setSelectedInfos([]);
     setSelectedSkills([]);
     setCheckButtonService("");
     setResetInputAddress((pre) => !pre);
+    setValue(undefined);
+    setSelectedLocation({
+      lat: 0,
+      lng: 0,
+    });
+    setCheckButton(false)
+    setSelectedDate([null, null])
+    setCheckButton(false)
   };
 
   useEffect(() => {
@@ -104,25 +115,54 @@ export function IndexUser() {
       fetchData();
     }
   }, [checking]);
-  const handleSubmit = (event) => {
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (
       selectedLocation.lat !== 0 &&
-      selectedLocation.lng !== 0 &&  
+      selectedLocation.lng !== 0 &&
       value !== undefined &&
       checkButtonService !== "" &&
-      selectedInfos.length > 0 &&  
-      selectedSkills.length > 0    
+      selectedInfos.length > 0 &&
+      selectedSkills.length > 0
     ) {
-      
-    } else{
-      toast.error("Nhập đầy đủ thông tin trước khi tìm kiếm")
-     
+      const selectedService = listService.find((service) => service.name === checkButtonService);
+      const selectedSkillIds = selectedSkills.map((selectedSkill) => {
+        const matchingSkill = listSkill.find((skill) => skill.name === selectedSkill);
+        return matchingSkill ? matchingSkill.id : null;
+      });
+      const selectedInfoIds = selectedInfos.map((selectedInfo) => {
+        const matchingInfo = listInformation.find((info) => info.name === selectedInfo);
+        return matchingInfo ? matchingInfo.id : null;
+      });
+      const transformedData = Object.keys(value).map((day) => ({
+        date: day,
+        sessionOfDateList: value[day],
+      }));
+      const data = {
+        longitude: selectedLocation.lng,
+        latitude: selectedLocation.lat,
+        distanceForWork: km,
+        nameLocation: place,
+        listSkillId: selectedSkillIds,
+        listInfoId: selectedInfoIds,
+        service: selectedService.id,
+        timeStart: startDay,
+        timeEnd: endDay,
+        listDateSession: transformedData,
+      };
+      axios.post(`http://localhost:8080/api/carts/create-filter/${id}`, data).then((res) => {
+        setListAssistantFilter(res.data.content);
+        setCheckButton(true);
+        console.log(res.data.content);
+      });
+    } else {
+      toast.error("Nhập đầy đủ thông tin trước khi tìm kiếm");
     }
   };
   return (
     <>
-      <ContainerViewUser idUser={id} />
+      <ContainerViewUser idUser={id} checkIconPage={true} />
       <div className="container-index-user">
         <div className="index-user-header">
           <LocalPoliceIcon className="icon-local-police" />
@@ -132,7 +172,6 @@ export function IndexUser() {
 
       <div className="index-user-body row ">
         <div className="index-user-body-filter col-4 sidebar">
-          <form onSubmit={handleSubmit}>
             <div className="index-user-body-title">
               <h5>Tìm kiếm người chăm sóc theo mong muốn của bạn</h5>
               <span className="reset-filter" onClick={handleReset}>
@@ -149,6 +188,7 @@ export function IndexUser() {
                 children={true}
                 km={km}
                 setKm={setKm}
+                checkButton={checkButton}
               />
             </div>
             <div className="index-user-body-dates">
@@ -204,30 +244,62 @@ export function IndexUser() {
                 ))}
               </div>
             </div>
-            <div className="button-index-user">
-              <ButtonForMe
-                value={60}
-                childrenButton={"Tìm kiếm"}
-                colorButton={"#3b71aa"}
-                type="submit"
-              />
-            </div>
-          </form>
+            {!checkButton ? (
+              <div className="button-index-user">
+                <ButtonForMe
+                  value={60}
+                  childrenButton={"Tìm kiếm"}
+                  colorButton={"#3b71aa"}
+                  type="submit"
+                  onclick={handleSubmit}
+                />
+              </div>
+            ) : (
+              <div className="button-index-user">
+                <ButtonForMe
+                  value={60}
+                  childrenButton={"Tạo mới yêu cầu"}
+                  colorButton={"#3b71aa"}
+                  type="submit"
+                  onclick={handleReset}
+                />
+              </div>
+            )}
         </div>
-        <div className="index-user-body-render-assistant col-8">
-          {listAssistant?.map((e, index) => (
-            <div key={index}>
-              <RenderListAssistantIndexUser listAssistant={listAssistant} value={e} index={index} />
+        {!checkButton ? (
+          <>
+            <div className="index-user-body-render-assistant col-8">
+              {listAssistant?.map((e, index) => (
+                <div key={index}>
+                  <RenderListAssistantIndexUser
+                    listAssistant={listAssistant}
+                    value={e}
+                    index={index}
+                    checkButtonForme={true}
+                  />
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-        {totalElements === listAssistant?.length || (
-          <div style={{ textAlign: "center", paddingLeft: "42%" }}>
-            <span className="loader-index-user"></span>
+            {totalElements === listAssistant?.length || (
+              <div style={{ textAlign: "center", paddingLeft: "42%" }}>
+                <span className="loader-index-user"></span>
+              </div>
+            )}
+          </>
+        ) : (
+          <div className="index-user-body-render-assistant col-8">
+            {listAssistantFilter?.map((e, index) => (
+              <div key={index}>
+                <RenderListAssistantIndexUser
+                  listAssistant={listAssistantFilter}
+                  value={e}
+                  index={index}
+                />
+              </div>
+            ))}
           </div>
         )}
       </div>
-
       <LegalNotice />
     </>
   );
