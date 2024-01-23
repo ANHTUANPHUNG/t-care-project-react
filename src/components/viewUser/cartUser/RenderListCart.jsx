@@ -88,7 +88,7 @@ export function RenderListCart({
           axios.put(`http://localhost:8080/api/carts/cartStatus/${findById.id}`).then((res) => {
             Swal.fire({
               title: "Chuyển tiền vào số tài khoản này để gặp hộ lý, số tiền là 200.000",
-              text: "00000000000",
+              text: "Số TK: 076 997 0012",
             });
             toast.success("Yêu cầu đã được chuyển đến quản lí.");
             setCheckCallApiCart((pre) => !pre);

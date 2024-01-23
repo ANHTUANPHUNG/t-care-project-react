@@ -10,9 +10,9 @@ import { ContainerViewSale } from './ContainerViewerSale';
 import Search from './search';
 import Swal from 'sweetalert2';
 
-export default function SalerView() {
+export default function SalerViewForUser() {
   const [customers, setCustomers] = useState([]);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(""); 
 
   useEffect(() => {
 		loadCustomers();
@@ -22,12 +22,12 @@ export default function SalerView() {
 	let navigate = useNavigate()
 	const loadCustomers = async () => {
 		const customers = await axios.get(
-			`http://localhost:8080/api/carts/sale/${id}`,
+			`http://localhost:8080/api/carts/readyStatus`,
 		);
         console.log(
-            customers.data
+            customers.data.content
         );
-			setCustomers(customers.data);
+			setCustomers(customers.data.content);
 
     }
 
@@ -47,8 +47,8 @@ export default function SalerView() {
           if (result.isConfirmed) {
             
           } else if (result.dismiss === Swal.DismissReason.cancel) {
-           axios.post(`http://localhost:8080/api/contracts/createContract/${id}`).then(e => loadCustomers())
-           toast.success("Tạo hợp đồng thành công")
+           axios.post(`http://localhost:8080/api/contracts/createContract/${id}`).then(e => loadCustomers(), toast.success("Tạo hợp đồng thành công"))
+          
            
           }
         });
@@ -85,10 +85,10 @@ export default function SalerView() {
     </div>
          <nav className="navbar bg-body-tertiary">
              <div className="container-fluid">
-                 <a className="navbar-brand">Danh sách khách hàng</a>
+                 <a className="navbar-brand">Danh sách khách hàng đăng kí trực tuyến</a>
                  <div className="d-flex" style={{gap: "10px"}}>
                      
-                     <button type="button" className="btn btn-outline-light" >
+                     {/* <button type="button" className="btn btn-outline-light" >
                          
                          <Link
                              style={{textDecoration: "none", color:"#0d6efd"}}
@@ -98,7 +98,7 @@ export default function SalerView() {
                                  <i className="far fa-plus-square"></i>
                          Thêm khách hàng mới
                         </Link>
-                     </button>
+                     </button> */}
                  </div>
              </div>
          </nav>
@@ -118,7 +118,7 @@ export default function SalerView() {
                      <th>Ghi chú người thuê</th>
                      <th>Ghi chú người nhà</th>
                      <th>Người hỗ trợ</th>
-                     <th>Ghi chú của sale</th>
+                     <th>SDT người hỗ trợ</th>
                      <th></th>
                      <th colSpan="2" style={{textAlign: "center"}}>...</th>
 
@@ -141,7 +141,7 @@ export default function SalerView() {
             ? 'Nữ'
             : 'Khác'})</td>
         <td style={{maxWidth:'170px'}}>
-          {customer.locationPlace ? customer.locationPlace : ''}
+          {customer.locationPlace.name ? customer.locationPlace.name : ''}
         </td>
         <td>{customer.phone}</td>
         <td style={{maxWidth: "150px", minWidth: "120px"}}>{customer.timeStart !== null ? customer.timeStart : ''} <br />{customer.timeEnd !== null ? customer.timeEnd : ''}</td>
@@ -156,8 +156,8 @@ export default function SalerView() {
         <td style={{maxWidth: "150px"}}>{customer.serviceGeneral} </td>
         <td style={{maxWidth: "150px"}}>{customer.noteForEmployee}</td> 
         <td style={{maxWidth: "150px"}}>{customer.noteForPatient}</td> 
-        <td style={{maxWidth: "150px"}}>{customer.employeeFirstName} {customer.employeeLastName} </td> 
-        <td style={{maxWidth: "150px"}}>{customer.saleNote}</td> 
+        <td style={{maxWidth: "150px"}}>{customer.employee.firstName} {customer.employee.lastName} </td> 
+        <td style={{maxWidth: "150px"}}>{customer.employee.phone}</td> 
         
         <td className="mx-2">
           <Link className="btn btn-warning"

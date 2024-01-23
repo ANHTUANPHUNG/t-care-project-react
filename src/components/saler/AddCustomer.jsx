@@ -198,7 +198,7 @@ export default function AddCustomer() {
       console.log(response.data);
        const cartId = response.data
       toast.success("Thêm mới khách hàng thành công")
-      loadCustomers()
+      loadCustomers();
       navigate(`/saler/${id}/render-list-assistant/${cartId}`)
     })
     .catch(error => {
@@ -327,7 +327,7 @@ export default function AddCustomer() {
         </div>
       </div>
           <div style={{paddingTop: '40px'}}>
-        <h6>Ghi chú cho bệnh nhân</h6>
+        <h6>Ghi chú cho bệnh nhân (bắt buộc) </h6>
         <div>
           <TextareaAutosize
             placeholder="Ghi chú cho bệnh nhân"
@@ -348,7 +348,7 @@ export default function AddCustomer() {
         </div>
       </div>
       <div style={{paddingTop: '40px'}}>
-        <h6>Ghi chú cho nhân viên</h6>
+        <h6>Ghi chú cho nhân viên (bắt buộc)</h6>
         <div>
           <TextareaAutosize
             placeholder="Ghi chú cho nhân viên"
@@ -369,7 +369,7 @@ export default function AddCustomer() {
         </div>
       </div>
       <div style={{paddingTop: '40px',paddingBottom: "40px"}}>
-        <h6>Ghi chú của sale</h6>
+        <h6>Ghi chú của sale (bắt buộc)</h6>
         <div>
           <TextareaAutosize
             placeholder="Ghi chú của sale"

@@ -52,7 +52,7 @@ export function RenderAss({
               <div className="ms-4">
                 {e?.descriptionAboutMySelf?.slice(0, 100)}
                 {e?.descriptionAboutMySelf?.length > 100 ? "..." : ""}{" "}
-                <span onClick={() => (setIsOpen(true), setProfileAssistant(e))}>read more</span>
+                <span onClick={() => (setIsOpen(true), setProfileAssistant(e))}>Đọc thêm</span>
               </div>
             </div>
           </div>

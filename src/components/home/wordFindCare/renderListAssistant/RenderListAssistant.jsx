@@ -106,19 +106,19 @@ export function RenderListAssistant() {
           onClick={() => setIsOpen(false)}
           onKeyDown={() => setIsOpen(false)}
         >
-          <div className="modal-profile-content">aaaaa</div>
+          <div className="modal-profile-content"></div>
           <div className="modal-profile-footer">
             <div className="modal-profile-footer-add-list">
               <div className="modal-profile-footer-add-list-check-icon">
                 <CheckIcon />
               </div>
-              <span>Add to list</span>
+              <span>Thêm vào danh sách</span>
             </div>
             <div onClose={() => setIsOpen(false)} className="modal-profile-footer-clear">
               <div className="modal-profile-footer-clear-icon">
                 <ClearIcon />
               </div>
-              <span>Close</span>
+              <span>Đóng</span>
             </div>
           </div>
         </Box>

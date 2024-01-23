@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import "./containerViewerSale.css";
 import { FavoriteBorder } from "@mui/icons-material";
 import { CreditScore } from "@mui/icons-material";
-import { ListAlt } from "@mui/icons-material";
-import { PersonAddAlt } from "@mui/icons-material";
 import { Home } from "@mui/icons-material";
 import { NavLink, useParams } from "react-router-dom";
 import { Avatar, Button, Menu, MenuItem } from "@mui/material";
+import AccountBoxRoundedIcon from '@mui/icons-material/AccountBoxRounded';
+import InterpreterModeRoundedIcon from '@mui/icons-material/InterpreterModeRounded';
 import axios from "axios";
 import LogoProject from "../logoProject/LogoProject";
 
@@ -20,6 +20,8 @@ export function ContainerViewSale({ idUser }) {
     };
     axiosData();
   }, [idUser]);
+  
+  const {id} = useParams()
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -39,31 +41,37 @@ export function ContainerViewSale({ idUser }) {
             >
               <div className="view-user-header-select-nav-block">
                 <Home className="view-user-header-select-nav-block-icon" />
-                <div className="view-user-header-select-nav-block-title">Home</div>
+                <div className="view-user-header-select-nav-block-title">Trang chủ</div>
               </div>
             </NavLink>
-            <NavLink className="view-user-header-select-nav">
+            <NavLink className="view-user-header-select-nav"
+              to={`/saler/${id}`}
+            >
               <div className="view-user-header-select-nav-block">
-                <FavoriteBorder className="view-user-header-select-nav-block-icon" />
-                <div className="view-user-header-select-nav-block-title">Favorites</div>
+                <AccountBoxRoundedIcon className="view-user-header-select-nav-block-icon" />
+                <div className="view-user-header-select-nav-block-title">Khách hàng của tôi</div>
               </div>
             </NavLink>
-            <NavLink className="view-user-header-select-nav">
+            <NavLink className="view-user-header-select-nav"
+              to={`/salerForUser/${id}`}
+            >
               <div className="view-user-header-select-nav-block">
-                <PersonAddAlt className="view-user-header-select-nav-block-icon" />
-                <div className="view-user-header-select-nav-block-title">Favorites</div>
+                <InterpreterModeRoundedIcon className="view-user-header-select-nav-block-icon" />
+                <div className="view-user-header-select-nav-block-title">Khách hàng trực tuyến</div>
               </div>
             </NavLink>
-            <NavLink className="view-user-header-select-nav">
+            {/* <NavLink className="view-user-header-select-nav">
               <div className="view-user-header-select-nav-block">
                 <ListAlt className="view-user-header-select-nav-block-icon" />
                 <div className="view-user-header-select-nav-block-title">Cart</div>
               </div>
-            </NavLink>
-            <NavLink className="view-user-header-select-nav">
+            </NavLink> */}
+            <NavLink className="view-user-header-select-nav" 
+              to={`/sale-contract/${id}`}
+            >
               <div className="view-user-header-select-nav-block">
                 <CreditScore className="view-user-header-select-nav-block-icon" />
-                <div className="view-user-header-select-nav-block-title">Contract</div>
+                <div className="view-user-header-select-nav-block-title">Hợp đồng</div>
               </div>
             </NavLink>
             <div className="view-user-header-select-profile">
