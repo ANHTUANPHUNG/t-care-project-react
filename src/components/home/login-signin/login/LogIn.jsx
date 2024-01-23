@@ -31,6 +31,9 @@ export function LogIn() {
       }
        else if(resp.data.isEmployee){
         navigate("/employee/index/" + resp.data.idAccount);
+      } else{
+        navigate("/admin/home/" + resp.data.idAccount);
+
       }
     } catch (err) {
       toast.error("Tên đăng nhập hoặc mật khẩu không đúng");

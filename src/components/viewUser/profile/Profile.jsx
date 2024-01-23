@@ -14,6 +14,8 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import { Checkbox, FormControl, FormControlLabel, FormLabel } from "@mui/material";
 import { ButtonForMe } from "../../ButtonForMe";
+import LoadingCommon from "../../common/LoadingCommon";
+import LoadingPage from "../../common/LoadingPage";
 
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -59,6 +61,8 @@ export function Profile() {
   const [loadingImage, setLoadingImage] = useState(false);
   const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
   const [checkModal, setCheckModal] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingImage, setIsLoadingImage] = useState(false);
 
   const [gender, setGender] = useState("");
   const validationSchema = yup.object({
@@ -66,14 +70,14 @@ export function Profile() {
     firstName: yup.string().required("Tên không được trống"),
     lastName: yup.string().required("Họ không được trống"),
     personID: yup
-    .number()
-    .typeError("Số Căn Cước Công Dân phải là số")
-    .test(
-      "len",
-      "Số Căn Cước Công Dân phải có đúng 10 số",
-      (val) => val && val.toString().length === 10
-    )
-    .required("Số Căn Cước Công Dân không được để trống"),
+      .number()
+      .typeError("Số Căn Cước Công Dân phải là số")
+      .test(
+        "len",
+        "Số Căn Cước Công Dân phải có đúng 10 số",
+        (val) => val && val.toString().length === 10
+      )
+      .required("Số Căn Cước Công Dân không được để trống"),
   });
   const formik = useFormik({
     initialValues: {
@@ -81,7 +85,7 @@ export function Profile() {
       firstName: "",
       lastName: "",
       personID: "",
-      gender:""
+      gender: "",
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
@@ -98,18 +102,16 @@ export function Profile() {
 
       if (response.status === 204) {
         toast.success("User data updated successfully");
-        setCheckModal(false)
+        setCheckModal(false);
       } else {
         toast.error("Failed to update user data");
       }
     },
-    
   });
 
   const handleGenderClick = (selectedGender) => {
     setGender(selectedGender);
-    formik.setFieldValue('gender', selectedGender);
-
+    formik.setFieldValue("gender", selectedGender);
   };
   const editProfile = (
     <>
@@ -211,6 +213,7 @@ export function Profile() {
         setUploadedImageUrl(res.data.photoUrl);
         setGender(res.data.gender);
         formik.setValues({});
+        setIsLoading(false);
       });
     };
     axiosData();
@@ -218,6 +221,8 @@ export function Profile() {
 
   const handleUpload = async (e) => {
     const selectedFile = e.target.files[0];
+    setIsLoadingImage(true);
+
     if (selectedFile) {
       const formData = new FormData();
       formData.append("avatar", selectedFile);
@@ -227,6 +232,7 @@ export function Profile() {
 
       if (response.status === 200) {
         const result = response.data;
+
         if (result) {
           setUploadedImageUrl(result.url);
           setImage(result.id);
@@ -235,6 +241,7 @@ export function Profile() {
             .put(`http://localhost:8080/api/users/photo/${id}`, photoEmployee)
             .then((response) => {
               toast.success("Sửa ảnh thành công");
+              setIsLoadingImage(false);
             });
         } else {
           console.error("Image ID not found in the response.");
@@ -244,7 +251,10 @@ export function Profile() {
       }
     }
   };
- 
+  if (isLoading) {
+    return <LoadingCommon />;
+  }
+
   return (
     <>
       <ContainerViewUser idUser={id} />
@@ -279,19 +289,33 @@ export function Profile() {
           >
             <div>
               <div className="my-profile-img" style={{ marginBottom: "16px" }}>
-                <img
-                  style={{
-                    width: "150px",
-                    height: "150px",
-                    border: "1px solid #53585d",
-                    borderRadius: "15px",
-                  }}
-                  src={
-                    uploadedImageUrl ||
-                    "https://res.cloudinary.com/dw4xpd646/image/upload/v1703929545/Cloudinary-React/gfxdp8xr8hhsdx0jxyea.png"
-                  }
-                  alt=""
-                />
+                {isLoadingImage ? (
+                  <div
+                    style={{
+                      width: "150px",
+                      height: "150px",
+                      border: "1px solid #53585d",
+                      borderRadius: "15px",
+                      paddingLeft: "35px",
+                    }}
+                  >
+                    <LoadingPage />
+                  </div>
+                ) : (
+                  <img
+                    style={{
+                      width: "150px",
+                      height: "150px",
+                      border: "1px solid #53585d",
+                      borderRadius: "15px",
+                    }}
+                    src={
+                      uploadedImageUrl ||
+                      "https://res.cloudinary.com/dw4xpd646/image/upload/v1703929545/Cloudinary-React/gfxdp8xr8hhsdx0jxyea.png"
+                    }
+                    alt=""
+                  />
+                )}
               </div>
               <input
                 type="file"
@@ -308,18 +332,18 @@ export function Profile() {
                 Upload photo
               </label>
             </div>
-            <div style={{ margin: " 0 10px 0 20px" }}>
+            <div style={{ margin: " 43px 10px 0 20px" }}>
               <h5>
                 {user?.lastName} {user?.firstName}
               </h5>
 
-              <h5>{user?.email}</h5>
-              <div>{user?.time} </div>
-              <div style={{ margin: "5px 0" }}>Hired 0 providers </div>
-              <div style={{ margin: "5px 0" }}> Posted 0 reviews </div>
+              <div style={{ fontSize: "14px" }}>{user?.email}</div>
+              <div style={{ fontSize: "14px" }}>{user?.time} </div>
+              {/* <div style={{ margin: "5px 0" }}>Hired 0 providers </div>
+              <div style={{ margin: "5px 0" }}> Posted 0 reviews </div> */}
               <div
                 onClick={() => setCheckModal(true)}
-                style={{ textAlign: "center", marginTop: "20px", color: "blue", cursor: "pointer" }}
+                style={{ textAlign: "center", marginTop: "50px", color: "blue", cursor: "pointer" }}
               >
                 Sửa hồ sơ
               </div>

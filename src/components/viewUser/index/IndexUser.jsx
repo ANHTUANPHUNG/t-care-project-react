@@ -14,6 +14,7 @@ import { ButtonForMe } from "./../../ButtonForMe";
 import { RenderListAssistantIndexUser } from "./RenderListAssistantIndexUser";
 import { toast } from "react-toastify";
 import LoadingCommon from "../../common/LoadingCommon";
+import LoadingPage from "../../common/LoadingPage";
 
 const debounce = (func, delay) => {
   let timeout;
@@ -52,6 +53,7 @@ export function IndexUser() {
   const { id } = useParams();
   const [checkButton, setCheckButton] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingImage, setIsLoadingImage] = useState(false);
 
   const handleReset = () => {
     setSelectedInfos([]);
@@ -122,6 +124,7 @@ export function IndexUser() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsLoadingImage(true);
 
     if (
       selectedLocation.lat !== 0 &&
@@ -131,6 +134,7 @@ export function IndexUser() {
       selectedInfos.length > 0 &&
       selectedSkills.length > 0
     ) {
+
       const selectedService = listService.find((service) => service.name === checkButtonService);
       const selectedSkillIds = selectedSkills.map((selectedSkill) => {
         const matchingSkill = listSkill.find((skill) => skill.name === selectedSkill);
@@ -159,9 +163,13 @@ export function IndexUser() {
       axios.post(`http://localhost:8080/api/carts/create-filter/${id}`, data).then((res) => {
         setListAssistantFilter(res.data.content);
         setCheckButton(true);
+              setIsLoadingImage(false);
+
       });
     } else {
       toast.error("Nhập đầy đủ thông tin trước khi tìm kiếm");
+      setIsLoadingImage(false);
+
     }
   };
   if (isLoading) {
@@ -216,9 +224,11 @@ export function IndexUser() {
               <h6>Có thể giúp bạn với</h6>
               <div className="index-user-body-services-render">
                 {listService?.map((e) => (
+                 
                   <ServiceIndexUser
                     key={e.id}
                     value={e}
+
                     setCheckButtonService={setCheckButtonService}
                     checkButtonService={checkButtonService}
                   />
@@ -295,7 +305,8 @@ export function IndexUser() {
           </>
         ) : (
           <div className="index-user-body-render-assistant col-8">
-            {listAssistantFilter?.map((e, index) => (
+            {isLoadingImage ? <div style={{margin:"50%"}}><LoadingPage/></div> : listAssistantFilter?.map((e, index) => (
+              
               <div key={index}>
                 <RenderListAssistantIndexUser
                   listAssistant={listAssistantFilter}

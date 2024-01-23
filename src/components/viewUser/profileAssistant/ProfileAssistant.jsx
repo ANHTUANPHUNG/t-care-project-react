@@ -25,9 +25,11 @@ export function ProfileAssistant() {
  
   useEffect(() => {
     let axiosData = async () => {
+
       const responseAssistant = await axios.get(
         "http://localhost:8080/api/employees/" + idAssistant
       );
+      
       setAssistant(responseAssistant.data);
       setIsLoading(false)
 

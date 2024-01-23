@@ -9,7 +9,7 @@ export function SignInUser() {
     <div className="m5-0">
       <FormSignIn
         url={"/login"}
-        checkRole={"ROLE_USER"}
+        checkRole={"ROLE_ADMIN"}
         api={UserServiceAPI.signInUserReturnLogin}
       />
     </div>

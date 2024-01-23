@@ -35,8 +35,12 @@ import { SkillAndInfo } from "./components/home/wordFindCare/skillAndInfo/SkillA
 import { EmployeeIndex } from "./components/employee/EmployeeIndex";
 import { ResetPassword } from './components/home/login-signin/forgotPassword/ResetPassword';
 import { EmployeeProfile } from "./components/employee/EmployeeProfile";
-import SalerViewForUser from "./components/saler/SaleViewForUser";
-import SaleContract from "./components/saler/SaleContract";
+import SaleContract from './components/saler/SaleContract';
+import SalerViewForUser from './components/saler/SaleViewForUser';
+import { EmployeeContract } from './components/employee/EmployeeContract';
+import { AdminHome } from "./components/dashboard/AdminHome";
+import { AdminStatistics } from './components/dashboard/AdminStatistics';
+import { AdminAssistant } from "./components/dashboard/AdminAssistant";
 
 function App() {
   return (
@@ -94,8 +98,13 @@ function App() {
           element={<RenderListAssistantSale />}
         ></Route>
         <Route path="/employee/index/:idEmployee" element={<EmployeeIndex />}></Route>
+        <Route path="/employee/contract/:idEmployee" element={<EmployeeContract />}></Route>
         <Route path="/employee/profile/:idEmployee" element={<EmployeeProfile />}></Route>
         <Route path="/reset-password" element={<ResetPassword />}></Route>
+        <Route path="/admin/home/:idAdmin" element={<AdminHome />}></Route>
+        <Route path="/admin/statistics/:idAdmin" element={<AdminStatistics />}></Route>
+        <Route path="/admin/assistant/:idAdmin" element={<AdminAssistant />}></Route>
+
       </Routes>
     </>
   );
