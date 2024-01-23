@@ -16,6 +16,12 @@ const HtmlTooltip = styled(({ className, ...props }) => (
     border: "1px solid #dadde9",
   },
 }));
+function formatCurrency(price) {
+  return new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND',
+  }).format(parseFloat(price));
+}
 export function ServiceIndexUser({ value, setCheckButtonService, checkButtonService }) {
   return (
     <HtmlTooltip
@@ -31,8 +37,11 @@ export function ServiceIndexUser({ value, setCheckButtonService, checkButtonServ
                     - {sentence.trim()}
                     <br />
                   </span>
+
                 )
             )}
+            <div style={{height:"1px", backgroundColor:"#919191", marginTop:"5px"}}></div>
+           <div style={{marginLeft:"50%",color:"orangered"}}>Giá dịch vụ: {formatCurrency(value.price)}</div>
           </Typography>
         </React.Fragment>
       }

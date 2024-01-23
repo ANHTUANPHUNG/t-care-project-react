@@ -33,6 +33,11 @@ import { SkillAndInfo } from "./components/home/wordFindCare/skillAndInfo/SkillA
 import { EmployeeIndex } from "./components/employee/EmployeeIndex";
 import { ResetPassword } from './components/home/login-signin/forgotPassword/ResetPassword';
 import { EmployeeProfile } from "./components/employee/EmployeeProfile";
+import { EmployeeContract } from "./components/employee/EmployeeContract";
+import { ContainerDashboard } from "./components/dashboard/ContainerDashboard";
+import { AdminHome } from "./components/dashboard/AdminHome";
+import { AdminStatistics } from "./components/dashboard/AdminStatistics";
+import { AdminAssistant } from "./components/dashboard/AdminAssistant";
 
 function App() {
   return (
@@ -83,8 +88,13 @@ function App() {
         <Route path="/saler/:id" element={<SalerView />}></Route>
         <Route path="/add-customer/:id" element={<AddCustomer />}></Route>
         <Route path="/employee/index/:idEmployee" element={<EmployeeIndex />}></Route>
+        <Route path="/employee/contract/:idEmployee" element={<EmployeeContract />}></Route>
         <Route path="/employee/profile/:idEmployee" element={<EmployeeProfile />}></Route>
         <Route path="/reset-password" element={<ResetPassword />}></Route>
+        <Route path="/admin/home/:idAdmin" element={<AdminHome />}></Route>
+        <Route path="/admin/statistics/:idAdmin" element={<AdminStatistics />}></Route>
+        <Route path="/admin/assistant/:idAdmin" element={<AdminAssistant />}></Route>
+
       </Routes>
     </>
   );
