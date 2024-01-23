@@ -35,6 +35,8 @@ import { SkillAndInfo } from "./components/home/wordFindCare/skillAndInfo/SkillA
 import { EmployeeIndex } from "./components/employee/EmployeeIndex";
 import { ResetPassword } from './components/home/login-signin/forgotPassword/ResetPassword';
 import { EmployeeProfile } from "./components/employee/EmployeeProfile";
+import SalerViewForUser from "./components/saler/SaleViewForUser";
+import SaleContract from "./components/saler/SaleContract";
 
 function App() {
   return (
@@ -83,8 +85,10 @@ function App() {
         <Route path="/user/cart/filter/:id/:idCart" element={<FilterCartUser />}></Route> 
         <Route path="/user/index/:id/:idAssistant" element={<ProfileAssistant />}></Route>
         <Route path="/saler/:id" element={<SalerView />}></Route>
+        <Route path="/salerForUser/:id" element={<SalerViewForUser />}></Route>
         <Route path="/add-customer/:id" element={<AddCustomer />}></Route>
         <Route path="/edit-customer/:idSale/:id" element={<EditCustomer />}></Route>
+        <Route path="/sale-contract/:id" element={<SaleContract />}></Route>
         <Route
           path="saler/:idSale/render-list-assistant/:id"
           element={<RenderListAssistantSale />}

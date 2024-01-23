@@ -11,6 +11,7 @@
             <div className="render-list-assistant-body-render-container">
               <div className="d-flex render-list-assistant-body-render-container-header">
                 <img
+                style={{ width: '75px', height: '100px' }}
                   // src="https://png.pngtree.com/png-vector/20190413/ourmid/pngtree-img-file-document-icon-png-image_938720.jpg"
                   alt=""
                   src={e?.photoUrl}
@@ -39,6 +40,12 @@
                   </div>
                   <div>
                     <span> Số điện thoại: <strong>{e?.phone}</strong></span>
+                  </div>
+                  <div>
+                    <span> Khoảng cách: <strong>{e?.distanceToWork && e.distanceToWork.toFixed(2)} </strong>km</span>
+                  </div>
+                  <div>
+                    <span> Số năm kinh nghiệm: <strong>{e?.eexperience && e.eexperience} </strong>năm</span>
                   </div>
                 </div>  
                 <div>

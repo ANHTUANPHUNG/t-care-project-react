@@ -8,7 +8,7 @@ const Search = ({ search, setSearch }) => {
           className="form-control"
           type="search"
           role="searchbox"
-          placeholder="Tìm kiếm tên khách hàng..."
+          placeholder="Tìm kiếm tên, số điện thoại khách hàng..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         ></input>
