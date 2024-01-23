@@ -88,7 +88,7 @@ export function RenderListCart({
           axios.put(`http://localhost:8080/api/carts/cartStatus/${findById.id}`).then((res) => {
             Swal.fire({
               title: "Chuyển tiền vào số tài khoản này để gặp hộ lý, số tiền là 200.000",
-              text: "Số TK: 076 997 0012",
+              text: "Số TK: 076 997 0012 \n Ngân hàng: MB bank",
             });
             toast.success("Yêu cầu đã được chuyển đến quản lí.");
             setCheckCallApiCart((pre) => !pre);
@@ -165,7 +165,7 @@ export function RenderListCart({
                   "https://res.cloudinary.com/dw4xpd646/image/upload/v1703929545/Cloudinary-React/gfxdp8xr8hhsdx0jxyea.png"
                 }
                 alt=""
-                style={{ width: "70px", height: "70px" }}
+                style={{ width: "75px", height: "100px" }}
               />
             </td>
             <td>{e.service.name}</td>

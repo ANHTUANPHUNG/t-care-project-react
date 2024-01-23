@@ -29,7 +29,6 @@ export function UserService() {
   if (isLoading) {
     return <LoadingCommon />;
   }
-  console.log(selectedRadioId);
   const handleSubmitService = async () => {
     const select = {
       serviceId: selectedRadioId,

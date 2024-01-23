@@ -147,7 +147,7 @@ export function FilterCartUser() {
               <img
                 src={profileAssistant?.photoUrl}
                 alt=""
-                style={{ width: "70px", height: "70px", borderRadius: "15px" }}
+                style={{ width: "75px", height: "100px", borderRadius: "15px" }}
               />
               <div style={{ marginLeft: "10px" }}>
                 <span style={{ fontWeight: "bold" }}>
@@ -228,13 +228,13 @@ export function FilterCartUser() {
               <div className="modal-profile-footer-add-list-check-icon">
                 <CheckIcon />
               </div>
-              <span>Add to list</span>
+              <span>Thêm vào danh sách</span>
             </div>
             <div onClose={() => setIsOpen(false)} className="modal-profile-footer-clear">
               <div className="modal-profile-footer-clear-icon">
                 <ClearIcon />
               </div>
-              <span>Close</span>
+              <span>Đóng</span>
             </div>
           </div>
         </Box>

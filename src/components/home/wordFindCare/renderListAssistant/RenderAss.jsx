@@ -17,7 +17,7 @@ export function RenderAss({
         <div key={e?.id} className="render-list-assistant-body-render">
           <div className="render-list-assistant-body-render-container">
             <div className="d-flex render-list-assistant-body-render-container-header">
-              <img alt="" src={e?.photoUrl} style={{ width: "72px", height: "72px" }} />
+              <img alt="" src={e?.photoUrl} style={{ width: "75px", height: "100px" }} />
               <div className="render-list-assistant-body-render-container-header-information">
                 <h6 className="m-0">
                   {e?.firstName} {e?.lastName}
