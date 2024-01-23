@@ -1,26 +1,29 @@
 import React, { useEffect, useState } from "react";
-import "./RenderListAssistant.css";
-import LogoProject from "../../../logoProject/LogoProject";
-import { LegalNotice } from "../../../carehub/LegalNotice";
-import { NavLink, useParams } from "react-router-dom";
+import "./renderListAssistantSale.css";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { Checkbox, SwipeableDrawer } from "@mui/material";
 import Box from "@mui/material/Box";
 import CheckIcon from "@mui/icons-material/Check";
 import ClearIcon from "@mui/icons-material/Clear";
-import { ButtonForMe } from "../../../ButtonForMe";
 import axios from "axios";
-import { RenderAss } from "./RenderAss";
+import { RenderAssSale } from "./RenderAssSale";
+import LogoProject from "../logoProject/LogoProject";
+import { LegalNotice } from "../carehub/LegalNotice";
+import { ButtonForMe } from "../ButtonForMe";
+import Swal from "sweetalert2";
 
-export function RenderListAssistant() {
+export function RenderListAssistantSale() {
   const [isOpen, setIsOpen] = useState(false);
   const [isChecked, setChecked] = useState(false);
   const [filterAss, setFilterAss] = useState();
   const { id } = useParams();
-  console.log(id);
+  const { idSale } = useParams();
+  console.log(filterAss);
+  let navigate = useNavigate();
   useEffect(() => {
     let axiosData = async () => {
       const responseFilterAss = await axios.get(
-        `http://localhost:8080/api/carts/filter/${id}`
+        `http://localhost:8080/api/carts/filter/${id}` 
       );
       console.log(responseFilterAss?.data);
       setFilterAss(responseFilterAss?.data.content);
@@ -29,6 +32,19 @@ export function RenderListAssistant() {
   }, []);
   const handleCheckboxChange = () => {
     setChecked(!isChecked);
+  };
+  const handleClick = (assistantId) => {
+    Swal.fire({
+      title: 'Liên hệ với nhân viên thành công',
+      confirmButtonText: "OK"
+    }).then(() => {
+      let cart = {
+        cartId : id,
+        employeeId : assistantId
+      }
+      axios.put(`http://localhost:8080/api/carts/employees`, cart)
+      navigate(`/saler/${idSale}`);
+    });
   };
   
   return (
@@ -55,12 +71,13 @@ export function RenderListAssistant() {
         </div>
         <div className="render-list-assistant-body">
           {filterAss != null ? (
-            <RenderAss
+            <RenderAssSale
               listFilterAss={filterAss}
               setChecked={setChecked}
               isChecked={isChecked}
               handleCheckboxChange={handleCheckboxChange}
               setIsOpen={setIsOpen}
+              handleClick= {handleClick}
             />
           ) : (
             ""
@@ -106,19 +123,19 @@ export function RenderListAssistant() {
           onClick={() => setIsOpen(false)}
           onKeyDown={() => setIsOpen(false)}
         >
-          <div className="modal-profile-content"></div>
+          <div className="modal-profile-content">aaaaa</div>
           <div className="modal-profile-footer">
             <div className="modal-profile-footer-add-list">
               <div className="modal-profile-footer-add-list-check-icon">
                 <CheckIcon />
               </div>
-              <span>Thêm vào danh sách</span>
+              <span>Add to list</span>
             </div>
             <div onClose={() => setIsOpen(false)} className="modal-profile-footer-clear">
               <div className="modal-profile-footer-clear-icon">
                 <ClearIcon />
               </div>
-              <span>Đóng</span>
+              <span>Close</span>
             </div>
           </div>
         </Box>

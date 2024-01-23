@@ -26,6 +26,8 @@ import { ForgotPassword } from "./components/home/login-signin/forgotPassword/Fo
 import AddCustomer from "./components/saler/AddCustomer";
 import { IndexUser } from "./components/viewUser/index/IndexUser";
 import { ProfileAssistant } from "./components/viewUser/profileAssistant/ProfileAssistant";
+import EditCustomer from "./components/saler/EditCustomer";
+import { RenderListAssistantSale } from "./components/saler/RenderListAssistantSale";
 import { CartUser } from './components/viewUser/cartUser/CartUser';
 import { FilterCartUser } from "./components/viewUser/cartUser/FilterCartUser";
 import { Contract } from "./components/viewUser/contract/Contract";
@@ -33,10 +35,11 @@ import { SkillAndInfo } from "./components/home/wordFindCare/skillAndInfo/SkillA
 import { EmployeeIndex } from "./components/employee/EmployeeIndex";
 import { ResetPassword } from './components/home/login-signin/forgotPassword/ResetPassword';
 import { EmployeeProfile } from "./components/employee/EmployeeProfile";
-import { EmployeeContract } from "./components/employee/EmployeeContract";
-import { ContainerDashboard } from "./components/dashboard/ContainerDashboard";
+import SaleContract from './components/saler/SaleContract';
+import SalerViewForUser from './components/saler/SaleViewForUser';
+import { EmployeeContract } from './components/employee/EmployeeContract';
 import { AdminHome } from "./components/dashboard/AdminHome";
-import { AdminStatistics } from "./components/dashboard/AdminStatistics";
+import { AdminStatistics } from './components/dashboard/AdminStatistics';
 import { AdminAssistant } from "./components/dashboard/AdminAssistant";
 
 function App() {
@@ -86,7 +89,14 @@ function App() {
         <Route path="/user/cart/filter/:id/:idCart" element={<FilterCartUser />}></Route> 
         <Route path="/user/index/:id/:idAssistant" element={<ProfileAssistant />}></Route>
         <Route path="/saler/:id" element={<SalerView />}></Route>
+        <Route path="/salerForUser/:id" element={<SalerViewForUser />}></Route>
         <Route path="/add-customer/:id" element={<AddCustomer />}></Route>
+        <Route path="/edit-customer/:idSale/:id" element={<EditCustomer />}></Route>
+        <Route path="/sale-contract/:id" element={<SaleContract />}></Route>
+        <Route
+          path="saler/:idSale/render-list-assistant/:id"
+          element={<RenderListAssistantSale />}
+        ></Route>
         <Route path="/employee/index/:idEmployee" element={<EmployeeIndex />}></Route>
         <Route path="/employee/contract/:idEmployee" element={<EmployeeContract />}></Route>
         <Route path="/employee/profile/:idEmployee" element={<EmployeeProfile />}></Route>

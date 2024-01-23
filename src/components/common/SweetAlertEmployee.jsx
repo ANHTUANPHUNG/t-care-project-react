@@ -13,7 +13,7 @@ export default function SweetAlertEmployee() {
                     text: 'Hello World',
                 });
             }}>
-                Open
+                Mở
             </button>
 
             <SweetAlert2 {...swalProps} />
