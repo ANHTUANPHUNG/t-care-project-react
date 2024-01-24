@@ -1,232 +1,46 @@
 import React, { useEffect, useState } from "react";
 import "./EmployeeProfile.css";
-import { LegalNotice } from "../carehub/LegalNotice";
-
 import TipsAndUpdatesIcon from "@mui/icons-material/TipsAndUpdates";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
+import { ContainerViewEmployee } from "./containerViewEmployee/ContainerViewEmployee";
+import LoadingCommon from "../common/LoadingCommon";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { LegalNotice } from "../carehub/LegalNotice";
 import ModalUnstyled from "../ModalToMe";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
-import { Checkbox, FormControl, FormControlLabel, FormLabel } from "@mui/material";
-import { ButtonForMe } from "../ButtonForMe";
-
-import { useFormik } from "formik";
-import * as yup from "yup";
-import { ContainerViewEmployee } from "./containerViewEmployee/ContainerViewEmployee";
-import LoadingCommon from "../common/LoadingCommon";
 import LoadingPage from "../common/LoadingPage";
-import LoadingForEmployeeProfile from "../common/loading/LoadingForEmployeeProfile";
-const preferencesRender = [
-  {
-    id: 1,
-    name: "Email me about T-Care.com features, services, special offers, and other cool stuff.",
-  },
-  {
-    id: 2,
-    name: "Email me about new caregivers near me who have recently joined T-Care.com.",
-  },
-  {
-    id: 3,
-    name: "Email me about Care.com features, services, special offers, and other cool stuff.",
-  },
-  {
-    id: 4,
-    name: "Share my online status with other members of T-Care.com.",
-  },
-  {
-    id: 5,
-    name: "Send read receipts with messages.",
-  },
-  {
-    id: 6,
-    name: "Make my profile and job posts public. (?)",
-  },
-  {
-    id: 7,
-    name: "Include my profile in caregiver search results and certain caregiver emails.",
-  },
-  { id: 8, name: "Allow caregivers to see that I viewed their profile." },
-  {
-    id: 9,
-    name: "Share information about me with third party communication facilitators so they may send me direct mail solicitations on behalf of other companies. (?)",
-  },
-];
+import Swal from "sweetalert2";
+
+
 export function EmployeeProfile() {
-  const { id } = useParams();
-  const [user, setUser] = useState();
+  const { idEmployee } = useParams();
+  const [employee, setEmployee] = useState();
   const [image, setImage] = useState();
   const [loadingImage, setLoadingImage] = useState(false);
   const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
   const [checkModal, setCheckModal] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const [loadingPhoto, setLoadingPhoto] = useState(false);
-
-  const [gender, setGender] = useState("");
-  const validationSchema = yup.object({
-    phoneNumber: yup.string().required("Số điện thoại không được trống"),
-    firstName: yup.string().required("Tên không được trống"),
-    lastName: yup.string().required("Họ không được trống"),
-    personID: yup
-      .number()
-      .typeError("Số Căn Cước Công Dân phải là số")
-      .test(
-        "len",
-        "Số Căn Cước Công Dân phải có đúng 10 số",
-        (val) => val && val.toString().length === 10
-      )
-      .required("Số Căn Cước Công Dân không được để trống"),
-  });
-  const formik = useFormik({
-    initialValues: {
-      phoneNumber: "",
-      firstName: "",
-      lastName: "",
-      personID: "",
-      gender: "",
-    },
-    validationSchema: validationSchema,
-    onSubmit: async (values) => {
-      const apiUrl = `http://localhost:8080/api/users/${id}`;
-
-      const updatedUserData = {
-        phoneNumber: values.phoneNumber || user.phoneNumber,
-        firstName: values.firstName || user.firstName,
-        fullName: values.lastName || user.lastName,
-        personID: values.personID || user.personID,
-        gender: values.gender || user.gender,
-      };
-      const response = await axios.put(apiUrl, updatedUserData);
-
-      if (response.status === 204) {
-        toast.success("User data updated successfully");
-        setCheckModal(false);
-      } else {
-        toast.error("Failed to update user data");
-      }
-    },
-  });
-
-  const handleGenderClick = (selectedGender) => {
-    setGender(selectedGender);
-    formik.setFieldValue("gender", selectedGender);
-  };
-  const editProfile = (
-    <>
-      <div>
-        <h2>Sửa hồ sơ</h2>
-        <form onSubmit={formik.handleSubmit}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                id="phoneNumber"
-                label="Số điện thoại"
-                type="phoneNumber"
-                value={formik.values.phoneNumber || user?.phoneNumber}
-                onChange={formik.handleChange}
-                error={formik.touched.phoneNumber && Boolean(formik.errors.phoneNumber)}
-                helperText={formik.touched.phoneNumber && formik.errors.phoneNumber}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                id="firstName"
-                label="Tên"
-                value={formik.values.firstName || user?.firstName}
-                onChange={formik.handleChange}
-                error={formik.touched.firstName && Boolean(formik.errors.firstName)}
-                helperText={formik.touched.firstName && formik.errors.firstName}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                id="lastName"
-                label="Họ"
-                value={formik.values.lastName || user?.lastName}
-                onChange={formik.handleChange}
-                error={formik.touched.lastName && Boolean(formik.errors.lastName)}
-                helperText={formik.touched.lastName && formik.errors.lastName}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                id="personID"
-                label="Số Căn Cước Công Dân"
-                value={formik.values.personID || user?.personID}
-                onChange={formik.handleChange}
-                error={formik.touched.personID && Boolean(formik.errors.personID)}
-                helperText={formik.touched.personID && formik.errors.personID}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControl component="fieldset">
-                <FormLabel component="legend">Giới tính</FormLabel>
-                <div className="d-flex">
-                  <Button
-                    onClick={() => handleGenderClick("MALE")}
-                    variant={gender === "MALE" ? "contained" : "outlined"}
-                    className="mx-1"
-                  >
-                    Nam
-                  </Button>
-                  <Button
-                    onClick={() => handleGenderClick("FEMALE")}
-                    variant={gender === "FEMALE" ? "contained" : "outlined"}
-                    className="mx-1"
-                  >
-                    Nữ
-                  </Button>
-                  <Button
-                    onClick={() => handleGenderClick("OTHER")}
-                    variant={gender === "OTHER" ? "contained" : "outlined"}
-                    className="mx-1"
-                  >
-                    Khác
-                  </Button>
-                </div>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} className="d-flex justify-content-center">
-              <ButtonForMe
-                value={50}
-                childrenButton={"Lưu"}
-                colorButton={"orangered"}
-                type="submit"
-              />
-            </Grid>
-          </Grid>
-        </form>
-      </div>
-    </>
-  );
-
+  const [isLoadingImage, setIsLoadingImage] = useState(false);
+  const [checkStatus, setCheckStatus] = useState(false);
   useEffect(() => {
-    const axiosData = async () => {
-      axios.get(`http://localhost:8080/api/employees/${id}`).then((res) => {
-        setUser(res.data);
-        setUploadedImageUrl(res.data.photoUrl);
-        setGender(res.data.gender);
-        formik.setValues({});
-        setIsLoading(false); 
-      });
+    let axiosData = async () => {
+        const responseAssistant = await axios.get(
+          "http://localhost:8080/api/employees/" + idEmployee
+        );
+        setEmployee(responseAssistant.data);
+        setUploadedImageUrl(responseAssistant.data.photoUrl)
+        setIsLoading(false);
+
     };
     axiosData();
-  }, [id, checkModal]);
-  if (isLoading) {
-    return <LoadingCommon />;
-  }
+  }, [checkStatus,idEmployee]);
   const handleUpload = async (e) => {
     const selectedFile = e.target.files[0];
+    setIsLoadingImage(true);
+
     if (selectedFile) {
-      setLoadingPhoto(true)
       const formData = new FormData();
       formData.append("avatar", selectedFile);
       formData.append("fileType", "image");
@@ -235,15 +49,17 @@ export function EmployeeProfile() {
 
       if (response.status === 200) {
         const result = response.data;
+
         if (result) {
           setUploadedImageUrl(result.url);
           setImage(result.id);
           const photoEmployee = { avatar: result.id };
           axios
-            .put(`http://localhost:8080/api/employees/photo/${id}`, photoEmployee)
+
+            .put(`http://localhost:8080/api/employees/photo/${idEmployee}`, photoEmployee)
             .then((response) => {
               toast.success("Sửa ảnh thành công");
-              setLoadingPhoto(false)
+              setIsLoadingImage(false);
             });
         } else {
           console.error("Image ID not found in the response.");
@@ -256,10 +72,49 @@ export function EmployeeProfile() {
       
     }
   };
-
+   
+  const handleStatus= (e)=>{
+    if(e === "Đang chờ"){
+        toast.info("Tài khoản đang chờ xác minh")
+    } else if(e === "Hoạt động"){
+        Swal.fire({
+            title: "Khóa tài khoản",
+            text: "Bạn có chắc chắn khóa tài khoản?",
+            showCancelButton: true,
+            confirmButtonText: "Có",
+            cancelButtonText: "Hủy",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              axios.put(`http://localhost:8080/api/employees/status/ban/${idEmployee}`).then((res) => {
+                toast.success("Khóa thành công.");
+                setCheckStatus(pre=>!pre)
+              });
+            }
+          });
+    } else{
+        Swal.fire({
+            title: "Mở tài khoản",
+            text: "Bạn có chắc chắn mở lại tài khoản?",
+            showCancelButton: true,
+            confirmButtonText: "Có",
+            cancelButtonText: "Hủy",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              axios.put(`http://localhost:8080/api/employees/status/active/${idEmployee}`).then((res) => {
+                toast.success("Mở thành công.");
+                setCheckStatus(pre=>!pre)
+              });
+            }
+          });
+    }
+  }
+  if (isLoading) {
+    return <LoadingCommon />;
+  }
   return (
     <>
-      <ContainerViewEmployee idEmployee={id} />
+
+      <ContainerViewEmployee idEmployee={idEmployee} />
       <div className="container-profile-user" style={{ margin: "0px 90px", padding: "0 15px" }}>
         <div
           className="notification-user"
@@ -273,9 +128,7 @@ export function EmployeeProfile() {
         >
           <div className="d-flex">
             <TipsAndUpdatesIcon />
-            <span>
-              Hồ sơ của bạn như thế này, có thể thay đổi để thu hút thêm sự chú ý từ khách hàng.
-            </span>
+            <span>Đây là hồ sơ hiện tại của bạn. Có thể chỉnh sửa để thu hút thêm khách hàng.</span>
           </div>
         </div>
         <h6 className="my-profile" style={{ padding: "25px 0" }}>
@@ -286,34 +139,35 @@ export function EmployeeProfile() {
         <div className="my-profile-header" style={{ display: "flex" }}>
           <div
             className="my-profile-header-form"
-            style={{ display: "flex", borderRight: "1px solid #e7e7e7", width: "33%" }}
+            style={{ display: "flex", borderRight: "1px solid #e7e7e7", width: "25%",    justifyContent: "center" }}
           >
             <div>
-            <div className="my-profile-img" style={{ marginBottom: "16px", position: "relative" }}>
-              {loadingPhoto && (
-                <div
-                  style={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
-                >
-                  {/* Nội dung phần loading */}
-                  <LoadingForEmployeeProfile />
-                </div>
-              )}
-              <img
-                style={{
-                  width: "150px",
-                  height: "150px",
-                  border: "1px solid #53585d",
-                  borderRadius: "15px",
-                }}
-                src={uploadedImageUrl}
-                alt=""
-              />
-            </div>
+              <div className="my-profile-img" style={{ marginBottom: "16px" }}>
+                {isLoadingImage ? (
+                  <div
+                    style={{
+                      width: "150px",
+                      height: "150px",
+                      border: "1px solid #53585d",
+                      borderRadius: "15px",
+                      paddingLeft: "35px",
+                    }}
+                  >
+                    <LoadingPage />
+                  </div>
+                ) : (
+                  <img
+                    style={{
+                      width: "150px",
+                      height: "150px",
+                      border: "1px solid #53585d",
+                      borderRadius: "15px",
+                    }}
+                    src={uploadedImageUrl}
+                    alt=""
+                  />
+                )}
+              </div>
               <input
                 type="file"
                 accept="image/*"
@@ -329,22 +183,7 @@ export function EmployeeProfile() {
                 Upload photo
               </label>
             </div>
-            <div style={{ margin: " 0 10px 0 20px" }}>
-              <h5>
-                {user?.lastName} {user?.firstName}
-              </h5>
-
-              <h5>{user?.email}</h5>
-              <div>{user?.time} </div>
-              <div style={{ margin: "5px 0" }}>Hired 0 providers </div>
-              <div style={{ margin: "5px 0" }}> Posted 0 reviews </div>
-              <div
-                onClick={() => setCheckModal(true)}
-                style={{ textAlign: "center", marginTop: "20px", color: "blue", cursor: "pointer" }}
-              >
-                Edit profile
-              </div>
-            </div>
+            
           </div>
           <div style={{ marginLeft: "15px" }}>
             <div
@@ -358,7 +197,7 @@ export function EmployeeProfile() {
                 paddingLeft: "15px",
               }}
             >
-              <span style={{ fontWeight: "bold" }}>Membership Information </span>
+              <span style={{ fontWeight: "bold" }}>Thông tin tài khoản </span>
             </div>
             <div
               style={{
@@ -367,39 +206,101 @@ export function EmployeeProfile() {
                 paddingLeft: "15px",
               }}
             >
-              <div style={{ padding: "15px 0 5px" }}>
-                <span style={{ fontWeight: "bold", fontSize: "13px" }}>Member Since </span>
-                <span style={{ fontSize: "11px", marginLeft: "115px", cursor: "pointer" }}>
-                  {user?.time}
-                </span>
+              <div className="row" style={{ padding: "15px 0 5px" }}>
+                <div className="col-4" style={{ fontWeight: "bold", fontSize: "13px" }}>Tên </div>
+                <div className="col-8" style={{ fontSize: "11px",  }}>
+                  {employee?.firstName} {" "}{employee?.lastName}
+                </div>
               </div>
-              <div style={{ padding: "5px 0" }}>
-                <span style={{ fontWeight: "bold", fontSize: "13px" }}>Account Status</span>
-                <span style={{ fontSize: "11px", marginLeft: "115px", cursor: "pointer" }}>
-                  Active
-                </span>
+              <div className="row"  style={{ padding: "5px 0" }}>
+                <div className="col-4" style={{ fontWeight: "bold", fontSize: "13px" }}>Thời gian tạo tài khoản</div>
+                <div className="col-8" style={{ fontSize: "11px",  cursor: "pointer" }}>
+                {employee?.time} 
+                </div>
               </div>
-              <div style={{ padding: "5px 0 15px" }}>
-                <span style={{ fontWeight: "bold", fontSize: "13px" }}>Membership Plan </span>
-                <span style={{ fontSize: "11px", marginLeft: "95px", cursor: "pointer" }}>
-                  Basic
-                </span>
+              <div className="row"   style={{ padding: "5px 0 5px" }}>
+                <div className="col-4" style={{ fontWeight: "bold", fontSize: "13px" }}>Trạng thái </div>
+                <div className="col-2" style={{ fontSize: "11px",   }}>
+                  {employee?.status}
+                </div>
+                <div onClick={()=>handleStatus(employee?.status)} className="col-4" style={{ fontSize: "11px",  cursor: "pointer", color:"blue" }} >
+                  Thay đổi trạng thái
+                </div>
+              </div>
+              <div className="row"   style={{ padding: "5px 0 5px" }}>
+                <div className="col-4" style={{ fontWeight: "bold", fontSize: "13px" }}>Email </div>
+                <div className="col-8" style={{ fontSize: "11px",   }}>
+                  {employee?.email}
+                </div>
+              </div>
+              <div className="row"   style={{ padding: "5px 0 5px" }}>
+                <div className="col-4" style={{ fontWeight: "bold", fontSize: "13px" }}>Địa chỉ </div>
+                <div className="col-8" style={{ fontSize: "11px",   }}>
+                  {employee?.address}
+                </div>
+              </div>
+              <div className="row"   style={{ padding: "5px 0 5px" }}>
+                <div className="col-4" style={{ fontWeight: "bold", fontSize: "13px" }}>Số điện thoại </div>
+                <div className="col-8" style={{ fontSize: "11px",   }}>
+                  {employee?.phone}
+                </div>
+              </div>
+              <div className="row"   style={{ padding: "5px 0 5px" }}>
+                <div className="col-4" style={{ fontWeight: "bold", fontSize: "13px" }}>Căn cước công dân</div>
+                <div className="col-8" style={{ fontSize: "11px",   }}>
+                  {employee?.personID}
+                </div>
+              </div>
+              <div className="row"   style={{ padding: "5px 0 5px" }}>
+                <div className="col-4" style={{ fontWeight: "bold", fontSize: "13px" }}>Giới tính </div>
+                <div className="col-8" style={{ fontSize: "11px",   }}>
+                  {employee?.gender}
+                </div>
+              </div>
+              <div className="row"   style={{ padding: "5px 0 5px" }}>
+                <div className="col-4" style={{ fontWeight: "bold", fontSize: "13px" }}>Kinh nghiệm </div>
+                <div className="col-8" style={{ fontSize: "11px",   }}>
+                  {employee?.experience}
+                </div>
+              </div>
+              <div className="row"   style={{ padding: "5px 0 5px" }}>
+                <div className="col-4" style={{ fontWeight: "bold", fontSize: "13px" }}>Bằng cấp </div>
+                <div className="col-8" style={{ fontSize: "11px",   }}>
+                  {employee?.education}
+                </div>
+              </div>
+              <div className="row"   style={{ padding: "5px 0 5px" }}>
+                <div className="col-4" style={{ fontWeight: "bold", fontSize: "13px" }}>Dịch vụ </div>
+                <div className="col-8" style={{ fontSize: "11px",   }}>
+                    {employee?.idServices.map((e)=>(
+                        <div key={e.id}>{e.id}</div>
+                    ))}
+                </div>
+              </div>
+              <div className="row"   style={{ padding: "5px 0 5px" }}>
+                <div className="col-4" style={{ fontWeight: "bold", fontSize: "13px" }}>Kỹ năng</div>
+                <div className="col-8" style={{ fontSize: "11px",   }}>
+                  {employee?.idSkills.map((e)=>(
+                    <div key={e}>{e}</div>
+                  ))}
+                </div>
+              </div>
+              <div className="row"   style={{ padding: "5px 0 5px" }}>
+                <div className="col-4" style={{ fontWeight: "bold", fontSize: "13px" }}>Thông tin thêm</div>
+                <div className="col-8" style={{ fontSize: "11px",   }}>
+                  {employee?.idAddInfos.map((e)=>(
+                    <div key={e}>{e}</div>
+                  ))}
+                </div>
+              </div>
+              <div className="row"   style={{ padding: "5px 0 5px" }}>
+                <div className="col-4" style={{ fontWeight: "bold", fontSize: "13px" }}>Giới thiệu bản thân</div>
+                <div className="col-8" style={{ fontSize: "11px",   }}>
+                  {employee?.descriptionAboutMySelf}
+                </div>
               </div>
             </div>
-            <div
-              style={{
-                width: "760px",
-                borderTop: "1px solid #e7e7e7",
-                height: "26px",
-                backgroundColor: "#e7e7e7",
-                borderTopRightRadius: "25px",
-                borderTopLeftRadius: "25px",
-                paddingLeft: "15px",
-                marginTop: "25px",
-              }}
-            >
-              <span style={{ fontWeight: "bold" }}>Preferences </span>
-            </div>
+          
             <div
               style={{
                 width: "760px",
@@ -408,25 +309,25 @@ export function EmployeeProfile() {
                 marginBottom: "40px",
               }}
             >
-              {preferencesRender.map((e) => (
+              {/* {preferencesRender.map((e) => (
                 <div key={e.id} style={{ padding: "5px 0 ", color: "#737373" }}>
                   <DoneAllIcon />
                   <span style={{ fontSize: "14px", marginLeft: "5px" }}>{e.name}</span>
                 </div>
-              ))}
+              ))} */}
             </div>
           </div>
         </div>
       </div>
       <LegalNotice />
-      <ModalUnstyled
+      {/* <ModalUnstyled
         paddingCheck={"20px"}
         check={checkModal}
         onClose={() => setCheckModal(false)}
-        children={editProfile}
+        // children={editProfile}
         widthForm={"40%"}
         heightForm={"80%"}
-      />
+      /> */}
     </>
   );
 }

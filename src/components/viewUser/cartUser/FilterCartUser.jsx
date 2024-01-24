@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import { Star, StarHalf } from "@mui/icons-material";
 import SecurityIcon from "@mui/icons-material/Security";
 import DoneIcon from "@mui/icons-material/Done";
+import LoadingCommon from "../../common/LoadingCommon";
 
 export function FilterCartUser() {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,6 +24,8 @@ export function FilterCartUser() {
   const {id,idCart } = useParams();
   const [selectedAssistant, setSelectedAssistant] = useState(null);
   const [profileAssistant, setProfileAssistant] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
   let navigate = useNavigate();
   useEffect(() => {
     let axiosData = async () => {
@@ -39,6 +42,7 @@ export function FilterCartUser() {
           return [...prevFilterAss, ...dataApi?.data.content];
         });
       }
+      setIsLoading(false)
     };
     axiosData();
   }, [count]);
@@ -57,6 +61,9 @@ export function FilterCartUser() {
         toast.success("Thêm yêu cầu thành công");
       });
   };
+  if (isLoading) {
+    return <LoadingCommon />;
+  }
   return (
     <>
       <div>
@@ -178,7 +185,7 @@ export function FilterCartUser() {
             </div>
             <div style={{ marginTop: "10px", fontWeight: "500", paddingLeft: "10px" }}>
               <i style={{ paddingRight: "5px" }} className="fa-regular fa-clock"></i>
-              <span>{profileAssistant?.eexperience} năm kinh nghiệm.</span>{" "}
+              <span>{profileAssistant?.experience} năm kinh nghiệm.</span>{" "}
             </div>
             <div
               style={{

@@ -15,6 +15,7 @@ import { InfoIndexUser } from '../viewUser/index/InfoIndexUser';
 import { ContainerViewSale } from './ContainerViewerSale';
 import { InfoIndexSale } from './InfoIndexSale';
 import { SkillIndexSale } from './SkillIndexSale';
+import LoadingCommon from '../common/LoadingCommon';
 
 export default function AddCustomer() {
   const [listInformation, setListInformation] = useState();
@@ -41,6 +42,7 @@ export default function AddCustomer() {
   const [place, setPlace] = useState("");
   const [value, setValue] = useState("");
   const [selectedDate, setSelectedDate] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(true);
   
   const [dayInWeek, setDayInWeek] = useState([]);
   const [startDay, setStartDay] = useState();
@@ -73,22 +75,33 @@ export default function AddCustomer() {
       setListInformation(responseInformation.data);
       const responseSkill = await axios.get("http://localhost:8080/api/skills");
       setListSkill(responseSkill.data);
+      setIsLoading(false)
     };
     axiosData();
   }, []);
   const loadCustomers = async () => {
-		const customers = await axios.get(
-			`http://localhost:8080/api/carts/sale/${id}`,
-		);
-        console.log(
-            customers.data
-        );
+    try {
+      setIsLoading(true);
+  
+      const response = await axios.get(`http://localhost:8080/api/carts/sale/${id}`);
+      const customers = response.data;
+  
+      setIsLoading(false);
+  
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
     }
+  };
 
+    
   const transformedData = Object.entries(value).map(([date, sessionList]) => ({
     date,
     sessionOfDateList: sessionList,
   }));
+  if (isLoading) {
+    return <LoadingCommon />;
+  }
   function convertDateFormat(dateString) {
     if (!dateString) {
       return ""; 
@@ -198,6 +211,8 @@ export default function AddCustomer() {
       console.log(response.data);
        const cartId = response.data
       toast.success("Thêm mới khách hàng thành công")
+      setIsLoading(false
+        )
       loadCustomers();
       navigate(`/saler/${id}/render-list-assistant/${cartId}`)
     })

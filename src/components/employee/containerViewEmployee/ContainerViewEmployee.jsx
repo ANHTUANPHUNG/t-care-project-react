@@ -34,7 +34,7 @@ export function ContainerViewEmployee({ idEmployee }) {
         <div className="view-user-header">
           <LogoProject />
           <div className="view-user-header-select">
-            <NavLink
+            {/* <NavLink
               className={`view-user-header-select-nav${
                 window.location.pathname === `/employee/index/${idEmployee}` ? "active" : ""
               }`}
@@ -48,7 +48,7 @@ export function ContainerViewEmployee({ idEmployee }) {
                 />
                 <div className="view-user-header-select-nav-block-title">Trang chủ</div>
               </div>
-            </NavLink>
+            </NavLink> */}
             {/* <NavLink className="view-user-header-select-nav">
               <div className="view-user-header-select-nav-block">
                 <FavoriteBorder className="view-user-header-select-nav-block-icon" />
