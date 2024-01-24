@@ -18,6 +18,9 @@ import { ButtonForMe } from "../ButtonForMe";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { ContainerViewEmployee } from "./containerViewEmployee/ContainerViewEmployee";
+import LoadingCommon from "../common/LoadingCommon";
+import LoadingPage from "../common/LoadingPage";
+import LoadingForEmployeeProfile from "../common/loading/LoadingForEmployeeProfile";
 const preferencesRender = [
   {
     id: 1,
@@ -60,6 +63,8 @@ export function EmployeeProfile() {
   const [loadingImage, setLoadingImage] = useState(false);
   const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
   const [checkModal, setCheckModal] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadingPhoto, setLoadingPhoto] = useState(false);
 
   const [gender, setGender] = useState("");
   const validationSchema = yup.object({
@@ -205,19 +210,23 @@ export function EmployeeProfile() {
 
   useEffect(() => {
     const axiosData = async () => {
-      axios.get(`http://localhost:8080/api/users/${id}`).then((res) => {
+      axios.get(`http://localhost:8080/api/employees/${id}`).then((res) => {
         setUser(res.data);
         setUploadedImageUrl(res.data.photoUrl);
         setGender(res.data.gender);
         formik.setValues({});
+        setIsLoading(false); 
       });
     };
     axiosData();
   }, [id, checkModal]);
-
+  if (isLoading) {
+    return <LoadingCommon />;
+  }
   const handleUpload = async (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
+      setLoadingPhoto(true)
       const formData = new FormData();
       formData.append("avatar", selectedFile);
       formData.append("fileType", "image");
@@ -231,22 +240,26 @@ export function EmployeeProfile() {
           setImage(result.id);
           const photoEmployee = { avatar: result.id };
           axios
-            .put(`http://localhost:8080/api/users/photo/${id}`, photoEmployee)
+            .put(`http://localhost:8080/api/employees/photo/${id}`, photoEmployee)
             .then((response) => {
               toast.success("Sửa ảnh thành công");
+              setLoadingPhoto(false)
             });
         } else {
           console.error("Image ID not found in the response.");
+          
+
         }
       } else {
         console.error("Failed to upload image:", response.statusText);
       }
+      
     }
   };
 
   return (
     <>
-      <ContainerViewEmployee idUser={id} />
+      <ContainerViewEmployee idEmployee={id} />
       <div className="container-profile-user" style={{ margin: "0px 90px", padding: "0 15px" }}>
         <div
           className="notification-user"
@@ -276,18 +289,31 @@ export function EmployeeProfile() {
             style={{ display: "flex", borderRight: "1px solid #e7e7e7", width: "33%" }}
           >
             <div>
-              <div className="my-profile-img" style={{ marginBottom: "16px" }}>
-                <img
+            <div className="my-profile-img" style={{ marginBottom: "16px", position: "relative" }}>
+              {loadingPhoto && (
+                <div
                   style={{
-                    width: "150px",
-                    height: "150px",
-                    border: "1px solid #53585d",
-                    borderRadius: "15px",
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
                   }}
-                  src={uploadedImageUrl}
-                  alt=""
-                />
-              </div>
+                >
+                  {/* Nội dung phần loading */}
+                  <LoadingForEmployeeProfile />
+                </div>
+              )}
+              <img
+                style={{
+                  width: "150px",
+                  height: "150px",
+                  border: "1px solid #53585d",
+                  borderRadius: "15px",
+                }}
+                src={uploadedImageUrl}
+                alt=""
+              />
+            </div>
               <input
                 type="file"
                 accept="image/*"

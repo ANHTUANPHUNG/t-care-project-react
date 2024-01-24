@@ -25,6 +25,7 @@ export default function ServiceIndexSale({ value, setCheckButtonService, checkBu
     title={
       <React.Fragment>
         <Typography color="inherit">
+          Giá: <strong>{Math.round(value.price).toLocaleString()}</strong> VND <br />
           {value.description.split(".").map(
             (sentence, index) =>
               sentence.length > 0 && (
