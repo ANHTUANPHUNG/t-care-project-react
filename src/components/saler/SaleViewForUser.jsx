@@ -26,7 +26,7 @@ export default function SalerViewForUser() {
         const socket = new SockJS("http:/localhost:8080/ws");
         const client = Stomp.over(socket);
         client.connect({}, () => {
-            client.subscribe("/topic/messages", (message) => {
+            client.subscribe("/topic/cart", (message) => {
                 const receivedMessage = JSON.parse(message.body);
                 // setMessages((prevMessages) => [...prevMessages, receivedMessage]);
                 setMessage(receivedMessage);

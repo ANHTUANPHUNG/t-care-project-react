@@ -127,10 +127,10 @@ export function RenderListCart({
         const socket = new SockJS("http:/localhost:8080/ws");
         const client = Stomp.over(socket);
         client.connect({}, () => {
-            client.subscribe("/topic/messages", (message) => {
+            client.subscribe("/topic/saler", (message) => {
                 const receivedMessage = JSON.parse(message.body);
                 // setMessages((prevMessages) => [...prevMessages, receivedMessage]);
-                setMessage(receivedMessage)
+                setMessage(receivedMessage);
             });
         });
         socket.onerror = (error) => {
