@@ -9,10 +9,12 @@ import { ContainerViewUser } from '../viewUser/containerViewUser/ContainerViewUs
 import { ContainerViewSale } from './ContainerViewerSale';
 import Search from './search';
 import Swal from 'sweetalert2';
+import LoadingCommon from '../common/LoadingCommon';
 
 export default function SalerView() {
   const [customers, setCustomers] = useState([]);
   const [search, setSearch] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
 		loadCustomers();
@@ -21,16 +23,24 @@ export default function SalerView() {
   const {id} = useParams()
 	let navigate = useNavigate()
 	const loadCustomers = async () => {
-		const customers = await axios.get(
-			`http://localhost:8080/api/carts/sale/${id}`,
-		);
-        console.log(
-            customers.data
-        );
-			setCustomers(customers.data);
-
+    try {
+      setIsLoading(true);
+  
+      const response = await axios.get(`http://localhost:8080/api/carts/sale/${id}`);
+      const customers = response.data;
+  
+      setIsLoading(false);
+  
+      setCustomers(customers);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
     }
+  };
 
+    if (isLoading) {
+      return <LoadingCommon />;
+    }
    
     const handleOnClick = (id) => {
       console.log(id);
