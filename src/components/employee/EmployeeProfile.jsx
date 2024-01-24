@@ -13,6 +13,7 @@ import ModalUnstyled from "../ModalToMe";
 import LoadingPage from "../common/LoadingPage";
 import Swal from "sweetalert2";
 
+
 export function EmployeeProfile() {
   const { idEmployee } = useParams();
   const [employee, setEmployee] = useState();
@@ -54,6 +55,7 @@ export function EmployeeProfile() {
           setImage(result.id);
           const photoEmployee = { avatar: result.id };
           axios
+
             .put(`http://localhost:8080/api/employees/photo/${idEmployee}`, photoEmployee)
             .then((response) => {
               toast.success("Sửa ảnh thành công");
@@ -61,10 +63,13 @@ export function EmployeeProfile() {
             });
         } else {
           console.error("Image ID not found in the response.");
+          
+
         }
       } else {
         console.error("Failed to upload image:", response.statusText);
       }
+      
     }
   };
    
@@ -108,6 +113,7 @@ export function EmployeeProfile() {
   }
   return (
     <>
+
       <ContainerViewEmployee idEmployee={idEmployee} />
       <div className="container-profile-user" style={{ margin: "0px 90px", padding: "0 15px" }}>
         <div

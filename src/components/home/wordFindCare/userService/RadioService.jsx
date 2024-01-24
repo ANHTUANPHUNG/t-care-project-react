@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import "./RadioService.css";
 
 export function RadioService({ value, selectedRadioId, setSelectedRadioId }) {
+  console.log(value);
   return value?.map((e) => {
     const sentences = e.description.split('.');
 
@@ -13,7 +14,7 @@ export function RadioService({ value, selectedRadioId, setSelectedRadioId }) {
       >
         <div className="w300">
           <label htmlFor={e.id}>
-            <h5 className="mx-3 mb-0">{e.name}</h5>
+            <h5 className="mx-3 mb-0">{e.name} ({Math.round(e.price).toLocaleString()} VND)</h5>
             {sentences.map((sentence, index) => (
               sentence.length > 0 && <span key={index} className="mx-3">- {sentence.trim()}<br /></span>
             ))}

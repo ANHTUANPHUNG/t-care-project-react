@@ -19,6 +19,7 @@ export function RenderListAssistantIndexUser({ value, index, listAssistant, chec
       setSelectedFavorites((prev) => [...prev, e]);
     }
   };
+  console.log("value", value);
   const handleSubmitCartUser = () => {
     const form = {
       cartId: value.cartId,
@@ -46,7 +47,7 @@ export function RenderListAssistantIndexUser({ value, index, listAssistant, chec
             <SecurityIcon className="render-list-assistant-index-user-body-icon-security" />
             <div className="render-list-assistant-index-user-body-experience">
               <div>{value?.nameAddress}</div>
-              <div>{value?.eexperience} năm kinh nghiệm</div>
+              <div>{value?.experience} năm kinh nghiệm</div>
             </div>
           </div>
         </div>
