@@ -88,13 +88,13 @@ function App() {
         <Route path="/user/contract/:id" element={<Contract />}></Route> 
         <Route path="/user/cart/filter/:id/:idCart" element={<FilterCartUser />}></Route> 
         <Route path="/user/index/:id/:idAssistant" element={<ProfileAssistant />}></Route>
-        <Route path="/saler/:id" element={<SalerView />}></Route>
-        <Route path="/salerForUser/:id" element={<SalerViewForUser />}></Route>
-        <Route path="/add-customer/:id" element={<AddCustomer />}></Route>
-        <Route path="/edit-customer/:idSale/:id" element={<EditCustomer />}></Route>
-        <Route path="/sale-contract/:id" element={<SaleContract />}></Route>
+        <Route path="/sale/:id" element={<SalerView />}></Route>
+        <Route path="/sale/sale-for-user/:id" element={<SalerViewForUser />}></Route>
+        <Route path="/sale/add-customer/:id" element={<AddCustomer />}></Route>
+        <Route path="/sale/edit-customer/:idSale/:id" element={<EditCustomer />}></Route>
+        <Route path="/sale/sale-contract/:id" element={<SaleContract />}></Route>
         <Route
-          path="saler/:idSale/render-list-assistant/:id"
+          path="/sale/:idSale/render-list-assistant/:id"
           element={<RenderListAssistantSale />}
         ></Route>
         <Route path="/employee/index/:idEmployee" element={<EmployeeIndex />}></Route>
