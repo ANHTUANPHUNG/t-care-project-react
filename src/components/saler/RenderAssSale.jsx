@@ -45,7 +45,7 @@
                     <span> Khoảng cách: <strong>{e?.distanceToWork && e.distanceToWork.toFixed(2)} </strong>km</span>
                   </div>
                   <div>
-                    <span> Số năm kinh nghiệm: <strong>{e?.eexperience && e.eexperience} </strong>năm</span>
+                    <span> Số năm kinh nghiệm: <strong>{e?.experience && e.experience} </strong>năm</span>
                   </div>
                 </div>  
                 <div>

@@ -60,7 +60,7 @@ export function Profile() {
   const [image, setImage] = useState();
   const [loadingImage, setLoadingImage] = useState(false);
   const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
-  const [checkModal, setCheckModal] = useState();
+  const [checkModal, setCheckModal] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingImage, setIsLoadingImage] = useState(false);
 

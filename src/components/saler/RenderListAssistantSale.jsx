@@ -11,6 +11,7 @@ import LogoProject from "../logoProject/LogoProject";
 import { LegalNotice } from "../carehub/LegalNotice";
 import { ButtonForMe } from "../ButtonForMe";
 import Swal from "sweetalert2";
+import LoadingCommon from "../common/LoadingCommon";
 
 export function RenderListAssistantSale() {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,13 +19,14 @@ export function RenderListAssistantSale() {
   const [filterAss, setFilterAss] = useState();
   const { id } = useParams();
   const { idSale } = useParams();
+  const [isLoading, setIsLoading] = useState(true);
   console.log(filterAss);
   let navigate = useNavigate();
   useEffect(() => {
     let axiosData = async () => {
       const responseFilterAss = await axios.get(
         `http://localhost:8080/api/carts/filter/${id}` 
-      );
+      ).then(setIsLoading(false))
       console.log(responseFilterAss?.data);
       setFilterAss(responseFilterAss?.data.content);
     };
@@ -33,6 +35,10 @@ export function RenderListAssistantSale() {
   const handleCheckboxChange = () => {
     setChecked(!isChecked);
   };
+ 
+  if (isLoading) {
+    return <LoadingCommon />;
+  }
   const handleClick = (assistantId) => {
     Swal.fire({
       title: 'Liên hệ với nhân viên thành công',
@@ -42,8 +48,14 @@ export function RenderListAssistantSale() {
         cartId : id,
         employeeId : assistantId
       }
-      axios.put(`http://localhost:8080/api/carts/employees`, cart)
-      navigate(`/saler/${idSale}`);
+      axios.put(`http://localhost:8080/api/carts/employees`, cart).then(() => {
+        setIsLoading(true)
+        setTimeout(() => {
+          navigate(`/saler/${idSale}`);
+        }, 1000);
+      });
+      
+      
     });
   };
   

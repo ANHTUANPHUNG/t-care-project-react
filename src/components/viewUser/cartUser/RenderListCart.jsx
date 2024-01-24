@@ -148,7 +148,6 @@ export function RenderListCart({
                     const existingItem = result.find(
                         (item) => item.dateInWeekName === currentItem.dateInWeekName
                     );
-
                     if (existingItem) {
                         if (!existingItem.sessionOfDate.includes(currentItem.sessionOfDateName)) {
                             existingItem.sessionOfDate.push(currentItem.sessionOfDateName);

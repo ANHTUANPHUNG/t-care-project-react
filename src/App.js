@@ -98,6 +98,7 @@ function App() {
           element={<RenderListAssistantSale />}
         ></Route>
         <Route path="/employee/index/:idEmployee" element={<EmployeeIndex />}></Route>
+
         <Route path="/employee/contract/:idEmployee" element={<EmployeeContract />}></Route>
         <Route path="/employee/profile/:idEmployee" element={<EmployeeProfile />}></Route>
         <Route path="/reset-password" element={<ResetPassword />}></Route>
