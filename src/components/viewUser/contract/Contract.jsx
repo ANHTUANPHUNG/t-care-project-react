@@ -8,6 +8,8 @@ import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import ModalUnstyled from "../../ModalToMe";
 import { ButtonForMe } from "../../ButtonForMe";
 import LoadingCommon from "../../common/LoadingCommon";
+import SockJS from "sockjs-client";
+import { Stomp } from "@stomp/stompjs";
 
 export function Contract({ role, id }) {
   const [listContract, setListContract] = useState([]);
@@ -19,6 +21,8 @@ export function Contract({ role, id }) {
   const [totalAmount, setTotalAmount] = useState(0);
   const [sessions, setSessions] = useState([], []);
   const [isLoading, setIsLoading] = useState(true);
+  const [message, setMessage] = useState("");
+  const [stompClient, setStompClient] = useState(null);
 
   useEffect(() => {
     axios.get(`http://localhost:8080/api/contracts/${role}/${id}`).then((res) => {
@@ -29,7 +33,25 @@ export function Contract({ role, id }) {
       setListContract(arrayList);
       setIsLoading(false);
     });
-  }, [id]);
+  }, [id, message]);
+  useEffect(() => {
+    const socket = new SockJS("http:/localhost:8080/ws");
+    const client = Stomp.over(socket);
+    client.connect({}, () => {
+      client.subscribe("/topic/saler", (message) => {
+        const receivedMessage = JSON.parse(message.body);
+        // setMessages((prevMessages) => [...prevMessages, receivedMessage]);
+        setMessage(receivedMessage);
+      });
+    });
+    socket.onerror = (error) => {
+      console.error("Socket error:", error);
+    };
+    setStompClient(client);
+    return () => {
+      client.disconnect();
+    };
+  }, []);
   console.log(listContract);
   const handleDetail = (e) => {
     setCheckModal(true);
