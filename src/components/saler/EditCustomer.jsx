@@ -230,7 +230,7 @@ export default function EditCustomer() {
       console.log(response.data);
        const cartId = response.data
       toast.success("Thay đổi thông tin khách hàng thành công")
-      navigate(`/saler/${idSale}`)
+      navigate(`/sale/${idSale}`)
       console.log(response.data);
     })
     .catch(error => {

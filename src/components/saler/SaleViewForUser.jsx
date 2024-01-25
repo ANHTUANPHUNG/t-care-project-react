@@ -215,48 +215,48 @@ export default function SalerViewForUser() {
                                                 <td style={{ maxWidth: "150px" }}>
                                                     {customer.employee.phone}
                                                 </td>
+        
+        <td className="mx-2">
+          <Link className="btn btn-warning"
+          to={`/edit-customer/${id}/${customer.id}`}
+          >
+            
+            <FaEdit />
+          </Link>
+          
+        </td>
+        <td className="mx-2">
+          <Link className="btn btn-outline-primary"
+          onClick={() => handleOnClick(customer.id)}
+          >
+            <FaAddressCard />
+          </Link>
+        </td>
+        <td className="mx-2">
+          <button className="btn btn-danger"
+          onClick={() => handleDeleteCustomer(customer.id)}
+          >
+            
+            <FaTrashAlt />
+          </button>
+        </td>
+        <td className="mx-2">
+          <Link className="btn btn-warning"
+          to={`/sale/${id}/render-list-assistant/${customer.id}`}
+          >
+            
+            <FaExchangeAlt />
+          </Link>
+        </td>
+      </tr>
+    ))}
+</tbody>
+         </table> 
+     </div>
+     
+ </div>
 
-                                                <td className="mx-2">
-                                                    <Link
-                                                        className="btn btn-warning"
-                                                        to={`/edit-customer/${id}/${customer.id}`}
-                                                    >
-                                                        <FaEdit />
-                                                    </Link>
-                                                </td>
-                                                <td className="mx-2">
-                                                    <Link
-                                                        className="btn btn-outline-primary"
-                                                        onClick={() => handleOnClick(customer.id)}
-                                                    >
-                                                        <FaAddressCard />
-                                                    </Link>
-                                                </td>
-                                                <td className="mx-2">
-                                                    <button
-                                                        className="btn btn-danger"
-                                                        onClick={() =>
-                                                            handleDeleteCustomer(customer.id)
-                                                        }
-                                                    >
-                                                        <FaTrashAlt />
-                                                    </button>
-                                                </td>
-                                                <td className="mx-2">
-                                                    <Link
-                                                        className="btn btn-warning"
-                                                        to={`/saler/${id}/render-list-assistant/${customer.id}`}
-                                                    >
-                                                        <FaExchangeAlt />
-                                                    </Link>
-                                                </td>
-                                            </tr>
-                                        ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </>
-    );
+ </div>
+ </>
+  )
 }

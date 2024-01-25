@@ -45,7 +45,7 @@ export function ContainerViewSale({ idUser }) {
               </div>
             </NavLink>
             <NavLink className="view-user-header-select-nav"
-              to={`/saler/${id}`}
+              to={`/sale/${id}`}
             >
               <div className="view-user-header-select-nav-block">
                 <AccountBoxRoundedIcon className="view-user-header-select-nav-block-icon" />
@@ -53,7 +53,7 @@ export function ContainerViewSale({ idUser }) {
               </div>
             </NavLink>
             <NavLink className="view-user-header-select-nav"
-              to={`/salerForUser/${id}`}
+              to={`/sale/sale-for-user/${id}`}
             >
               <div className="view-user-header-select-nav-block">
                 <InterpreterModeRoundedIcon className="view-user-header-select-nav-block-icon" />
@@ -67,14 +67,14 @@ export function ContainerViewSale({ idUser }) {
               </div>
             </NavLink> */}
             <NavLink className="view-user-header-select-nav" 
-              to={`/sale-contract/${id}`}
+              to={`/sale/sale-contract/${id}`}
             >
               <div className="view-user-header-select-nav-block">
                 <CreditScore className="view-user-header-select-nav-block-icon" />
                 <div className="view-user-header-select-nav-block-title">Hợp đồng</div>
               </div>
             </NavLink>
-            <div className="view-user-header-select-profile">
+            {/* <div className="view-user-header-select-profile">
               <Button
                 id="basic-button"
                 aria-controls={open ? "basic-menu" : undefined}
@@ -103,7 +103,7 @@ export function ContainerViewSale({ idUser }) {
                   <MenuItem>Logout</MenuItem>
                 </NavLink>
               </Menu>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="row">

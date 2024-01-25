@@ -81,7 +81,7 @@ export function ProfileAssistant() {
               <img
                 src={assistant.photoUrl}
                 alt=""
-                style={{ width: "180px", height: "180px", borderRadius: "15px" }}
+                style={{ width: "135px", height: "180px", borderRadius: "15px" }}
               />
               <div className="" style={{ marginLeft: "20px", alignSelf: "center" }}>
                 <span className="" style={{ fontWeight: "bold", fontSize: "25px" }}>
