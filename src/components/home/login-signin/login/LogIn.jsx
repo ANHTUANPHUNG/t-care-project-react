@@ -16,7 +16,6 @@ export function LogIn() {
   let navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
-  const [role, setRole] = useState("");
 
   let userDispatch = null;
   const { user, dispatch} = useContext(AuthContext);
@@ -30,26 +29,22 @@ export function LogIn() {
       console.log("resp", resp.data);
       
       if (resp.data.isUser) {
-        // setRole("ROLE_USER")
-        // authContext.updateRole("ROLE_USER");
         userDispatch = {
           type: "UPDATE_ROLE",
           payload: {
-            username: "aa",
+            userId: resp.data.idAccount,
             role: "ROLE_USER"
           }
         };
         dispatch(userDispatch)
         localStorage.setItem("user", JSON.stringify(userDispatch))
-        // navigate("/user/index/" + resp.data.idAccount);
+        navigate("/user/index/" + resp.data.idAccount);
       } else if(resp.data.isSale){
-        // setRole("ROLE_SALE")
-        // authContext.updateRole("ROLE_SALE");
         navigate("/sale/" + resp.data.idAccount);
         userDispatch = {
           type: "UPDATE_ROLE",
           payload: {
-            username: "aa",
+            userId: resp.data.idAccount,
             role: "ROLE_SALE"
           }
         }
@@ -57,13 +52,11 @@ export function LogIn() {
         localStorage.setItem("user", JSON.stringify(userDispatch))
       }
        else if(resp.data.isEmployee){
-        // setRole("ROLE_EMPLOYEE")
-        // authContext.updateRole("ROLE_EMPLOYEE");
-        // navigate("/employee/index/" + resp.data.idAccount);
+        navigate("/employee/index/" + resp.data.idAccount);
         userDispatch = {
           type: "UPDATE_ROLE",
           payload: {
-            username: "aa",
+            userId: resp.data.idAccount,
             role: "ROLE_EMPLOYEE"
           }
         }
@@ -72,13 +65,11 @@ export function LogIn() {
         
 
       } else{
-        // setRole("ROLE_ADMIN")
-        // authContext.updateRole("ROLE_ADMIN");
         navigate("/admin/home/" + resp.data.idAccount);
         userDispatch = {
           type: "UPDATE_ROLE",
           payload: {
-            username: "aa",
+            userId: resp.data.idAccount,
             role: "ROLE_ADMIN"
           }
         }
@@ -90,7 +81,6 @@ export function LogIn() {
       toast.error("Tên đăng nhập hoặc mật khẩu không đúng");
     }
   };
-  console.log(role);
   const logIn = (
     <div className="form-login">
       <CheckLogInSignIn value={"login"} />
