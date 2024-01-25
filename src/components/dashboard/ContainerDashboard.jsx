@@ -54,7 +54,7 @@ export function ContainerDashboard() {
                 "aria-labelledby": "basic-button",
               }}
             >
-              <NavLink className="container-dashboard-header-name-admin" to={`/employee/profile`}>
+              <NavLink className="container-dashboard-header-name-admin" >
                 <MenuItem>Anh Tuấn</MenuItem>
               </NavLink>
               <NavLink className="container-dashboard-header-logout" to={"/home"}>
