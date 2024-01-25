@@ -9,9 +9,11 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import { toast } from "react-toastify";
 import UserServiceAPI from "./../../../../service/userServiceAPI";
-import './UserAddress.css'
+import "./UserAddress.css";
+import LoadingPage from "../../../common/LoadingPage";
 
 export function UserAddress() {
+  const [isLoading, setIsLoading] = useState(false);
   const [km, setKm] = useState(10);
   const [place, setPlace] = useState("");
   const { id } = useParams();
@@ -45,6 +47,7 @@ export function UserAddress() {
     }
   };
   const handleButtonClick = async () => {
+    setIsLoading(true);
     if (place != "") {
       const postData = {
         nameLocation: place,
@@ -53,6 +56,7 @@ export function UserAddress() {
         latitude: selectedLocation.lat,
       };
       await UserServiceAPI.updateLocation(id, postData, navigate, "/user/service");
+      setIsLoading(false);
     } else {
       toast.error("Chọn vị trí của bạn");
     }
@@ -68,7 +72,7 @@ export function UserAddress() {
           <div className="col-4 bg-h3"></div>
         </div>
       </div>
-      <div className="m-5" style={{textAlign:"-webkit-center"}}>
+      <div className="m-5" style={{ textAlign: "-webkit-center" }}>
         <SearchLocationInput
           setSelectedLocation={setSelectedLocation}
           setPlace={setPlace}
@@ -77,8 +81,7 @@ export function UserAddress() {
         <MapComponent selectedLocation={selectedLocation} widthMap={"60%"} />
         <div className="m30-35">
           <h6 className="pl-50">Bạn dự định tìm kiếm trong bao xa?</h6>
-          <div className="d-flex-m30-0-jc-sa"
-          >
+          <div className="d-flex-m30-0-jc-sa">
             <div className="pointer-m10" onClick={() => handleMinus()}>
               <RemoveIcon />
             </div>
@@ -91,7 +94,13 @@ export function UserAddress() {
           </div>
         </div>
         <div className="mt-5 h10">
-          <ButtonForMe childrenButton={"Tiếp theo"} onclick={handleButtonClick} />
+          {isLoading ? (
+            <div style={{marginRight:"17%"}}>
+              <LoadingPage />
+            </div>
+          ) : (
+            <ButtonForMe childrenButton={"Tiếp theo"} onclick={handleButtonClick} />
+          )}
         </div>
       </div>
       <div className="legal-notice-user">

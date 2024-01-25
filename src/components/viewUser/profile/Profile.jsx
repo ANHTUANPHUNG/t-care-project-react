@@ -22,37 +22,31 @@ import * as yup from "yup";
 const preferencesRender = [
   {
     id: 1,
-    name: "Email me about T-Care.com features, services, special offers, and other cool stuff.",
+    name: "Gửi email cho tôi về các tính năng, dịch vụ, ưu đãi đặc biệt của T-Care.com và những nội dung thú vị khác.",
   },
   {
     id: 2,
-    name: "Email me about new caregivers near me who have recently joined T-Care.com.",
+    name: "Gửi email cho tôi về những người chăm sóc mới ở gần tôi, những người gần đây đã tham gia T-Care.com.",
   },
   {
     id: 3,
-    name: "Email me about Care.com features, services, special offers, and other cool stuff.",
+    name: "Gửi email cho tôi về các tính năng, dịch vụ, ưu đãi đặc biệt của T-Care.com và những nội dung thú vị khác.",
   },
   {
     id: 4,
-    name: "Share my online status with other members of T-Care.com.",
+    name: "Chia sẻ trạng thái trực tuyến của tôi với các thành viên khác của T-Care.com.",
   },
-  {
-    id: 5,
-    name: "Send read receipts with messages.",
-  },
+ 
   {
     id: 6,
-    name: "Make my profile and job posts public. (?)",
+    name: "Công khai hồ sơ và tin tuyển dụng của tôi. (?)",
   },
   {
     id: 7,
-    name: "Include my profile in caregiver search results and certain caregiver emails.",
+    name: "Đưa hồ sơ của tôi vào kết quả tìm kiếm người chăm sóc và một số email nhất định của người chăm sóc.",
   },
-  { id: 8, name: "Allow caregivers to see that I viewed their profile." },
-  {
-    id: 9,
-    name: "Share information about me with third party communication facilitators so they may send me direct mail solicitations on behalf of other companies. (?)",
-  },
+  { id: 8, name: "Cho phép người chăm sóc biết rằng tôi đã xem hồ sơ của họ." },
+ 
 ];
 export function Profile() {
   const { id } = useParams();
@@ -272,14 +266,13 @@ export function Profile() {
           <div className="d-flex">
             <TipsAndUpdatesIcon />
             <span>
-              This is what your profile looks now. Grab attention from caregivers by describing your
-              family's needs and interests.
+              Hồ sơ bạn như thế này, hãy hoàn thiện hồ sơ để việc tìm kiếm hộ lý có thể triển khai nhanh hơn.
             </span>
           </div>
         </div>
         <h6 className="my-profile" style={{ padding: "25px 0" }}>
           <AccountBoxIcon />
-          My Profile
+          Thông tin của tôi
         </h6>
 
         <div className="my-profile-header" style={{ display: "flex" }}>
@@ -329,7 +322,7 @@ export function Profile() {
                 className="upload-photo-label"
                 style={{ marginLeft: "31px", cursor: "pointer", color: "blue" }}
               >
-                Upload photo
+                Tải ảnh lên
               </label>
             </div>
             <div style={{ margin: " 43px 10px 0 20px" }}>
@@ -339,8 +332,6 @@ export function Profile() {
 
               <div style={{ fontSize: "14px" }}>{user?.email}</div>
               <div style={{ fontSize: "14px" }}>{user?.time} </div>
-              {/* <div style={{ margin: "5px 0" }}>Hired 0 providers </div>
-              <div style={{ margin: "5px 0" }}> Posted 0 reviews </div> */}
               <div
                 onClick={() => setCheckModal(true)}
                 style={{ textAlign: "center", marginTop: "50px", color: "blue", cursor: "pointer" }}
@@ -361,7 +352,7 @@ export function Profile() {
                 paddingLeft: "15px",
               }}
             >
-              <span style={{ fontWeight: "bold" }}>Membership Information </span>
+              <span style={{ fontWeight: "bold" }}>Thông tin thành viên </span>
             </div>
             <div
               style={{
@@ -370,22 +361,22 @@ export function Profile() {
                 paddingLeft: "15px",
               }}
             >
-              <div style={{ padding: "15px 0 5px" }}>
-                <span style={{ fontWeight: "bold", fontSize: "13px" }}>Member Since </span>
-                <span style={{ fontSize: "11px", marginLeft: "115px", cursor: "pointer" }}>
+              <div className="row" style={{ padding: "15px 0 5px"  }}>
+                <span className="col-3" style={{ fontWeight: "bold", fontSize: "13px" }}>Thơi gian tạo tài khoản </span>
+                <span className="col-3" style={{ fontSize: "11px",  cursor: "pointer" }}>
                   {user?.time}
                 </span>
               </div>
-              <div style={{ padding: "5px 0" }}>
-                <span style={{ fontWeight: "bold", fontSize: "13px" }}>Account Status</span>
-                <span style={{ fontSize: "11px", marginLeft: "115px", cursor: "pointer" }}>
-                  Active
+              <div className="row" style={{ padding: "5px 0" }}>
+                <span className="col-3" style={{ fontWeight: "bold", fontSize: "13px" }}>Trạng thái tài khoản</span>
+                <span className="col-3" style={{ fontSize: "11px",  cursor: "pointer" }}>
+                  Đang hoạt động
                 </span>
               </div>
-              <div style={{ padding: "5px 0 15px" }}>
-                <span style={{ fontWeight: "bold", fontSize: "13px" }}>Membership Plan </span>
-                <span style={{ fontSize: "11px", marginLeft: "95px", cursor: "pointer" }}>
-                  Basic
+              <div className="row" style={{ padding: "5px 0 15px" }}>
+                <span className="col-3" style={{ fontWeight: "bold", fontSize: "13px" }}>Gói thành viên </span>
+                <span className="col-3" style={{ fontSize: "11px",  cursor: "pointer" }}>
+                  Thường
                 </span>
               </div>
             </div>

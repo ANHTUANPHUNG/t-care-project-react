@@ -6,23 +6,28 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import ModalUnstyled from "../../ModalToMe";
+import { ButtonForMe } from "../../ButtonForMe";
+import LoadingCommon from "../../common/LoadingCommon";
 
-export function Contract() {
-  const { id } = useParams();
+export function Contract({ role, id }) {
   const [listContract, setListContract] = useState([]);
   const [checkModal, setCheckModal] = useState(false);
   const [date, setDate] = useState(null);
   const [starDate, setStarDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [contract, setContract] = useState(null);
+  const [totalAmount, setTotalAmount] = useState(0);
+  const [sessions, setSessions] = useState([], []);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/api/contracts/users/${id}`).then((res) => {
+    axios.get(`http://localhost:8080/api/contracts/${role}/${id}`).then((res) => {
       const arrayList = res.data.content.map((e, i) => ({
         ...e,
         indexContract: i + 1,
       }));
       setListContract(arrayList);
+      setIsLoading(false);
     });
   }, [id]);
   console.log(listContract);
@@ -56,10 +61,37 @@ export function Contract() {
     const formattedEndDate = ` ngày ${endDateString.getDate()} tháng ${
       monthNames[endDateString.getMonth()]
     } năm ${endDateString.getFullYear()}`;
+    var arrayDate = {};
+    e?.historyWorking.forEach((element) => {
+      const key = element.dateWork;
+      if (!arrayDate[key]) {
+        arrayDate[key] = {
+          dateContract: element.dateWork,
+          session: [element.sessionOfDateName],
+        };
+      } else {
+        arrayDate[key].session.push(element.sessionOfDateName);
+      }
+    });
+    const totalAmountNumber = parseFloat(e.totalAmount);
+    const formattedTotalAmount = totalAmountNumber.toLocaleString("vi-VN", {
+      currency: "VND",
+    });
+
+    const arr = Object.values(arrayDate);
+    const middleIndex = Math.ceil(arr.length / 2);
+
+    const firstPart = arr.slice(0, middleIndex);
+    const secondPart = arr.slice(middleIndex);
+    setTotalAmount(formattedTotalAmount);
+    setSessions([firstPart, secondPart]);
     setDate(formattedDate);
     setStarDate(formattedStarDate);
     setEndDate(formattedEndDate);
   };
+  if (isLoading) {
+    return <LoadingCommon />;
+  }
   const contractDetail = (
     <>
       <div style={{ textAlign: "center" }}>
@@ -116,11 +148,14 @@ export function Contract() {
         <span>Thỏa thuận ký kết hợp đồng lao động và làm đúng những thỏa thuận sau đây: </span>
         <div style={{ height: "10px" }}></div>
         <span style={{ fontWeight: "600", fontSize: "20px" }}>
-          ĐIỀU 1: CÔNG VIỆC, ĐỊA ĐIỂM VÀ THỜI GIAN LÀM VIỆC
+          ĐIỀU 1: CÔNG VIỆC, ĐỊA ĐIỂM, THỜI GIAN, YÊU CẦU LÀM VIỆC VÀ CHI PHÍ.
         </span>{" "}
         <br /> <div style={{ height: "10px" }}></div>
         <span style={{ fontWeight: "600" }}>1.</span> <span> Công việc của hộ lý:</span>{" "}
-        <span>{contract?.nameService}:</span> <br />
+        <span>
+          {contract?.nameService} . Giá tiền: {contract?.totalPrice}.
+        </span>{" "}
+        <br />
         {contract?.descriptionService.split(".").map(
           (sentence, index) =>
             sentence.length > 0 && (
@@ -130,10 +165,55 @@ export function Contract() {
               </span>
             )
         )}
-        <span style={{ fontWeight: "600" }}>2.</span> <span> Thời gian làm việc: </span>{" "} <br />
-        
-         <span style={{ fontWeight: "600" }}>3.</span>{" "}
-        <span> Địa điểm làm việc của hộ lý: {contract?.location.name}</span>{" "}
+        <span style={{ fontWeight: "600" }}>2.</span> <span> Thời gian làm việc: </span> <br />
+        <span>
+          <div className="row">
+            <div className="col-6">
+              {sessions[0]?.map((e, index) => (
+                <div key={index} style={{ paddingLeft: "50px" }}>
+                  + {e?.dateContract} :{" "}
+                  {e?.session?.map((value, i) => (
+                    <span key={i}>
+                      {value}
+                      {i === e.session.length - 1 ? "" : ","}
+                    </span>
+                  ))}
+                  .
+                </div>
+              ))}
+            </div>
+            <div className="col-6">
+              {sessions[1]?.map((e, index) => (
+                <div key={index} style={{ paddingLeft: "50px" }}>
+                  + {e?.dateContract} :{" "}
+                  {e?.session?.map((value, i) => (
+                    <span key={i}>
+                      {value}
+                      {i === e.session.length - 1 ? "" : ","}
+                    </span>
+                  ))}
+                  .
+                </div>
+              ))}
+            </div>
+          </div>
+        </span>
+        <span style={{ fontWeight: "600" }}>3.</span>{" "}
+        <span> Địa điểm làm việc của hộ lý: {contract?.location.name}</span> <br />
+        <span style={{ fontWeight: "600" }}>4.</span> <span> Yêu cầu hộ lý: </span> <br />
+        <span>- Thông tin người cần chăm sóc và chú thích cho hộ lý:</span> <br />
+        <span>- Họ và tên :</span>
+        <span>{contract?.customerName}</span> <br />
+        <span>- Số điện thoại :</span>
+        <span>{contract?.customerPhone}</span> <br />
+        <span>- Giới tính :</span>
+        <span>{contract?.genders}</span> <br />
+        <span>- Ghi chú của người cần chăm sóc :</span>
+        <span>{contract?.noteForPatient}</span> <br />
+        <span>- Ghi chú cho hộ lý :</span>
+        <span>{contract?.noteForEmployee}</span> <br />
+        <span style={{ fontWeight: "600" }}>5.</span> <span> Chi phí: {totalAmount} VNĐ</span>{" "}
+        <br />
         <div style={{ height: "10px" }}></div>
         <span style={{ fontWeight: "600", fontSize: "20px" }}>ĐIỀU 2: THỜI HẠN HỢP ĐỒNG</span>{" "}
         <br />
@@ -141,6 +221,20 @@ export function Contract() {
         <br />
         <span className="mx-3">+ Ngày kết thúc: {endDate}</span>
         <br />
+        <div style={{ padding: "20px 16%" }}>
+          <span style={{ fontSize: "13px" }}>
+            ( Điều khoản được in vào ở hợp đồng bằng văn bản được bên A và bên B cất giữ)
+          </span>
+        </div>
+        <div style={{ textAlign: "center" }}>
+          <ButtonForMe
+            value={30}
+            childrenButton={"Đóng"}
+            colorButton={"#3b71aa"}
+            type="submit"
+            onclick={() => setCheckModal(false)}
+          />
+        </div>
       </div>
     </>
   );

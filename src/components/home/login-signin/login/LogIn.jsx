@@ -72,7 +72,7 @@ export function LogIn() {
           </div>
 
           <Grid item xs={12} className="d-flex justify-content-center ">
-            <ButtonForMe value={100} childrenButton={"Log In"} />
+            <ButtonForMe value={100} childrenButton={"Đăng nhập"} />
           </Grid>
         </Grid>
       </form>

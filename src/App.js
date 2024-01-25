@@ -41,6 +41,7 @@ import { EmployeeContract } from './components/employee/EmployeeContract';
 import { AdminHome } from "./components/dashboard/AdminHome";
 import { AdminStatistics } from './components/dashboard/AdminStatistics';
 import { AdminAssistant } from "./components/dashboard/AdminAssistant";
+import { UserContract } from "./components/viewUser/userContract/UserContract";
 
 function App() {
   return (
@@ -50,6 +51,7 @@ function App() {
         <Route path="/home" element={<Home />}></Route>
         <Route path="/login" element={<LogIn />}></Route>
         <Route path="/forgot-password" element={<ForgotPassword />}></Route>
+        <Route path="/reset-password" element={<ResetPassword />}></Route>
         <Route path="/sign-in" element={<SignInSelect />}></Route>
         <Route path="/sign-in/find-care" element={<SignInUser />}></Route>
         <Route path="/assistant/sign-in" element={<AssistantSignIn />}></Route>
@@ -85,7 +87,7 @@ function App() {
         <Route path="/user/profile/:id" element={<Profile />}></Route>
         <Route path="/user/index/:id" element={<IndexUser />}></Route>
         <Route path="/user/cart/:id" element={<CartUser />}></Route> 
-        <Route path="/user/contract/:id" element={<Contract />}></Route> 
+        <Route path="/user/contract/:id" element={<UserContract />}></Route> 
         <Route path="/user/cart/filter/:id/:idCart" element={<FilterCartUser />}></Route> 
         <Route path="/user/index/:id/:idAssistant" element={<ProfileAssistant />}></Route>
         <Route path="/saler/:id" element={<SalerView />}></Route>
