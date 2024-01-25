@@ -27,49 +27,6 @@ export default function SaleContract() {
         setContracts(contracts.data.content);
 
     }
-
-   
-    // const handleOnClick = (id) => {
-    //   console.log(id);
-    //   axios
-    //   .get(`http://localhost:8080/api/carts/${id}`)
-    //   .then((response) => {
-    //     console.log(response.data);
-    //     Swal.fire({
-    //       title: 'Yêu cầu khách chuyển: ' + response.data.totalAmount,
-    //       showCancelButton: true,
-    //       confirmButtonText: 'OK',
-    //       cancelButtonText: 'Tạo hợp đồng',
-    //     }).then((result) => {
-    //       if (result.isConfirmed) {
-            
-    //       } else if (result.dismiss === Swal.DismissReason.cancel) {
-    //        axios.post(`http://localhost:8080/api/contracts/createContract/${id}`).then(e => loadcontracts())
-    //        toast.success("Tạo hợp đồng thành công")
-           
-    //       }
-    //     });
-    
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
-    
-    // }
-
-    // const handleDeletecontract = (id) => {
-    //   axios
-    //     .delete(`http://localhost:8080/api/carts/deletecontractBySale/${id}`)
-    //     .then((response) => {
-    //       console.log(response);
-    //       toast.success("Xóa khách hàng thành công", { autoClose: 1000 });
-    //       loadcontracts();
-    //     })
-    //     .catch((error) => {
-    //       console.error(error);
-    //       toast.error("Xóa thất bại");
-    //     });
-    // }
   return (
     <>
  <ContainerViewSale/>
@@ -111,22 +68,26 @@ export default function SaleContract() {
                  </tr>
              </thead>
              <tbody>
-  {contracts &&
-    contracts
+             {contracts &&
+  contracts
+    .sort((a, b) => new Date(b.createAt) - new Date(a.createAt))
     .filter(
       (contract) =>
-      contract.customerName.toLowerCase().includes(search.toLowerCase()) ||
-      contract.customerPhone.toLowerCase().includes(search.toLowerCase())
+        contract.customerName.toLowerCase().includes(search.toLowerCase()) ||
+        contract.customerPhone.toLowerCase().includes(search.toLowerCase())
     )
-    .map((contract) => (  
+    .map((contract) => (
       <tr key={contract.id}>
-        <td>{contract.customerName}</td>    
-        <td style={{maxWidth: "300px"}}>{contract.location.name}</td>
+        <td>{contract.customerName}</td>
+        <td style={{ maxWidth: "300px" }}>{contract.location.name}</td>
         <td>{contract.customerPhone}</td>
-        <td style={{maxWidth: "150px", minWidth: "120px"}}>{contract.timeStart !== null ? contract.timeStart : ''} <br />{contract.timeEnd !== null ? contract.timeEnd : ''}</td>
-        <td style={{maxWidth: "150px"}}>{contract.nameService} </td>
-        <td style={{maxWidth: "150px"}}>{contract.createAt}</td> 
-        <td style={{maxWidth: "150px"}}>{contract.totalAmount + " "}VND</td> 
+        <td style={{ maxWidth: "150px", minWidth: "120px" }}>
+          {contract.timeStart !== null ? contract.timeStart : ""} <br />
+          {contract.timeEnd !== null ? contract.timeEnd : ""}
+        </td>
+        <td style={{ maxWidth: "150px" }}>{contract.nameService} </td>
+        <td style={{ maxWidth: "150px" }}>{contract.createAt}</td>
+        <td style={{ maxWidth: "150px" }}>{contract.totalAmount + " "}VND</td>
       </tr>
     ))}
 </tbody>

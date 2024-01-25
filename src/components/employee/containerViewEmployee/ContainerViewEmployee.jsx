@@ -28,6 +28,9 @@ export function ContainerViewEmployee({ idEmployee }) {
     const handleClose = () => {
       setAnchorEl(null);
     };
+    const handleLogout = () => {
+      localStorage.removeItem('user')
+    }
   return (
     <>
       <div>
@@ -114,7 +117,7 @@ export function ContainerViewEmployee({ idEmployee }) {
                 >
                   <MenuItem>Thông tin cá nhân</MenuItem>
                 </NavLink>
-                <NavLink style={{ textDecoration: "none", color: "#212529" }} to={"/home"}>
+                <NavLink style={{ textDecoration: "none", color: "#212529" }}onClick={handleLogout}>
                   <MenuItem>Thoát</MenuItem>
                 </NavLink>
               </Menu>

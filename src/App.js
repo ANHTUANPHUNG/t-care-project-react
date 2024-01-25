@@ -2,7 +2,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../node_modules/@fortawesome/fontawesome-free/css/all.min.css";
 import { Home } from "./components/home/Home";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { UserSignIn } from "./components/home/wordFindCare/userSignIn/UserSignIn";
 import { UserAddress } from "./components/home/wordFindCare/userAddress/UserAddress";
 import { UserService } from "./components/home/wordFindCare/userService/UserService";
@@ -40,13 +40,12 @@ import { EmployeeContract } from "./components/employee/EmployeeContract";
 import { AdminHome } from "./components/dashboard/AdminHome";
 import { AdminStatistics } from "./components/dashboard/AdminStatistics";
 import { AdminAssistant } from "./components/dashboard/AdminAssistant";
-import { AuthProvider } from "./hooks/AuthContext";
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useReducer } from "react";
 import { UserContract } from "./components/viewUser/userContract/UserContract";
 
 export const AuthContext = createContext();
 const initUser = {
-  username: "",
+  userId: "",
   role: "",
 };
 const userReducer = (state, action) => {
@@ -54,7 +53,7 @@ const userReducer = (state, action) => {
   switch (action.type) {
     case "UPDATE_ROLE": {
       return {
-        username: action.payload.username,
+        userId: action.payload.userId,
         role: action.payload.role,
       };
     }
@@ -65,25 +64,95 @@ const userReducer = (state, action) => {
 
 function App() {
   const [user, dispatch] = useReducer(userReducer, initUser);
-  function PrivateRoute({ children }) {
-    const auth = useAuth();
+  let navigate = useNavigate();
+  function PrivateRouteSale({ children }) {
+    const auth = useAuthForSale();
     return auth ? children : <Navigate to="/login" />;
   }
-
-  function useAuth() {
-    // let roleUser = JSON.parse(localStorage.getItem("user"));
-    // console.log("user", roleUser);
-    // if (roleUser) {
-    //   if (roleUser.role == "ROLE_EMPLOYEE") {
-    //     return true;
-    //   } else {
-    //     return false;
-    //   }
-    // } else {
-    //   return false;
-    // }
-    return true;
+  function PrivateRouteEmployee({ children }) {
+    const auth = useAuthForEmployee();
+    return auth ? children : <Navigate to="/login" />;
   }
+  function PrivateRouteAdmin({ children }) {
+    const auth = useAuthForAdmin();
+    return auth ? children : <Navigate to="/login" />;
+  }
+  function PrivateRouteUser({ children }) {
+    const auth = useAuthForUser();
+    return auth ? children : <Navigate to="/login" />;
+  }
+  function PrivateRouteHome({ children }) {
+    let roleUser = JSON.parse(localStorage.getItem("user"));
+    if (roleUser) {
+      if (roleUser.payload.role == "ROLE_USER") {
+          return <Navigate to={`/user/index/${roleUser.payload.userId}`} />
+          } 
+      if (roleUser.payload.role == "ROLE_EMPLOYEE") {
+        return <Navigate to={`/employee/index/${roleUser.payload.userId}`}/>;
+      }
+      if (roleUser.payload.role == "ROLE_SALE") {
+        return <Navigate to={`/sale/${roleUser.payload.userId}`}/>
+      }
+      if (roleUser.payload.role == "ROLE_ADMIN") {
+        return <Navigate to={`/admin/home/${roleUser.payload.userId}`}/>
+      }
+    }
+    return children
+  }
+
+  function useAuthForSale() {
+    let roleUser = JSON.parse(localStorage.getItem("user"));
+    console.log("roleUser", roleUser);
+    if (roleUser) {
+      if (roleUser.payload.role == "ROLE_SALE") {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+  function useAuthForEmployee() {
+    let roleUser = JSON.parse(localStorage.getItem("user"));
+    console.log("roleUser", roleUser);
+    if (roleUser) {
+      if (roleUser.payload.role == "ROLE_EMPLOYEE") {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+  function useAuthForAdmin() {
+    let roleUser = JSON.parse(localStorage.getItem("user"));
+    console.log("roleUser", roleUser);
+    if (roleUser) {
+      if (roleUser.payload.role == "ROLE_ADMIN") {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+  function useAuthForUser() {
+    let roleUser = JSON.parse(localStorage.getItem("user"));
+    console.log("roleUser", roleUser);
+    if (roleUser) {
+      if (roleUser.payload.role == "ROLE_USER") {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
 
   console.log("user", user);
   return (
@@ -91,109 +160,278 @@ function App() {
       <ToastContainer autoClose={3000} theme="colored" />
       <AuthContext.Provider value={{ user, dispatch }}>
         <Routes>
-          <Route
-            path="/home"
-            element={
-              <PrivateRoute>
-                <Home />
-              </PrivateRoute>
-            }
-          ></Route>
+          <Route path="/home" element={<PrivateRouteHome><Home /></PrivateRouteHome>}></Route>
           <Route path="/login" element={<LogIn />}></Route>
           <Route path="/forgot-password" element={<ForgotPassword />}></Route>
           <Route path="/sign-in" element={<SignInSelect />}></Route>
           <Route path="/sign-in/find-care" element={<SignInUser />}></Route>
           <Route
             path="/assistant/sign-in"
-            element={<AssistantSignIn />}
+            element={
+              <PrivateRouteEmployee>
+                <AssistantSignIn />
+              </PrivateRouteEmployee>
+            }
           ></Route>
-          <Route path="/assistant/address/:id" element={<Address />}></Route>
+          <Route
+            path="/assistant/address/:id"
+            element={
+              <PrivateRouteEmployee>
+                <Address />
+              </PrivateRouteEmployee>
+            }
+          ></Route>
           <Route
             path="/assistant/process/:id"
-            element={<DescriptionProcess />}
+            element={
+              <PrivateRouteEmployee>
+                <DescriptionProcess />
+              </PrivateRouteEmployee>
+            }
           ></Route>
           <Route
             path="/assistant/availability/:id"
-            element={<Availability />}
+            element={
+              <PrivateRouteEmployee>
+                <Availability />
+              </PrivateRouteEmployee>
+            }
           ></Route>
           <Route
             path="/assistant/experience/:id"
-            element={<Experience />}
+            element={
+              <PrivateRouteEmployee>
+                <Experience />
+              </PrivateRouteEmployee>
+            }
           ></Route>
-          <Route path="/assistant/bio/:id" element={<Bio />}></Route>
-          <Route path="/assistant/photo/:id" element={<Photo />}></Route>
-          <Route path="/user/signin" element={<UserSignIn />}></Route>
-          <Route path="/user/address/:id" element={<UserAddress />}></Route>
-          <Route path="/user/service/:id" element={<UserService />}></Route>
-          <Route path="/user/skill-info/:id" element={<SkillAndInfo />}></Route>
+
+          <Route
+            path="/assistant/bio/:id"
+            element={
+              <PrivateRouteEmployee>
+                <Bio />
+              </PrivateRouteEmployee>
+            }
+          ></Route>
+          <Route
+            path="/assistant/photo/:id"
+            element={
+              <PrivateRouteEmployee>
+                <Photo />
+              </PrivateRouteEmployee>
+            }
+          ></Route>
+          <Route
+            path="/user/signin"
+            element={
+              <PrivateRouteUser>
+                <UserSignIn />
+              </PrivateRouteUser>
+            }
+          ></Route>
+          <Route
+            path="/user/address/:id"
+            element={
+              <PrivateRouteUser>
+                <UserAddress />
+              </PrivateRouteUser>
+            }
+          ></Route>
+          <Route
+            path="/user/service/:id"
+            element={
+              <PrivateRouteUser>
+                <UserService />
+              </PrivateRouteUser>
+            }
+          ></Route>
+          <Route
+            path="/user/skill-info/:id"
+            element={
+              <PrivateRouteUser>
+                <SkillAndInfo />
+              </PrivateRouteUser>
+            }
+          ></Route>
           <Route
             path="/user/date-session/:id"
-            element={<DateSession />}
+            element={
+              <PrivateRouteUser>
+                <DateSession />
+              </PrivateRouteUser>
+            }
           ></Route>
-          <Route path="/user/need-care/:id" element={<UserNeedCare />}></Route>
+          <Route
+            path="/user/need-care/:id"
+            element={
+              <PrivateRouteUser>
+                <UserNeedCare />
+              </PrivateRouteUser>
+            }
+          ></Route>
           <Route
             path="/user/assistant-caption/:idCart"
-            element={<AssistantCaption />}
+            element={
+              <PrivateRouteUser>
+                <AssistantCaption />
+              </PrivateRouteUser>
+            }
           ></Route>
           <Route
             path="/user/render-list-assistant/:id"
-            element={<RenderListAssistant />}
+            element={
+              <PrivateRouteUser>
+                <RenderListAssistant />
+              </PrivateRouteUser>
+            }
           ></Route>
-          <Route path="/user/profile/:id" element={<Profile />}></Route>
-          <Route path="/user/index/:id" element={<IndexUser />}></Route>
-          <Route path="/user/cart/:id" element={<CartUser />}></Route>
-          <Route path="/user/contract/:id" element={<UserContract />}></Route>
+          <Route
+            path="/user/profile/:id"
+            element={
+              <PrivateRouteUser>
+                <Profile />
+              </PrivateRouteUser>
+            }
+          ></Route>
+          <Route
+            path="/user/cart/:id"
+            element={
+              <PrivateRouteUser>
+                <CartUser />
+              </PrivateRouteUser>
+            }
+          ></Route>
+          <Route
+            path="/user/contract/:id"
+            element={
+              <PrivateRouteUser>
+                <UserContract />
+              </PrivateRouteUser>
+            }
+          ></Route>
+
           <Route
             path="/user/cart/filter/:id/:idCart"
-            element={<FilterCartUser />}
+            element={
+              <PrivateRouteUser>
+                <FilterCartUser />
+              </PrivateRouteUser>
+            }
           ></Route>
           <Route
             path="/user/index/:id/:idAssistant"
-            element={<ProfileAssistant />}
+            element={
+              <PrivateRouteUser>
+                <ProfileAssistant />
+              </PrivateRouteUser>
+            }
           ></Route>
-          <Route path="/sale/:id" element={<SalerView />}></Route>
+          <Route
+            path="/user/index/:id"
+            element={
+              <PrivateRouteUser>
+                <IndexUser />
+              </PrivateRouteUser>
+            }
+          ></Route>
+          <Route
+            path="/sale/:id"
+            element={
+              <PrivateRouteSale>
+                <SalerView />
+              </PrivateRouteSale>
+            }
+          ></Route>
           <Route
             path="/sale/sale-for-user/:id"
-            element={<SalerViewForUser />}
+            element={
+              <PrivateRouteSale>
+                <SalerViewForUser />
+              </PrivateRouteSale>
+            }
           ></Route>
           <Route
             path="/sale/add-customer/:id"
-            element={<AddCustomer />}
+            element={
+              <PrivateRouteSale>
+                <AddCustomer />
+              </PrivateRouteSale>
+            }
           ></Route>
           <Route
             path="/sale/edit-customer/:idSale/:id"
-            element={<EditCustomer />}
+            element={
+              <PrivateRouteSale>
+                <EditCustomer />
+              </PrivateRouteSale>
+            }
           ></Route>
           <Route
             path="/sale/sale-contract/:id"
-            element={<SaleContract />}
+            element={
+              <PrivateRouteSale>
+                <SaleContract />
+              </PrivateRouteSale>
+            }
           ></Route>
           <Route
             path="/sale/:idSale/render-list-assistant/:id"
-            element={<RenderListAssistantSale />}
+            element={
+              <PrivateRouteSale>
+                <RenderListAssistantSale />
+              </PrivateRouteSale>
+            }
           ></Route>
           <Route
             path="/employee/index/:idEmployee"
-            element={<EmployeeIndex />}
+            element={
+              <PrivateRouteEmployee>
+                <EmployeeIndex />
+              </PrivateRouteEmployee>
+            }
           ></Route>
 
           <Route
             path="/employee/contract/:idEmployee"
-            element={<EmployeeContract />}
+            element={
+              <PrivateRouteEmployee>
+                <EmployeeContract />
+              </PrivateRouteEmployee>
+            }
           ></Route>
           <Route
             path="/employee/profile/:idEmployee"
-            element={<EmployeeProfile />}
+            element={
+              <PrivateRouteEmployee>
+                <EmployeeProfile />
+              </PrivateRouteEmployee>
+            }
           ></Route>
           <Route path="/reset-password" element={<ResetPassword />}></Route>
-          <Route path="/admin/home/:idAdmin" element={<AdminHome />}></Route>
+          <Route
+            path="/admin/home/:idAdmin"
+            element={
+              <PrivateRouteAdmin>
+                <AdminHome />
+              </PrivateRouteAdmin>
+            }
+          ></Route>
           <Route
             path="/admin/statistics/:idAdmin"
-            element={<AdminStatistics />}
+            element={
+              <PrivateRouteAdmin>
+                <AdminStatistics />
+              </PrivateRouteAdmin>
+            }
           ></Route>
           <Route
             path="/admin/assistant/:idAdmin"
-            element={<AdminAssistant />}
+            element={
+              <PrivateRouteAdmin>
+                <AdminAssistant />
+              </PrivateRouteAdmin>
+            }
           ></Route>
         </Routes>
       </AuthContext.Provider>

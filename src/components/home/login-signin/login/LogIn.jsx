@@ -16,10 +16,9 @@ export function LogIn() {
   let navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
-  const [role, setRole] = useState("");
 
   let userDispatch = null;
-  const { user, dispatch} = useContext(AuthContext);
+  const { user, dispatch } = useContext(AuthContext);
   const handleSubmit = async (event) => {
     event.preventDefault();
     const login = { username: email, password: pass };
@@ -28,69 +27,57 @@ export function LogIn() {
       const resp = await axios.post("http://localhost:8080/api/auth/login", login);
       toast.success("Đăng nhập thành công");
       console.log("resp", resp.data);
-      
+
       if (resp.data.isUser) {
-        // setRole("ROLE_USER")
-        // authContext.updateRole("ROLE_USER");
         userDispatch = {
           type: "UPDATE_ROLE",
           payload: {
-            username: "aa",
-            role: "ROLE_USER"
-          }
+            userId: resp.data.idAccount,
+            role: "ROLE_USER",
+          },
         };
-        dispatch(userDispatch)
-        localStorage.setItem("user", JSON.stringify(userDispatch))
+        dispatch(userDispatch);
+        localStorage.setItem("user", JSON.stringify(userDispatch));
         navigate("/user/index/" + resp.data.idAccount);
-      } else if(resp.data.isSale){
-        // setRole("ROLE_SALE")
-        // authContext.updateRole("ROLE_SALE");
+      } else if (resp.data.isSale) {
         navigate("/sale/" + resp.data.idAccount);
         userDispatch = {
           type: "UPDATE_ROLE",
           payload: {
-            username: "aa",
-            role: "ROLE_SALE"
-          }
-        }
-        dispatch(userDispatch)
-        localStorage.setItem("user", JSON.stringify(userDispatch))
-      }
-       else if(resp.data.isEmployee){
-        // setRole("ROLE_EMPLOYEE")
-        // authContext.updateRole("ROLE_EMPLOYEE");
+            userId: resp.data.idAccount,
+            role: "ROLE_SALE",
+          },
+        };
+        dispatch(userDispatch);
+        localStorage.setItem("user", JSON.stringify(userDispatch));
+      } else if (resp.data.isEmployee) {
         navigate("/employee/index/" + resp.data.idAccount);
         userDispatch = {
           type: "UPDATE_ROLE",
           payload: {
-            username: "aa",
-            role: "ROLE_EMPLOYEE"
-          }
-        }
-        dispatch(userDispatch)
-        localStorage.setItem("user", JSON.stringify(userDispatch))
-        
-
-      } else{
-        // setRole("ROLE_ADMIN")
-        // authContext.updateRole("ROLE_ADMIN");
+            userId: resp.data.idAccount,
+            role: "ROLE_EMPLOYEE",
+          },
+        };
+        dispatch(userDispatch);
+        localStorage.setItem("user", JSON.stringify(userDispatch));
+      } else {
         navigate("/admin/home/" + resp.data.idAccount);
         userDispatch = {
           type: "UPDATE_ROLE",
           payload: {
-            username: "aa",
-            role: "ROLE_ADMIN"
-          }
-        }
-        dispatch(userDispatch)
-        localStorage.setItem("user", JSON.stringify(userDispatch))
+            userId: resp.data.idAccount,
+            role: "ROLE_ADMIN",
+          },
+        };
+        dispatch(userDispatch);
+        localStorage.setItem("user", JSON.stringify(userDispatch));
       }
     } catch (err) {
       console.log(err);
       toast.error("Tên đăng nhập hoặc mật khẩu không đúng");
     }
   };
-  console.log(role);
   const logIn = (
     <div className="form-login">
       <CheckLogInSignIn value={"login"} />
