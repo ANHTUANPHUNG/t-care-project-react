@@ -45,7 +45,6 @@ export default function SalerViewForUser() {
     let navigate = useNavigate();
     const loadCustomers = async () => {
         const customers = await axios.get(`http://localhost:8080/api/carts/readyStatus`);
-        console.log(customers.data.content);
         setCustomers(customers.data.content);
     };
 

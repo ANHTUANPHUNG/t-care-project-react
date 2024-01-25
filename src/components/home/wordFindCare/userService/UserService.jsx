@@ -9,6 +9,7 @@ import GetServiceAPI from "../../../../service/getServiceAPI";
 import { toast } from "react-toastify";
 import LoadingCommon from "../../../common/LoadingCommon";
 import "./UserService.css";
+import LoadingPage from "../../../common/LoadingPage";
 
 export function UserService() {
   const [listServiceGenerals, setListServiceGenerals] = useState();
@@ -16,6 +17,7 @@ export function UserService() {
   const { id } = useParams();
   let navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingPage, setIsLoadingPage] = useState(false);
 
   useEffect(() => {
     showListServiceGenerals();
@@ -30,6 +32,7 @@ export function UserService() {
     return <LoadingCommon />;
   }
   const handleSubmitService = async () => {
+    setIsLoadingPage(true);
     const select = {
       serviceId: selectedRadioId,
     };
@@ -39,10 +42,12 @@ export function UserService() {
       .then((resp) => {
         toast.success("Chọn dịch vụ thành công");
         navigate("/user/skill-info" + "/" + id);
+        setIsLoadingPage(false);
       })
       .catch((err) => {
         console.error("Lỗi khi gửi POST request:", err);
         toast.error("Chọn dịch vụ");
+        setIsLoadingPage(false);
       });
   };
   return (
@@ -67,7 +72,13 @@ export function UserService() {
         </div>
       </div>
       <div className="my-5 h5-ta-center">
-        <ButtonForMe childrenButton={"Tiếp theo"} onclick={handleSubmitService} />
+        {isLoadingPage ? (
+          <div style={{ marginRight: "17%" }}>
+            <LoadingPage />
+          </div>
+        ) : (
+          <ButtonForMe childrenButton={"Tiếp theo"} onclick={handleSubmitService} />
+        )}
       </div>
       <div className="legal-notice-user">
         <LegalNotice />

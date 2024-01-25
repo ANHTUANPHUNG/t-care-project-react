@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
+import "./Contract.css";
+import { LegalNotice } from "../../carehub/LegalNotice";
 import axios from "axios";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import ModalUnstyled from "../ModalToMe.jsx";
-import LoadingCommon from "../common/LoadingCommon.jsx";
+import ModalUnstyled from "../../ModalToMe.jsx";
+import LoadingCommon from "../../common/LoadingCommon.jsx";
 import SockJS from "sockjs-client";
 import { Stomp } from "@stomp/stompjs";
 import { useParams } from "react-router";
-import { ButtonForMe } from "../ButtonForMe.jsx";
-import { ContainerViewEmployee } from "./containerViewEmployee/ContainerViewEmployee.jsx";
-import { LegalNotice } from "./../carehub/LegalNotice";
+import { ContainerViewUser } from "../containerViewUser/ContainerViewUser.jsx";
+import { ButtonForMe } from "./../../ButtonForMe";
 import { format } from "date-fns";
 
-export function EmployeeContract() {
-  const { idEmployee } = useParams();
-  console.log("a", idEmployee);
+export function UserContract() {
+  const { id } = useParams();
   const [listContract, setListContract] = useState([]);
   const [checkModal, setCheckModal] = useState(false);
   const [date, setDate] = useState(null);
@@ -25,18 +25,19 @@ export function EmployeeContract() {
   const [isLoading, setIsLoading] = useState(true);
   const [message, setMessage] = useState("");
   const [stompClient, setStompClient] = useState(null);
-  console.log(listContract);
+
   useEffect(() => {
-    axios.get(`http://localhost:8080/api/contracts/employees/${idEmployee}`).then((res) => {
+    axios.get(`http://localhost:8080/api/contracts/users/${id}`).then((res) => {
       const arrayList = res.data.content.map((e, i) => ({
         ...e,
+        // createAt:
       }));
       arrayList.sort((a, b) => new Date(b.createAt) - new Date(a.createAt));
 
       setListContract(arrayList);
       setIsLoading(false);
     });
-  }, [idEmployee, message]);
+  }, [id, message]);
   console.log(listContract);
   useEffect(() => {
     const socket = new SockJS("http:/localhost:8080/ws");
@@ -154,15 +155,10 @@ export function EmployeeContract() {
         <span>Chức vụ: Giám Đốc/ Tổng Giám Đốc.</span> <br />
         <div style={{ height: "10px" }}></div>
         <span style={{ fontWeight: "600" }}>Bên B: </span> <br />
-        <span>Tên Ông/Bà: </span>{" "}
-        <span>
-          {" "}
-          <td>{contract?.user !== null ? contract?.user.name : contract?.customerName} </td>.
-        </span>{" "}
-        <br />
-        <span>Số điện thoại: </span> <span>{contract?.user?.phone}.</span> <br />
-        <span>CMND/CCCD số: </span> <span>{contract?.user?.personId}.</span> <br />
-        <span>Giới tính: </span> <span>{contract?.user?.gender}.</span> <br />
+        <span>Tên Ông/Bà: </span> <span>{contract?.user.name}.</span> <br />
+        <span>Số điện thoại: </span> <span>{contract?.user.phone}.</span> <br />
+        <span>CMND/CCCD số: </span> <span>{contract?.user.personId}.</span> <br />
+        <span>Giới tính: </span> <span>{contract?.user.gender}.</span> <br />
         <div style={{ height: "10px" }}></div>
         <span style={{ fontWeight: "600" }}>Hộ lý được ký kết: </span> <br />
         <span>Tên hộ lý: </span> <span>{contract?.employee.name}.</span> <br />
@@ -267,7 +263,7 @@ export function EmployeeContract() {
   );
   return (
     <>
-      <ContainerViewEmployee idEmployee={idEmployee} />
+      <ContainerViewUser idUser={id} />
       <div style={{ padding: "30px 70px" }}>
         <h2>Danh sách hợp đồng</h2>
         <table className="table table-striped table-hover">
@@ -282,13 +278,13 @@ export function EmployeeContract() {
           </thead>
           <tbody>
             {listContract?.map((e) => (
-              <tr key={e?.id}>
+              <tr key={e.id}>
                 <td>{format(new Date(e.createAt), "yyyy-MM-dd HH:mm")}</td>
                 <td>
-                  {e?.timeStart} <br /> {e?.timeEnd}
+                  {e.timeStart} <br /> {e.timeEnd}
                 </td>
                 <td>{e.user !== null ? e.user.name : e.customerName} </td>
-                <td>{e?.employee.name} </td>
+                <td>{e.employee.name} </td>
                 <td>
                   {" "}
                   <div
