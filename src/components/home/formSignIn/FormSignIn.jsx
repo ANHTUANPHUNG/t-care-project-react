@@ -9,6 +9,8 @@ import { ButtonForMe } from "../../ButtonForMe";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
+import LoadingPage from "../../common/LoadingPage";
+import { textAlign } from "@mui/system";
 
 const validationSchema = yup.object().shape({
   email: yup.string().email("Email không hợp lệ").required("Email không được để trống"),
@@ -33,6 +35,8 @@ const validationSchema = yup.object().shape({
 
 export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, color, checkRole, api }) {
   const [gender, setGender] = useState("MALE");
+  const [isLoading, setIsLoading] = useState(false);
+
   let navigate = useNavigate();
 
   const formik = useFormik({
@@ -49,6 +53,8 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
+        setIsLoading(true)
+
         await api(
           {
             firstName: values.firstName,
@@ -64,6 +70,7 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
           url
         );
         formik.resetForm();
+        setIsLoading(false)
       } catch (error) {
         console.error("An error occurred during form submission:", error);
       }
@@ -216,7 +223,7 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
               )}
             </Grid>
 
-            <Grid item xs={12} className="d-flex justify-content-center">
+            {!isLoading? <Grid item xs={12} className="d-flex justify-content-center">
               <ButtonForMe
                 value={100}
                 childrenButton={"Đăng kí"}
@@ -224,6 +231,11 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
                 type="submit"
               />
             </Grid>
+          : 
+          <div style={{ padding:"20px 45%"}}>
+            <LoadingPage />
+          </div>
+          }
           </Grid>
         </form>
       </div>

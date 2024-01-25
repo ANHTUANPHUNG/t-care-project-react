@@ -47,6 +47,7 @@ export function FilterCartUser() {
     };
     axiosData();
   }, [count]);
+  console.log(filterAss);
   const handleSubmitAssistant = () => {
     console.log(selectedAssistant);
     const form = {

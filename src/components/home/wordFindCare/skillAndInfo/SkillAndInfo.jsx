@@ -9,6 +9,7 @@ import { SkillIndexUser } from "../../../viewUser/index/SkillIndexUser";
 import { InfoIndexUser } from "../../../viewUser/index/InfoIndexUser";
 import { toast } from "react-toastify";
 import LoadingCommon from "../../../common/LoadingCommon";
+import LoadingPage from "../../../common/LoadingPage";
 
 export function SkillAndInfo() {
   const { id } = useParams();
@@ -17,6 +18,8 @@ export function SkillAndInfo() {
   const [selectedSkills, setSelectedSkills] = useState([]);
   const [selectedInfos, setSelectedInfos] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingPage, setIsLoadingPage] = useState(false);
+
   let navigate = useNavigate();
   useEffect(() => {
     const fetchData = async () => {
@@ -25,16 +28,15 @@ export function SkillAndInfo() {
       setListSkill(dataSkillResponse.data);
       setListInfo(dataInfoResponse.data);
       setIsLoading(false);
-
     };
 
     fetchData();
-    
   }, [id]);
   if (isLoading) {
     return <LoadingCommon />;
   }
   const handleSubmitSkillAndInfo = () => {
+    setIsLoadingPage(true);
     if (selectedSkills.length !== 0 && selectedInfos.length !== 0) {
       const selectedSkillIds = selectedSkills.map((selectedSkill) => {
         const matchingSkill = listSkill.find((skill) => skill.name === selectedSkill);
@@ -56,6 +58,7 @@ export function SkillAndInfo() {
           toast.success("Cập nhật thông tin hộ lý thành công!");
           navigate("/user/date-session" + "/" + id);
         }
+        setIsLoadingPage(false);
       };
       updateData();
     } else {
@@ -103,7 +106,13 @@ export function SkillAndInfo() {
         </div>
       </div>
       <div className="my-5 h5-ta-center">
-        <ButtonForMe childrenButton={"Tiếp theo"} onclick={handleSubmitSkillAndInfo} />
+        {isLoadingPage ? (
+          <div style={{ marginRight: "17%" }}>
+            <LoadingPage />
+          </div>
+        ) : (
+          <ButtonForMe childrenButton={"Tiếp theo"} onclick={handleSubmitSkillAndInfo} />
+        )}
       </div>
       <div className="legal-notice-user">
         <LegalNotice />

@@ -167,7 +167,6 @@ export function RenderListCart({
 
                 return (
                     <tr key={e.id}>
-                        <td>{e.indexCart}</td>
                         <td style={{ width: "100px" }}>
                             {e.timeStart} <br /> {e.timeEnd}
                         </td>
@@ -179,9 +178,13 @@ export function RenderListCart({
                                 </div>
                             ))}
                         </td>
-                        <td>
+                        <td style={{width:"150px"}}>
                             {e?.employee?.firstName && e?.employee?.lastName ? (
-                                `${e.employee.firstName} ${e.employee.lastName}`
+                                <div>
+                                    {e.employee.firstName} {e.employee.lastName} <br /> 
+                                    <Link to={`/user/cart/filter/${id}/${e.id}`}>Đổi hộ lý</Link>
+
+                                </div>
                             ) : (
                                 <Link to={`/user/cart/filter/${id}/${e.id}`}>Thêm trợ lý</Link>
                             )}

@@ -18,7 +18,7 @@ export function LogIn() {
   const [pass, setPass] = useState("");
 
   let userDispatch = null;
-  const { user, dispatch} = useContext(AuthContext);
+  const { user, dispatch } = useContext(AuthContext);
   const handleSubmit = async (event) => {
     event.preventDefault();
     const login = { username: email, password: pass };
@@ -27,54 +27,51 @@ export function LogIn() {
       const resp = await axios.post("http://localhost:8080/api/auth/login", login);
       toast.success("Đăng nhập thành công");
       console.log("resp", resp.data);
-      
+
       if (resp.data.isUser) {
         userDispatch = {
           type: "UPDATE_ROLE",
           payload: {
             userId: resp.data.idAccount,
-            role: "ROLE_USER"
-          }
+            role: "ROLE_USER",
+          },
         };
-        dispatch(userDispatch)
-        localStorage.setItem("user", JSON.stringify(userDispatch))
+        dispatch(userDispatch);
+        localStorage.setItem("user", JSON.stringify(userDispatch));
         navigate("/user/index/" + resp.data.idAccount);
-      } else if(resp.data.isSale){
+      } else if (resp.data.isSale) {
         navigate("/sale/" + resp.data.idAccount);
         userDispatch = {
           type: "UPDATE_ROLE",
           payload: {
             userId: resp.data.idAccount,
-            role: "ROLE_SALE"
-          }
-        }
-        dispatch(userDispatch)
-        localStorage.setItem("user", JSON.stringify(userDispatch))
-      }
-       else if(resp.data.isEmployee){
-        navigate("/employee/index/" + resp.data.idAccount);
+            role: "ROLE_SALE",
+          },
+        };
+        dispatch(userDispatch);
+        localStorage.setItem("user", JSON.stringify(userDispatch));
+      } else if (resp.data.isEmployee) {
+        navigate("/employee/contract/" + resp.data.idAccount);
         userDispatch = {
           type: "UPDATE_ROLE",
           payload: {
             userId: resp.data.idAccount,
-            role: "ROLE_EMPLOYEE"
-          }
-        }
-        dispatch(userDispatch)
-        localStorage.setItem("user", JSON.stringify(userDispatch))
-        
-
-      } else{
+            role: "ROLE_EMPLOYEE",
+          },
+        };
+        dispatch(userDispatch);
+        localStorage.setItem("user", JSON.stringify(userDispatch));
+      } else {
         navigate("/admin/home/" + resp.data.idAccount);
         userDispatch = {
           type: "UPDATE_ROLE",
           payload: {
             userId: resp.data.idAccount,
-            role: "ROLE_ADMIN"
-          }
-        }
-        dispatch(userDispatch)
-        localStorage.setItem("user", JSON.stringify(userDispatch))
+            role: "ROLE_ADMIN",
+          },
+        };
+        dispatch(userDispatch);
+        localStorage.setItem("user", JSON.stringify(userDispatch));
       }
     } catch (err) {
       console.log(err);
@@ -114,7 +111,7 @@ export function LogIn() {
           </div>
 
           <Grid item xs={12} className="d-flex justify-content-center ">
-            <ButtonForMe value={100} childrenButton={"Log In"} />
+            <ButtonForMe value={100} childrenButton={"Đăng nhập"} />
           </Grid>
         </Grid>
       </form>

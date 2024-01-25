@@ -16,17 +16,16 @@ export function RenderListAssistant() {
   const [isChecked, setChecked] = useState(false);
   const [filterAss, setFilterAss] = useState();
   const { id } = useParams();
-  console.log(id);
   useEffect(() => {
     let axiosData = async () => {
       const responseFilterAss = await axios.get(
         `http://localhost:8080/api/carts/filter/${id}`
       );
-      console.log(responseFilterAss?.data);
       setFilterAss(responseFilterAss?.data.content);
     };
     axiosData();
   }, []);
+  console.log(filterAss);
   const handleCheckboxChange = () => {
     setChecked(!isChecked);
   };

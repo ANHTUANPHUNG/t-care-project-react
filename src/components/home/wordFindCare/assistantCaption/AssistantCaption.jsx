@@ -6,11 +6,15 @@ import LogoProject from "../../../logoProject/LogoProject";
 import { ButtonForMe } from "./../../../ButtonForMe";
 import { toast } from "react-toastify";
 import axios from "axios";
+import LoadingPage from "../../../common/LoadingPage";
+
 export function AssistantCaption() {
   const [content, setContent] = useState("");
   const navigate = useNavigate();
   const { idCart } = useParams();
   const [idUser, setIdUser] = useState()
+  const [isLoadingPage, setIsLoadingPage] = useState(false);
+
   useEffect(() => {
     const findByIdCart = () => {
       axios
@@ -23,6 +27,7 @@ export function AssistantCaption() {
   }, [idCart]); 
   
   const handleSubmitAssistantCaption =  () => {
+    setIsLoadingPage(true)
     const note = {
       noteForEmployee:content
     }
@@ -33,10 +38,13 @@ export function AssistantCaption() {
         
         toast.success("Hoàn thành thêm thông tin người cần chăm sóc");
         navigate(`/user/cart/filter/${id}/${idCart}`);
+        setIsLoadingPage(false)
       })
       .catch((err) => {
         console.error("Lỗi khi gửi POST request:", err);
         toast.error("Lỗi");
+        setIsLoadingPage(false)
+
       });
   };
   return (
@@ -71,7 +79,12 @@ export function AssistantCaption() {
       </div>
 
       <div className="mt-2 mb-5 button-date-session">
-        <ButtonForMe childrenButton={"Tiếp theo"} onclick={handleSubmitAssistantCaption} />
+      {isLoadingPage ? (
+          <div style={{ marginRight: "17%" }}>
+            <LoadingPage />
+          </div>
+        ) : (
+        <ButtonForMe childrenButton={"Tiếp theo"} onclick={handleSubmitAssistantCaption} />)}
       </div>
       <div className="legal-notice-user">
         <LegalNotice />

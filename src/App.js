@@ -30,7 +30,6 @@ import EditCustomer from "./components/saler/EditCustomer";
 import { RenderListAssistantSale } from "./components/saler/RenderListAssistantSale";
 import { CartUser } from "./components/viewUser/cartUser/CartUser";
 import { FilterCartUser } from "./components/viewUser/cartUser/FilterCartUser";
-import { Contract } from "./components/viewUser/contract/Contract";
 import { SkillAndInfo } from "./components/home/wordFindCare/skillAndInfo/SkillAndInfo";
 import { EmployeeIndex } from "./components/employee/EmployeeIndex";
 import { ResetPassword } from "./components/home/login-signin/forgotPassword/ResetPassword";
@@ -41,8 +40,8 @@ import { EmployeeContract } from "./components/employee/EmployeeContract";
 import { AdminHome } from "./components/dashboard/AdminHome";
 import { AdminStatistics } from "./components/dashboard/AdminStatistics";
 import { AdminAssistant } from "./components/dashboard/AdminAssistant";
-import { AuthProvider } from "./hooks/AuthContext";
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useReducer } from "react";
+import { UserContract } from "./components/viewUser/userContract/UserContract";
 
 export const AuthContext = createContext();
 const initUser = {
@@ -89,7 +88,8 @@ function App() {
         return <Navigate to={`/user/index/${roleUser.payload.userId}`} />;
       }
       if (roleUser.payload.role == "ROLE_EMPLOYEE") {
-        return <Navigate to={`/employee/index/${roleUser.payload.userId}`} />;
+
+        return <Navigate to={`/employee/contract/${roleUser.payload.userId}`}/>;
       }
       if (roleUser.payload.role == "ROLE_SALE") {
         return <Navigate to={`/sale/${roleUser.payload.userId}`} />;
@@ -158,7 +158,6 @@ function App() {
   return (
     <>
       <ToastContainer autoClose={3000} theme="colored" />
-
       <AuthContext.Provider value={{ user, dispatch }}>
         <Routes>
           <Route
@@ -291,10 +290,11 @@ function App() {
             path="/user/contract/:id"
             element={
               <PrivateRouteUser>
-                <Contract />
+                <UserContract />
               </PrivateRouteUser>
             }
           ></Route>
+
           <Route
             path="/user/cart/filter/:id/:idCart"
             element={
