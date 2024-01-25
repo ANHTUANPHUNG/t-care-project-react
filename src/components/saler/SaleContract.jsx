@@ -87,7 +87,7 @@ export default function SaleContract() {
         </td>
         <td style={{ maxWidth: "150px" }}>{contract.nameService} </td>
         <td style={{ maxWidth: "150px" }}>{contract.createAt}</td>
-        <td style={{ maxWidth: "150px" }}>{contract.totalAmount + " "}VND</td>
+        <td style={{ maxWidth: "150px" }}>{contract.totalAmount.toLocaleString() + " "}VND</td>
       </tr>
     ))}
 </tbody>

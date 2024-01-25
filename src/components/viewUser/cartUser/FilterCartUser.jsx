@@ -15,6 +15,7 @@ import { Star, StarHalf } from "@mui/icons-material";
 import SecurityIcon from "@mui/icons-material/Security";
 import DoneIcon from "@mui/icons-material/Done";
 import LoadingCommon from "../../common/LoadingCommon";
+import { width } from "@mui/system";
 
 export function FilterCartUser() {
   const [isOpen, setIsOpen] = useState(false);
@@ -86,7 +87,7 @@ export function FilterCartUser() {
             </div>
           </div>
           <div className="col-3 p-0">
-            <img
+          <img style={{ height: "100px", width: "75px" }} 
               src="https://res.cloudinary.com/dw4xpd646/image/upload/v1703816118/Cloudinary-React/ljezvtifp9u79nfvqtkq.png"
               alt=""
             />

@@ -96,8 +96,10 @@ export function RenderListCart({
                         .then((res) => {
                             Swal.fire({
                                 title: "Chuyển tiền vào số tài khoản này để gặp hộ lý, số tiền là 200.000",
-                                text: "Số TK: 076 997 0012",
-                            });
+                                html:
+                                  "Số TK: <strong>076 997 0012</strong><br>" +
+                                  "Ngân hàng MB Bank",
+                              });
                             toast.success("Yêu cầu đã được chuyển đến quản lí.");
                             setCheckCallApiCart((pre) => !pre);
                         });
