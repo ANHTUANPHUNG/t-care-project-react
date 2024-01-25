@@ -185,7 +185,7 @@ export default function SalerViewForUser() {
         </td>
         <td className="mx-2">
           <Link className="btn btn-warning"
-          to={`/saler/${id}/render-list-assistant/${customer.id}`}
+          to={`/sale/${id}/render-list-assistant/${customer.id}`}
           >
             
             <FaExchangeAlt />

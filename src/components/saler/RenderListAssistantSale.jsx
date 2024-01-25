@@ -51,7 +51,7 @@ export function RenderListAssistantSale() {
       axios.put(`http://localhost:8080/api/carts/employees`, cart).then(() => {
         setIsLoading(true)
         setTimeout(() => {
-          navigate(`/saler/${idSale}`);
+          navigate(`/sale/${idSale}`);
         }, 1000);
       });
       
