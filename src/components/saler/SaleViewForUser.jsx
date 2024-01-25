@@ -56,7 +56,7 @@ export default function SalerViewForUser() {
             .then((response) => {
                 console.log(response.data);
                 Swal.fire({
-                    title: "Yêu cầu khách chuyển: " + response.data.totalAmount,
+                    title: "Yêu cầu khách chuyển: " + response.data.totalAmount.toLocaleString(),
                     showCancelButton: true,
                     confirmButtonText: "OK",
                     cancelButtonText: "Tạo hợp đồng",
@@ -122,7 +122,7 @@ export default function SalerViewForUser() {
                         <table id="tbCustomer" className="table table-hover">
                             <thead>
                                 <tr>
-                                    <th>Họ Tên</th>
+                                    <th>Tên Người Bệnh</th>
                                     <th>Địa chỉ</th>
                                     <th>Số điện thoại</th>
                                     <th>Ngày thuê</th>

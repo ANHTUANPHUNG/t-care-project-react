@@ -49,7 +49,7 @@ export default function SalerView() {
       .then((response) => {
         console.log(response.data);
         Swal.fire({
-          title: 'Yêu cầu khách chuyển: ' + response.data.totalAmount,
+          title: 'Yêu cầu khách chuyển: ' + response.data.totalAmount.toLocaleString(),
           showCancelButton: true,
           confirmButtonText: 'OK',
           cancelButtonText: 'Tạo hợp đồng',
@@ -58,7 +58,7 @@ export default function SalerView() {
             
           } else if (result.dismiss === Swal.DismissReason.cancel) {
            axios.post(`http://localhost:8080/api/contracts/createContract/${id}`).then(e => loadCustomers())
-           toast.success("Tạo hợp đồng thành công")
+           .then(toast.success("Tạo hợp đồng thành công"))
            
           }
         });
