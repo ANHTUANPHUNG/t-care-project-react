@@ -38,7 +38,7 @@ export function RenderListAssistantIndexUser({ value, index, listAssistant, chec
     <>
       <div className="render-list-assistant-index-user" key={index}>
         <div className="render-list-assistant-index-user-header">
-          <img src={value?.photoUrl} alt="" />
+          <img src={value?.photoUrl} alt="" style={{width:"75px"}}/>
           <div className="render-list-assistant-index-user-body">
             <span className="render-list-assistant-index-user-body-name">
               {value?.lastName} {value?.firstName}

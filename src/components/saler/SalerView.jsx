@@ -102,7 +102,7 @@ export default function SalerView() {
                          
                          <Link
                              style={{textDecoration: "none", color:"#0d6efd"}}
-                              to={`/add-customer/${id}`}
+                              to={`/sale/add-customer/${id}`}
                              >
                                  
                                  <i className="far fa-plus-square"></i>
@@ -171,7 +171,7 @@ export default function SalerView() {
         
         <td className="mx-2">
           <Link className="btn btn-warning"
-          to={`/edit-customer/${id}/${customer.id}`}
+          to={`/sale/edit-customer/${id}/${customer.id}`}
           >
             
             <FaEdit />
@@ -195,7 +195,7 @@ export default function SalerView() {
         </td>
         <td className="mx-2">
           <Link className="btn btn-warning"
-          to={`/saler/${id}/render-list-assistant/${customer.id}`}
+          to={`/sale/${id}/render-list-assistant/${customer.id}`}
           >
             
             <FaExchangeAlt />

@@ -48,7 +48,7 @@ export default function Phone() {
         </div>
       </div>
       <div className="tel">
-        <p className="fone"onClick={handleCallNow}>Gọi ngay</p>
+        <p className="fone"onClick={handleCallNow}>0225 731 2999</p>
       </div>
     </div>
   );

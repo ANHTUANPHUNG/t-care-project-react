@@ -1,8 +1,8 @@
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "../node_modules/@fortawesome/fontawesome-free/css/all.min.css"
+import "../node_modules/@fortawesome/fontawesome-free/css/all.min.css";
 import { Home } from "./components/home/Home";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { UserSignIn } from "./components/home/wordFindCare/userSignIn/UserSignIn";
 import { UserAddress } from "./components/home/wordFindCare/userAddress/UserAddress";
 import { UserService } from "./components/home/wordFindCare/userService/UserService";
@@ -28,87 +28,175 @@ import { IndexUser } from "./components/viewUser/index/IndexUser";
 import { ProfileAssistant } from "./components/viewUser/profileAssistant/ProfileAssistant";
 import EditCustomer from "./components/saler/EditCustomer";
 import { RenderListAssistantSale } from "./components/saler/RenderListAssistantSale";
-import { CartUser } from './components/viewUser/cartUser/CartUser';
+import { CartUser } from "./components/viewUser/cartUser/CartUser";
 import { FilterCartUser } from "./components/viewUser/cartUser/FilterCartUser";
-import { Contract } from "./components/viewUser/contract/Contract";
 import { SkillAndInfo } from "./components/home/wordFindCare/skillAndInfo/SkillAndInfo";
 import { EmployeeIndex } from "./components/employee/EmployeeIndex";
-import { ResetPassword } from './components/home/login-signin/forgotPassword/ResetPassword';
+import { ResetPassword } from "./components/home/login-signin/forgotPassword/ResetPassword";
 import { EmployeeProfile } from "./components/employee/EmployeeProfile";
-import SaleContract from './components/saler/SaleContract';
-import SalerViewForUser from './components/saler/SaleViewForUser';
-import { EmployeeContract } from './components/employee/EmployeeContract';
+import SaleContract from "./components/saler/SaleContract";
+import SalerViewForUser from "./components/saler/SaleViewForUser";
+import { EmployeeContract } from "./components/employee/EmployeeContract";
 import { AdminHome } from "./components/dashboard/AdminHome";
-import { AdminStatistics } from './components/dashboard/AdminStatistics';
+import { AdminStatistics } from "./components/dashboard/AdminStatistics";
 import { AdminAssistant } from "./components/dashboard/AdminAssistant";
+import { AuthProvider } from "./hooks/AuthContext";
+import { createContext, useContext, useReducer } from "react";
 import { UserContract } from "./components/viewUser/userContract/UserContract";
 
+export const AuthContext = createContext();
+const initUser = {
+  username: "",
+  role: "",
+};
+const userReducer = (state, action) => {
+  console.log(action);
+  switch (action.type) {
+    case "UPDATE_ROLE": {
+      return {
+        username: action.payload.username,
+        role: action.payload.role,
+      };
+    }
+    default:
+      return state;
+  }
+};
+
 function App() {
+  const [user, dispatch] = useReducer(userReducer, initUser);
+  function PrivateRoute({ children }) {
+    const auth = useAuth();
+    return auth ? children : <Navigate to="/login" />;
+  }
+
+  function useAuth() {
+    // let roleUser = JSON.parse(localStorage.getItem("user"));
+    // console.log("user", roleUser);
+    // if (roleUser) {
+    //   if (roleUser.role == "ROLE_EMPLOYEE") {
+    //     return true;
+    //   } else {
+    //     return false;
+    //   }
+    // } else {
+    //   return false;
+    // }
+    return true;
+  }
+
+  console.log("user", user);
   return (
     <>
       <ToastContainer autoClose={3000} theme="colored" />
-      <Routes>
-        <Route path="/home" element={<Home />}></Route>
-        <Route path="/login" element={<LogIn />}></Route>
-        <Route path="/forgot-password" element={<ForgotPassword />}></Route>
-        <Route path="/reset-password" element={<ResetPassword />}></Route>
-        <Route path="/sign-in" element={<SignInSelect />}></Route>
-        <Route path="/sign-in/find-care" element={<SignInUser />}></Route>
-        <Route path="/assistant/sign-in" element={<AssistantSignIn />}></Route>
-        <Route path="/assistant/address/:id" element={<Address />}></Route>
-        <Route
-          path="/assistant/process/:id"
-          element={<DescriptionProcess />}
-        ></Route>
-        <Route
-          path="/assistant/availability/:id"
-          element={<Availability />}
-        ></Route>
-        <Route
-          path="/assistant/experience/:id"
-          element={<Experience />}
-        ></Route>
-        <Route path="/assistant/bio/:id" element={<Bio />}></Route>
-        <Route path="/assistant/photo/:id" element={<Photo />}></Route>
-        <Route path="/user/signin" element={<UserSignIn />}></Route>
-        <Route path="/user/address/:id" element={<UserAddress />}></Route>
-        <Route path="/user/service/:id" element={<UserService />}></Route>
-        <Route path="/user/skill-info/:id" element={<SkillAndInfo />}></Route>
-        <Route path="/user/date-session/:id" element={<DateSession />}></Route>
-        <Route path="/user/need-care/:id" element={<UserNeedCare />}></Route>
-        <Route
-          path="/user/assistant-caption/:idCart"
-          element={<AssistantCaption />}
-        ></Route>
-        <Route
-          path="/user/render-list-assistant/:id"
-          element={<RenderListAssistant />}
-        ></Route>
-        <Route path="/user/profile/:id" element={<Profile />}></Route>
-        <Route path="/user/index/:id" element={<IndexUser />}></Route>
-        <Route path="/user/cart/:id" element={<CartUser />}></Route> 
-        <Route path="/user/contract/:id" element={<UserContract />}></Route> 
-        <Route path="/user/cart/filter/:id/:idCart" element={<FilterCartUser />}></Route> 
-        <Route path="/user/index/:id/:idAssistant" element={<ProfileAssistant />}></Route>
-        <Route path="/saler/:id" element={<SalerView />}></Route>
-        <Route path="/salerForUser/:id" element={<SalerViewForUser />}></Route>
-        <Route path="/add-customer/:id" element={<AddCustomer />}></Route>
-        <Route path="/edit-customer/:idSale/:id" element={<EditCustomer />}></Route>
-        <Route path="/sale-contract/:id" element={<SaleContract />}></Route>
-        <Route
-          path="saler/:idSale/render-list-assistant/:id"
-          element={<RenderListAssistantSale />}
-        ></Route>
-        <Route path="/employee/index/:idEmployee" element={<EmployeeIndex />}></Route>
+      <AuthContext.Provider value={{ user, dispatch }}>
+        <Routes>
+          <Route
+            path="/home"
+            element={
+              <PrivateRoute>
+                <Home />
+              </PrivateRoute>
+            }
+          ></Route>
+          <Route path="/login" element={<LogIn />}></Route>
+          <Route path="/forgot-password" element={<ForgotPassword />}></Route>
+          <Route path="/sign-in" element={<SignInSelect />}></Route>
+          <Route path="/sign-in/find-care" element={<SignInUser />}></Route>
+          <Route
+            path="/assistant/sign-in"
+            element={<AssistantSignIn />}
+          ></Route>
+          <Route path="/assistant/address/:id" element={<Address />}></Route>
+          <Route
+            path="/assistant/process/:id"
+            element={<DescriptionProcess />}
+          ></Route>
+          <Route
+            path="/assistant/availability/:id"
+            element={<Availability />}
+          ></Route>
+          <Route
+            path="/assistant/experience/:id"
+            element={<Experience />}
+          ></Route>
+          <Route path="/assistant/bio/:id" element={<Bio />}></Route>
+          <Route path="/assistant/photo/:id" element={<Photo />}></Route>
+          <Route path="/user/signin" element={<UserSignIn />}></Route>
+          <Route path="/user/address/:id" element={<UserAddress />}></Route>
+          <Route path="/user/service/:id" element={<UserService />}></Route>
+          <Route path="/user/skill-info/:id" element={<SkillAndInfo />}></Route>
+          <Route
+            path="/user/date-session/:id"
+            element={<DateSession />}
+          ></Route>
+          <Route path="/user/need-care/:id" element={<UserNeedCare />}></Route>
+          <Route
+            path="/user/assistant-caption/:idCart"
+            element={<AssistantCaption />}
+          ></Route>
+          <Route
+            path="/user/render-list-assistant/:id"
+            element={<RenderListAssistant />}
+          ></Route>
+          <Route path="/user/profile/:id" element={<Profile />}></Route>
+          <Route path="/user/index/:id" element={<IndexUser />}></Route>
+          <Route path="/user/cart/:id" element={<CartUser />}></Route>
+          <Route path="/user/contract/:id" element={<UserContract />}></Route>
+          <Route
+            path="/user/cart/filter/:id/:idCart"
+            element={<FilterCartUser />}
+          ></Route>
+          <Route
+            path="/user/index/:id/:idAssistant"
+            element={<ProfileAssistant />}
+          ></Route>
+          <Route path="/sale/:id" element={<SalerView />}></Route>
+          <Route
+            path="/sale/sale-for-user/:id"
+            element={<SalerViewForUser />}
+          ></Route>
+          <Route
+            path="/sale/add-customer/:id"
+            element={<AddCustomer />}
+          ></Route>
+          <Route
+            path="/sale/edit-customer/:idSale/:id"
+            element={<EditCustomer />}
+          ></Route>
+          <Route
+            path="/sale/sale-contract/:id"
+            element={<SaleContract />}
+          ></Route>
+          <Route
+            path="/sale/:idSale/render-list-assistant/:id"
+            element={<RenderListAssistantSale />}
+          ></Route>
+          <Route
+            path="/employee/index/:idEmployee"
+            element={<EmployeeIndex />}
+          ></Route>
 
-        <Route path="/employee/contract/:idEmployee" element={<EmployeeContract />}></Route>
-        <Route path="/employee/profile/:idEmployee" element={<EmployeeProfile />}></Route>
-        <Route path="/reset-password" element={<ResetPassword />}></Route>
-        <Route path="/admin/home/:idAdmin" element={<AdminHome />}></Route>
-        <Route path="/admin/statistics/:idAdmin" element={<AdminStatistics />}></Route>
-        <Route path="/admin/assistant/:idAdmin" element={<AdminAssistant />}></Route>
-
-      </Routes>
+          <Route
+            path="/employee/contract/:idEmployee"
+            element={<EmployeeContract />}
+          ></Route>
+          <Route
+            path="/employee/profile/:idEmployee"
+            element={<EmployeeProfile />}
+          ></Route>
+          <Route path="/reset-password" element={<ResetPassword />}></Route>
+          <Route path="/admin/home/:idAdmin" element={<AdminHome />}></Route>
+          <Route
+            path="/admin/statistics/:idAdmin"
+            element={<AdminStatistics />}
+          ></Route>
+          <Route
+            path="/admin/assistant/:idAdmin"
+            element={<AdminAssistant />}
+          ></Route>
+        </Routes>
+      </AuthContext.Provider>
     </>
   );
 }
