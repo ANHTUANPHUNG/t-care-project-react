@@ -88,7 +88,7 @@ function App() {
           return <Navigate to={`/user/index/${roleUser.payload.userId}`} />
           } 
       if (roleUser.payload.role == "ROLE_EMPLOYEE") {
-        return <Navigate to={`/employee/index/${roleUser.payload.userId}`}/>;
+        return <Navigate to={`/employee/contract/${roleUser.payload.userId}`}/>;
       }
       if (roleUser.payload.role == "ROLE_SALE") {
         return <Navigate to={`/sale/${roleUser.payload.userId}`}/>

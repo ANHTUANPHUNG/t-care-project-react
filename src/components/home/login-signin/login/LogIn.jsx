@@ -51,7 +51,7 @@ export function LogIn() {
         dispatch(userDispatch);
         localStorage.setItem("user", JSON.stringify(userDispatch));
       } else if (resp.data.isEmployee) {
-        navigate("/employee/index/" + resp.data.idAccount);
+        navigate("/employee/contract/" + resp.data.idAccount);
         userDispatch = {
           type: "UPDATE_ROLE",
           payload: {

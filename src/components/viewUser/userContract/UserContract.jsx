@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./Contract.css"
+import "./Contract.css";
 import { LegalNotice } from "../../carehub/LegalNotice";
 import axios from "axios";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
@@ -9,10 +9,11 @@ import SockJS from "sockjs-client";
 import { Stomp } from "@stomp/stompjs";
 import { useParams } from "react-router";
 import { ContainerViewUser } from "../containerViewUser/ContainerViewUser.jsx";
-import { ButtonForMe } from './../../ButtonForMe';
+import { ButtonForMe } from "./../../ButtonForMe";
+import { format } from "date-fns";
 
 export function UserContract() {
-  const {id} = useParams()
+  const { id } = useParams();
   const [listContract, setListContract] = useState([]);
   const [checkModal, setCheckModal] = useState(false);
   const [date, setDate] = useState(null);
@@ -29,8 +30,10 @@ export function UserContract() {
     axios.get(`http://localhost:8080/api/contracts/users/${id}`).then((res) => {
       const arrayList = res.data.content.map((e, i) => ({
         ...e,
-        indexContract: i + 1,
+        // createAt:
       }));
+      arrayList.sort((a, b) => new Date(b.createAt) - new Date(a.createAt));
+
       setListContract(arrayList);
       setIsLoading(false);
     });
@@ -45,8 +48,7 @@ export function UserContract() {
         setMessage(receivedMessage);
       });
     });
-    socket.onerror = (error) => {
-    };
+    socket.onerror = (error) => {};
     setStompClient(client);
     return () => {
       client.disconnect();
@@ -267,7 +269,6 @@ export function UserContract() {
         <table className="table table-striped table-hover">
           <thead>
             <tr>
-              <th>#</th>
               <th>Thời gian ký </th>
               <th>Hiệu lực</th>
               <th>Tên khách hàng</th>
@@ -278,12 +279,11 @@ export function UserContract() {
           <tbody>
             {listContract?.map((e) => (
               <tr key={e.id}>
-                <td>{e.indexContract}</td>
-                <td>{e.createAt}</td>
+                <td>{format(new Date(e.createAt), "yyyy-MM-dd HH:mm")}</td>
                 <td>
                   {e.timeStart} <br /> {e.timeEnd}
                 </td>
-                <td>{e.user.name} </td>
+                <td>{e.user !== null ? e.user.name : e.customerName} </td>
                 <td>{e.employee.name} </td>
                 <td>
                   {" "}
