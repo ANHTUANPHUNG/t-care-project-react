@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./FormSignIn.css";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -11,6 +11,9 @@ import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import LoadingPage from "../../common/LoadingPage";
 import { textAlign } from "@mui/system";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { AuthContext } from "../../../App";
 
 const validationSchema = yup.object().shape({
   email: yup.string().email("Email không hợp lệ").required("Email không được để trống"),
@@ -33,9 +36,10 @@ const validationSchema = yup.object().shape({
   termsAgreed: yup.bool().oneOf([true], "Bạn phải đồng ý với các điều khoản và dịch vụ"),
 });
 
-export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, color, checkRole, api }) {
+export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, color, checkRole, api ,loginUser}) {
   const [gender, setGender] = useState("MALE");
   const [isLoading, setIsLoading] = useState(false);
+  const { user, dispatch } = useContext(AuthContext);
 
   let navigate = useNavigate();
 
@@ -69,6 +73,32 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
           navigate,
           url
         );
+        if (loginUser) {
+          const loginUser = async () => {
+            const login = { username: values.email, password: values.password };
+          
+            try {
+              const resp = await axios.post("http://localhost:8080/api/auth/login", login);
+          
+              if (resp.data.isUser) {
+                const userDispatch = {
+                  type: "UPDATE_ROLE",
+                  payload: {
+                    userId: resp.data.idAccount,
+                    role: "ROLE_USER",
+                  },
+                };
+                dispatch(userDispatch);
+                localStorage.setItem("user", JSON.stringify(userDispatch));
+                // navigate("/user/address/" + resp.data.idAccount);
+              }
+            } catch (error) {
+              console.error("Đăng nhập thất bại", error);
+              // Xử lý lỗi nếu cần thiết
+            }
+          };
+          loginUser()
+        }
         formik.resetForm();
         setIsLoading(false)
       } catch (error) {

@@ -44,7 +44,7 @@ const UserServiceAPI = {
         return axios
             .put(PREFIX + "/carts/locations/" + id, postData)
             .then((resp) => {
-                toast.success("Tài khoản được tạo thành công");
+                toast.success("Thêm địa chỉ thành công");
                 navigate(url + "/" + id);
             })
             .catch((err) => {

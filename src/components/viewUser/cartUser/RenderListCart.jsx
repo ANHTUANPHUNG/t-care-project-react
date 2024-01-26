@@ -95,10 +95,11 @@ export function RenderListCart({
                         .put(`http://localhost:8080/api/carts/cartStatus/${findById.id}`)
                         .then((res) => {
                             Swal.fire({
-                                title: "Chuyển tiền vào số tài khoản này để gặp hộ lý, số tiền là 200.000",
+                                title: "Chuyển tiền vào số tài khoản này để gặp hộ lý, số tiền là 200.000 VNĐ",
                                 html:
                                   "Số TK: <strong>076 997 0012</strong><br>" +
-                                  "Ngân hàng MB Bank",
+                                  "Ngân hàng MB Bank <br>" +
+                                  "Nội dung: Chuyển tiền gặp mặt hộ lý",
                               });
                             toast.success("Yêu cầu đã được chuyển đến quản lí.");
                             setCheckCallApiCart((pre) => !pre);

@@ -8,6 +8,7 @@ import { LegalNotice } from "../../../carehub/LegalNotice";
 import UserServiceAPI from "../../../../service/userServiceAPI";
 
 export function UserSignIn() {
+  
   return (
     <>
       <div>
@@ -19,7 +20,7 @@ export function UserSignIn() {
         </div>
       </div>
       <div className="m5-0">
-        <FormSignIn url={"/user/address"} checkRole={"ROLE_USER"} api ={UserServiceAPI.signInUser} />
+        <FormSignIn url={"/user/address"} loginUser={true} checkRole={"ROLE_USER"} api ={UserServiceAPI.signInUser} />
       </div>
       <div className="legal-notice-user">
         <LegalNotice />

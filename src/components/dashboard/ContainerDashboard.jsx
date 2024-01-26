@@ -23,7 +23,9 @@ export function ContainerDashboard() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+  };
   return (
     <>
       <div className="container-dashboard-header">
@@ -54,10 +56,14 @@ export function ContainerDashboard() {
                 "aria-labelledby": "basic-button",
               }}
             >
-              <NavLink className="container-dashboard-header-name-admin" >
+              <NavLink className="container-dashboard-header-name-admin">
                 <MenuItem>Anh Tuấn</MenuItem>
               </NavLink>
-              <NavLink className="container-dashboard-header-logout" to={"/home"}>
+              <NavLink
+                className="container-dashboard-header-logout"
+                to={"/home"}
+                onClick={handleLogout}
+              >
                 <MenuItem>Thoát</MenuItem>
               </NavLink>
             </Menu>
@@ -110,7 +116,6 @@ export function ContainerDashboard() {
         </NavLink>
       </div>
       <div className="container-dashboard-separation-2"></div>
-      
     </>
   );
 }
