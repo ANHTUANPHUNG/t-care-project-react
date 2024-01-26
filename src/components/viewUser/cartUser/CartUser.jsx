@@ -4,8 +4,9 @@ import { useParams } from "react-router-dom";
 import { ContainerViewUser } from "../containerViewUser/ContainerViewUser";
 import { LegalNotice } from "../../carehub/LegalNotice";
 import axios from "axios";
-
+import LoadingCommon from "../../common/LoadingCommon";
 import { RenderListCart } from "./RenderListCart";
+import { toast } from "react-toastify";
 
 const memberOfFamilyList = [
   { id: "MYPARENT", name: "Cha Mẹ của tôi" },
@@ -30,6 +31,9 @@ export function CartUser() {
   const [checkModal, setCheckModal] = useState();
   const [checkCallApiCart, setCheckCallApiCart] = useState(false);
   const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasShownToast, setHasShownToast] = useState(false);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -38,16 +42,25 @@ export function CartUser() {
           ...cartItem,
         }));
         updatedListCart.sort((a, b) => new Date(b.createAt) - new Date(a.createAt));
-
+        if (updatedListCart.length === 0 ) {
+          setHasShownToast(true); 
+        }
         setListCart(updatedListCart);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        toast.error("Lấy dữ liệu thất bại")
       }
+      setIsLoading(false)
+
     };
 
     fetchData();
   }, [id, checkModal, checkCallApiCart, message]);
-
+  useEffect(()=>{ if (hasShownToast) {
+    toast.info("Chưa có dữ liệu")
+  }},[hasShownToast])
+  if(isLoading){
+    <LoadingCommon/>
+  }
   return (
     <>
       <ContainerViewUser idUser={id} />

@@ -116,7 +116,6 @@ function App() {
   }
   function useAuthForEmployee() {
     let roleUser = JSON.parse(localStorage.getItem("user"));
-    console.log("roleUser", roleUser);
     if (roleUser) {
       if (roleUser.payload.role == "ROLE_EMPLOYEE") {
         return true;
@@ -129,7 +128,6 @@ function App() {
   }
   function useAuthForAdmin() {
     let roleUser = JSON.parse(localStorage.getItem("user"));
-    console.log("roleUser", roleUser);
     if (roleUser) {
       if (roleUser.payload.role == "ROLE_ADMIN") {
         return true;
@@ -142,7 +140,6 @@ function App() {
   }
   function useAuthForUser() {
     let roleUser = JSON.parse(localStorage.getItem("user"));
-    console.log("roleUser", roleUser);
     if (roleUser) {
       if (roleUser.payload.role == "ROLE_USER") {
         return true;

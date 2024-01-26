@@ -11,22 +11,23 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { FrameLoginSignIn } from "../frameLoginSignIn/FrameLoginSignIn";
 import { AuthContext } from "../../../../App";
-
+import LoadingPage from './../../../common/LoadingPage';
 export function LogIn() {
   let navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   let userDispatch = null;
   const { user, dispatch } = useContext(AuthContext);
   const handleSubmit = async (event) => {
+    setIsLoading(true);
     event.preventDefault();
     const login = { username: email, password: pass };
 
     try {
       const resp = await axios.post("http://localhost:8080/api/auth/login", login);
       toast.success("Đăng nhập thành công");
-      console.log("resp", resp.data);
 
       if (resp.data.isUser) {
         userDispatch = {
@@ -73,9 +74,11 @@ export function LogIn() {
         dispatch(userDispatch);
         localStorage.setItem("user", JSON.stringify(userDispatch));
       }
+      setIsLoading(false);
     } catch (err) {
       console.log(err);
       toast.error("Tên đăng nhập hoặc mật khẩu không đúng");
+      setIsLoading(false);
     }
   };
   const logIn = (
@@ -109,10 +112,13 @@ export function LogIn() {
               </NavLink>
             </div>
           </div>
-
-          <Grid item xs={12} className="d-flex justify-content-center ">
-            <ButtonForMe value={100} childrenButton={"Đăng nhập"} />
-          </Grid>
+          {isLoading ? (
+            <div style={{padding:"50%"}}><LoadingPage /></div>
+          ) : (
+            <Grid item xs={12} className="d-flex justify-content-center ">
+              <ButtonForMe value={100} childrenButton={"Đăng nhập"} />
+            </Grid>
+          )}
         </Grid>
       </form>
       <div className="d-flex justify-content-center w-100 my-4">

@@ -10,6 +10,7 @@ import { NavLink, useParams } from "react-router-dom";
 import { Avatar, Button, Menu, MenuItem } from "@mui/material";
 import axios from "axios";
 
+
 export function ContainerViewUser({ idUser }) {
   const [user, setUser] = useState();
   const { id } = useParams();
@@ -21,6 +22,7 @@ export function ContainerViewUser({ idUser }) {
     };
     axiosData();
   }, [idUser]);
+
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -30,8 +32,8 @@ export function ContainerViewUser({ idUser }) {
     setAnchorEl(null);
   };
   const handleLogout = () => {
-    localStorage.removeItem('user')
-  }
+    localStorage.removeItem("user");
+  };
   return (
     <>
       <div>
@@ -65,7 +67,23 @@ export function ContainerViewUser({ idUser }) {
                 <div className="view-user-header-select-nav-block-title">Favorites</div>
               </div>
             </NavLink> */}
-            <NavLink
+            
+              <NavLink
+                className={`view-user-header-select-nav${
+                  window.location.pathname === `/user/cart/${id}` ? "active" : ""
+                }`}
+                to={`/user/cart/${id}`}
+              >
+                <div className="view-user-header-select-nav-block">
+                  <ListAlt
+                    className={`view-user-header-select-nav-block-icon${
+                      window.location.pathname === `/user/cart/${id}` ? "active" : ""
+                    }`}
+                  />
+                  <div className="view-user-header-select-nav-block-title">Danh sách hồ sơ</div>
+                </div>
+              </NavLink>
+            {/* <NavLink
               className={`view-user-header-select-nav${
                 window.location.pathname === `/user/cart/${id}` ? "active" : ""
               }`}
@@ -79,11 +97,13 @@ export function ContainerViewUser({ idUser }) {
                 />
                 <div className="view-user-header-select-nav-block-title">Danh sách hồ sơ</div>
               </div>
-            </NavLink>
-            <NavLink className={`view-user-header-select-nav${
+            </NavLink> */}
+            <NavLink
+              className={`view-user-header-select-nav${
                 window.location.pathname === `/user/contract/${id}` ? "active" : ""
               }`}
-              to={`/user/contract/${id}`}>
+              to={`/user/contract/${id}`}
+            >
               <div className="view-user-header-select-nav-block">
                 <CreditScore
                   className={`view-user-header-select-nav-block-icon${
@@ -118,7 +138,10 @@ export function ContainerViewUser({ idUser }) {
                 >
                   <MenuItem>Thông tin cá nhân</MenuItem>
                 </NavLink>
-                <NavLink style={{ textDecoration: "none", color: "#212529" }} onClick={handleLogout}>
+                <NavLink
+                  style={{ textDecoration: "none", color: "#212529" }}
+                  onClick={handleLogout}
+                >
                   <MenuItem>Thoát</MenuItem>
                 </NavLink>
               </Menu>
