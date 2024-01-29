@@ -230,7 +230,7 @@ export default function EditCustomer() {
       console.log(response.data);
        const cartId = response.data
       toast.success("Thay đổi thông tin khách hàng thành công")
-      navigate(`/sale/${idSale}`)
+      navigate(`/sale/${idSale}/render-list-assistant/${id}`)
       console.log(response.data);
     })
     .catch(error => {
@@ -296,7 +296,9 @@ export default function EditCustomer() {
 
        
       </div>
-        <div style={{ display: 'flex', alignItems: 'center', paddingTop:'60px' }}>
+      <div style={{padding:"40px 0 20px 0", fontWeight:"600", fontSize:"30px"}}>Thông tin người cần chăm sóc</div>
+
+        <div style={{ display: 'flex', alignItems: 'center', }}>
           <h6>Giới tính:</h6>
           <div style={{ marginRight: '140px',paddingLeft: "58px" }}>
           <FormControl>
@@ -309,7 +311,7 @@ export default function EditCustomer() {
               <MenuItem value="" disabled>
                 Chọn giới tính
               </MenuItem>
-              {gender.map((option) => (
+              {gender?.map((option) => (
                 <MenuItem key={option} value={option}>
                   {getDisplayValueGender(option)}
                 </MenuItem>
@@ -329,7 +331,7 @@ export default function EditCustomer() {
               <MenuItem value="" disabled>
                 Mối quan hệ: 
               </MenuItem>
-              {relationship.map((option) => (
+              {relationship?.map((option) => (
                 <MenuItem key={option} value={option}>
                   {getDisplayValueRelation(option)}
                 </MenuItem>
@@ -351,7 +353,7 @@ export default function EditCustomer() {
               <MenuItem value="" disabled>
                 Chọn thập niên
               </MenuItem>
-              {edecadeList.map((option) => (
+              {edecadeList?.map((option) => (
                 <MenuItem key={option} value={option}>
                    {getDisplayValueEdecade(option)}
                 </MenuItem>

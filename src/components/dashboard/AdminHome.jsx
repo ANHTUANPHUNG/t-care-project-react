@@ -79,7 +79,7 @@ export function AdminHome() {
   if (isLoading) {
     return <LoadingCommon />;
   }
-
+  const x = Array.from({ length: 21 }, (_, index) => -1 + 0.2 * index);
   return (
     <>
       <ContainerDashboard />
@@ -99,7 +99,7 @@ export function AdminHome() {
               borderRadius: "5px",
             }}
           >
-            {revenue?.feeAmountRevenue + revenue?.feeContactRevenue} <div>Tổng doanh thu</div>
+            {(revenue?.feeAmountRevenue + revenue?.feeContactRevenue).toLocaleString() + " " + "VND"} <div>Tổng doanh thu</div>
           </div>
           <div
             className="col-2"
@@ -111,7 +111,7 @@ export function AdminHome() {
               borderRadius: "5px",
             }}
           >
-            <div>{revenue?.feeAmountRevenue}</div>
+            <div>{(revenue?.feeAmountRevenue).toLocaleString() + " " + "VND"}</div>
             <div>Doanh thu sản phẩm</div>
           </div>
           <div
@@ -124,7 +124,7 @@ export function AdminHome() {
               borderRadius: "5px",
             }}
           >
-            <div>{revenue?.feeContactRevenue}</div>
+            <div>{(revenue?.feeContactRevenue).toLocaleString() + " " + "VND"}</div>
             <div>Doanh thu khác</div>
           </div>
           <div

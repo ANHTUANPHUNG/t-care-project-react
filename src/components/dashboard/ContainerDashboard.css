@@ -38,3 +38,7 @@
     background-color: #f5f7fb;
     padding: 50px 60px;
 }
+
+.MuiChartsAxis-directionY{
+    display: none;
+}

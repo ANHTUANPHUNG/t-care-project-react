@@ -22,6 +22,7 @@ export function AdminAssistant() {
       const assistant = await axios.get("http://localhost:8080/api/admin/employees/waiting");
       const data = assistant.data.content;
       const listWithIndex = data.map((item, index) => ({ ...item, index: index + 1 }));
+      listWithIndex.sort((a, b) => new Date(b.createAt) - new Date(a.createAt))
       setListAssistantWaiting(listWithIndex);
       setIsLoading(false);
     };
@@ -83,6 +84,7 @@ export function AdminAssistant() {
       }
     });
   };
+  console.log("listAssistantWaiting",listAssistantWaiting);
   const profileAssistant = (
     <>
       <div style={{ textAlign: "center", padding: "30px 0" }}>
@@ -197,7 +199,6 @@ export function AdminAssistant() {
           <table style={{ marginTop: "20px" }} className="table table-hover table-bordered">
             <thead>
               <tr>
-                <th>STT</th>
                 <th>Ngày</th>
                 <th>Tên</th>
                 <th>Email</th>
@@ -208,7 +209,6 @@ export function AdminAssistant() {
             <tbody>
               {listAssistantWaiting?.map((e) => (
                 <tr key={e.id}>
-                  <td>{e.index}</td>
                   <td>{e.createAt}</td>
                   <td>
                     {e.lastName} {e.firstName}

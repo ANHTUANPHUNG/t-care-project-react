@@ -15,10 +15,11 @@ export default function SalerView() {
   const [customers, setCustomers] = useState([]);
   const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [check, setCheck] = useState(true);
 
   useEffect(() => {
     loadCustomers();
-  }, []);
+  }, [check]);
 
   const { id } = useParams();
   let navigate = useNavigate();
@@ -58,7 +59,23 @@ export default function SalerView() {
           } else if (result.dismiss === Swal.DismissReason.cancel) {
             axios
               .post(`http://localhost:8080/api/contracts/createContract/${id}`)
-              .then((e) => loadCustomers(), toast.success("Tạo hợp đồng thành công"));
+              .then(() => {
+                setCheck(prevCheck => !prevCheck);
+                loadCustomers();
+               
+              })
+              .then(() => {
+                setIsLoading(true)
+                setTimeout(() => {
+                  navigate(`/sale/d6206379-5c88-4239-b265-2929c972749e`);
+                  toast.success("Tạo hợp đồng thành công");
+                }, 1000);
+              })
+              
+              .catch((error) => {
+                loadCustomers();
+                console.log(error);
+              });
           }
         });
       })
@@ -130,6 +147,7 @@ export default function SalerView() {
               <tbody>
                 {customers &&
                   customers
+                  .sort((a, b) => new Date(b.createAt) - new Date(a.createAt))
                     .filter(
                       (customer) =>
                         customer.firstName.toLowerCase().includes(search.toLowerCase()) ||
