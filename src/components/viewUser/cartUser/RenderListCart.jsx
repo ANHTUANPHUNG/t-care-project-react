@@ -99,7 +99,7 @@ export function RenderListCart({
                                 html:
                                   "Số TK: <strong>076 997 0012</strong><br>" +
                                   "Ngân hàng MB Bank <br>" +
-                                  "Nội dung: Chuyển tiền gặp mặt hộ lý",
+                                  "Nội dung: HOTEN_SODIENTHOAI",
                               });
                             toast.success("Yêu cầu đã được chuyển đến quản lí.");
                             setCheckCallApiCart((pre) => !pre);
@@ -181,11 +181,18 @@ export function RenderListCart({
                         </td>
                         <td style={{width:"150px"}}>
                             {e?.employee?.firstName && e?.employee?.lastName ? (
-                                <div>
+                                
+                                    e?.cartStatus === "Đang xác nhận" ? 
+                                    <div>
+                                    {e.employee.firstName} {e.employee.lastName} <br />    </div>
+: <div>
                                     {e.employee.firstName} {e.employee.lastName} <br /> 
                                     <Link to={`/user/cart/filter/${id}/${e.id}`}>Đổi hộ lý</Link>
 
+                             
                                 </div>
+                                
+                               
                             ) : (
                                 <Link to={`/user/cart/filter/${id}/${e.id}`}>Thêm trợ lý</Link>
                             )}

@@ -273,11 +273,11 @@ export default function AddCustomer() {
           />
         </div>
       </div>
-       
-
-       
       </div>
-        <div style={{ display: 'flex', alignItems: 'center', paddingTop:'60px' }}>
+      <div style={{padding:"40px 0 20px 0", fontWeight:"600", fontSize:"30px"}}>Thông tin người cần chăm sóc</div>
+
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+
           <h6>Giới tính:</h6>
           <div style={{ marginRight: '140px',paddingLeft: "58px" }}>
           <FormControl>

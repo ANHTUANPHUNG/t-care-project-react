@@ -249,7 +249,7 @@ export function IndexUser() {
               </div>
             </div>
             <div className="index-user-body-infos">
-              <h6>Kỹ năng chuyên nghiệp</h6>
+              <h6>Thông tin khác</h6>
               <div className="index-user-body-infos-render">
                 {listInformation?.map((e) => (
                   <InfoIndexUser

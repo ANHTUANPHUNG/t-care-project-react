@@ -3,24 +3,22 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { FaAddressCard, FaEdit, FaExchangeAlt, FaTrashAlt } from "react-icons/fa";
-import { LegalNotice } from "../carehub/LegalNotice";
-import LogoProject from "../logoProject/LogoProject";
-import { ContainerViewUser } from "../viewUser/containerViewUser/ContainerViewUser";
 import { ContainerViewSale } from "./ContainerViewerSale";
 import Search from "./search";
 import Swal from "sweetalert2";
 import SockJS from "sockjs-client";
 import { Stomp } from "@stomp/stompjs";
+import LoadingCommon from "../common/LoadingCommon";
 
 export default function SalerViewForUser() {
     const [customers, setCustomers] = useState([]);
     const [search, setSearch] = useState("");
     const [message, setMessage] = useState("");
     const [stompClient, setStompClient] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         loadCustomers();
-        console.log(123);
     }, [message]);
     useEffect(() => {
         const socket = new SockJS("http:/localhost:8080/ws");
@@ -46,7 +44,12 @@ export default function SalerViewForUser() {
     const loadCustomers = async () => {
         const customers = await axios.get(`http://localhost:8080/api/carts/readyStatus`);
         setCustomers(customers.data.content);
+        setIsLoading(false);
+        console.log(customers.data);
     };
+    if (isLoading) {
+        return <LoadingCommon />;
+      }
 
     const handleOnClick = (id) => {
         console.log(id);
@@ -64,7 +67,15 @@ export default function SalerViewForUser() {
                     } else if (result.dismiss === Swal.DismissReason.cancel) {
                         axios
                             .post(`http://localhost:8080/api/contracts/createContract/${id}`)
-                            .then((e) => loadCustomers(), toast.success("Tạo hợp đồng thành công"));
+                            .then( loadCustomers()
+                             )
+                             .then(() => {
+                                setIsLoading(true)
+                                setTimeout(() => {
+                                  navigate(`/sale/sale-for-user/d6206379-5c88-4239-b265-2929c972749e`);
+                                  toast.success("Tạo hợp đồng thành công");
+                                }, 1000);
+                              })
                     }
                 });
             })
@@ -73,19 +84,7 @@ export default function SalerViewForUser() {
             });
     };
 
-    const handleDeleteCustomer = (id) => {
-        axios
-            .delete(`http://localhost:8080/api/carts/deleteCustomerBySale/${id}`)
-            .then((response) => {
-                console.log(response);
-                toast.success("Xóa khách hàng thành công", { autoClose: 1000 });
-                loadCustomers();
-            })
-            .catch((error) => {
-                console.error(error);
-                toast.error("Xóa thất bại");
-            });
-    };
+
     return (
         <>
             <ContainerViewSale />
@@ -101,17 +100,6 @@ export default function SalerViewForUser() {
                                     Danh sách khách hàng đăng kí trực tuyến
                                 </a>
                                 <div className="d-flex" style={{ gap: "10px" }}>
-                                    {/* <button type="button" className="btn btn-outline-light" >
-                         
-                         <Link
-                             style={{textDecoration: "none", color:"#0d6efd"}}
-                              to={`/add-customer/${id}`}
-                             >
-                                 
-                                 <i className="far fa-plus-square"></i>
-                         Thêm khách hàng mới
-                        </Link>
-                     </button> */}
                                 </div>
                             </div>
                         </nav>
@@ -140,6 +128,7 @@ export default function SalerViewForUser() {
                             <tbody>
                                 {customers &&
                                     customers
+                                    .sort((a, b) => new Date(b.createAt) - new Date(a.createAt))
                                         .filter(
                                             (customer) =>
                                                 customer.firstName
@@ -215,29 +204,13 @@ export default function SalerViewForUser() {
                                                     {customer.employee.phone}
                                                 </td>
         
-        <td className="mx-2">
-          <Link className="btn btn-warning"
-          to={`/edit-customer/${id}/${customer.id}`}
-          >
-            
-            <FaEdit />
-          </Link>
-          
-        </td>
+
         <td className="mx-2">
           <Link className="btn btn-outline-primary"
           onClick={() => handleOnClick(customer.id)}
           >
             <FaAddressCard />
           </Link>
-        </td>
-        <td className="mx-2">
-          <button className="btn btn-danger"
-          onClick={() => handleDeleteCustomer(customer.id)}
-          >
-            
-            <FaTrashAlt />
-          </button>
         </td>
         <td className="mx-2">
           <Link className="btn btn-warning"

@@ -63,6 +63,7 @@ export function SkillAndInfo() {
       updateData();
     } else {
       toast.error("Cần chọn đủ thông tin hộ lý được yêu cầu");
+      setIsLoadingPage(false);
     }
   };
   return (

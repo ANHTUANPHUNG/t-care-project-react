@@ -69,27 +69,27 @@ export default function SaleContract() {
              </thead>
              <tbody>
              {contracts &&
-  contracts
-    .sort((a, b) => new Date(b.createAt) - new Date(a.createAt))
-    .filter(
-      (contract) =>
-        contract.customerName.toLowerCase().includes(search.toLowerCase()) ||
-        contract.customerPhone.toLowerCase().includes(search.toLowerCase())
-    )
-    .map((contract) => (
-      <tr key={contract.id}>
-        <td>{contract.customerName}</td>
-        <td style={{ maxWidth: "300px" }}>{contract.location.name}</td>
-        <td>{contract.customerPhone}</td>
-        <td style={{ maxWidth: "150px", minWidth: "120px" }}>
-          {contract.timeStart !== null ? contract.timeStart : ""} <br />
-          {contract.timeEnd !== null ? contract.timeEnd : ""}
-        </td>
-        <td style={{ maxWidth: "150px" }}>{contract.nameService} </td>
-        <td style={{ maxWidth: "150px" }}>{contract.createAt}</td>
-        <td style={{ maxWidth: "150px" }}>{contract.totalAmount.toLocaleString() + " "}VND</td>
-      </tr>
-    ))}
+    contracts
+      .sort((a, b) => new Date(b.createAt) - new Date(a.createAt))
+      .filter(
+        (contract) =>
+          contract.customerName.toLowerCase().includes(search.toLowerCase()) ||
+          contract.customerPhone.toLowerCase().includes(search.toLowerCase())
+      )
+      .map((contract) => (
+        <tr key={contract.id}>
+          <td>{contract.customerName}</td>
+          <td style={{ maxWidth: "300px" }}>{contract.location.name}</td>
+          <td>{contract.customerPhone}</td>
+          <td style={{ maxWidth: "150px", minWidth: "120px" }}>
+            {contract.timeStart !== null ? contract.timeStart : ""} <br />
+            {contract.timeEnd !== null ? contract.timeEnd : ""}
+          </td>
+          <td style={{ maxWidth: "150px" }}>{contract.nameService} </td>
+          <td style={{ maxWidth: "150px" }}>{contract.createAt.split("T")[0]}</td>
+          <td style={{ maxWidth: "150px" }}>{contract.totalAmount.toLocaleString() + " "}VND</td>
+        </tr>
+      ))}
 </tbody>
          </table> 
      </div>

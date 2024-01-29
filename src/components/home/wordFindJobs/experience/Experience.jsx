@@ -110,6 +110,7 @@ export function Experience() {
     }
   };
   const handleSubmitExperience = async () => {
+    setIsLoading(true)
     const listExperience = {
       idSkills: skill.map((s) => s.id),
       experience: years.id,
@@ -120,6 +121,7 @@ export function Experience() {
     await axios
       .put(`http://localhost:8080/api/employees/experience/${id}`, listExperience)
       .then((resp) => {
+        setIsLoading(false)
         toast.success("Lưu thông tin thành công");
         navigate(`/assistant/bio/${id}`)
       })
@@ -127,7 +129,9 @@ export function Experience() {
       .catch((err) => {
         console.error("Lỗi khi gửi POST request:", err);
         toast.error("Vui lòng điền đầy đủ thông tin");
+        setIsLoading(false)
       });
+      
   };
   const servicesToShow = showMore ? listService : listService?.slice(0, 5);
 
@@ -140,7 +144,7 @@ export function Experience() {
           <span className="services-provided-side-bar-select">Vui lòng chọn ít nhất một</span>
         </div>
         <div>
-          <MapToMe mapToMe={servicesToShow} valueList={servicer} setValueList={setServicer} />
+          <MapToMe mapToMe={servicesToShow}  checkService={true} valueList={servicer} setValueList={setServicer} />
           {listService?.length > 5 && (
             <div className="show-more" onClick={() => setShowMore((prev) => !prev)}>
               {showMore ? (
