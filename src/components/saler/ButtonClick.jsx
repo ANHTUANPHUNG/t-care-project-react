@@ -1,7 +1,7 @@
 import React from 'react'
-
+import { Button } from '@mui/material';
 export default function ButtonClick({onclick}) {
     return (
-        <button onClick={onclick}>Liên hệ</button>
+        <Button onClick={onclick}>Liên hệ</Button>
       );
 }

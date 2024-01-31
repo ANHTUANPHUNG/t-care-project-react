@@ -13,6 +13,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { toast } from "react-toastify";
 import axios from "axios";
 import LoadingCommon from "../../../common/LoadingCommon";
+import { faIR } from "@mui/x-date-pickers";
 export function Experience() {
   const listEducation = [
     { id: "HIGHSCHOOL", name: "Trung học phổ thông" },
@@ -129,6 +130,7 @@ export function Experience() {
         toast.error("Vui lòng điền đầy đủ thông tin");
       });
   };
+  console.log(listService);
   const servicesToShow = showMore ? listService : listService?.slice(0, 5);
 
   const experience = (
@@ -140,7 +142,7 @@ export function Experience() {
           <span className="services-provided-side-bar-select">Vui lòng chọn ít nhất một</span>
         </div>
         <div>
-          <MapToMe mapToMe={servicesToShow} valueList={servicer} setValueList={setServicer} />
+          <MapToMe mapToMe={servicesToShow} checkService={true} valueList={servicer} setValueList={setServicer} />
           {listService?.length > 5 && (
             <div className="show-more" onClick={() => setShowMore((prev) => !prev)}>
               {showMore ? (
@@ -210,7 +212,7 @@ export function Experience() {
           <span>Kĩ năng</span>
         </div>
         <div>
-          <MapToMe mapToMe={listSkill} valueList={skill} setValueList={setSkill} />
+          <MapToMe mapToMe={listSkill}  valueList={skill} setValueList={setSkill} />
         </div>
       </div>
       <div className="separation-experience"></div>
@@ -220,6 +222,7 @@ export function Experience() {
         </div>
         <div>
           <MapToMe
+          
             mapToMe={listInformation}
             valueList={information}
             setValueList={setInformation}
