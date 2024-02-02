@@ -2,7 +2,12 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { FaAddressCard, FaEdit, FaExchangeAlt, FaTrashAlt } from "react-icons/fa";
+import {
+  FaAddressCard,
+  FaEdit,
+  FaExchangeAlt,
+  FaTrashAlt,
+} from "react-icons/fa";
 import { LegalNotice } from "../carehub/LegalNotice";
 import LogoProject from "../logoProject/LogoProject";
 import { ContainerViewUser } from "../viewUser/containerViewUser/ContainerViewUser";
@@ -27,7 +32,9 @@ export default function SalerView() {
     try {
       setIsLoading(true);
 
-      const response = await axios.get(`http://localhost:8080/api/carts/sale/${id}`);
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_CARTS_SALE}/${id}`
+      );
       const customers = response.data;
 
       setIsLoading(false);
@@ -46,11 +53,13 @@ export default function SalerView() {
   const handleOnClick = (id) => {
     console.log(id);
     axios
-      .get(`http://localhost:8080/api/carts/${id}`)
+      .get(`${process.env.REACT_APP_API_CARTS}/${id}`)
       .then((response) => {
         console.log(response.data);
         Swal.fire({
-          title: 'Yêu cầu khách chuyển: ' + response.data.totalAmount.toLocaleString(),
+          title:
+            "Yêu cầu khách chuyển: " +
+            response.data.totalAmount.toLocaleString(),
           showCancelButton: true,
           confirmButtonText: "OK",
           cancelButtonText: "Tạo hợp đồng",
@@ -58,20 +67,19 @@ export default function SalerView() {
           if (result.isConfirmed) {
           } else if (result.dismiss === Swal.DismissReason.cancel) {
             axios
-              .post(`http://localhost:8080/api/contracts/createContract/${id}`)
+              .post(`${process.env.REACT_APP_API_CONTRACT_CREATE}/${id}`)
               .then(() => {
-                setCheck(prevCheck => !prevCheck);
+                setCheck((prevCheck) => !prevCheck);
                 loadCustomers();
-               
               })
               .then(() => {
-                setIsLoading(true)
+                setIsLoading(true);
                 setTimeout(() => {
                   navigate(`/sale/d6206379-5c88-4239-b265-2929c972749e`);
                   toast.success("Tạo hợp đồng thành công");
                 }, 1000);
               })
-              
+
               .catch((error) => {
                 loadCustomers();
                 console.log(error);
@@ -86,7 +94,7 @@ export default function SalerView() {
 
   const handleDeleteCustomer = (id) => {
     axios
-      .delete(`http://localhost:8080/api/carts/deleteCustomerBySale/${id}`)
+      .delete(`${process.env.REACT_APP_API_SALE_DELETE_CUSTOMER}/${id}`)
       .then((response) => {
         console.log(response);
         toast.success("Xóa khách hàng thành công", { autoClose: 1000 });
@@ -147,12 +155,18 @@ export default function SalerView() {
               <tbody>
                 {customers &&
                   customers
-                  .sort((a, b) => new Date(b.createAt) - new Date(a.createAt))
+                    .sort((a, b) => new Date(b.createAt) - new Date(a.createAt))
                     .filter(
                       (customer) =>
-                        customer.firstName.toLowerCase().includes(search.toLowerCase()) ||
-                        customer.lastName.toLowerCase().includes(search.toLowerCase()) ||
-                        customer.phone.toLowerCase().includes(search.toLowerCase())
+                        customer.firstName
+                          .toLowerCase()
+                          .includes(search.toLowerCase()) ||
+                        customer.lastName
+                          .toLowerCase()
+                          .includes(search.toLowerCase()) ||
+                        customer.phone
+                          .toLowerCase()
+                          .includes(search.toLowerCase())
                     )
                     .map((customer) => (
                       <tr key={customer.id}>
@@ -172,7 +186,10 @@ export default function SalerView() {
                         </td>
                         <td>{customer.phone}</td>
                         <td style={{ maxWidth: "150px", minWidth: "120px" }}>
-                          {customer.timeStart !== null ? customer.timeStart : ""} <br />
+                          {customer.timeStart !== null
+                            ? customer.timeStart
+                            : ""}{" "}
+                          <br />
                           {customer.timeEnd !== null ? customer.timeEnd : ""}
                         </td>
                         <td>
@@ -188,13 +205,22 @@ export default function SalerView() {
                               : "Khác"
                             : ""}
                         </td>
-                        <td style={{ maxWidth: "150px" }}>{customer.serviceGeneral} </td>
-                        <td style={{ maxWidth: "150px" }}>{customer.noteForEmployee}</td>
-                        <td style={{ maxWidth: "150px" }}>{customer.noteForPatient}</td>
                         <td style={{ maxWidth: "150px" }}>
-                          {customer.employeeFirstName} {customer.employeeLastName}{" "}
+                          {customer.serviceGeneral}{" "}
                         </td>
-                        <td style={{ maxWidth: "150px" }}>{customer.saleNote}</td>
+                        <td style={{ maxWidth: "150px" }}>
+                          {customer.noteForEmployee}
+                        </td>
+                        <td style={{ maxWidth: "150px" }}>
+                          {customer.noteForPatient}
+                        </td>
+                        <td style={{ maxWidth: "150px" }}>
+                          {customer.employeeFirstName}{" "}
+                          {customer.employeeLastName}{" "}
+                        </td>
+                        <td style={{ maxWidth: "150px" }}>
+                          {customer.saleNote}
+                        </td>
 
                         <td className="mx-2">
                           <Link

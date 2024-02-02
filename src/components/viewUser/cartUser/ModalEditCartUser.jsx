@@ -38,7 +38,6 @@ export function ModalEditCartUser({
   lastName,
   setGender,
   gender,
-  
 }) {
   const { id } = useParams();
 
@@ -63,10 +62,15 @@ export function ModalEditCartUser({
         noteForPatient,
         phone,
       };
-      axios.put(`http://localhost:8080/api/carts/updateField/${idCart}`, formSubmit).then((res) => {
-        toast.success("Cập nhật thông tin thành công");
-        setCheckModal(false);
-      });
+      axios
+        .put(
+          `${process.env.REACT_APP_API_CARTS_UPDATE_FIELDS}/${idCart}`,
+          formSubmit
+        )
+        .then((res) => {
+          toast.success("Cập nhật thông tin thành công");
+          setCheckModal(false);
+        });
     } else {
       toast.error("Nhập đầy đủ thông tin ( có thể bỏ qua số điện thoại)");
     }
@@ -74,7 +78,9 @@ export function ModalEditCartUser({
   const editCart = (
     <div>
       <div style={{ padding: " 20px 29%" }}>
-        <span style={{ fontWeight: "bold", fontSize: "25px" }}>Thông tin người bệnh</span>
+        <span style={{ fontWeight: "bold", fontSize: "25px" }}>
+          Thông tin người bệnh
+        </span>
       </div>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>

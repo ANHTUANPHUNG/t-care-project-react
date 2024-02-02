@@ -10,15 +10,16 @@ import { NavLink, useParams } from "react-router-dom";
 import { Avatar, Button, Menu, MenuItem } from "@mui/material";
 import axios from "axios";
 
-
 export function ContainerViewUser({ idUser }) {
   const [user, setUser] = useState();
   const { id } = useParams();
   useEffect(() => {
     const axiosData = async () => {
-      axios.get(`http://localhost:8080/api/users/${idUser}`).then((res) => {
-        setUser(res);
-      });
+      axios
+        .get(`${process.env.REACT_APP_API_USERS_GET}/${idUser}`)
+        .then((res) => {
+          setUser(res);
+        });
     };
     axiosData();
   }, [idUser]);
@@ -49,10 +50,14 @@ export function ContainerViewUser({ idUser }) {
               <div className="view-user-header-select-nav-block">
                 <Home
                   className={`view-user-header-select-nav-block-icon${
-                    window.location.pathname === `/user/index/${id}` ? "active" : ""
+                    window.location.pathname === `/user/index/${id}`
+                      ? "active"
+                      : ""
                   }`}
                 />
-                <div className="view-user-header-select-nav-block-title">Trang chủ</div>
+                <div className="view-user-header-select-nav-block-title">
+                  Trang chủ
+                </div>
               </div>
             </NavLink>
             {/* <NavLink className="view-user-header-select-nav">
@@ -67,22 +72,26 @@ export function ContainerViewUser({ idUser }) {
                 <div className="view-user-header-select-nav-block-title">Favorites</div>
               </div>
             </NavLink> */}
-            
-              <NavLink
-                className={`view-user-header-select-nav${
-                  window.location.pathname === `/user/cart/${id}` ? "active" : ""
-                }`}
-                to={`/user/cart/${id}`}
-              >
-                <div className="view-user-header-select-nav-block">
-                  <ListAlt
-                    className={`view-user-header-select-nav-block-icon${
-                      window.location.pathname === `/user/cart/${id}` ? "active" : ""
-                    }`}
-                  />
-                  <div className="view-user-header-select-nav-block-title">Danh sách hồ sơ</div>
+
+            <NavLink
+              className={`view-user-header-select-nav${
+                window.location.pathname === `/user/cart/${id}` ? "active" : ""
+              }`}
+              to={`/user/cart/${id}`}
+            >
+              <div className="view-user-header-select-nav-block">
+                <ListAlt
+                  className={`view-user-header-select-nav-block-icon${
+                    window.location.pathname === `/user/cart/${id}`
+                      ? "active"
+                      : ""
+                  }`}
+                />
+                <div className="view-user-header-select-nav-block-title">
+                  Danh sách hồ sơ
                 </div>
-              </NavLink>
+              </div>
+            </NavLink>
             {/* <NavLink
               className={`view-user-header-select-nav${
                 window.location.pathname === `/user/cart/${id}` ? "active" : ""
@@ -100,17 +109,23 @@ export function ContainerViewUser({ idUser }) {
             </NavLink> */}
             <NavLink
               className={`view-user-header-select-nav${
-                window.location.pathname === `/user/contract/${id}` ? "active" : ""
+                window.location.pathname === `/user/contract/${id}`
+                  ? "active"
+                  : ""
               }`}
               to={`/user/contract/${id}`}
             >
               <div className="view-user-header-select-nav-block">
                 <CreditScore
                   className={`view-user-header-select-nav-block-icon${
-                    window.location.pathname === `/user/contract/${id}` ? "active" : ""
+                    window.location.pathname === `/user/contract/${id}`
+                      ? "active"
+                      : ""
                   }`}
                 />
-                <div className="view-user-header-select-nav-block-title">Hợp đồng</div>
+                <div className="view-user-header-select-nav-block-title">
+                  Hợp đồng
+                </div>
               </div>
             </NavLink>
             <div className="view-user-header-select-profile">
@@ -121,7 +136,9 @@ export function ContainerViewUser({ idUser }) {
                 aria-expanded={open ? "true" : undefined}
                 onClick={handleClick}
               >
-                <Avatar>{user?.data.firstName && user?.data.firstName.charAt(0)}</Avatar>
+                <Avatar>
+                  {user?.data.firstName && user?.data.firstName.charAt(0)}
+                </Avatar>
               </Button>
               <Menu
                 id="basic-menu"

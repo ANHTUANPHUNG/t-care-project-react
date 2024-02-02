@@ -3,7 +3,7 @@ import "../../home/wordFindCare/renderListAssistant/RenderListAssistant.css";
 import LogoProject from "../../logoProject/LogoProject";
 import { LegalNotice } from "../../carehub/LegalNotice";
 import { NavLink, useParams, useNavigate } from "react-router-dom";
-import {  SwipeableDrawer } from "@mui/material";
+import { SwipeableDrawer } from "@mui/material";
 import Box from "@mui/material/Box";
 import CheckIcon from "@mui/icons-material/Check";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -22,7 +22,7 @@ export function FilterCartUser() {
   const [filterAss, setFilterAss] = useState([]);
   const [count, setCount] = useState(0);
   const [check, setCheck] = useState(false);
-  const {id,idCart } = useParams();
+  const { id, idCart } = useParams();
   const [selectedAssistant, setSelectedAssistant] = useState(null);
   const [profileAssistant, setProfileAssistant] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -30,11 +30,16 @@ export function FilterCartUser() {
   let navigate = useNavigate();
   useEffect(() => {
     let axiosData = async () => {
-      const dataApi = await axios.get(`http://localhost:8080/api/carts/filter/${idCart}?page=${count}`);
+      const dataApi = await axios.get(
+        `${process.env.REACT_APP_API_FILTER_EMPLOYEE}/${idCart}?page=${count}`
+      );
 
       if (dataApi.data.totalPages === count + 1) {
         setCheck(true);
-        setFilterAss((prevFilterAss) => [...prevFilterAss, ...dataApi?.data.content]);
+        setFilterAss((prevFilterAss) => [
+          ...prevFilterAss,
+          ...dataApi?.data.content,
+        ]);
       } else {
         setFilterAss((prevFilterAss) => {
           if (count === 0) {
@@ -43,7 +48,7 @@ export function FilterCartUser() {
           return [...prevFilterAss, ...dataApi?.data.content];
         });
       }
-      setIsLoading(false)
+      setIsLoading(false);
     };
     axiosData();
   }, [count]);
@@ -55,7 +60,7 @@ export function FilterCartUser() {
       employeeId: profileAssistant?.id || selectedAssistant?.id,
     };
     axios
-      .put(`http://localhost:8080/api/carts/employees`, form)
+      .put(process.env.REACT_APP_API_CARTS_EMPLOYEES, form)
       .then((res) => {
         navigate(`/user/cart/${id}`);
       })
@@ -78,7 +83,10 @@ export function FilterCartUser() {
         <div className="row render-list-assistant-header">
           <div className="col-3"></div>
           <div className="col-6 py-3">
-            <h4>Đây là danh sách hồ sơ cá nhân gợi ý dựa vào những thông tin bạn cung cấp</h4>
+            <h4>
+              Đây là danh sách hồ sơ cá nhân gợi ý dựa vào những thông tin bạn
+              cung cấp
+            </h4>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <h6>Danh sách yêu thích</h6>
               <NavLink to={`/user/cart/${id}`}>
@@ -87,7 +95,8 @@ export function FilterCartUser() {
             </div>
           </div>
           <div className="col-3 p-0">
-          <img style={{ height: "100px", width: "75px" }} 
+            <img
+              style={{ height: "100px", width: "75px" }}
               src="https://res.cloudinary.com/dw4xpd646/image/upload/v1703816118/Cloudinary-React/ljezvtifp9u79nfvqtkq.png"
               alt=""
             />
@@ -109,7 +118,10 @@ export function FilterCartUser() {
             ""
           ) : (
             <div className="per-page">
-              <div className="per-page-item" onClick={() => setCount((pre) => pre + 1)}>
+              <div
+                className="per-page-item"
+                onClick={() => setCount((pre) => pre + 1)}
+              >
                 <div>Xem thêm 7 người hỗ trợ</div>
               </div>
             </div>
@@ -122,7 +134,8 @@ export function FilterCartUser() {
           <div className="check-select-header">
             <div>
               <h5>
-                Bạn đã chọn {selectedAssistant?.firstName} {selectedAssistant?.lastName}
+                Bạn đã chọn {selectedAssistant?.firstName}{" "}
+                {selectedAssistant?.lastName}
               </h5>
               <span>
                 Chọn người khác hoặc chọn {selectedAssistant?.firstName}{" "}
@@ -130,7 +143,11 @@ export function FilterCartUser() {
               </span>
             </div>
             <div className="check-select-button">
-                <ButtonForMe value={100} childrenButton={"Đồng ý"} onclick={handleSubmitAssistant}></ButtonForMe>
+              <ButtonForMe
+                value={100}
+                childrenButton={"Đồng ý"}
+                onclick={handleSubmitAssistant}
+              ></ButtonForMe>
             </div>
           </div>
         </div>
@@ -151,7 +168,10 @@ export function FilterCartUser() {
           onClick={() => setIsOpen(false)}
           onKeyDown={() => setIsOpen(false)}
         >
-          <div className="modal-profile-content" style={{ margin: "30px 20px 0 20px" }}>
+          <div
+            className="modal-profile-content"
+            style={{ margin: "30px 20px 0 20px" }}
+          >
             <div style={{ display: "flex" }}>
               <img
                 src={profileAssistant?.photoUrl}
@@ -167,26 +187,48 @@ export function FilterCartUser() {
                     profileAssistant.starAverage !== null &&
                     profileAssistant.rateQuantity !== null && (
                       <>
-                        {Array.from({ length: Math.floor(profileAssistant.starAverage * 2) / 2 })
+                        {Array.from({
+                          length:
+                            Math.floor(profileAssistant.starAverage * 2) / 2,
+                        })
                           .fill(1)
                           .map((item, index) => (
-                            <Star key={index} style={{ color: "yellow", fontSize: "18px" }} />
+                            <Star
+                              key={index}
+                              style={{ color: "yellow", fontSize: "18px" }}
+                            />
                           ))}
                         {profileAssistant.starAverage % 1 !== 0 && (
-                          <StarHalf style={{ color: "yellow", fontSize: "18px" }} />
+                          <StarHalf
+                            style={{ color: "yellow", fontSize: "18px" }}
+                          />
                         )}
                         <span className="ml-5-fs12-mt3">
-                          (<span style={{ fontSize: "14px" }}>{profileAssistant.rateQuantity}</span>
+                          (
+                          <span style={{ fontSize: "14px" }}>
+                            {profileAssistant.rateQuantity}
+                          </span>
                           )
                         </span>
                       </>
                     )}
                 </div>
-                <div style={{ fontSize: "14px" }}>{profileAssistant?.nameLocation}</div>
+                <div style={{ fontSize: "14px" }}>
+                  {profileAssistant?.nameLocation}
+                </div>
               </div>
             </div>
-            <div style={{ marginTop: "10px", fontWeight: "500", paddingLeft: "10px" }}>
-              <i style={{ paddingRight: "5px" }} className="fa-regular fa-clock"></i>
+            <div
+              style={{
+                marginTop: "10px",
+                fontWeight: "500",
+                paddingLeft: "10px",
+              }}
+            >
+              <i
+                style={{ paddingRight: "5px" }}
+                className="fa-regular fa-clock"
+              ></i>
               <span>{profileAssistant?.experience} năm kinh nghiệm.</span>{" "}
             </div>
             <div
@@ -233,13 +275,19 @@ export function FilterCartUser() {
             </div>
           </div>
           <div className="modal-profile-footer">
-            <div className="modal-profile-footer-add-list" onClick={handleSubmitAssistant}>
+            <div
+              className="modal-profile-footer-add-list"
+              onClick={handleSubmitAssistant}
+            >
               <div className="modal-profile-footer-add-list-check-icon">
                 <CheckIcon />
               </div>
               <span>Thêm vào danh sách</span>
             </div>
-            <div onClose={() => setIsOpen(false)} className="modal-profile-footer-clear">
+            <div
+              onClose={() => setIsOpen(false)}
+              className="modal-profile-footer-clear"
+            >
               <div className="modal-profile-footer-clear-icon">
                 <ClearIcon />
               </div>

@@ -22,20 +22,16 @@ export function ProfileAssistant() {
   const [checkModal, setCheckModal] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
- 
   useEffect(() => {
     let axiosData = async () => {
-
       const responseAssistant = await axios.get(
-        "http://localhost:8080/api/employees/" + idAssistant
+        `${process.env.REACT_APP_API_ADMIN_EMPLOYEES}/` + idAssistant
       );
-      
-      setAssistant(responseAssistant.data);
-      setIsLoading(false)
 
+      setAssistant(responseAssistant.data);
+      setIsLoading(false);
     };
     axiosData();
-
   }, [idAssistant]);
   useEffect(() => {
     if (assistant && assistant.listDateSessions) {
@@ -81,10 +77,20 @@ export function ProfileAssistant() {
               <img
                 src={assistant.photoUrl}
                 alt=""
-                style={{ width: "135px", height: "180px", borderRadius: "15px" }}
+                style={{
+                  width: "135px",
+                  height: "180px",
+                  borderRadius: "15px",
+                }}
               />
-              <div className="" style={{ marginLeft: "20px", alignSelf: "center" }}>
-                <span className="" style={{ fontWeight: "bold", fontSize: "25px" }}>
+              <div
+                className=""
+                style={{ marginLeft: "20px", alignSelf: "center" }}
+              >
+                <span
+                  className=""
+                  style={{ fontWeight: "bold", fontSize: "25px" }}
+                >
                   {assistant.lastName} {assistant.firstName}
                 </span>
                 <TokenIcon className="" style={{ color: "#4093e9" }} />
@@ -124,10 +130,15 @@ export function ProfileAssistant() {
             <div>
               <h6>{assistant.firstName} đã hoàn thành T-CareCheck</h6>
               <span>
-                Đây là bước kiểm tra lý lịch mà chúng tôi yêu cầu đối với tất cả người chăm sóc.{" "}
+                Đây là bước kiểm tra lý lịch mà chúng tôi yêu cầu đối với tất cả
+                người chăm sóc.{" "}
                 <span
                   onClick={() => setCheckModalBackground(true)}
-                  style={{ color: "blue", textDecoration: "underline", cursor: "pointer" }}
+                  style={{
+                    color: "blue",
+                    textDecoration: "underline",
+                    cursor: "pointer",
+                  }}
                 >
                   Tìm hiểu thêm
                 </span>
@@ -190,7 +201,11 @@ export function ProfileAssistant() {
               {assistant?.idServices?.map((e) => (
                 <div
                   key={e.id}
-                  style={{ paddingRight: "15px", width: "47%", paddingBottom: "20px" }}
+                  style={{
+                    paddingRight: "15px",
+                    width: "47%",
+                    paddingBottom: "20px",
+                  }}
                 >
                   <h6>{e.id}</h6>
                   <div>
@@ -211,7 +226,13 @@ export function ProfileAssistant() {
           <div style={{ height: "1px", backgroundColor: "#ccd1d6" }}></div>
           <div style={{ padding: "20px 0" }}>
             <h5>Trình độ chuyên môn</h5>
-            <div style={{ display: "flex", justifyContent: "space-around", fontSize: "14px" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-around",
+                fontSize: "14px",
+              }}
+            >
               <div>
                 <h6>Giáo dục</h6>
                 <span>
@@ -240,8 +261,15 @@ export function ProfileAssistant() {
         </div>
       </div>
       <LegalNotice />
-      <CheckBackground setCheckModal={setCheckModalBackground} checkModal={checkModalBackground} />
-      <RateAssistant setCheckModal={setCheckRate} assistant={assistant} checkModal={checkRate} />
+      <CheckBackground
+        setCheckModal={setCheckModalBackground}
+        checkModal={checkModalBackground}
+      />
+      <RateAssistant
+        setCheckModal={setCheckRate}
+        assistant={assistant}
+        checkModal={checkRate}
+      />
     </>
   );
 }

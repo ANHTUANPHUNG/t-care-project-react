@@ -6,14 +6,21 @@ import { ButtonForMe } from "../../ButtonForMe";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
-export function RenderListAssistantIndexUser({ value, index, listAssistant, checkButtonForme }) {
+export function RenderListAssistantIndexUser({
+  value,
+  index,
+  listAssistant,
+  checkButtonForme,
+}) {
   const [selectedFavorites, setSelectedFavorites] = useState([]);
   const { id } = useParams();
   let navigate = useNavigate();
   const handleSelectFavorite = (e) => {
     const isInfoSelected = selectedFavorites?.some((element) => element === e);
     if (isInfoSelected) {
-      const updatedInfos = selectedFavorites?.filter((element) => element !== e);
+      const updatedInfos = selectedFavorites?.filter(
+        (element) => element !== e
+      );
       setSelectedFavorites(updatedInfos);
     } else {
       setSelectedFavorites((prev) => [...prev, e]);
@@ -26,7 +33,7 @@ export function RenderListAssistantIndexUser({ value, index, listAssistant, chec
       employeeId: value.id,
     };
     axios
-      .put(`http://localhost:8080/api/carts/employees`, form)
+      .put(process.env.REACT_APP_API_CARTS_EMPLOYEES, form)
       .then((res) => {
         navigate(`/user/cart/${id}`);
       })
@@ -38,7 +45,7 @@ export function RenderListAssistantIndexUser({ value, index, listAssistant, chec
     <>
       <div className="render-list-assistant-index-user" key={index}>
         <div className="render-list-assistant-index-user-header">
-          <img src={value?.photoUrl} alt="" style={{width:"75px"}}/>
+          <img src={value?.photoUrl} alt="" style={{ width: "75px" }} />
           <div className="render-list-assistant-index-user-body">
             <span className="render-list-assistant-index-user-body-name">
               {value?.lastName} {value?.firstName}
@@ -55,7 +62,10 @@ export function RenderListAssistantIndexUser({ value, index, listAssistant, chec
           <span className="render-list-assistant-index-user-footer-content">
             "{value?.descriptionAboutMySelf?.slice(0, 100)}
             {value?.descriptionAboutMySelf?.length > 100 ? "..." : ""}"{" "}
-            <a href={`http://localhost:3000/user/index/${id}/${value?.id}`} target="_blank">
+            <a
+              href={`${process.env.REACT_APP_API_URL_USER_INDEX}/${id}/${value?.id}`}
+              target="_blank"
+            >
               more
             </a>
           </span>
@@ -69,7 +79,11 @@ export function RenderListAssistantIndexUser({ value, index, listAssistant, chec
           {checkButtonForme ? (
             ""
           ) : (
-            <ButtonForMe childrenButton={"Thêm"} value={20} onclick={handleSubmitCartUser} />
+            <ButtonForMe
+              childrenButton={"Thêm"}
+              value={20}
+              onclick={handleSubmitCartUser}
+            />
           )}
         </div>
       </div>

@@ -12,7 +12,12 @@ import ModalUnstyled from "../../ModalToMe";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import { Checkbox, FormControl, FormControlLabel, FormLabel } from "@mui/material";
+import {
+  Checkbox,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+} from "@mui/material";
 import { ButtonForMe } from "../../ButtonForMe";
 import LoadingCommon from "../../common/LoadingCommon";
 import LoadingPage from "../../common/LoadingPage";
@@ -36,7 +41,7 @@ const preferencesRender = [
     id: 4,
     name: "Chia sẻ trạng thái trực tuyến của tôi với các thành viên khác của T-Care.com.",
   },
- 
+
   {
     id: 6,
     name: "Công khai hồ sơ và tin tuyển dụng của tôi. (?)",
@@ -46,7 +51,6 @@ const preferencesRender = [
     name: "Đưa hồ sơ của tôi vào kết quả tìm kiếm người chăm sóc và một số email nhất định của người chăm sóc.",
   },
   { id: 8, name: "Cho phép người chăm sóc biết rằng tôi đã xem hồ sơ của họ." },
- 
 ];
 export function Profile() {
   const { id } = useParams();
@@ -83,7 +87,7 @@ export function Profile() {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      const apiUrl = `http://localhost:8080/api/users/${id}`;
+      const apiUrl = `${process.env.REACT_APP_API_USERS_GET}/${id}`;
 
       const updatedUserData = {
         phoneNumber: values.phoneNumber || user.phoneNumber,
@@ -121,8 +125,13 @@ export function Profile() {
                 type="phoneNumber"
                 value={formik.values.phoneNumber || user?.phoneNumber}
                 onChange={formik.handleChange}
-                error={formik.touched.phoneNumber && Boolean(formik.errors.phoneNumber)}
-                helperText={formik.touched.phoneNumber && formik.errors.phoneNumber}
+                error={
+                  formik.touched.phoneNumber &&
+                  Boolean(formik.errors.phoneNumber)
+                }
+                helperText={
+                  formik.touched.phoneNumber && formik.errors.phoneNumber
+                }
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -132,7 +141,9 @@ export function Profile() {
                 label="Tên"
                 value={formik.values.firstName || user?.firstName}
                 onChange={formik.handleChange}
-                error={formik.touched.firstName && Boolean(formik.errors.firstName)}
+                error={
+                  formik.touched.firstName && Boolean(formik.errors.firstName)
+                }
                 helperText={formik.touched.firstName && formik.errors.firstName}
               />
             </Grid>
@@ -143,7 +154,9 @@ export function Profile() {
                 label="Họ"
                 value={formik.values.lastName || user?.lastName}
                 onChange={formik.handleChange}
-                error={formik.touched.lastName && Boolean(formik.errors.lastName)}
+                error={
+                  formik.touched.lastName && Boolean(formik.errors.lastName)
+                }
                 helperText={formik.touched.lastName && formik.errors.lastName}
               />
             </Grid>
@@ -154,7 +167,9 @@ export function Profile() {
                 label="Số Căn Cước Công Dân"
                 value={formik.values.personID || user?.personID}
                 onChange={formik.handleChange}
-                error={formik.touched.personID && Boolean(formik.errors.personID)}
+                error={
+                  formik.touched.personID && Boolean(formik.errors.personID)
+                }
                 helperText={formik.touched.personID && formik.errors.personID}
               />
             </Grid>
@@ -202,7 +217,7 @@ export function Profile() {
 
   useEffect(() => {
     const axiosData = async () => {
-      axios.get(`http://localhost:8080/api/users/${id}`).then((res) => {
+      axios.get(`${process.env.REACT_APP_API_USERS_GET}/${id}`).then((res) => {
         setUser(res.data);
         setUploadedImageUrl(res.data.photoUrl);
         setGender(res.data.gender);
@@ -222,7 +237,10 @@ export function Profile() {
       formData.append("avatar", selectedFile);
       formData.append("fileType", "image");
 
-      const response = await axios.post("http://localhost:8080/api/photos", formData);
+      const response = await axios.post(
+        process.env.REACT_APP_API_PHOTO,
+        formData
+      );
 
       if (response.status === 200) {
         const result = response.data;
@@ -232,7 +250,7 @@ export function Profile() {
           setImage(result.id);
           const photoEmployee = { avatar: result.id };
           axios
-            .put(`http://localhost:8080/api/users/photo/${id}`, photoEmployee)
+            .put(`${process.env.REACT_APP_API_PHOTO_USER}/${id}`, photoEmployee)
             .then((response) => {
               toast.success("Sửa ảnh thành công");
               setIsLoadingImage(false);
@@ -252,7 +270,10 @@ export function Profile() {
   return (
     <>
       <ContainerViewUser idUser={id} />
-      <div className="container-profile-user" style={{ margin: "0px 90px", padding: "0 15px" }}>
+      <div
+        className="container-profile-user"
+        style={{ margin: "0px 90px", padding: "0 15px" }}
+      >
         <div
           className="notification-user"
           style={{
@@ -266,7 +287,8 @@ export function Profile() {
           <div className="d-flex">
             <TipsAndUpdatesIcon />
             <span>
-              Hồ sơ bạn như thế này, hãy hoàn thiện hồ sơ để việc tìm kiếm hộ lý có thể triển khai nhanh hơn.
+              Hồ sơ bạn như thế này, hãy hoàn thiện hồ sơ để việc tìm kiếm hộ lý
+              có thể triển khai nhanh hơn.
             </span>
           </div>
         </div>
@@ -278,7 +300,11 @@ export function Profile() {
         <div className="my-profile-header" style={{ display: "flex" }}>
           <div
             className="my-profile-header-form"
-            style={{ display: "flex", borderRight: "1px solid #e7e7e7", width: "33%" }}
+            style={{
+              display: "flex",
+              borderRight: "1px solid #e7e7e7",
+              width: "33%",
+            }}
           >
             <div>
               <div className="my-profile-img" style={{ marginBottom: "16px" }}>
@@ -334,7 +360,12 @@ export function Profile() {
               <div style={{ fontSize: "14px" }}>{user?.time} </div>
               <div
                 onClick={() => setCheckModal(true)}
-                style={{ textAlign: "center", marginTop: "50px", color: "blue", cursor: "pointer" }}
+                style={{
+                  textAlign: "center",
+                  marginTop: "50px",
+                  color: "blue",
+                  cursor: "pointer",
+                }}
               >
                 Sửa hồ sơ
               </div>
@@ -361,21 +392,45 @@ export function Profile() {
                 paddingLeft: "15px",
               }}
             >
-              <div className="row" style={{ padding: "15px 0 5px"  }}>
-                <span className="col-3" style={{ fontWeight: "bold", fontSize: "13px" }}>Thơi gian tạo tài khoản </span>
-                <span className="col-3" style={{ fontSize: "11px",  cursor: "pointer" }}>
+              <div className="row" style={{ padding: "15px 0 5px" }}>
+                <span
+                  className="col-3"
+                  style={{ fontWeight: "bold", fontSize: "13px" }}
+                >
+                  Thơi gian tạo tài khoản{" "}
+                </span>
+                <span
+                  className="col-3"
+                  style={{ fontSize: "11px", cursor: "pointer" }}
+                >
                   {user?.time}
                 </span>
               </div>
               <div className="row" style={{ padding: "5px 0" }}>
-                <span className="col-3" style={{ fontWeight: "bold", fontSize: "13px" }}>Trạng thái tài khoản</span>
-                <span className="col-3" style={{ fontSize: "11px",  cursor: "pointer" }}>
+                <span
+                  className="col-3"
+                  style={{ fontWeight: "bold", fontSize: "13px" }}
+                >
+                  Trạng thái tài khoản
+                </span>
+                <span
+                  className="col-3"
+                  style={{ fontSize: "11px", cursor: "pointer" }}
+                >
                   Đang hoạt động
                 </span>
               </div>
               <div className="row" style={{ padding: "5px 0 15px" }}>
-                <span className="col-3" style={{ fontWeight: "bold", fontSize: "13px" }}>Gói thành viên </span>
-                <span className="col-3" style={{ fontSize: "11px",  cursor: "pointer" }}>
+                <span
+                  className="col-3"
+                  style={{ fontWeight: "bold", fontSize: "13px" }}
+                >
+                  Gói thành viên{" "}
+                </span>
+                <span
+                  className="col-3"
+                  style={{ fontSize: "11px", cursor: "pointer" }}
+                >
                   Thường
                 </span>
               </div>
@@ -405,7 +460,9 @@ export function Profile() {
               {preferencesRender.map((e) => (
                 <div key={e.id} style={{ padding: "5px 0 ", color: "#737373" }}>
                   <DoneAllIcon />
-                  <span style={{ fontSize: "14px", marginLeft: "5px" }}>{e.name}</span>
+                  <span style={{ fontSize: "14px", marginLeft: "5px" }}>
+                    {e.name}
+                  </span>
                 </div>
               ))}
             </div>

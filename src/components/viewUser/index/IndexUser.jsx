@@ -65,34 +65,44 @@ export function IndexUser() {
       lat: 0,
       lng: 0,
     });
-    setSelectedDate([null, null])
-    setCheckButton(false)
+    setSelectedDate([null, null]);
+    setCheckButton(false);
   };
 
   useEffect(() => {
     let axiosData = async () => {
-      const responseInformation = await axios.get("http://localhost:8080/api/add-infos");
+      const responseInformation = await axios.get(
+        process.env.REACT_APP_API_ADD_INFOS
+      );
       setListInformation(responseInformation.data);
 
-      const responseService = await axios.get("http://localhost:8080/api/serviceGenerals");
+      const responseService = await axios.get(
+        process.env.REACT_APP_API_SERVICE_GENERALS
+      );
       setListService(responseService.data);
 
-      const responseSkill = await axios.get("http://localhost:8080/api/skills");
+      const responseSkill = await axios.get(process.env.REACT_APP_API_SKILLS);
       setListSkill(responseSkill.data);
-      const responseAssistant = await axios.get(`http://localhost:8080/api/employees?page=0`);
+      const responseAssistant = await axios.get(
+        `${process.env.REACT_APP_API_ADMIN_EMPLOYEES}?page=0`
+      );
       setListAssistant(responseAssistant.data.content);
       setPageTotal(responseAssistant.data.totalPages);
       setTotalElements(responseAssistant.data.totalElements);
       setIsLoading(false);
-
     };
     axiosData();
   }, []);
   console.log(listAssistant);
   const fetchData = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/employees?page=${count}`);
-      setListAssistant((prevList) => [...(prevList || []), ...response.data.content]);
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_ADMIN_EMPLOYEES}?page=${count}`
+      );
+      setListAssistant((prevList) => [
+        ...(prevList || []),
+        ...response.data.content,
+      ]);
       setCount((pre) => pre + 1);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -134,14 +144,19 @@ export function IndexUser() {
       selectedInfos.length > 0 &&
       selectedSkills.length > 0
     ) {
-
-      const selectedService = listService.find((service) => service.name === checkButtonService);
+      const selectedService = listService.find(
+        (service) => service.name === checkButtonService
+      );
       const selectedSkillIds = selectedSkills.map((selectedSkill) => {
-        const matchingSkill = listSkill.find((skill) => skill.name === selectedSkill);
+        const matchingSkill = listSkill.find(
+          (skill) => skill.name === selectedSkill
+        );
         return matchingSkill ? matchingSkill.id : null;
       });
       const selectedInfoIds = selectedInfos.map((selectedInfo) => {
-        const matchingInfo = listInformation.find((info) => info.name === selectedInfo);
+        const matchingInfo = listInformation.find(
+          (info) => info.name === selectedInfo
+        );
         return matchingInfo ? matchingInfo.id : null;
       });
       const transformedData = Object.keys(value).map((day) => ({
@@ -160,16 +175,16 @@ export function IndexUser() {
         timeEnd: endDay,
         listDateSession: transformedData,
       };
-      axios.post(`http://localhost:8080/api/carts/create-filter/${id}`, data).then((res) => {
-        setListAssistantFilter(res.data.content);
-        setCheckButton(true);
-              setIsLoadingImage(false);
-
-      });
+      axios
+        .post(`${process.env.REACT_APP_API_CARTS_CREATE_FILTER}/${id}`, data)
+        .then((res) => {
+          setListAssistantFilter(res.data.content);
+          setCheckButton(true);
+          setIsLoadingImage(false);
+        });
     } else {
       toast.error("Nhập đầy đủ thông tin trước khi tìm kiếm");
       setIsLoadingImage(false);
-
     }
   };
   if (isLoading) {
@@ -187,101 +202,99 @@ export function IndexUser() {
 
       <div className="index-user-body row ">
         <div className="index-user-body-filter col-4 sidebar">
-            <div className="index-user-body-title">
-              <h5>Tìm kiếm người chăm sóc theo mong muốn của bạn</h5>
-              <span className="reset-filter" onClick={handleReset}>
-                Chọn lại
-              </span>
-            </div>
+          <div className="index-user-body-title">
+            <h5>Tìm kiếm người chăm sóc theo mong muốn của bạn</h5>
+            <span className="reset-filter" onClick={handleReset}>
+              Chọn lại
+            </span>
+          </div>
 
-            <div className="w-100">
-              <SearchLocationInput
-                setSelectedLocation={setSelectedLocation}
-                setPlace={setPlace}
-                marginTest={"0"}
-                resetInputAddress={resetInputAddress}
-                children={true}
-                km={km}
-                setKm={setKm}
-                checkButton={checkButton}
+          <div className="w-100">
+            <SearchLocationInput
+              setSelectedLocation={setSelectedLocation}
+              setPlace={setPlace}
+              marginTest={"0"}
+              resetInputAddress={resetInputAddress}
+              children={true}
+              km={km}
+              setKm={setKm}
+              checkButton={checkButton}
+            />
+          </div>
+          <div className="index-user-body-dates">
+            <h6 style={{ margin: "0" }}>Thời gian cần chăm sóc</h6>
+            <div className="index-user-body-dates-render">
+              <DateIndexUser
+                setSelectedDate={setSelectedDate}
+                dayInWeek={dayInWeek}
+                setValue={setValue}
+                selectedDate={selectedDate}
+                setDayInWeek={setDayInWeek}
+                setStartDay={setStartDay}
+                setEndDay={setEndDay}
               />
             </div>
-            <div className="index-user-body-dates">
-              <h6 style={{ margin: "0" }}>Thời gian cần chăm sóc</h6>
-              <div className="index-user-body-dates-render">
-                <DateIndexUser
-                  setSelectedDate={setSelectedDate}
-                  dayInWeek={dayInWeek}
-                  setValue={setValue}
-                  selectedDate={selectedDate}
-                  setDayInWeek={setDayInWeek}
-                  setStartDay={setStartDay}
-                  setEndDay={setEndDay}
+          </div>
+          <div className="index-user-body-services">
+            <h6>Có thể giúp bạn với</h6>
+            <div className="index-user-body-services-render">
+              {listService?.map((e) => (
+                <ServiceIndexUser
+                  key={e.id}
+                  value={e}
+                  setCheckButtonService={setCheckButtonService}
+                  checkButtonService={checkButtonService}
                 />
-              </div>
+              ))}
             </div>
-            <div className="index-user-body-services">
-              <h6>Có thể giúp bạn với</h6>
-              <div className="index-user-body-services-render">
-                {listService?.map((e) => (
-                 
-                  <ServiceIndexUser
-                    key={e.id}
-                    value={e}
-
-                    setCheckButtonService={setCheckButtonService}
-                    checkButtonService={checkButtonService}
-                  />
-                ))}
-              </div>
-            </div>
-            <div className="index-user-body-skills">
-              <h6>Kỹ năng chuyên nghiệp</h6>
-              <div className="index-user-body-skills-render">
-                {listSkill?.map((e) => (
-                  <SkillIndexUser
-                    key={e.id}
-                    setSelectedSkills={setSelectedSkills}
-                    selectedSkills={selectedSkills}
-                    value={e}
-                  />
-                ))}
-              </div>
-            </div>
-            <div className="index-user-body-infos">
-              <h6>Thông tin khác</h6>
-              <div className="index-user-body-infos-render">
-                {listInformation?.map((e) => (
-                  <InfoIndexUser
-                    key={e.id}
-                    setSelectedInfos={setSelectedInfos}
-                    selectedInfos={selectedInfos}
-                    value={e}
-                  />
-                ))}
-              </div>
-            </div>
-            {!checkButton ? (
-              <div className="button-index-user">
-                <ButtonForMe
-                  value={60}
-                  childrenButton={"Tìm kiếm"}
-                  colorButton={"#3b71aa"}
-                  type="submit"
-                  onclick={handleSubmit}
+          </div>
+          <div className="index-user-body-skills">
+            <h6>Kỹ năng chuyên nghiệp</h6>
+            <div className="index-user-body-skills-render">
+              {listSkill?.map((e) => (
+                <SkillIndexUser
+                  key={e.id}
+                  setSelectedSkills={setSelectedSkills}
+                  selectedSkills={selectedSkills}
+                  value={e}
                 />
-              </div>
-            ) : (
-              <div className="button-index-user">
-                <ButtonForMe
-                  value={60}
-                  childrenButton={"Tạo mới yêu cầu"}
-                  colorButton={"#3b71aa"}
-                  type="submit"
-                  onclick={handleReset}
+              ))}
+            </div>
+          </div>
+          <div className="index-user-body-infos">
+            <h6>Thông tin khác</h6>
+            <div className="index-user-body-infos-render">
+              {listInformation?.map((e) => (
+                <InfoIndexUser
+                  key={e.id}
+                  setSelectedInfos={setSelectedInfos}
+                  selectedInfos={selectedInfos}
+                  value={e}
                 />
-              </div>
-            )}
+              ))}
+            </div>
+          </div>
+          {!checkButton ? (
+            <div className="button-index-user">
+              <ButtonForMe
+                value={60}
+                childrenButton={"Tìm kiếm"}
+                colorButton={"#3b71aa"}
+                type="submit"
+                onclick={handleSubmit}
+              />
+            </div>
+          ) : (
+            <div className="button-index-user">
+              <ButtonForMe
+                value={60}
+                childrenButton={"Tạo mới yêu cầu"}
+                colorButton={"#3b71aa"}
+                type="submit"
+                onclick={handleReset}
+              />
+            </div>
+          )}
         </div>
         {!checkButton ? (
           <>
@@ -305,16 +318,21 @@ export function IndexUser() {
           </>
         ) : (
           <div className="index-user-body-render-assistant col-8">
-            {isLoadingImage ? <div style={{margin:"50%"}}><LoadingPage/></div> : listAssistantFilter?.map((e, index) => (
-              
-              <div key={index}>
-                <RenderListAssistantIndexUser
-                  listAssistant={listAssistantFilter}
-                  value={e}
-                  index={index}
-                />
+            {isLoadingImage ? (
+              <div style={{ margin: "50%" }}>
+                <LoadingPage />
               </div>
-            ))}
+            ) : (
+              listAssistantFilter?.map((e, index) => (
+                <div key={index}>
+                  <RenderListAssistantIndexUser
+                    listAssistant={listAssistantFilter}
+                    value={e}
+                    index={index}
+                  />
+                </div>
+              ))
+            )}
           </div>
         )}
       </div>

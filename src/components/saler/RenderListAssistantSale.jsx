@@ -24,9 +24,9 @@ export function RenderListAssistantSale() {
   let navigate = useNavigate();
   useEffect(() => {
     let axiosData = async () => {
-      const responseFilterAss = await axios.get(
-        process.env.REACT_APP_API_CARTS_FILTER +"/"+id
-      ).then(setIsLoading(false))
+      const responseFilterAss = await axios
+        .get(process.env.REACT_APP_API_CARTS_FILTER + "/" + id)
+        .then(setIsLoading(false));
       console.log(responseFilterAss?.data);
       setFilterAss(responseFilterAss?.data.content);
     };
@@ -35,30 +35,28 @@ export function RenderListAssistantSale() {
   const handleCheckboxChange = () => {
     setChecked(!isChecked);
   };
- 
+
   if (isLoading) {
     return <LoadingCommon />;
   }
   const handleClick = (assistantId) => {
     Swal.fire({
-      title: 'Liên hệ với nhân viên thành công',
-      confirmButtonText: "OK"
+      title: "Liên hệ với nhân viên thành công",
+      confirmButtonText: "OK",
     }).then(() => {
       let cart = {
-        cartId : id,
-        employeeId : assistantId
-      }
-      axios.put(`http://localhost:8080/api/carts/employees`, cart).then(() => {
-        setIsLoading(true)
+        cartId: id,
+        employeeId: assistantId,
+      };
+      axios.put(process.env.REACT_APP_API_CARTS_EMPLOYEES, cart).then(() => {
+        setIsLoading(true);
         setTimeout(() => {
           navigate(`/sale/${idSale}`);
         }, 1000);
       });
-      
-      
     });
   };
-  
+
   return (
     <>
       <div>
@@ -71,7 +69,10 @@ export function RenderListAssistantSale() {
         <div className="row render-list-assistant-header">
           <div className="col-3"></div>
           <div className="col-6 py-3">
-            <h4>Đây là danh sách hồ sơ cá nhân gợi ý dựa vào những thông tin bạn cung cấp</h4>
+            <h4>
+              Đây là danh sách hồ sơ cá nhân gợi ý dựa vào những thông tin bạn
+              cung cấp
+            </h4>
             <h6>Danh sách yêu thích</h6>
           </div>
           <div className="col-3 p-0">
@@ -89,7 +90,7 @@ export function RenderListAssistantSale() {
               isChecked={isChecked}
               handleCheckboxChange={handleCheckboxChange}
               setIsOpen={setIsOpen}
-              handleClick= {handleClick}
+              handleClick={handleClick}
             />
           ) : (
             ""
@@ -111,9 +112,11 @@ export function RenderListAssistantSale() {
               <span>Add more or continue to evaluate them</span>
             </div>
             <div className="check-select-button">
-
               <NavLink to="/user/assistant-caption">
-                <ButtonForMe value={100} childrenButton={"Tiếp theo"}></ButtonForMe>
+                <ButtonForMe
+                  value={100}
+                  childrenButton={"Tiếp theo"}
+                ></ButtonForMe>
               </NavLink>
             </div>
           </div>
@@ -143,7 +146,10 @@ export function RenderListAssistantSale() {
               </div>
               <span>Add to list</span>
             </div>
-            <div onClose={() => setIsOpen(false)} className="modal-profile-footer-clear">
+            <div
+              onClose={() => setIsOpen(false)}
+              className="modal-profile-footer-clear"
+            >
               <div className="modal-profile-footer-clear-icon">
                 <ClearIcon />
               </div>

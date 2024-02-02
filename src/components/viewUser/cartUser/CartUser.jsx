@@ -37,29 +37,37 @@ export function CartUser() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/carts/user/${id}`);
-        const updatedListCart = response.data.content.map((cartItem, index) => ({
-          ...cartItem,
-        }));
-        updatedListCart.sort((a, b) => new Date(b.createAt) - new Date(a.createAt));
-        if (updatedListCart.length === 0 ) {
-          setHasShownToast(true); 
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_CARTS_USERS}/${id}`
+        );
+        console.log(response);
+        const updatedListCart = response.data.content.map(
+          (cartItem, index) => ({
+            ...cartItem,
+          })
+        );
+        updatedListCart.sort(
+          (a, b) => new Date(b.createAt) - new Date(a.createAt)
+        );
+        if (updatedListCart.length === 0) {
+          setHasShownToast(true);
         }
         setListCart(updatedListCart);
       } catch (error) {
-        toast.error("Lấy dữ liệu thất bại")
+        toast.error("Lấy dữ liệu thất bại");
       }
-      setIsLoading(false)
-
+      setIsLoading(false);
     };
 
     fetchData();
   }, [id, checkModal, checkCallApiCart, message]);
-  useEffect(()=>{ if (hasShownToast) {
-    toast.info("Chưa có dữ liệu")
-  }},[hasShownToast])
-  if(isLoading){
-    <LoadingCommon/>
+  useEffect(() => {
+    if (hasShownToast) {
+      toast.info("Chưa có dữ liệu");
+    }
+  }, [hasShownToast]);
+  if (isLoading) {
+    <LoadingCommon />;
   }
   return (
     <>

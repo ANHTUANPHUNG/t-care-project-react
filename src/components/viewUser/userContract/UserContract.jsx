@@ -11,6 +11,7 @@ import { useParams } from "react-router";
 import { ContainerViewUser } from "../containerViewUser/ContainerViewUser.jsx";
 import { ButtonForMe } from "./../../ButtonForMe";
 import { format } from "date-fns";
+import { toast } from "react-toastify";
 
 export function UserContract() {
   const { id } = useParams();
@@ -27,25 +28,28 @@ export function UserContract() {
   const [stompClient, setStompClient] = useState(null);
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/api/contracts/users/${id}`).then((res) => {
-      const arrayList = res.data.content.map((e, i) => ({
-        ...e,
-        // createAt:
-      }));
-      arrayList.sort((a, b) => new Date(b.createAt) - new Date(a.createAt));
+    axios
+      .get(`${process.env.REACT_APP_API_USERS_CONTRACT}/${id}`)
+      .then((res) => {
+        const arrayList = res.data.content.map((e, i) => ({
+          ...e,
+          // createAt:
+        }));
+        arrayList.sort((a, b) => new Date(b.createAt) - new Date(a.createAt));
 
-      setListContract(arrayList);
-      setIsLoading(false);
-    });
+        setListContract(arrayList);
+        setIsLoading(false);
+      });
   }, [id, message]);
   console.log(listContract);
   useEffect(() => {
-    const socket = new SockJS("http:/localhost:8080/ws");
+    const socket = new SockJS(process.env.REACT_APP_API_SOCKET);
     const client = Stomp.over(socket);
     client.connect({}, () => {
       client.subscribe("/topic/saler", (message) => {
         const receivedMessage = JSON.parse(message.body);
         setMessage(receivedMessage);
+        toast.success("Hợp đồng của bạn đã được tạo");
       });
     });
     socket.onerror = (error) => {};
@@ -131,15 +135,28 @@ export function UserContract() {
             marginBottom: "20px",
           }}
         ></div>
-        <div style={{ textAlign: "right", marginRight: "22px", marginBottom: "20px" }}>{date}</div>
-        <span style={{ fontWeight: "600", fontSize: "30px" }}>HỢP ĐỒNG LAO ĐỘNG</span>
+        <div
+          style={{
+            textAlign: "right",
+            marginRight: "22px",
+            marginBottom: "20px",
+          }}
+        >
+          {date}
+        </div>
+        <span style={{ fontWeight: "600", fontSize: "30px" }}>
+          HỢP ĐỒNG LAO ĐỘNG
+        </span>
       </div>
       <div style={{ padding: "30px" }}>
         <span style={{ fontWeight: "600" }}>Bên A: </span> <br />
-        <span> Công ty:</span> <span>Trung tâm chăm sóc sức khỏe và hỗ trợ cuộc sống T-Care.</span>
+        <span> Công ty:</span>{" "}
+        <span>Trung tâm chăm sóc sức khỏe và hỗ trợ cuộc sống T-Care.</span>
         <br />
         <span>Địa chỉ: </span>{" "}
-        <span>28 Nguyễn Tri Phương, Phú Nhuận, Thành phố Huế, Thừa Thiên Huế.</span>
+        <span>
+          28 Nguyễn Tri Phương, Phú Nhuận, Thành phố Huế, Thừa Thiên Huế.
+        </span>
         <br />
         <span style={{ fontWeight: "600" }}>Đại diện bởi: </span>
         <br />
@@ -147,8 +164,9 @@ export function UserContract() {
         <br />
         <span>Sinh ngày: </span> <span>03-05-1996.</span>
         <br />
-        <span>CMND/CCCD số: </span> <span>046096010215.</span> <span>Cấp ngày:</span>{" "}
-        <span>13-03-2022.</span> <span>Tại:</span> <span>Tỉnh Thừa Thiên Huế.</span>
+        <span>CMND/CCCD số: </span> <span>046096010215.</span>{" "}
+        <span>Cấp ngày:</span> <span>13-03-2022.</span> <span>Tại:</span>{" "}
+        <span>Tỉnh Thừa Thiên Huế.</span>
         <br />
         <span>Địa chỉ cư trú: </span>{" "}
         <span>Hải Bình, Thuận An, Thành phố Huế, Thừa Thiên Huế.</span> <br />
@@ -157,24 +175,33 @@ export function UserContract() {
         <span style={{ fontWeight: "600" }}>Bên B: </span> <br />
         <span>Tên Ông/Bà: </span> <span>{contract?.user.name}.</span> <br />
         <span>Số điện thoại: </span> <span>{contract?.user.phone}.</span> <br />
-        <span>CMND/CCCD số: </span> <span>{contract?.user.personId}.</span> <br />
+        <span>CMND/CCCD số: </span> <span>{contract?.user.personId}.</span>{" "}
+        <br />
         <span>Giới tính: </span> <span>{contract?.user.gender}.</span> <br />
         <div style={{ height: "10px" }}></div>
         <span style={{ fontWeight: "600" }}>Hộ lý được ký kết: </span> <br />
         <span>Tên hộ lý: </span> <span>{contract?.employee.name}.</span> <br />
         <span>Email: </span> <span>{contract?.employee.email}.</span> <br />
-        <span>Số điện thoại: </span> <span>{contract?.employee.phone}.</span> <br />
-        <span>Địa chỉ: </span> <span>{contract?.employee.location}.</span> <br />
-        <span>CMND/CCCD số: </span> <span>{contract?.employee.personId}.</span> <br />
-        <span>Giới tính: </span> <span>{contract?.employee.gender}.</span> <br />
+        <span>Số điện thoại: </span> <span>{contract?.employee.phone}.</span>{" "}
         <br />
-        <span>Thỏa thuận ký kết hợp đồng lao động và làm đúng những thỏa thuận sau đây: </span>
+        <span>Địa chỉ: </span> <span>{contract?.employee.location}.</span>{" "}
+        <br />
+        <span>CMND/CCCD số: </span> <span>{contract?.employee.personId}.</span>{" "}
+        <br />
+        <span>Giới tính: </span> <span>{contract?.employee.gender}.</span>{" "}
+        <br />
+        <br />
+        <span>
+          Thỏa thuận ký kết hợp đồng lao động và làm đúng những thỏa thuận sau
+          đây:{" "}
+        </span>
         <div style={{ height: "10px" }}></div>
         <span style={{ fontWeight: "600", fontSize: "20px" }}>
           ĐIỀU 1: CÔNG VIỆC, ĐỊA ĐIỂM, THỜI GIAN, YÊU CẦU LÀM VIỆC VÀ CHI PHÍ.
         </span>{" "}
         <br /> <div style={{ height: "10px" }}></div>
-        <span style={{ fontWeight: "600" }}>1.</span> <span> Công việc của hộ lý:</span>{" "}
+        <span style={{ fontWeight: "600" }}>1.</span>{" "}
+        <span> Công việc của hộ lý:</span>{" "}
         <span>
           {contract?.nameService} . Giá tiền: {contract?.totalPrice}.
         </span>{" "}
@@ -188,7 +215,8 @@ export function UserContract() {
               </span>
             )
         )}
-        <span style={{ fontWeight: "600" }}>2.</span> <span> Thời gian làm việc: </span> <br />
+        <span style={{ fontWeight: "600" }}>2.</span>{" "}
+        <span> Thời gian làm việc: </span> <br />
         <span>
           <div className="row">
             <div className="col-6">
@@ -222,9 +250,12 @@ export function UserContract() {
           </div>
         </span>
         <span style={{ fontWeight: "600" }}>3.</span>{" "}
-        <span> Địa điểm làm việc của hộ lý: {contract?.location.name}</span> <br />
-        <span style={{ fontWeight: "600" }}>4.</span> <span> Yêu cầu hộ lý: </span> <br />
-        <span>- Thông tin người cần chăm sóc và chú thích cho hộ lý:</span> <br />
+        <span> Địa điểm làm việc của hộ lý: {contract?.location.name}</span>{" "}
+        <br />
+        <span style={{ fontWeight: "600" }}>4.</span>{" "}
+        <span> Yêu cầu hộ lý: </span> <br />
+        <span>- Thông tin người cần chăm sóc và chú thích cho hộ lý:</span>{" "}
+        <br />
         <span>- Họ và tên :</span>
         <span>{contract?.customerName}</span> <br />
         <span>- Số điện thoại :</span>
@@ -235,10 +266,12 @@ export function UserContract() {
         <span>{contract?.noteForPatient}</span> <br />
         <span>- Ghi chú cho hộ lý :</span>
         <span>{contract?.noteForEmployee}</span> <br />
-        <span style={{ fontWeight: "600" }}>5.</span> <span> Chi phí: {totalAmount} VNĐ</span>{" "}
-        <br />
+        <span style={{ fontWeight: "600" }}>5.</span>{" "}
+        <span> Chi phí: {totalAmount} VNĐ</span> <br />
         <div style={{ height: "10px" }}></div>
-        <span style={{ fontWeight: "600", fontSize: "20px" }}>ĐIỀU 2: THỜI HẠN HỢP ĐỒNG</span>{" "}
+        <span style={{ fontWeight: "600", fontSize: "20px" }}>
+          ĐIỀU 2: THỜI HẠN HỢP ĐỒNG
+        </span>{" "}
         <br />
         <span className="mx-3">+ Ngày bắt đầu: {starDate}</span>
         <br />
@@ -246,7 +279,8 @@ export function UserContract() {
         <br />
         <div style={{ padding: "20px 16%" }}>
           <span style={{ fontSize: "13px" }}>
-            ( Điều khoản được in vào ở hợp đồng bằng văn bản được bên A và bên B cất giữ)
+            ( Điều khoản được in vào ở hợp đồng bằng văn bản được bên A và bên B
+            cất giữ)
           </span>
         </div>
         <div style={{ textAlign: "center" }}>
