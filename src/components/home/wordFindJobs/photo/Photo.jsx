@@ -15,7 +15,6 @@ import Swal from "sweetalert2";
 export function Photo() {
   const inputRef = useRef(null);
   const [isNextDisabled, setIsNextDisabled] = useState(true);  
-  const [check,setCheck] = ("");
   const [image, setImage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [avatar, setAvatar] = useState("")
@@ -39,23 +38,22 @@ export function Photo() {
       formData.append("fileType", "image");
 
       try {
-        const response = await axios.post("http://localhost:8080/api/photos", formData);
+        const response = await axios.post(process.env.REACT_APP_API_PHOTO, formData);
 
         if (response.status === 200) {
           const result = response.data;
               setError("");
           if (result) {
-            console.log(result);
             setImage(result.url);
             setAvatar(result.id)
           } else {
-            console.error("Image ID not found in the response.");
+            toast.error("Tải ảnh thất bại")
           }
         } else {
-          console.error("Failed to upload image:", response.statusText);
+          toast.error("Tải ảnh thất bại")
         }
       } catch (error) {
-        console.error("An error occurred:", error);
+        toast.error("Tải ảnh thất bại")
       } finally {
         setIsLoading(false);
         setIsNextDisabled(true)
@@ -76,7 +74,7 @@ export function Photo() {
     setError("");
     const photoEmployee = { avatar: avatar };
     axios
-      .put(`http://localhost:8080/api/employees/photo/${id}`, photoEmployee)
+      .put(process.env.REACT_APP_API_EMPLOYEES_PHOTO +"/"+id, photoEmployee)
       .then((response) => {
         Swal.fire({
           title: 'Hồ sơ trực tuyến đã hoàn tất',
@@ -87,7 +85,7 @@ export function Photo() {
         });
       })
       .catch((error) => {
-        console.error("Đã có lỗi xảy ra:", error);
+        toast.error("Đã có lỗi xảy ra");
       })
       .finally(() => {
         setIsLoading(false);

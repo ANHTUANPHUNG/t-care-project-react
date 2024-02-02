@@ -12,7 +12,6 @@
               <div className="d-flex render-list-assistant-body-render-container-header">
                 <img
                 style={{ width: '75px', height: '100px' }}
-                  // src="https://png.pngtree.com/png-vector/20190413/ourmid/pngtree-img-file-document-icon-png-image_938720.jpg"
                   alt=""
                   src={e?.photoUrl}
                 />

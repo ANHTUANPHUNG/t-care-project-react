@@ -19,7 +19,7 @@ export function AdminAssistant() {
 
   useEffect(() => {
     const axiosData = async () => {
-      const assistant = await axios.get("http://localhost:8080/api/admin/employees/waiting");
+      const assistant = await axios.get(process.env.REACT_APP_API_EMPLOYEES_WAITING);
       const data = assistant.data.content;
       const listWithIndex = data.map((item, index) => ({ ...item, index: index + 1 }));
       listWithIndex.sort((a, b) => new Date(b.createAt) - new Date(a.createAt))
@@ -61,7 +61,7 @@ export function AdminAssistant() {
       cancelButtonText: "Hủy",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.put(`http://localhost:8080/api/admin/employees/active/${id}`).then((res) => {
+        axios.put(process.env.REACT_APP_API_EMPLOYEES_WAITING +"/" + id).then((res) => {
           toast.success("Châp nhận thành công");
           setIsCheck((pre) => !pre);
         });
@@ -77,7 +77,7 @@ export function AdminAssistant() {
       cancelButtonText: "Hủy",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.put(`http://localhost:8080/api/admin/employees/ban/${id}`).then((res) => {
+        axios.put(process.env.REACT_APP_API_EMPLOYEES_BAN +"/" + id).then((res) => {
           toast.success("Xóa yêu cầu thành công");
           setIsCheck((pre) => !pre);
         });

@@ -19,13 +19,12 @@ export function RenderListAssistant() {
   useEffect(() => {
     let axiosData = async () => {
       const responseFilterAss = await axios.get(
-        `http://localhost:8080/api/carts/filter/${id}`
+      process.env.REACT_APP_API_CARTS_FILTER +"/"+id
       );
       setFilterAss(responseFilterAss?.data.content);
     };
     axiosData();
   }, []);
-  console.log(filterAss);
   const handleCheckboxChange = () => {
     setChecked(!isChecked);
   };

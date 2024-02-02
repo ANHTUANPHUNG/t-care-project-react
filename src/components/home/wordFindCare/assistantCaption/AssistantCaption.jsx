@@ -18,7 +18,7 @@ export function AssistantCaption() {
   useEffect(() => {
     const findByIdCart = () => {
       axios
-        .get(`http://localhost:8080/api/carts/${idCart}`)
+        .get(process.env.REACT_APP_API_CARTS +"/"+idCart)
         .then((resp) => {
           setIdUser(resp.data.user.id)
         });
@@ -33,7 +33,7 @@ export function AssistantCaption() {
     }
     const id = idUser
      axios
-      .put(`http://localhost:8080/api/carts/noteEmployee/${idCart}`, note)
+      .put(process.env.REACT_APP_API_CARTS_NOTE_EMPLOYEE + "/" + idCart, note)
       .then((resp) => {
         
         toast.success("Hoàn thành thêm thông tin người cần chăm sóc");
@@ -41,8 +41,7 @@ export function AssistantCaption() {
         setIsLoadingPage(false)
       })
       .catch((err) => {
-        console.error("Lỗi khi gửi POST request:", err);
-        toast.error("Lỗi");
+        toast.error("Lỗi khi tải dữ liệu");
         setIsLoadingPage(false)
 
       });

@@ -59,18 +59,18 @@ export function Experience() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const responseInformation = await axios.get("http://localhost:8080/api/add-infos");
+        const responseInformation = await axios.get(process.env.REACT_APP_API_ADD_INFOS);
         setListInformation(responseInformation.data);
 
-        const responseService = await axios.get("http://localhost:8080/api/serviceGenerals");
+        const responseService = await axios.get(process.env.REACT_APP_API_SERVICE_GENERALS);
         setListService(responseService.data);
 
-        const responseSkill = await axios.get("http://localhost:8080/api/skills");
+        const responseSkill = await axios.get(process.env.REACT_APP_API_SKILLS);
         setListSkill(responseSkill.data);
 
         setIsLoading(false); 
       } catch (error) {
-        console.error(error);
+        toast.error("Nhận dữ liệu thất bại")
       }
     };
 

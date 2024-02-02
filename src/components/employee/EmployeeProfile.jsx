@@ -27,7 +27,7 @@ export function EmployeeProfile() {
   useEffect(() => {
     let axiosData = async () => {
         const responseAssistant = await axios.get(
-          "http://localhost:8080/api/employees/" + idEmployee
+          process.env.REACT_APP_API_EMPLOYEES + idEmployee
         );
         setEmployee(responseAssistant.data);
         setUploadedImageUrl(responseAssistant.data.photoUrl)
@@ -45,7 +45,7 @@ export function EmployeeProfile() {
       formData.append("avatar", selectedFile);
       formData.append("fileType", "image");
 
-      const response = await axios.post("http://localhost:8080/api/photos", formData);
+      const response = await axios.post(process.env.REACT_APP_API_PHOTO, formData);
 
       if (response.status === 200) {
         const result = response.data;
@@ -56,7 +56,7 @@ export function EmployeeProfile() {
           const photoEmployee = { avatar: result.id };
           axios
 
-            .put(`http://localhost:8080/api/employees/photo/${idEmployee}`, photoEmployee)
+            .put(process.env.REACT_APP_API_EMPLOYEES_PHOTO +"/"+idEmployee, photoEmployee)
             .then((response) => {
               toast.success("Sửa ảnh thành công");
               setIsLoadingImage(false);
@@ -85,7 +85,7 @@ export function EmployeeProfile() {
             cancelButtonText: "Hủy",
           }).then((result) => {
             if (result.isConfirmed) {
-              axios.put(`http://localhost:8080/api/employees/status/ban/${idEmployee}`).then((res) => {
+              axios.put(process.env.REACT_APP_API_EMPLOYEES_STATUS_BAN +"/" +idEmployee).then((res) => {
                 toast.success("Khóa thành công.");
                 setCheckStatus(pre=>!pre)
               });
@@ -100,7 +100,7 @@ export function EmployeeProfile() {
             cancelButtonText: "Hủy",
           }).then((result) => {
             if (result.isConfirmed) {
-              axios.put(`http://localhost:8080/api/employees/status/active/${idEmployee}`).then((res) => {
+              axios.put(process.env.REACT_APP_API_EMPLOYEES_STATUS_ACTIVE +"/" +idEmployee).then((res) => {
                 toast.success("Mở thành công.");
                 setCheckStatus(pre=>!pre)
               });

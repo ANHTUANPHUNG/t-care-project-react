@@ -4,7 +4,7 @@ import { FrameLoginSignIn } from "../frameLoginSignIn/FrameLoginSignIn";
 import { Grid, TextField } from "@mui/material";
 import { ButtonForMe } from "../../../ButtonForMe";
 import axios from "axios";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "./ForgotPassword.css";
 import * as yup from "yup";
 import { toast } from "react-toastify";
@@ -36,7 +36,7 @@ export function ResetPassword() {
         newPassword: values.password,
       };
       axios
-        .post(`http://localhost:8080/api/auth/reset-password${window.location.search}`, passSubmit)
+        .post(process.env.REACT_APP_API_AUTH_RESET_REQUEST + window.location.search, passSubmit)
         .then((resp) => {
           setIsLoading(false);
           toast.success("Thay đổi mật khẩu thành công");

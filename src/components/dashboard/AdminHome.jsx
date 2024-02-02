@@ -21,16 +21,16 @@ export function AdminHome() {
     };
     let axiosData = async () => {
       const responseRevenue = await axios.post(
-        "http://localhost:8080/api/admin/revenue/contract",
+        process.env.REACT_APP_API_ADMIN_REVENUE_CONTRACT,
         day
       );
       setRevenue(responseRevenue.data);
 
-      const responseUser = await axios.get("http://localhost:8080/api/users");
+      const responseUser = await axios.get(process.env.REACT_APP_API_USERS);
       setListUser(responseUser.data);
       setTotalUser(responseUser?.data ? responseUser.data.length : 0);
 
-      const responseEmployee = await axios.get("http://localhost:8080/api/employees");
+      const responseEmployee = await axios.get(process.env.REACT_APP_API_ADMIN_EMPLOYEES);
       setListEmployee(responseEmployee.data);
       setTotalEmployee(
         responseEmployee?.data.totalElements ? responseEmployee.data.totalElements : 0
@@ -66,7 +66,7 @@ export function AdminHome() {
     let axiosData = async () => {
       const promises = weeksData.map(async (week) => {
         const responseRevenue = await axios.post(
-          "http://localhost:8080/api/admin/revenue/contract",
+          process.env.REACT_APP_API_ADMIN_REVENUE_CONTRACT,
           week
         );
         return responseRevenue.data;

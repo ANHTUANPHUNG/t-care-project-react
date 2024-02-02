@@ -23,8 +23,8 @@ export function SkillAndInfo() {
   let navigate = useNavigate();
   useEffect(() => {
     const fetchData = async () => {
-      const dataSkillResponse = await axios.get(`http://localhost:8080/api/skills`);
-      const dataInfoResponse = await axios.get(`http://localhost:8080/api/add-infos`);
+      const dataSkillResponse = await axios.get(process.env.REACT_APP_API_SKILLS);
+      const dataInfoResponse = await axios.get(process.env.REACT_APP_API_ADD_INFOS);
       setListSkill(dataSkillResponse.data);
       setListInfo(dataInfoResponse.data);
       setIsLoading(false);
@@ -50,8 +50,8 @@ export function SkillAndInfo() {
       const info = { infoIdList: selectedInfoIds };
       const updateData = async () => {
         const [skillResponse, infoResponse] = await Promise.all([
-          axios.put(`http://localhost:8080/api/carts/cartSkills/${id}`, skill),
-          axios.put(`http://localhost:8080/api/carts/cartInfos/${id}`, info),
+          axios.put(process.env.REACT_APP_API_CARTS_CART_SKILLS+"/"+id, skill),
+          axios.put(process.env.REACT_APP_API_CARTS_CART_INFOS +"/"+id, info),
         ]);
 
         if (skillResponse.status === 204 && infoResponse.status === 204) {

@@ -50,7 +50,7 @@ export function UserNeedCare() {
       noteForPatient:noteForPatient
     }
     await axios
-    .put(`http://localhost:8080/api/carts/infoPatient/${id}`, information)
+    .put(process.env.REACT_APP_API_CARTS_CART_INFOS_PATIENT +"/" +id, information)
     .then((resp) => {
       toast.success("Hoàn thành thêm thông tin người cần chăm sóc");
       navigate("/user/assistant-caption" + "/" + id);

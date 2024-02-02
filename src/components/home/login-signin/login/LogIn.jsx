@@ -26,7 +26,7 @@ export function LogIn() {
     const login = { username: email, password: pass };
 
     try {
-      const resp = await axios.post("http://localhost:8080/api/auth/login", login);
+      const resp = await axios.post(process.env.REACT_APP_API_AUTH_LOGIN, login);
       toast.success("Đăng nhập thành công");
 
       if (resp.data.isUser) {

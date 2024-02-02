@@ -38,14 +38,13 @@ export function UserService() {
     };
 
     await axios
-      .put(`http://localhost:8080/api/carts/services/${id}`, select)
+      .put(process.env.REACT_APP_API_CARTS_CART_SERVICES +"/"+id, select)
       .then((resp) => {
         toast.success("Chọn dịch vụ thành công");
         navigate("/user/skill-info" + "/" + id);
         setIsLoadingPage(false);
       })
       .catch((err) => {
-        console.error("Lỗi khi gửi POST request:", err);
         toast.error("Chọn dịch vụ");
         setIsLoadingPage(false);
       });

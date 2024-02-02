@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState } from "react";
 import "./ContainerViewEmployee.css";
 import LogoProject from "../../logoProject/LogoProject";
@@ -9,28 +7,28 @@ import { NavLink, useParams } from "react-router-dom";
 import { CreditScore, Home, ListAlt } from "@mui/icons-material";
 
 export function ContainerViewEmployee({ idEmployee }) {
-    const [employee, setEmployee] = useState();
+  const [employee, setEmployee] = useState();
 
-    const [anchorEl, setAnchorEl] = useState(null);
-    useEffect(() => {
-        const axiosData = async () => {
-          axios.get(`http://localhost:8080/api/employees/${idEmployee}`).then((res) => {
-            setEmployee(res);
-          });
-        };
-        axiosData();
-      }, [idEmployee]);
-      console.log(employee);
-    const open = Boolean(anchorEl);
-    const handleClick = (event) => {
-      setAnchorEl(event.currentTarget);
+  const [anchorEl, setAnchorEl] = useState(null);
+  useEffect(() => {
+    const axiosData = async () => {
+      axios.get(process.env.REACT_APP_API_EMPLOYEES + "/" + idEmployee).then((res) => {
+        setEmployee(res);
+      });
     };
-    const handleClose = () => {
-      setAnchorEl(null);
-    };
-    const handleLogout = () => {
-      localStorage.removeItem('user')
-    }
+    axiosData();
+  }, [idEmployee]);
+  console.log(employee);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+  };
   return (
     <>
       <div>
@@ -79,10 +77,12 @@ export function ContainerViewEmployee({ idEmployee }) {
                 <div className="view-user-header-select-nav-block-title">Danh sách hồ sơ</div>
               </div>
             </NavLink> */}
-            <NavLink className={`view-user-header-select-nav${
+            <NavLink
+              className={`view-user-header-select-nav${
                 window.location.pathname === `/employee/contract/${idEmployee}` ? "active" : ""
               }`}
-              to={`/employee/contract/${idEmployee}`}>
+              to={`/employee/contract/${idEmployee}`}
+            >
               <div className="view-user-header-select-nav-block">
                 <CreditScore
                   className={`view-user-header-select-nav-block-icon${
@@ -117,7 +117,10 @@ export function ContainerViewEmployee({ idEmployee }) {
                 >
                   <MenuItem>Thông tin cá nhân</MenuItem>
                 </NavLink>
-                <NavLink style={{ textDecoration: "none", color: "#212529" }}onClick={handleLogout}>
+                <NavLink
+                  style={{ textDecoration: "none", color: "#212529" }}
+                  onClick={handleLogout}
+                >
                   <MenuItem>Thoát</MenuItem>
                 </NavLink>
               </Menu>

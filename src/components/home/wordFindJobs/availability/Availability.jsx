@@ -26,14 +26,13 @@ export function Availability() {
         sessionOfDateList: value[day],
       }));
 
-      await axios.put(`http://localhost:8080/api/employees/dateSessions/${id}`, {
+      await axios.put(process.env.REACT_APP_API_EMPLOYEES_DATE_SESSIONS + "/" + id, {
         listDateSession: transformedData,
       });
 
       navigate(`/assistant/experience/${id}`);
       toast.success("Hoàn thành cập nhật ngày có thể làm");
     } catch (error) {
-      console.error("Lỗi khi gửi PUT request:", error);
       toast.error("Đã xảy ra lỗi. Vui lòng thử lại sau.");
     }
   };

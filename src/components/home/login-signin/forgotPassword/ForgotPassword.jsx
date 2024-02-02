@@ -21,10 +21,10 @@ export function ForgotPassword() {
         email: values.email,
       };
       axios
-        .post("http://localhost:8080/api/auth/check-mail", emailSubmit)
+        .post(process.env.REACT_APP_API_AUTH_CHECK_MAIL, emailSubmit)
         .then((resp) => {
           axios
-            .post("http://localhost:8080/api/auth/password-reset-request", emailSubmit)
+            .post(process.env.REACT_APP_API_AUTH_PASSWORD_RESET_REQUEST, emailSubmit)
             .then((res) => {
               toast.success("Vui lòng kiểm tra Email của bạn");
               setIsLoading(false);
@@ -36,7 +36,6 @@ export function ForgotPassword() {
         })
         .catch((err) => {
           setIsLoading(false);
-
           toast.error("Email không tồn tài");
         });
     },

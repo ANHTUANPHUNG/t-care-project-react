@@ -78,7 +78,7 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
             const login = { username: values.email, password: values.password };
           
             try {
-              const resp = await axios.post("http://localhost:8080/api/auth/login", login);
+              const resp = await axios.post(process.env.REACT_APP_API_AUTH_LOGIN, login);
           
               if (resp.data.isUser) {
                 const userDispatch = {
@@ -90,11 +90,9 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
                 };
                 dispatch(userDispatch);
                 localStorage.setItem("user", JSON.stringify(userDispatch));
-                // navigate("/user/address/" + resp.data.idAccount);
               }
             } catch (error) {
-              console.error("Đăng nhập thất bại", error);
-              // Xử lý lỗi nếu cần thiết
+              toast.error("Đăng nhập thất bại")
             }
           };
           loginUser()
@@ -102,7 +100,7 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
         formik.resetForm();
         setIsLoading(false)
       } catch (error) {
-        console.error("An error occurred during form submission:", error);
+        toast.error("Đăng nhập thất bại")
       }
     },
   });

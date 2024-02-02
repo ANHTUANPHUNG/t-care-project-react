@@ -31,7 +31,7 @@ export function AdminStatistics() {
       try {
         if (dayData.startDay && dayData.endDay) {
           const response = await axios.post(
-            "http://localhost:8080/api/admin/revenue/contract",
+            process.env.REACT_APP_API_ADMIN_REVENUE_CONTRACT,
             dayData
           );
           setTotalFunction(response.data);
@@ -97,7 +97,7 @@ export function AdminStatistics() {
     };
     if (newDateRange[0] !== null && newDateRange[1] !== null) {
       const responseRevenue = await axios.post(
-        "http://localhost:8080/api/admin/revenue/contract",
+        process.env.REACT_APP_API_ADMIN_REVENUE_CONTRACT,
         day
       );
 
@@ -117,7 +117,7 @@ export function AdminStatistics() {
       endDay: formattedLastDay,
     };
     if (newDateRange !== null) {
-      axios.post("http://localhost:8080/api/admin/revenue/contract", day).then((res) => {
+      axios.post(process.env.REACT_APP_API_ADMIN_REVENUE_CONTRACT, day).then((res) => {
         setMonthTotal(res.data);
       });
     }
@@ -134,7 +134,7 @@ export function AdminStatistics() {
       endDay: formattedLastDay,
     };
     if (newDateRange !== null) {
-      axios.post("http://localhost:8080/api/admin/revenue/contract", day).then((res) => {
+      axios.post(process.env.REACT_APP_API_ADMIN_REVENUE_CONTRACT, day).then((res) => {
         setYearTotal(res.data);
       });
     }

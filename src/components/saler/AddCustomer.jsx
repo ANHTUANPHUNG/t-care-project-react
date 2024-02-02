@@ -69,11 +69,11 @@ export default function AddCustomer() {
   }, []);
   useEffect(() => {
     let axiosData = async () => {
-      const responseService = await axios.get("http://localhost:8080/api/serviceGenerals");
+      const responseService = await axios.get(process.env.REACT_APP_API_SERVICE_GENERALS);
       setListService(responseService.data);
-      const responseInformation = await axios.get("http://localhost:8080/api/add-infos");
+      const responseInformation = await axios.get(process.env.REACT_APP_API_ADD_INFOS);
       setListInformation(responseInformation.data);
-      const responseSkill = await axios.get("http://localhost:8080/api/skills");
+      const responseSkill = await axios.get(process.env.REACT_APP_API_SKILLS);
       setListSkill(responseSkill.data);
       setIsLoading(false)
     };
@@ -83,7 +83,7 @@ export default function AddCustomer() {
     try {
       setIsLoading(true);
   
-      const response = await axios.get(`http://localhost:8080/api/carts/sale/${id}`);
+      const response = await axios.get(process.env.REACT_APP_API_CARTS_SALE +"/"+id);
       const customers = response.data;
   
       setIsLoading(false);
@@ -206,7 +206,7 @@ export default function AddCustomer() {
       return;
     }
     console.log(cart);
-    axios.post(`http://localhost:8080/api/carts/sale/${id}`, cart)
+    axios.post(process.env.REACT_APP_API_CARTS_SALE +"/"+id, cart)
     .then(response => {
       console.log(response.data);
        const cartId = response.data

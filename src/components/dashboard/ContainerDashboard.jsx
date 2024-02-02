@@ -6,11 +6,7 @@ import { CreditScore, Home, ListAlt } from "@mui/icons-material";
 import HomeIcon from "@mui/icons-material/Home";
 import QueryStatsIcon from "@mui/icons-material/QueryStats";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
-import { width } from "@mui/system";
 import "./ContainerDashboard.css";
-import axios from "axios";
-import LoadingCommon from "../common/LoadingCommon";
-import { logRoles } from "@testing-library/react";
 
 export function ContainerDashboard() {
   const { idAdmin } = useParams();

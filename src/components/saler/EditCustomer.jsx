@@ -66,7 +66,7 @@ export default function EditCustomer() {
   }, []);
   useEffect(() => {
     let axiosData = async () => {
-      const responseService = await axios.get("http://localhost:8080/api/serviceGenerals");
+      const responseService = await axios.get(process.env.REACT_APP_API_SERVICE_GENERALS);
       setListService(responseService.data);
       const responseInformation = await axios.get("http://localhost:8080/api/add-infos");
       setListInformation(responseInformation.data);

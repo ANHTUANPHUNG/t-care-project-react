@@ -15,9 +15,7 @@ export function ContainerViewSale({ idUser }) {
   const [user, setUser] = useState();
   useEffect(() => {
     const axiosData = async () => {
-      //   axios.get(`http://localhost:8080/api/users/${idUser}`).then((res) => {
-      //     setUser(res);
-      //   });
+  
     };
     axiosData();
   }, [idUser]);

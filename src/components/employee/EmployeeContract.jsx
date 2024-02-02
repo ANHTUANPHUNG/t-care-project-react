@@ -27,7 +27,7 @@ export function EmployeeContract() {
   const [stompClient, setStompClient] = useState(null);
   console.log(listContract);
   useEffect(() => {
-    axios.get(`http://localhost:8080/api/contracts/employees/${idEmployee}`).then((res) => {
+    axios.get(process.env.REACT_APP_API_CONTRACTS_EMPLOYEES +"/"+idEmployee).then((res) => {
       const arrayList = res.data.content.map((e, i) => ({
         ...e,
       }));
@@ -39,7 +39,7 @@ export function EmployeeContract() {
   }, [idEmployee, message]);
   console.log(listContract);
   useEffect(() => {
-    const socket = new SockJS("http:/localhost:8080/ws");
+    const socket = new SockJS(process.env.REACT_APP_API_SOCKET);
     const client = Stomp.over(socket);
     client.connect({}, () => {
       client.subscribe("/topic/saler", (message) => {
