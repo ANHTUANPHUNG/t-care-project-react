@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import clsx from "clsx";
 import { styled, css } from "@mui/system";
 import { Modal as BaseModal } from "@mui/base/Modal";
-import { ButtonForMe } from "./ButtonForMe";
-import { Button } from "@mui/material";
+
 
 export default function ModalUnstyled({
   paddingCheck,
@@ -26,7 +25,7 @@ export default function ModalUnstyled({
   };
   return (
     <div>
-      <Modal open={open} onClose={handleClose} slots={{ backdrop: StyledBackdrop }}>
+      <Modal open={open !== undefined ? open : false} onClose={handleClose} slots={{ backdrop: StyledBackdrop }}>
         <ModalContent sx={{ width: widthForm, height: heightForm }}>
           <div style={{padding: paddingCheck || 0 }}>{children}</div>
         </ModalContent>

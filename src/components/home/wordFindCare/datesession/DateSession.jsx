@@ -8,16 +8,19 @@ import { SelectDate } from "../../../selectDate/SelectDate";
 import DateBetween from "./DateBetween";
 import { toast } from "react-toastify";
 import axios from "axios";
+import "./DateSession.css";
+import LoadingPage from "../../../common/LoadingPage";
 
 export function DateSession() {
   const [value, setValue] = useState();
-  const [selectedDate, setSelectedDate] = useState(undefined);
+  const [selectedDate, setSelectedDate] = useState([null, null]);
   const [dayInWeek, setDayInWeek] = useState([]);
   const [startDay, setStartDay] = useState();
   const [endDay, setEndDay] = useState();
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
+  const [isLoadingPage, setIsLoadingPage] = useState(false);
   let navigate = useNavigate();
   const { id } = useParams();
   const getDaysInRange = (startDate, endDate) => {
@@ -38,7 +41,6 @@ export function DateSession() {
     const dateValue = objectDay?.$d;
     const formattedDate = dateValue?.toLocaleDateString("en-GB");
     return formattedDate;
-
   };
   useEffect(() => {
     if (selectedDate != null) {
@@ -51,33 +53,35 @@ export function DateSession() {
   }, [selectedDate]);
 
   const handleSubmitDate = async () => {
+    setIsLoadingPage(true);
     try {
-
       if (!selectedDate || !selectedDate[0] || !selectedDate[1]) {
         toast.error("Vui lòng ngày bắt đầu và ngày kết thúc");
         return;
       }
 
-
       const startDate = selectedDate[0];
       const endDate = selectedDate[1];
       const currentDate = new Date();
-  
 
       if (startDate <= currentDate) {
         toast.error("Vui lòng điền ngày bắt đầu lớn hơn ngày hiện tại");
+        setIsLoadingPage(false);
+
         return;
       }
-  
+
       if (endDate <= startDate) {
         toast.error("Vui lòng điền ngày kết thúc phải lớn hơn ngày bắt đầu");
+        setIsLoadingPage(false);
+
         return;
       }
-
-
 
       if (Object.keys(value).length === 0) {
         toast.error("Vui lòng điền thời gian trong tuần bạn muốn thuê");
+        setIsLoadingPage(false);
+
         return;
       }
 
@@ -86,7 +90,7 @@ export function DateSession() {
         sessionOfDateList: value[day],
       }));
 
-      await axios.put(`http://localhost:8080/api/carts/dateSessions/${id}`, {
+      await axios.put(process.env.REACT_APP_API_CARTS_NOTE_DATE_SESSIONS +"/"+id, {
         listDateSession: transformedData,
         timeStart: startDay,
         timeEnd: endDay,
@@ -94,9 +98,10 @@ export function DateSession() {
 
       navigate(`/user/need-care/${id}`);
       toast.success("Hoàn thành hồ sơ ngày thuê");
+      setIsLoadingPage(false);
     } catch (error) {
-      console.error("Lỗi khi gửi PUT request:", error);
       toast.error("Đã xảy ra lỗi. Vui lòng thử lại sau.");
+      setIsLoadingPage(false);
     }
   };
   return (
@@ -131,11 +136,17 @@ export function DateSession() {
       </div>
 
       <div className="d-flex justify-content-center mt-4">
-        Đừng lo lắng, bạn luôn có thể chỉnh sửa nó sau.
+        {/* Đừng lo lắng, bạn luôn có thể chỉnh sửa nó sau. */}
       </div>
 
       <div className="mt-2 mb-5 button-date-session">
-        <ButtonForMe childrenButton={"Tiếp theo"} onclick={handleSubmitDate} />
+        {isLoadingPage ? (
+          <div style={{ marginRight: "17%" }}>
+            <LoadingPage />
+          </div>
+        ) : (
+          <ButtonForMe childrenButton={"Tiếp theo"} onclick={handleSubmitDate} />
+        )}
       </div>
       <div className="legal-notice-user">
         <LegalNotice />

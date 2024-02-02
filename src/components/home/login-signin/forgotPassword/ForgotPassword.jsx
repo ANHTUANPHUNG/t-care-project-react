@@ -5,28 +5,38 @@ import { Grid, TextField } from "@mui/material";
 import { ButtonForMe } from "../../../ButtonForMe";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
-import OtherHousesIcon from "@mui/icons-material/OtherHouses";
 import "./ForgotPassword.css";
-
+import { toast } from "react-toastify";
+import LoadingPage from "../../../common/LoadingPage";
 export function ForgotPassword() {
-  const [checkEmail, setCheckEmail] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const formik = useFormik({
     initialValues: {
       email: "",
     },
     onSubmit: (values) => {
+      setIsLoading(true);
       const emailSubmit = {
         email: values.email,
       };
       axios
-        .post("http://localhost:8080/api/auth/check-mail", emailSubmit)
+        .post(process.env.REACT_APP_API_AUTH_CHECK_MAIL, emailSubmit)
         .then((resp) => {
-          console.log(resp.data);
-          setCheckEmail(true);
-          return resp.data;
+          axios
+            .post(process.env.REACT_APP_API_AUTH_PASSWORD_RESET_REQUEST, emailSubmit)
+            .then((res) => {
+              toast.success("Vui lòng kiểm tra Email của bạn");
+              setIsLoading(false);
+            })
+            .catch((err) => {
+              setIsLoading(false);
+              toast.error("Vui lòng kiểm tra Email của bạn");
+            });
         })
         .catch((err) => {
-          console.log(err);
+          setIsLoading(false);
+          toast.error("Email không tồn tài");
         });
     },
   });
@@ -55,16 +65,24 @@ export function ForgotPassword() {
             </Grid>
 
             <div className="forgot-password-button">
-              <div className="forgot-password-button-left">
-                <NavLink to={"/login"} className="forgot-password-button-left-style-nav-link">
-                  <div className="forgot-password-button-left-style">
-                    <span>Hủy</span>
+              {isLoading ? (
+                <div style={{ marginLeft: "70%" }}>
+                  <LoadingPage />
+                </div>
+              ) : (
+                <>
+                  <div className="forgot-password-button-left">
+                    <NavLink to={"/login"} className="forgot-password-button-left-style-nav-link">
+                      <div className="forgot-password-button-left-style">
+                        <span>Hủy</span>
+                      </div>
+                    </NavLink>
                   </div>
-                </NavLink>
-              </div>
-              <Grid item xs={4} className="forgot-password-button-right">
-                <ButtonForMe value={100} childrenButton={"Tìm kiếm"} type="submit" />
-              </Grid>
+                  <Grid item xs={4} className="forgot-password-button-right">
+                    <ButtonForMe value={100} childrenButton={"Tìm kiếm"} type="submit" />
+                  </Grid>
+                </>
+              )}
             </div>
           </Grid>
         </form>

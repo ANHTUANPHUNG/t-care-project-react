@@ -15,7 +15,7 @@ const UserServiceAPI = {
     },
     signInUser: async (postData,navigate,url) => {
         return axios
-            .post(PREFIX + "/auth/users/account", postData)
+            .post(PREFIX + "/auth/users/cart/account", postData)
             .then((resp) => {
                 const login =  {
                     username: postData.email,
@@ -26,7 +26,7 @@ const UserServiceAPI = {
                 navigate(url + "/" + resp.data);
             })
             .catch((err) => {
-                console.log(err);
+                toast.error(err.response.data)
             });
     },
     signInUserReturnLogin: async (postData,navigate,url) => {
@@ -37,14 +37,14 @@ const UserServiceAPI = {
                 navigate(url);
             })
             .catch((err) => {
-                console.log(err);
+                toast.error(err.response.data)
             });
     },
     updateLocation: async (id, postData, navigate, url) => {
         return axios
             .put(PREFIX + "/carts/locations/" + id, postData)
             .then((resp) => {
-                toast.success("Tài khoản được tạo thành công");
+                toast.success("Thêm địa chỉ thành công");
                 navigate(url + "/" + id);
             })
             .catch((err) => {

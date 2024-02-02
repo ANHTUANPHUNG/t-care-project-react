@@ -21,7 +21,8 @@ const EmployeeServiceAPI = {
         navigate(url + "/" + resp.data);
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err.response.data)
+
       });
   },
   updateLocation: async (id, postData, navigate, url) => {

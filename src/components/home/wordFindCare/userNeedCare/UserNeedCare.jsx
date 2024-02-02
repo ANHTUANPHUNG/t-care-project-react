@@ -7,6 +7,7 @@ import { LegalNotice } from "../../../carehub/LegalNotice";
 import { ButtonForMe } from "../../../ButtonForMe";
 import { toast } from "react-toastify";
 import axios from "axios";
+import LoadingPage from "../../../common/LoadingPage";
 
 const memberOfFamily = [
   { id: "MYPARENT", name: "Cha Mẹ của tôi" },
@@ -36,9 +37,12 @@ export function UserNeedCare() {
   const [noteForPatient, setNoteForPatient] = useState("");
   const [age, setAge] = React.useState("THIRTY");
   const {id} = useParams()
+  const [isLoadingPage, setIsLoadingPage] = useState(false);
+
   let navigate = useNavigate();
 
   const handleSubmitNeedCare = async ()=>{
+    setIsLoadingPage(true)
     const information = {
       memberOfFamily: member,
       gender:genderSelect,
@@ -46,16 +50,16 @@ export function UserNeedCare() {
       noteForPatient:noteForPatient
     }
     await axios
-    .put(`http://localhost:8080/api/carts/infoPatient/${id}`, information)
+    .put(process.env.REACT_APP_API_CARTS_CART_INFOS_PATIENT +"/" +id, information)
     .then((resp) => {
       toast.success("Hoàn thành thêm thông tin người cần chăm sóc");
       navigate("/user/assistant-caption" + "/" + id);
-
+      setIsLoadingPage(false)
     })
     .catch((err) => {
       console.error("Lỗi khi gửi POST request:", err);
       toast.error("Lỗi");
-      
+      setIsLoadingPage(false)
     });
   }
   return (
@@ -139,7 +143,12 @@ export function UserNeedCare() {
       </div>
 
       <div className="mt-2 mb-5 button-date-session">
-          <ButtonForMe childrenButton={"Next"} onclick={handleSubmitNeedCare} />
+      {isLoadingPage ? (
+          <div style={{ marginRight: "17%" }}>
+            <LoadingPage />
+          </div>
+        ) : (
+          <ButtonForMe childrenButton={"Next"} onclick={handleSubmitNeedCare} />)}
       </div>
       <div className="legal-notice-user">
         <LegalNotice />

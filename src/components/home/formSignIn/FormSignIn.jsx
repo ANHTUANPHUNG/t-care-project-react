@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./FormSignIn.css";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -9,6 +9,11 @@ import { ButtonForMe } from "../../ButtonForMe";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
+import LoadingPage from "../../common/LoadingPage";
+import { textAlign } from "@mui/system";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { AuthContext } from "../../../App";
 
 const validationSchema = yup.object().shape({
   email: yup.string().email("Email không hợp lệ").required("Email không được để trống"),
@@ -31,8 +36,11 @@ const validationSchema = yup.object().shape({
   termsAgreed: yup.bool().oneOf([true], "Bạn phải đồng ý với các điều khoản và dịch vụ"),
 });
 
-export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, color, checkRole, api }) {
+export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, color, checkRole, api ,loginUser}) {
   const [gender, setGender] = useState("MALE");
+  const [isLoading, setIsLoading] = useState(false);
+  const { user, dispatch } = useContext(AuthContext);
+
   let navigate = useNavigate();
 
   const formik = useFormik({
@@ -40,7 +48,7 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
       email: "",
       firstName: "",
       lastName: "",
-      phone : "",
+      phoneNumber : "",
       password: "",
       confirmPassword: "",
       personID: "",
@@ -49,12 +57,14 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
+        setIsLoading(true)
+
         await api(
           {
             firstName: values.firstName,
             lastName: values.lastName,
             email: values.email,
-            phone: values.phone,
+            phoneNumber: values.phone,
             password: values.password,
             gender: gender,
             personId: values.personID,
@@ -63,9 +73,34 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
           navigate,
           url
         );
+        if (loginUser) {
+          const loginUser = async () => {
+            const login = { username: values.email, password: values.password };
+          
+            try {
+              const resp = await axios.post(process.env.REACT_APP_API_AUTH_LOGIN, login);
+          
+              if (resp.data.isUser) {
+                const userDispatch = {
+                  type: "UPDATE_ROLE",
+                  payload: {
+                    userId: resp.data.idAccount,
+                    role: "ROLE_USER",
+                  },
+                };
+                dispatch(userDispatch);
+                localStorage.setItem("user", JSON.stringify(userDispatch));
+              }
+            } catch (error) {
+              toast.error("Đăng nhập thất bại")
+            }
+          };
+          loginUser()
+        }
         formik.resetForm();
+        setIsLoading(false)
       } catch (error) {
-        console.error("An error occurred during form submission:", error);
+        toast.error("Đăng nhập thất bại")
       }
     },
   });
@@ -159,7 +194,7 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
                 fullWidth
                 id="personID"
                 label="Số Căn Cước Công Dân"
-                value={formik.values.personID || "1234567890"}
+                value={formik.values.personID}
                 onChange={formik.handleChange}
                 error={formik.touched.personID && Boolean(formik.errors.personID)}
                 helperText={formik.touched.personID && formik.errors.personID}
@@ -216,7 +251,7 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
               )}
             </Grid>
 
-            <Grid item xs={12} className="d-flex justify-content-center">
+            {!isLoading? <Grid item xs={12} className="d-flex justify-content-center">
               <ButtonForMe
                 value={100}
                 childrenButton={"Đăng kí"}
@@ -224,6 +259,11 @@ export function FormSignIn({ url, marginContainer, marginHeader, termAgreed, col
                 type="submit"
               />
             </Grid>
+          : 
+          <div style={{ padding:"20px 45%"}}>
+            <LoadingPage />
+          </div>
+          }
           </Grid>
         </form>
       </div>

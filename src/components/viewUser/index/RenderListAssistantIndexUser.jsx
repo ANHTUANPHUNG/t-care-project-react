@@ -3,54 +3,93 @@ import TokenIcon from "@mui/icons-material/Token";
 import SecurityIcon from "@mui/icons-material/Security";
 import { FavoriteBorder } from "@mui/icons-material";
 import { ButtonForMe } from "../../ButtonForMe";
-import { useParams } from "react-router-dom";
-export function RenderListAssistantIndexUser({ value }) {
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import axios from "axios";
+export function RenderListAssistantIndexUser({
+  value,
+  index,
+  listAssistant,
+  checkButtonForme,
+}) {
   const [selectedFavorites, setSelectedFavorites] = useState([]);
   const { id } = useParams();
+  let navigate = useNavigate();
   const handleSelectFavorite = (e) => {
     const isInfoSelected = selectedFavorites?.some((element) => element === e);
     if (isInfoSelected) {
-      const updatedInfos = selectedFavorites?.filter((element) => element !== e);
+      const updatedInfos = selectedFavorites?.filter(
+        (element) => element !== e
+      );
       setSelectedFavorites(updatedInfos);
     } else {
       setSelectedFavorites((prev) => [...prev, e]);
     }
   };
+  console.log("value", value);
+  const handleSubmitCartUser = () => {
+    const form = {
+      cartId: value.cartId,
+      employeeId: value.id,
+    };
+    axios
+      .put(process.env.REACT_APP_API_CARTS_EMPLOYEES, form)
+      .then((res) => {
+        navigate(`/user/cart/${id}`);
+      })
+      .then((res) => {
+        toast.success("Thêm yêu cầu thành công");
+      });
+  };
   return (
     <>
-    
-      <div className="render-list-assistant-index-user" key={value.id}>
+      <div className="render-list-assistant-index-user" key={index}>
         <div className="render-list-assistant-index-user-header">
-          <img src={value.photoUrl} alt="" />
+          <img src={value?.photoUrl} alt="" style={{ width: "75px" }} />
           <div className="render-list-assistant-index-user-body">
             <span className="render-list-assistant-index-user-body-name">
-              {value.lastName} {value.firstName}
+              {value?.lastName} {value?.firstName}
             </span>
             <TokenIcon className="render-list-assistant-index-user-body-icon-token" />
             <SecurityIcon className="render-list-assistant-index-user-body-icon-security" />
             <div className="render-list-assistant-index-user-body-experience">
-              <div>{value.nameAddress}</div>
-              <div>{value.experience} năm kinh nghiệm</div>
+              <div>{value?.nameAddress}</div>
+              <div>{value?.experience} năm kinh nghiệm</div>
             </div>
           </div>
         </div>
         <div className="render-list-assistant-index-user-footer">
           <span className="render-list-assistant-index-user-footer-content">
-            "{value.descriptionAboutMySelf.slice(0, 100)}
-            {value.descriptionAboutMySelf.length > 100 ? "..." : ""}"{" "}
-            <a href={`http://localhost:3000/user/index/${id}/${value.id}`} target="_blank">more</a>
+            "{value?.descriptionAboutMySelf?.slice(0, 100)}
+            {value?.descriptionAboutMySelf?.length > 100 ? "..." : ""}"{" "}
+            <a
+              href={`${process.env.REACT_APP_API_URL_USER_INDEX}/${id}/${value?.id}`}
+              target="_blank"
+            >
+              more
+            </a>
           </span>
           <FavoriteBorder
             className={`favorite-check-index-user${
-              selectedFavorites.includes(value.id) ? "-active" : ""
+              selectedFavorites.includes(value?.id) ? "-active" : ""
             }`}
-            onClick={() => handleSelectFavorite(value.id)}
-            name={value.id}
+            onClick={() => handleSelectFavorite(value?.id)}
+            name={value?.id}
           />
-          <ButtonForMe childrenButton={"Thêm"} value={20} />
+          {checkButtonForme ? (
+            ""
+          ) : (
+            <ButtonForMe
+              childrenButton={"Thêm"}
+              value={20}
+              onclick={handleSubmitCartUser}
+            />
+          )}
         </div>
       </div>
-      <div className="render-list-assistant-index-user-footer-separation"></div>
+      {listAssistant?.length - 1 == index || (
+        <div className="render-list-assistant-index-user-footer-separation"></div>
+      )}
     </>
   );
 }

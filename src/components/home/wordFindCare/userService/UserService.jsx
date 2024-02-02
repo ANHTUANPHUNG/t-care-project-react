@@ -8,13 +8,16 @@ import { RadioService } from "./RadioService";
 import GetServiceAPI from "../../../../service/getServiceAPI";
 import { toast } from "react-toastify";
 import LoadingCommon from "../../../common/LoadingCommon";
+import "./UserService.css";
+import LoadingPage from "../../../common/LoadingPage";
 
 export function UserService() {
   const [listServiceGenerals, setListServiceGenerals] = useState();
   const [selectedRadioId, setSelectedRadioId] = useState(null);
-  const {id} = useParams()
+  const { id } = useParams();
   let navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingPage, setIsLoadingPage] = useState(false);
 
   useEffect(() => {
     showListServiceGenerals();
@@ -22,29 +25,28 @@ export function UserService() {
   const showListServiceGenerals = async () => {
     const serviceGenerals = await GetServiceAPI.getServiceGeneral();
     setListServiceGenerals(serviceGenerals);
-    setIsLoading(false); 
+    setIsLoading(false);
   };
 
   if (isLoading) {
     return <LoadingCommon />;
   }
-  console.log(selectedRadioId);
   const handleSubmitService = async () => {
+    setIsLoadingPage(true);
     const select = {
-      serviceId:selectedRadioId
-    }
-    
+      serviceId: selectedRadioId,
+    };
+
     await axios
-      .put(`http://localhost:8080/api/carts/services/${id}`, select)
+      .put(process.env.REACT_APP_API_CARTS_CART_SERVICES +"/"+id, select)
       .then((resp) => {
         toast.success("Chọn dịch vụ thành công");
-        navigate("/user/date-session" + "/" + id);
-
+        navigate("/user/skill-info" + "/" + id);
+        setIsLoadingPage(false);
       })
       .catch((err) => {
-        console.error("Lỗi khi gửi POST request:", err);
         toast.error("Chọn dịch vụ");
-        
+        setIsLoadingPage(false);
       });
   };
   return (
@@ -61,11 +63,21 @@ export function UserService() {
       <div className="d-flex my-5 jc-center">
         <div>
           <h3 className="mb-4">Bạn đang tìm kiếm loại chăm sóc nào?</h3>
-          <RadioService value={listServiceGenerals} selectedRadioId={selectedRadioId} setSelectedRadioId={setSelectedRadioId} />
+          <RadioService
+            value={listServiceGenerals}
+            selectedRadioId={selectedRadioId}
+            setSelectedRadioId={setSelectedRadioId}
+          />
         </div>
       </div>
       <div className="my-5 h5-ta-center">
+        {isLoadingPage ? (
+          <div style={{ marginRight: "17%" }}>
+            <LoadingPage />
+          </div>
+        ) : (
           <ButtonForMe childrenButton={"Tiếp theo"} onclick={handleSubmitService} />
+        )}
       </div>
       <div className="legal-notice-user">
         <LegalNotice />

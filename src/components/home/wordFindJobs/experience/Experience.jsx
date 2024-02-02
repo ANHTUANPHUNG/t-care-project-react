@@ -59,18 +59,22 @@ export function Experience() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const responseInformation = await axios.get("http://localhost:8080/api/add-infos");
+        const responseInformation = await axios.get(
+          process.env.REACT_APP_API_ADD_INFOS
+        );
         setListInformation(responseInformation.data);
 
-        const responseService = await axios.get("http://localhost:8080/api/serviceGenerals");
+        const responseService = await axios.get(
+          process.env.REACT_APP_API_SERVICE_GENERALS
+        );
         setListService(responseService.data);
 
-        const responseSkill = await axios.get("http://localhost:8080/api/skills");
+        const responseSkill = await axios.get(process.env.REACT_APP_API_SKILLS);
         setListSkill(responseSkill.data);
 
-        setIsLoading(false); 
+        setIsLoading(false);
       } catch (error) {
-        console.error(error);
+        toast.error("Nhận dữ liệu thất bại");
       }
     };
 
@@ -103,13 +107,16 @@ export function Experience() {
     const selectedEducationId = event.target.value;
     setEducationId(selectedEducationId);
 
-    const selectedEducation = listYear.find((item) => item.id === selectedEducationId);
+    const selectedEducation = listYear.find(
+      (item) => item.id === selectedEducationId
+    );
 
     if (selectedEducation) {
       setEducationName(selectedEducation.name);
     }
   };
   const handleSubmitExperience = async () => {
+    setIsLoading(true);
     const listExperience = {
       idSkills: skill.map((s) => s.id),
       experience: years.id,
@@ -118,15 +125,20 @@ export function Experience() {
       education: educationId,
     };
     await axios
-      .put(`http://localhost:8080/api/employees/experience/${id}`, listExperience)
+      .put(
+        `${process.env.REACT_APP_API_EMPLOYEES_EXPERIENCE}/${id}`,
+        listExperience
+      )
       .then((resp) => {
+        setIsLoading(false);
         toast.success("Lưu thông tin thành công");
-        navigate(`/assistant/bio/${id}`)
+        navigate(`/assistant/bio/${id}`);
       })
-     
+
       .catch((err) => {
         console.error("Lỗi khi gửi POST request:", err);
         toast.error("Vui lòng điền đầy đủ thông tin");
+        setIsLoading(false);
       });
   };
   const servicesToShow = showMore ? listService : listService?.slice(0, 5);
@@ -137,12 +149,22 @@ export function Experience() {
       <div className="services-provided">
         <div className="services-provided-side-bar">
           <span>Các dịch vụ cung cấp</span> <br />
-          <span className="services-provided-side-bar-select">Vui lòng chọn ít nhất một</span>
+          <span className="services-provided-side-bar-select">
+            Vui lòng chọn ít nhất một
+          </span>
         </div>
         <div>
-          <MapToMe mapToMe={servicesToShow} valueList={servicer} setValueList={setServicer} />
+          <MapToMe
+            mapToMe={servicesToShow}
+            checkService={true}
+            valueList={servicer}
+            setValueList={setServicer}
+          />
           {listService?.length > 5 && (
-            <div className="show-more" onClick={() => setShowMore((prev) => !prev)}>
+            <div
+              className="show-more"
+              onClick={() => setShowMore((prev) => !prev)}
+            >
               {showMore ? (
                 <span>
                   <KeyboardArrowUpIcon />
@@ -163,7 +185,9 @@ export function Experience() {
           <span>Giáo dục</span>
         </div>
         <div>
-          <span className="education-highest-level">BẰNG CẤP CAO NHẤT ĐẠT ĐƯỢC</span>
+          <span className="education-highest-level">
+            BẰNG CẤP CAO NHẤT ĐẠT ĐƯỢC
+          </span>
           <br />
           <FormControl sx={{ width: 300 }}>
             <Select
@@ -192,14 +216,20 @@ export function Experience() {
           <div className="w-75">Số năm kinh nghiệm làm việc</div>
         </div>
         <div className="year-experience-handle">
-          <div className="year-experience-handle-minus" onClick={() => handleMinus()}>
+          <div
+            className="year-experience-handle-minus"
+            onClick={() => handleMinus()}
+          >
             <RemoveIcon />
           </div>
           <div>
-            <span className="year-experience-handle-years">{years.name}</span> <br />{" "}
-            <span>Years</span>
+            <span className="year-experience-handle-years">{years.name}</span>{" "}
+            <br /> <span>Years</span>
           </div>
-          <div className="year-experience-handle-add" onClick={() => handleAdd()}>
+          <div
+            className="year-experience-handle-add"
+            onClick={() => handleAdd()}
+          >
             <AddIcon />
           </div>
         </div>
@@ -210,7 +240,11 @@ export function Experience() {
           <span>Kĩ năng</span>
         </div>
         <div>
-          <MapToMe mapToMe={listSkill} valueList={skill} setValueList={setSkill} />
+          <MapToMe
+            mapToMe={listSkill}
+            valueList={skill}
+            setValueList={setSkill}
+          />
         </div>
       </div>
       <div className="separation-experience"></div>
@@ -238,7 +272,12 @@ export function Experience() {
   return (
     <NavBarFindJob
       children={
-        <SideBarFindJob col={"col-6"} value={experience} check={true} activeIds={[1, 2, 3]} />
+        <SideBarFindJob
+          col={"col-6"}
+          value={experience}
+          check={true}
+          activeIds={[1, 2, 3]}
+        />
       }
     />
   );

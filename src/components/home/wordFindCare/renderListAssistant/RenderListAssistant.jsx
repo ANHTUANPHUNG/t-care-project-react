@@ -16,13 +16,11 @@ export function RenderListAssistant() {
   const [isChecked, setChecked] = useState(false);
   const [filterAss, setFilterAss] = useState();
   const { id } = useParams();
-  console.log(filterAss);
   useEffect(() => {
     let axiosData = async () => {
       const responseFilterAss = await axios.get(
-        "http://localhost:8080/api/carts/filter/e5c79d6b-6a3c-4104-b4f9-91d3a9979e06"
+      process.env.REACT_APP_API_CARTS_FILTER +"/"+id
       );
-      console.log(responseFilterAss?.data);
       setFilterAss(responseFilterAss?.data.content);
     };
     axiosData();
@@ -106,19 +104,19 @@ export function RenderListAssistant() {
           onClick={() => setIsOpen(false)}
           onKeyDown={() => setIsOpen(false)}
         >
-          <div className="modal-profile-content">aaaaa</div>
+          <div className="modal-profile-content"></div>
           <div className="modal-profile-footer">
             <div className="modal-profile-footer-add-list">
               <div className="modal-profile-footer-add-list-check-icon">
                 <CheckIcon />
               </div>
-              <span>Add to list</span>
+              <span>Thêm vào danh sách</span>
             </div>
             <div onClose={() => setIsOpen(false)} className="modal-profile-footer-clear">
               <div className="modal-profile-footer-clear-icon">
                 <ClearIcon />
               </div>
-              <span>Close</span>
+              <span>Đóng</span>
             </div>
           </div>
         </Box>

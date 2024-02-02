@@ -14,11 +14,15 @@ const SearchLocationInput = ({
   marginTest,
   resetInputAddress,
   children,
+  onKmChange,
+  onQueryChange,
+  defaultValue,
+  km,setKm, checkButton
 }) => {
   const autoCompleteRef = useRef();
 
   const inputRef = useRef();
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(defaultValue || "");
   const handleScriptLoad = (updateQuery) => {
     autoCompleteRef.current = new window.google.maps.places.Autocomplete(inputRef.current, {
       componentRestrictions: { country: "VN" },
@@ -31,9 +35,18 @@ const SearchLocationInput = ({
   useEffect(() => {
     setQuery("");
   }, [resetInputAddress]);
+
+  useEffect(() => {
+    setQuery(defaultValue)
+  }, [defaultValue])
+  
   const handleInputChange = (event) => {
     const inputValue = event.target.value;
     setQuery(inputValue);
+    if (onQueryChange) {
+      onQueryChange(inputValue);
+    }
+    
   };
   const handlePlaceSelect = async (updateQuery) => {
     const addressObject = await autoCompleteRef.current.getPlace();
@@ -56,10 +69,14 @@ const SearchLocationInput = ({
   useEffect(() => {
     handleScriptLoad(setQuery);
   }, []);
-  const [age, setAge] = useState("");
 
   const handleChange = (event) => {
-    setAge(event.target.value);
+
+    let newAge = event.target.value;
+    setKm(newAge);
+  if (onKmChange) {
+    onKmChange(newAge);
+  }
   };
   return (
     <div className="search-location-input">
@@ -72,12 +89,12 @@ const SearchLocationInput = ({
           <h6>Bạn cần chăm sóc ở đâu ?</h6>
           <div className="d-flex ">
             <FormControl fullWidth sx={{minWidth:100}}>
-              <InputLabel id="demo-simple-select-label" className={`input-index-user${age!= "" ?"acitve":""}`}>Km</InputLabel>
+              <InputLabel id="demo-simple-select-label" className={`input-index-user${km!= "" ?"acitve":""}`}>Km</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 className="select-index-user"
-                value={age}
+                value={km}
                 label="Age"
                 onChange={handleChange}
               >
