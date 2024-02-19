@@ -29,8 +29,8 @@ const validationSchema = yup.object().shape({
     .typeError("Số Căn Cước Công Dân phải là số")
     .test(
       "len",
-      "Số Căn Cước Công Dân phải có đúng 10 số",
-      (val) => val && val.toString().length === 10
+      "Số Căn Cước Công Dân phải có đúng 12 số",
+      (val) => val && val.toString().length === 12
     )
     .required("Số Căn Cước Công Dân không được để trống"),
   termsAgreed: yup.bool().oneOf([true], "Bạn phải đồng ý với các điều khoản và dịch vụ"),
