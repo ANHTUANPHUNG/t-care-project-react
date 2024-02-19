@@ -25,13 +25,9 @@ const validationSchema = yup.object().shape({
         .string()
         .oneOf([yup.ref("password"), null], "Mật khẩu xác nhận phải giống mật khẩu"),
     personID: yup
-        .number()
-        .typeError("Số Căn Cước Công Dân phải là số")
-        .test(
-            "len",
-            "Số Căn Cước Công Dân phải có đúng 12 số",
-            (val) => val && val.toString().length == 12
-        )
+        .string()
+        .matches(/^\d+$/, "Số Căn Cước Công Dân phải là một chuỗi số")
+        .test("len", "Số Căn Cước Công Dân phải có đúng 12 số", (val) => val && val.length === 12)
         .required("Số Căn Cước Công Dân không được để trống"),
     termsAgreed: yup.bool().oneOf([true], "Bạn phải đồng ý với các điều khoản và dịch vụ"),
 });
