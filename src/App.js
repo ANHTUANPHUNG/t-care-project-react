@@ -151,8 +151,7 @@ function App() {
     }
   }
 
-  console.log("user", user);
-  console.log("EVN" , process.env.REACT_APP_API_URL);
+
   return (
     <>
       <ToastContainer autoClose={3000} theme="colored" />
