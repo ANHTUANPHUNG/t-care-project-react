@@ -44,8 +44,6 @@ export function ResetPassword() {
         })
         .catch((err) => {
           setIsLoading(false);
-
-          console.log("b", err);
         });
     },
   });

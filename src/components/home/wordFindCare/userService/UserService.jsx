@@ -38,7 +38,7 @@ export function UserService() {
     };
 
     await axios
-      .put(process.env.REACT_APP_API_CARTS_CART_SERVICES +"/"+id, select)
+      .put(`${process.env.REACT_APP_API_CARTS_CART_SERVICES}/${id}`, select)
       .then((resp) => {
         toast.success("Chọn dịch vụ thành công");
         navigate("/user/skill-info" + "/" + id);

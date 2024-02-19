@@ -44,7 +44,7 @@ export function Bio() {
 
     const bioEmployee = { bioTitle: descriptionText, descriptionAboutMySelf: bioText };
     try {
-      await axios.put(process.env.REACT_APP_API_EMPLOYEES_BIO +"/"+id, bioEmployee).then((resp) => {
+      await axios.put(`${process.env.REACT_APP_API_EMPLOYEES_BIO}/${id}`, bioEmployee).then((resp) => {
         toast.success("Lưu thông tin thành công");
         navigate(`/assistant/photo/${id}`);
       });

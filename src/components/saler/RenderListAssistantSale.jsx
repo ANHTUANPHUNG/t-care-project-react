@@ -25,7 +25,7 @@ export function RenderListAssistantSale() {
   useEffect(() => {
     let axiosData = async () => {
       const responseFilterAss = await axios
-        .get(process.env.REACT_APP_API_CARTS_FILTER + "/" + id)
+        .get(`${process.env.REACT_APP_API_CARTS_FILTER}/${id}`)
         .then(setIsLoading(false));
       console.log(responseFilterAss?.data);
       setFilterAss(responseFilterAss?.data.content);

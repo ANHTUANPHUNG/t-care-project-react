@@ -87,7 +87,7 @@ export function AdminAssistant() {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .put(process.env.REACT_APP_API_EMPLOYEES_ACTIVE + "/" + id)
+          .put(`${process.env.REACT_APP_API_EMPLOYEES_ACTIVE}/${id}`)
           .then((res) => {
             toast.success("Châp nhận thành công");
             setIsCheck((pre) => !pre);
@@ -105,7 +105,7 @@ export function AdminAssistant() {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .put(process.env.REACT_APP_API_EMPLOYEES_BAN + "/" + id)
+          .put(`${process.env.REACT_APP_API_EMPLOYEES_BAN}/${id}`)
           .then((res) => {
             toast.success("Xóa yêu cầu thành công");
             setIsCheck((pre) => !pre);

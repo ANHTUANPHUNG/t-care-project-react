@@ -27,7 +27,7 @@ export function EmployeeContract() {
   const [stompClient, setStompClient] = useState(null);
   console.log(listContract);
   useEffect(() => {
-    axios.get(process.env.REACT_APP_API_CONTRACTS_EMPLOYEES +"/"+idEmployee).then((res) => {
+    axios.get(`${process.env.REACT_APP_API_CONTRACTS_EMPLOYEES}/+${idEmployee}`).then((res) => {
       const arrayList = res.data.content.map((e, i) => ({
         ...e,
       }));

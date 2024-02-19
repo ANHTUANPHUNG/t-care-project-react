@@ -83,7 +83,7 @@ export default function AddCustomer() {
     try {
       setIsLoading(true);
   
-      const response = await axios.get(process.env.REACT_APP_API_CARTS_SALE +"/"+id);
+      const response = await axios.get(`${process.env.REACT_APP_API_CARTS_SALE}/${id}`);
       const customers = response.data;
   
       setIsLoading(false);
@@ -206,7 +206,7 @@ export default function AddCustomer() {
       return;
     }
     console.log(cart);
-    axios.post(process.env.REACT_APP_API_CARTS_SALE +"/"+id, cart)
+    axios.post(`${process.env.REACT_APP_API_CARTS_SALE}/${id}`, cart)
     .then(response => {
       console.log(response.data);
        const cartId = response.data

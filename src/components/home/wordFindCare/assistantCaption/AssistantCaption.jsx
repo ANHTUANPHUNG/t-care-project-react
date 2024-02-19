@@ -18,7 +18,7 @@ export function AssistantCaption() {
   useEffect(() => {
     const findByIdCart = () => {
       axios
-        .get(process.env.REACT_APP_API_CARTS +"/"+idCart)
+        .get(`${process.env.REACT_APP_API_CARTS}/${idCart}`)
         .then((resp) => {
           setIdUser(resp.data.user.id)
         });
@@ -33,7 +33,7 @@ export function AssistantCaption() {
     }
     const id = idUser
      axios
-      .put(process.env.REACT_APP_API_CARTS_NOTE_EMPLOYEE + "/" + idCart, note)
+      .put(`${process.env.REACT_APP_API_CARTS_NOTE_EMPLOYEE}/${idCart}`, note)
       .then((resp) => {
         
         toast.success("Hoàn thành thêm thông tin người cần chăm sóc");

@@ -74,7 +74,7 @@ export function Photo() {
     setError("");
     const photoEmployee = { avatar: avatar };
     axios
-      .put(process.env.REACT_APP_API_EMPLOYEES_PHOTO +"/"+id, photoEmployee)
+      .put(`${process.env.REACT_APP_API_EMPLOYEES_PHOTO}/${id}`, photoEmployee)
       .then((response) => {
         Swal.fire({
           title: 'Hồ sơ trực tuyến đã hoàn tất',

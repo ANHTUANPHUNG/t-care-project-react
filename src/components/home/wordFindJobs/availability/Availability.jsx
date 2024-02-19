@@ -26,7 +26,7 @@ export function Availability() {
         sessionOfDateList: value[day],
       }));
 
-      await axios.put(process.env.REACT_APP_API_EMPLOYEES_DATE_SESSIONS + "/" + id, {
+      await axios.put(`${process.env.REACT_APP_API_EMPLOYEES_DATE_SESSIONS}/${id}`, {
         listDateSession: transformedData,
       });
 

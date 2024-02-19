@@ -12,7 +12,7 @@ export function ContainerViewEmployee({ idEmployee }) {
   const [anchorEl, setAnchorEl] = useState(null);
   useEffect(() => {
     const axiosData = async () => {
-      axios.get(process.env.REACT_APP_API_EMPLOYEES + "/" + idEmployee).then((res) => {
+      axios.get(`${process.env.REACT_APP_API_EMPLOYEES}/${idEmployee}`).then((res) => {
         setEmployee(res);
       });
     };
