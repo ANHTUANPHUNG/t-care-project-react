@@ -14,7 +14,7 @@ export function FrameLoginSignIn({ children }) {
           <LogoProject />
           
           <div id="logInHome">
-            <NavLink className="navlink-no-underline" to="/home">
+            <NavLink className="navlink-no-underline" to="/">
               <Button className="buttonLogin" variant="contained">
                 Trang chủ
               </Button>

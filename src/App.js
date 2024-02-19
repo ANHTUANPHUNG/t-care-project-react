@@ -159,7 +159,7 @@ function App() {
       <AuthContext.Provider value={{ user, dispatch }}>
         <Routes>
           <Route
-            path="/home"
+            path="/"
             element={
               <PrivateRouteHome>
                 <Home />
