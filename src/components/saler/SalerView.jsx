@@ -41,7 +41,6 @@ export default function SalerView() {
 
       setCustomers(customers);
     } catch (error) {
-      console.log(error);
       setIsLoading(false);
     }
   };
@@ -51,11 +50,9 @@ export default function SalerView() {
   }
 
   const handleOnClick = (id) => {
-    console.log(id);
     axios
       .get(`${process.env.REACT_APP_API_CARTS}/${id}`)
       .then((response) => {
-        console.log(response.data);
         Swal.fire({
           title:
             "Yêu cầu khách chuyển: " +
@@ -82,13 +79,11 @@ export default function SalerView() {
 
               .catch((error) => {
                 loadCustomers();
-                console.log(error);
               });
           }
         });
       })
       .catch((error) => {
-        console.log(error);
       });
   };
 
@@ -96,12 +91,10 @@ export default function SalerView() {
     axios
       .delete(`${process.env.REACT_APP_API_SALE_DELETE_CUSTOMER}/${id}`)
       .then((response) => {
-        console.log(response);
         toast.success("Xóa khách hàng thành công", { autoClose: 1000 });
         loadCustomers();
       })
       .catch((error) => {
-        console.error(error);
         toast.error("Xóa thất bại");
       });
   };

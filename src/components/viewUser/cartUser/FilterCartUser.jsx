@@ -52,9 +52,7 @@ export function FilterCartUser() {
     };
     axiosData();
   }, [count]);
-  console.log(filterAss);
   const handleSubmitAssistant = () => {
-    console.log(selectedAssistant);
     const form = {
       cartId: idCart,
       employeeId: profileAssistant?.id || selectedAssistant?.id,

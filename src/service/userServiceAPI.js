@@ -9,7 +9,6 @@ const UserServiceAPI = {
                 return resp.data;
             })
             .catch((err) => {
-                console.log(err);
             });
     },
     signInUser: async (postData, navigate, url) => {
@@ -47,7 +46,6 @@ const UserServiceAPI = {
                 navigate(url + "/" + id);
             })
             .catch((err) => {
-                console.error("Lỗi khi gửi POST request:", err);
                 navigate(`/user/address` + "/" + id);
                 toast.error("Lỗi khi gửi thông tin vị trí");
             });

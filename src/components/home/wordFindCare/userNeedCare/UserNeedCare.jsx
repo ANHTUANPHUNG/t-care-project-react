@@ -57,7 +57,6 @@ export function UserNeedCare() {
                 setIsLoadingPage(false);
             })
             .catch((err) => {
-                console.error("Lỗi khi gửi POST request:", err);
                 toast.error("Lỗi");
                 setIsLoadingPage(false);
             });

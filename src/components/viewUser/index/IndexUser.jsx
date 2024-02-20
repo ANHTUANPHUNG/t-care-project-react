@@ -93,7 +93,6 @@ export function IndexUser() {
     };
     axiosData();
   }, []);
-  console.log(listAssistant);
   const fetchData = async () => {
     try {
       const response = await axios.get(
@@ -105,7 +104,6 @@ export function IndexUser() {
       ]);
       setCount((pre) => pre + 1);
     } catch (error) {
-      console.error("Error fetching data:", error);
     } finally {
       setChecking(false);
     }

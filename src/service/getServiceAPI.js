@@ -8,7 +8,6 @@ const GetServiceAPI = {
                 return resp.data;
             })
             .catch((err) => {
-                console.log(err);
             });
     },
 

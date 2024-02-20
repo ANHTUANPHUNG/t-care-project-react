@@ -13,7 +13,6 @@ import { format } from "date-fns";
 
 export function EmployeeContract() {
   const { idEmployee } = useParams();
-  console.log("a", idEmployee);
   const [listContract, setListContract] = useState([]);
   const [checkModal, setCheckModal] = useState(false);
   const [date, setDate] = useState(null);
@@ -25,7 +24,6 @@ export function EmployeeContract() {
   const [isLoading, setIsLoading] = useState(true);
   const [message, setMessage] = useState("");
   const [stompClient, setStompClient] = useState(null);
-  console.log(listContract);
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_API_CONTRACTS_EMPLOYEES}/+${idEmployee}`).then((res) => {
       const arrayList = res.data.content.map((e, i) => ({
@@ -37,7 +35,6 @@ export function EmployeeContract() {
       setIsLoading(false);
     });
   }, [idEmployee, message]);
-  console.log(listContract);
   useEffect(() => {
     const socket = new SockJS(process.env.REACT_APP_API_SOCKET);
     const client = Stomp.over(socket);

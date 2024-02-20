@@ -17,7 +17,6 @@ export function RateAssistant({ checkModal, setCheckModal, assistant }) {
   };
 
   const handleStarClick = (clickedRating) => {
-    console.log("Rating submitted:", clickedRating);
   };
   const rateAssistant = (
     <>

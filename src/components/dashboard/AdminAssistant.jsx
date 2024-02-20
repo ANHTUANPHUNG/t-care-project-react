@@ -113,7 +113,6 @@ export function AdminAssistant() {
       }
     });
   };
-  console.log("listAssistantWaiting", listAssistantWaiting);
   const profileAssistant = (
     <>
       <div style={{ textAlign: "center", padding: "30px 0" }}>

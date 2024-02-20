@@ -99,7 +99,6 @@ export default function EditCustomer() {
       const customer = await axios.get(
         `${process.env.REACT_APP_API_CARTS}/${id}`
       );
-      console.log(customer.data);
       setCustomer(customer.data);
       setFirstName(customer.data.firstName);
       setLastName(customer.data.lastName);
@@ -248,15 +247,12 @@ export default function EditCustomer() {
       toast.error("Vui lòng điền ngày kết thúc phải lớn hơn ngày bắt đầu");
       return;
     }
-    console.log("cart", cart);
     axios
       .put(`${process.env.REACT_APP_API_CARTS_SALE}/${id}`, cart)
       .then((response) => {
-        console.log(response.data);
         const cartId = response.data;
         toast.success("Thay đổi thông tin khách hàng thành công");
         navigate(`/sale/${idSale}/render-list-assistant/${id}`);
-        console.log(response.data);
       })
       .catch((error) => {
         toast.error("Vui lòng điền đầy đủ thông tin");

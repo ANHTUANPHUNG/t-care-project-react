@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import "./RadioService.css";
 
 export function RadioService({ value, selectedRadioId, setSelectedRadioId }) {
-  console.log(value);
   return value?.map((e) => {
     const sentences = e.description.split('.');
 

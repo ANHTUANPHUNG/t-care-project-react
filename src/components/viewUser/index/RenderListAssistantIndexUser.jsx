@@ -26,7 +26,6 @@ export function RenderListAssistantIndexUser({
       setSelectedFavorites((prev) => [...prev, e]);
     }
   };
-  console.log("value", value);
   const handleSubmitCartUser = () => {
     const form = {
       cartId: value.cartId,

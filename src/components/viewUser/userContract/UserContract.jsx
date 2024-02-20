@@ -41,7 +41,6 @@ export function UserContract() {
         setIsLoading(false);
       });
   }, [id, message]);
-  console.log(listContract);
   useEffect(() => {
     const socket = new SockJS(process.env.REACT_APP_API_SOCKET);
     const client = Stomp.over(socket);

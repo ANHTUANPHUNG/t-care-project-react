@@ -89,7 +89,6 @@ export default function AddCustomer() {
       setIsLoading(false);
   
     } catch (error) {
-      console.log(error);
       setIsLoading(false);
     }
   };
@@ -205,10 +204,8 @@ export default function AddCustomer() {
       toast.error("Vui lòng điền ngày kết thúc phải lớn hơn ngày bắt đầu");
       return;
     }
-    console.log(cart);
     axios.post(`${process.env.REACT_APP_API_CARTS_SALE}/${id}`, cart)
     .then(response => {
-      console.log(response.data);
        const cartId = response.data
       toast.success("Thêm mới khách hàng thành công")
       setIsLoading(false

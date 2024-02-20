@@ -8,14 +8,12 @@ const EmployeeServiceAPI = {
                 return resp.data;
             })
             .catch((err) => {
-                console.log(err);
             });
     },
     signInEmployee: async (postData, navigate, url) => {
         return axios
             .post(process.env.REACT_APP_API_AUTH_SIGN_IN_EMPLOYEE, postData)
             .then((resp) => {
-                console.log(resp.data);
                 toast.success("Tài khoản được tạo thành công");
                 navigate(url + "/" + resp.data);
             })
@@ -31,7 +29,6 @@ const EmployeeServiceAPI = {
                 navigate(url + "/" + id);
             })
             .catch((err) => {
-                console.error("Lỗi khi gửi POST request:", err);
                 navigate(`/assistant/process/${id}`);
                 // toast.error("Bạn đã đăng kí địa chỉ rồi!");
             });

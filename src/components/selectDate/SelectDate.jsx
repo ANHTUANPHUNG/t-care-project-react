@@ -43,8 +43,6 @@ export function SelectDate({ paddingSpan, setValue, dayInWeek, billIndexUser }) 
       [date]: updatedSessions,
     });
   };
-console.log(dateInWeekList);
-console.log(dayInWeek);
   useEffect(() => {
     setValue(selectedSessions);
   }, [selectedSessions]);

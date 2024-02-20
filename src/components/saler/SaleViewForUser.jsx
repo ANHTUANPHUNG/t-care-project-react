@@ -37,7 +37,6 @@ export default function SalerViewForUser() {
       });
     });
     socket.onerror = (error) => {
-      console.error("Socket error:", error);
     };
     setStompClient(client);
     return () => {
@@ -53,18 +52,15 @@ export default function SalerViewForUser() {
     );
     setCustomers(customers.data.content);
     setIsLoading(false);
-    console.log(customers.data);
   };
   if (isLoading) {
     return <LoadingCommon />;
   }
 
   const handleOnClick = (id) => {
-    console.log(id);
     axios
       .get(`${process.env.REACT_APP_API_CARTS}/${id}`)
       .then((response) => {
-        console.log(response.data);
         Swal.fire({
           title:
             "Yêu cầu khách chuyển: " +
@@ -91,7 +87,6 @@ export default function SalerViewForUser() {
         });
       })
       .catch((error) => {
-        console.log(error);
       });
   };
 

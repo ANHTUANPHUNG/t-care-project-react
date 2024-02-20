@@ -24,7 +24,6 @@ export default function SaleContract() {
   let navigate = useNavigate();
   const loadContracts = async () => {
     const contracts = await axios.get(process.env.REACT_APP_API_CONTRACT);
-    console.log(contracts.data.content);
     setContracts(contracts.data.content);
   };
   return (

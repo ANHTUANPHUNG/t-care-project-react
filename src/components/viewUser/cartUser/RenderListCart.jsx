@@ -72,7 +72,6 @@ export function RenderListCart({
       }
     });
   };
-  console.log(listCart);
   const handleUpdateContract = (id) => {
     const findById = listCart.find((e) => e.id === id);
     if (
@@ -143,7 +142,6 @@ export function RenderListCart({
       });
     });
     socket.onerror = (error) => {
-      console.error("Socket error:", error);
     };
     setStompClient(client);
     return () => {

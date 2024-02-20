@@ -62,7 +62,6 @@ export function AdminHome() {
 
       weeksData.push({ startDay, endDay });
     }
-    console.log(weeksData);
     let axiosData = async () => {
       const promises = weeksData.map(async (week) => {
         const responseRevenue = await axios.post(

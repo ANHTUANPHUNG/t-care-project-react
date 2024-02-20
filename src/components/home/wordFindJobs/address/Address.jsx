@@ -56,7 +56,6 @@ export function Address() {
       toast.error("Vui lòng chọn vị trí của bạn")
     }
   };
-console.log(place);
   const formAddress = (
     <div
       style={{

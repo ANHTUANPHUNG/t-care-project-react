@@ -49,7 +49,6 @@ export function Bio() {
         navigate(`/assistant/photo/${id}`);
       });
     } catch (error) {
-      console.error(error);
     }
   };
 

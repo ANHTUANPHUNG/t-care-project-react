@@ -18,7 +18,6 @@ export function ContainerViewEmployee({ idEmployee }) {
     };
     axiosData();
   }, [idEmployee]);
-  console.log(employee);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);

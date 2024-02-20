@@ -136,7 +136,6 @@ export function Experience() {
       })
 
       .catch((err) => {
-        console.error("Lỗi khi gửi POST request:", err);
         toast.error("Vui lòng điền đầy đủ thông tin");
         setIsLoading(false);
       });

@@ -42,7 +42,6 @@ export function AdminStatistics() {
     };
 
     const selectNewDate = dayjs();
-    console.log(selectNewDate);
     const startOfDay = selectNewDate.startOf("day");
     const endOfDay = selectNewDate.endOf("day");
 
@@ -82,7 +81,6 @@ export function AdminStatistics() {
     fetchData(yearData, setYearTotal);
     setIsLoading(false);
   }, []);
-  //   console.log(selectedDate)
   const handleDateRangeChange = async (newDateRange) => {
     const formattedDatesArray = newDateRange?.map((dateObject) => {
       if (dateObject && dateObject.$d) {
@@ -143,7 +141,6 @@ export function AdminStatistics() {
   if (isLoading) {
     return <LoadingCommon />;
   }
-  console.log(yearTotal);
   return (
     <>
       <ContainerDashboard />

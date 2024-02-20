@@ -84,10 +84,8 @@ export function EmployeeProfile() {
                             setIsLoadingImage(false);
                         });
                 } else {
-                    console.error("Image ID not found in the response.");
                 }
             } else {
-                console.error("Failed to upload image:", response.statusText);
             }
         }
     };

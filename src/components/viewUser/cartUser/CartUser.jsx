@@ -40,7 +40,6 @@ export function CartUser() {
         const response = await axios.get(
           `${process.env.REACT_APP_API_CARTS_USERS}/${id}`
         );
-        console.log(response);
         const updatedListCart = response.data.content.map(
           (cartItem, index) => ({
             ...cartItem,
