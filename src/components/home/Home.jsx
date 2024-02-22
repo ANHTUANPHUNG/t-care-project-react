@@ -35,11 +35,11 @@ export function Home() {
                 <div className="d-flex bg-white-bb-red">
                     <CheckFind />
                     <div className="w45">
-                        <img className="w100"
+                        <img
+                            className="w100"
                             src="https://res.cloudinary.com/dw4xpd646/image/upload/v1703748824/Cloudinary-React/gwsdfpleoznddaljvn9m.png"
-                           
-                        />  
-                    </div>  
+                        />
+                    </div>
                 </div>
                 <About />
                 <div className="rate-average mt-3">
@@ -68,7 +68,7 @@ export function Home() {
                 </div>
             </div>
             <CareHub />
-            <Phone/>
+            <Phone />
         </>
     );
 }
